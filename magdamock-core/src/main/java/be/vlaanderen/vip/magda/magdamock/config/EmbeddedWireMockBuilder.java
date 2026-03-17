@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.config;
 
+import be.vlaanderen.vip.magda.magdamock.utils.MockDataTemplateHelper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.direct.DirectCallHttpServerFactory;
@@ -16,6 +17,8 @@ public class EmbeddedWireMockBuilder {
         WireMockConfiguration config = WireMockConfiguration.wireMockConfig()
                 .port(wiremockPort)
                 .httpServerFactory(factory)
+                .globalTemplating(true)
+                .extensions(MockDataTemplateHelper.getTemplateHelperExtensions())
                 .usingFilesUnderDirectory(fileSource);
 
         return new WireMockData(new WireMockServer(config), factory);
