@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client;
 
+import be.vlaanderen.vip.magda.client.MagdaDocument;
 import be.vlaanderen.vip.magda.client.connection.MagdaConnection;
 import be.vlaanderen.vip.magda.client.domeinservice.MagdaRegistrationInfo;
 import be.vlaanderen.vip.magda.client.rest.MagdaRestRequest;
@@ -29,6 +30,9 @@ import org.w3c.dom.Document;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -61,7 +65,27 @@ public class MagdaMockConnection implements MagdaConnection {
 
     @Override
     public Document sendDocument(Document xml) {
-        throw new NotImplementedException();
+        MagdaDocument request = MagdaDocument.fromDocument(xml);
+        String dateHeader = getDateHeaderFromSoapRequest(request);
+        String soapUrl = wireMockServer.url("/soap");
+        Request mockRequest = createInternalWiremockRequest(soapUrl, "POST", request.toString(), dateHeader, "text/xml");
+        Response response = routeRequest(mockRequest);
+        if (response.getStatus() == 404) {
+            return null;
+        }
+        return parseSoapResponse(response);
+    }
+
+    private String getDateHeaderFromSoapRequest(MagdaDocument request) {
+        LocalDate date;
+        try {
+            String dateString = request.getValue("//Verzoek/Context/Bericht/Tijdstip/Datum").strip();
+            date = LocalDate.parse(dateString);
+            return DateTimeFormatter.RFC_1123_DATE_TIME.format(date.atStartOfDay(ZoneId.of("Europe/Brussels")));
+        } catch (Exception e) {
+            log.info("Unable to extract date and time from request");
+        }
+        return "";
     }
 
     @Override
@@ -94,15 +118,13 @@ public class MagdaMockConnection implements MagdaConnection {
             parts.add(query);
         }
         String url = String.join("?", parts);
-        Request mockRequest = createInternalWiremockRequest(url, method, requestBody, dateHeader);
-        return routeRequest(mockRequest);
+        Request mockRequest = createInternalWiremockRequest(url, method, requestBody, dateHeader, "application/json");
+        Response response = routeRequest(mockRequest);
+        return parseRestResponse(response);
     }
 
-
-    private Pair<JsonNode, Integer> routeRequest(Request request) {
+    private Pair<JsonNode, Integer> parseRestResponse(Response response) {
         try {
-            Response response = internalWiremockHttpServer.stubRequest(request);
-
             if (response.getStatus() == 404) {
                 return Pair.of(null, 404);
             }
@@ -112,9 +134,16 @@ public class MagdaMockConnection implements MagdaConnection {
         }
     }
 
+    private Document parseSoapResponse(Response response) {
+        return MagdaDocument.fromString(response.getBodyAsString()).getXml();
+    }
+
+    private Response routeRequest(Request request) {
+        return internalWiremockHttpServer.stubRequest(request);
+    }
 
     // As there need to be certain parameters filled in to avoid wiremock throwing nullpointers while templating, we create the request ourselves
-    private Request createInternalWiremockRequest(String url, String method, String requestBody, String dateHeader) {
+    private Request createInternalWiremockRequest(String url, String method, String requestBody, String dateHeader, String contentType) {
         if (dateHeader == null) {
             dateHeader = "";
         }
@@ -171,7 +200,7 @@ public class MagdaMockConnection implements MagdaConnection {
 
             @Override
             public ContentTypeHeader contentTypeHeader() {
-                return new ContentTypeHeader("application/json");
+                return new ContentTypeHeader(contentType);
             }
 
             @Override
