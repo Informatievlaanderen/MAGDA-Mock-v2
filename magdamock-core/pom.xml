@@ -28,6 +28,13 @@
             <artifactId>wiremock-jetty12</artifactId>
             <version>3.13.1</version>
         </dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>5.23.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<artifactId>magdamock-core</artifactId>
 

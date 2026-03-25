@@ -5,6 +5,8 @@ import be.vlaanderen.vip.magda.client.connection.MagdaConnection;
 import be.vlaanderen.vip.magda.client.domeinservice.MagdaRegistrationInfo;
 import be.vlaanderen.vip.magda.client.rest.MagdaRestRequest;
 import be.vlaanderen.vip.magda.magdamock.client.exceptions.MagdaMockRestException;
+import be.vlaanderen.vip.magda.magdamock.client.soap.SoapResponsePatcher;
+import be.vlaanderen.vip.magda.magdamock.client.soap.SoapResponsePatcherImpl;
 import be.vlaanderen.vip.magda.magdamock.config.EmbeddedWireMockBuilder;
 import be.vlaanderen.vip.magda.magdamock.config.MockRestMagdaEndpoints;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
@@ -27,6 +29,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.Pair;
 import org.w3c.dom.Document;
 
+import javax.print.Doc;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -48,6 +51,7 @@ public class MagdaMockConnection implements MagdaConnection {
     private final WireMockServer wireMockServer;
     private final ObjectMapper mapper;
     private final DirectCallHttpServer internalWiremockHttpServer;
+    private final SoapResponsePatcher soapResponsePatcher = new SoapResponsePatcherImpl();
 
     MagdaMockConnection(WireMockData wiremockServerData) {
         this.wireMockServer = wiremockServerData.wireMockServer();
@@ -73,7 +77,7 @@ public class MagdaMockConnection implements MagdaConnection {
         if (response.getStatus() == 404) {
             return null;
         }
-        return parseSoapResponse(response);
+        return patchResponse(request, parseSoapResponse(response));
     }
 
     private String getDateHeaderFromSoapRequest(MagdaDocument request) {
@@ -136,6 +140,10 @@ public class MagdaMockConnection implements MagdaConnection {
 
     private Document parseSoapResponse(Response response) {
         return MagdaDocument.fromString(response.getBodyAsString()).getXml();
+    }
+
+    private Document patchResponse(MagdaDocument request, Document document) {
+        return soapResponsePatcher.patchResponse(request, document).getXml();
     }
 
     private Response routeRequest(Request request) {

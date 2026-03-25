@@ -3,12 +3,14 @@ package be.vlaanderen.vip.magda.magdamock.client;
 import be.vlaanderen.vip.magda.client.MagdaDocument;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.utils.MockDataTemplateHelper;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import com.github.tomakehurst.wiremock.direct.DirectCallHttpServerFactory;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.containing;
@@ -20,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class MagdaMockConnectionTest {
+class MagdaMockConnectionTest {
 
     @Test
     @SneakyThrows
@@ -127,7 +129,9 @@ public class MagdaMockConnectionTest {
         assertNotNull(response);
         MagdaDocument doc = MagdaDocument.fromDocument(response);
         String date = doc.getValue("//Context/Bericht/Tijdstip/Datum");
-        assertEquals("2017-01-23", date);
+        LocalDate today = LocalDate.now();
+        String formattedDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        assertEquals(formattedDate, date);
     }
 
     @Test
