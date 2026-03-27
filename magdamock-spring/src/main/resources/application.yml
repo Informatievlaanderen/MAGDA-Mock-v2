@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: magdamock-service
+
+magda:
+  magdamock:
+    magda-mock-test-path: "wiremock"
