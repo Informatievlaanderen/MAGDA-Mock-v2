@@ -97,7 +97,7 @@ pipelines:
           script:
             - export TESTCONTAINERS_RYUK_DISABLED=true
             - export MAVEN_OPTS="-Xmx1024m"
-            - mvn -B -U clean deploy sonar:sonar -s .m2/settings.xml -Dbuild=bitbucket  -Pdocker -Dsonar.host.url=${SONAR_HOST} -Dsonar.projectKey=${SONAR_PROJECT} -Dsonar.token=${SONAR_APITOKEN}
+            - mvn -B -U clean deploy sonar:sonar -s .m2/settings.xml -Dbuild=bitbucket -Pfat-jar -Pdocker -Dsonar.host.url=${SONAR_HOST} -Dsonar.projectKey=${SONAR_PROJECT} -Dsonar.token=${SONAR_APITOKEN}
             - mkdir -p target
             - mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout > target/pom_version
             - mvn dependency:tree > maven.tree
