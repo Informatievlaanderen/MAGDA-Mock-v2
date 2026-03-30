@@ -5,3 +5,4 @@ spring:
 magda:
   magdamock:
     magda-mock-test-path: "wiremock"
+    soap-test-path:  # directory containing SOAP XML files (absolute path)

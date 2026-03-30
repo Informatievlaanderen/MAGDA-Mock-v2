@@ -7,14 +7,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
 
+import java.io.IOException;
+
 @Data
 @Configuration
 @ConfigurationProperties("magda.magdamock")
 public class MagdaMockConfig {
     String magdaMockTestPath;
+    String soapTestPath;
 
     @Bean
-    public MagdaConnection magdaMockConnection() {
-        return MagdaMockConnection.create(magdaMockTestPath);
+    public MagdaConnection magdaMockConnection() throws IOException {
+        return MagdaMockConnection.create(magdaMockTestPath, soapTestPath);
     }
 }

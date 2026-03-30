@@ -5,11 +5,14 @@ import be.vlaanderen.vip.magda.client.connection.MagdaConnection;
 import be.vlaanderen.vip.magda.client.domeinservice.MagdaRegistrationInfo;
 import be.vlaanderen.vip.magda.client.rest.MagdaRestRequest;
 import be.vlaanderen.vip.magda.magdamock.client.exceptions.MagdaMockRestException;
+import be.vlaanderen.vip.magda.magdamock.client.soap.Domain;
 import be.vlaanderen.vip.magda.magdamock.client.soap.SoapResponsePatcher;
 import be.vlaanderen.vip.magda.magdamock.client.soap.SoapResponsePatcherImpl;
+import be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar;
 import be.vlaanderen.vip.magda.magdamock.config.EmbeddedWireMockBuilder;
 import be.vlaanderen.vip.magda.magdamock.config.MockRestMagdaEndpoints;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
+import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -25,11 +28,9 @@ import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.RequestMethod;
 import com.github.tomakehurst.wiremock.http.Response;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.Pair;
 import org.w3c.dom.Document;
 
-import javax.print.Doc;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -53,6 +54,7 @@ public class MagdaMockConnection implements MagdaConnection {
     private final DirectCallHttpServer internalWiremockHttpServer;
     private final SoapResponsePatcher soapResponsePatcher = new SoapResponsePatcherImpl();
 
+
     MagdaMockConnection(WireMockData wiremockServerData) {
         this.wireMockServer = wiremockServerData.wireMockServer();
         internalWiremockHttpServer = wiremockServerData.factory().getHttpServer();
@@ -63,8 +65,12 @@ public class MagdaMockConnection implements MagdaConnection {
         return new MagdaMockConnection(wiremockServerData);
     }
 
-    public static MagdaMockConnection create(String testDataPath) {
-        return create(EmbeddedWireMockBuilder.wireMockServer(testDataPath));
+    public static MagdaMockConnection create(String testDataPath, String soapTestPath) throws IOException {
+        List<Domain> domains = SoapResourceUtil.loadDomainsFromPaths(SoapResourceUtil.resolvePaths(soapTestPath));
+        WireMockData wireMockData = EmbeddedWireMockBuilder.wireMockServer(testDataPath);
+        SoapStubRegistrar soapStubRegistrar = new SoapStubRegistrar(wireMockData.wireMockServer(), soapTestPath);
+        domains.forEach(soapStubRegistrar::registerDomain);
+        return create(wireMockData);
     }
 
     @Override
