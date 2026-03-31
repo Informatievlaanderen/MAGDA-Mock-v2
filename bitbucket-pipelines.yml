@@ -42,6 +42,17 @@ definitions:
           - prepare_git
           - git checkout $VERSION
           - mvn -B package io.fabric8:docker-maven-plugin:0.31.0:push -s .m2/settings.xml -Pfat-jar -Pdocker-release
+    - step: &dockerBuildDemo
+        name: Build Docker image
+        caches:
+          - docker
+        script:
+          - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASSWORD vlaamseoverheid-magda-docker-releases.jfrog.io
+          - version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          - cd magdamock-demo
+          - docker build -t vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo:$version .
+          - docker build -t vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo:latest .
+          - docker push -a vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo
     - step: &sigridPublish
         image: softwareimprovementgroup/sigridci
         name: Publish to Sigrid
@@ -75,6 +86,8 @@ pipelines:
             - maven.tree
       - step:
           <<: *sigridPublish
+      - step:
+          <<: *dockerBuildDemo
       - step:
           <<: *deploy
           name: Deploy release to TST
@@ -131,6 +144,8 @@ pipelines:
   custom:
     maven-release:
       - step: *release
+    docker-build-demo:
+      - step: *dockerBuildDemo
     deploy-released-version:
       - step:
           name: Check
