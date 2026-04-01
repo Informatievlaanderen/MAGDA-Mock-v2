@@ -1,3 +1,7 @@
+spring:
+  application:
+    name: magdamock-demo
+
 magda:
   magdamock:
     magda-mock-test-path: "/data/wiremock"

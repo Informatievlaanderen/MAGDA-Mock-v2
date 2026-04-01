@@ -6,3 +6,11 @@ magda:
   magdamock:
     magda-mock-test-path: "wiremock"
     soap-test-path:  # directory containing SOAP XML files (absolute path)
+
+management:
+  server:
+    port: 8081
+
+  endpoint:
+    health:
+      show-details: always

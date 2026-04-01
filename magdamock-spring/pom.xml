@@ -32,6 +32,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
@@ -53,24 +58,17 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${spring-boot.version}</version>
                         <executions>
                             <execution>
-                                <id>create-fat-jar</id>
-                                <phase>package</phase>
+                                <id>repackage</id>
                                 <goals>
-                                    <goal>single</goal>
+                                    <goal>repackage</goal>
                                 </goals>
                                 <configuration>
-                                    <descriptorRefs>
-                                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                                    </descriptorRefs>
-                                    <archive>
-                                        <manifest>
-                                            <mainClass>be.vlaanderen.vip.magda.magdamock.spring.MagdamockSpringApplication</mainClass>
-                                        </manifest>
-                                    </archive>
+                                    <mainClass>be.vlaanderen.vip.magda.magdamock.spring.MagdamockSpringApplication</mainClass>
                                 </configuration>
                             </execution>
                         </executions>
