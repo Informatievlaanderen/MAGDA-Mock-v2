@@ -6,7 +6,7 @@
     <parent>
         <groupId>be.vlaanderen.vip</groupId>
         <artifactId>magda.magdamock</artifactId>
-        <version>0.1.0</version>
+        <version>0.2.0</version>
     </parent>
 
     <artifactId>magdamock-spring</artifactId>
@@ -21,13 +21,18 @@
         <dependency>
             <groupId>be.vlaanderen.vip</groupId>
             <artifactId>magdamock-core</artifactId>
-            <version>0.1.0</version>
+            <version>0.2.0</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
             <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
@@ -53,24 +58,17 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${spring-boot.version}</version>
                         <executions>
                             <execution>
-                                <id>create-fat-jar</id>
-                                <phase>package</phase>
+                                <id>repackage</id>
                                 <goals>
-                                    <goal>single</goal>
+                                    <goal>repackage</goal>
                                 </goals>
                                 <configuration>
-                                    <descriptorRefs>
-                                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                                    </descriptorRefs>
-                                    <archive>
-                                        <manifest>
-                                            <mainClass>be.vlaanderen.vip.magda.magdamock.spring.MagdamockSpringApplication</mainClass>
-                                        </manifest>
-                                    </archive>
+                                    <mainClass>be.vlaanderen.vip.magda.magdamock.spring.MagdamockSpringApplication</mainClass>
                                 </configuration>
                             </execution>
                         </executions>

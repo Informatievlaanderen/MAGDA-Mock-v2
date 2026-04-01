@@ -16,7 +16,7 @@ definitions:
           # Allow overwriting applications in deployments
           - >
             if [[ "$APPS" == "" ]]; then
-              export APPS='magdamock-spring'
+              export APPS='magdamock-spring magda-magdamock-demo'
             fi
           - echo $NAMESPACE > target/namespace  # Necessary for passing namespace to the next steps
           - chmod +x deploy-with-argocd.sh
@@ -50,8 +50,8 @@ definitions:
           - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASSWORD vlaamseoverheid-magda-docker-releases.jfrog.io
           - version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           - cd magdamock-demo
-          - docker build -t vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo:$version .
-          - docker build -t vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo:latest .
+          - docker build --build-arg MAGDAMOCK_VERSION=$version -t vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo:$version .
+          - docker build --build-arg MAGDAMOCK_VERSION=$version -t vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo:latest .
           - docker push -a vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo
     - step: &sigridPublish
         image: softwareimprovementgroup/sigridci
