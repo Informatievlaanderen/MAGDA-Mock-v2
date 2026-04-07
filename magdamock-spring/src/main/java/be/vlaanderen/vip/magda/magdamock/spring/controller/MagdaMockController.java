@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -84,6 +85,6 @@ public class MagdaMockController {
         splittedRequestUri.remove(0);
         String path = String.join(MAGDA_REST_V1, splittedRequestUri);
         Pair<JsonNode, Integer> response = mockConnection.sendRestRequest(path, query, method, requestBody);
-        return new ResponseEntity<>(response.getLeft().toString(), HttpStatusCode.valueOf(response.getRight()));
+        return new ResponseEntity<>(Optional.ofNullable(response.getLeft()).map(Object::toString).orElse(""), HttpStatusCode.valueOf(response.getRight()));
     }
 }

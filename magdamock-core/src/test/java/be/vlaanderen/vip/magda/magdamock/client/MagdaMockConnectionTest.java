@@ -176,6 +176,22 @@ class MagdaMockConnectionTest {
         assertNull(response);
     }
 
+    @Test
+    void whenRequestIsInvalid_shouldReturn400(){
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest());
+        var response = connection.sendRestRequest("/invalidResponse", "", "GET", """
+                {"test": invalid json}
+                """, "Tue, 29 Oct 2024 16:56:32 GMT");
+        assertEquals(400, response.getRight());
+    }
+
+    @Test
+    void whenResponseIsInvalid_shouldReturn502(){
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest());
+        var response = connection.sendRestRequest("/invalidResponse", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT");
+        assertEquals(502, response.getRight());
+    }
+
     private WireMockData createWireMockForTest() {
         DirectCallHttpServerFactory factory = new DirectCallHttpServerFactory();
 
@@ -201,6 +217,13 @@ class MagdaMockConnectionTest {
                                 .withBody("""
                                         {"test": "{formatDate (dateMath (dateMath (parseDate request.headers.Date) '-10d') '-5y')}}"}
                                         """
+                                )
+                        ));
+
+        wireMockServer.stubFor(
+                get(urlEqualTo("/invalidResponse"))
+                        .willReturn(aResponse()
+                                .withBody("invalid json"
                                 )
                         ));
 
