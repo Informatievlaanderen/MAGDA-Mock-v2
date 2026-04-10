@@ -58,11 +58,12 @@ definitions:
         caches:
           - docker
         script:
-          - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASSWORD vlaamseoverheid-magda-docker-releases.jfrog.io
+          - docker_url="vlaamseoverheid-magda-docker-snapshots.jfrog.io"
+          - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASSWORD vlaamseoverheid-magda-docker-snapshots.jfrog.io
           - version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           - cd magdamock-demo
-          - docker build --build-arg MAGDAMOCK_VERSION=$version -t vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo:$version .
-          - docker push -a vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo
+          - docker build --build-arg MAGDAMOCK_VERSION=$version --build-arg DOCKER_URL=$docker_url -t vlaamseoverheid-magda-docker-snapshots.jfrog.io/magda/magda.magdamock-demo:$version .
+          - docker push -a vlaamseoverheid-magda-docker-snapshots.jfrog.io/magda/magda.magdamock-demo
     - step: &sigridPublish
         image: softwareimprovementgroup/sigridci
         name: Publish to Sigrid

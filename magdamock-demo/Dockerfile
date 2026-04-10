@@ -1,6 +1,7 @@
 ARG MAGDAMOCK_VERSION="latest"
+ARG DOCKER_URL="vlaamseoverheid-magda-docker-releases.jfrog.io"
 
-FROM vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock:${MAGDAMOCK_VERSION}
+FROM ${DOCKER_URL}/magda/magda.magdamock:${MAGDAMOCK_VERSION}
 
 COPY ./application.yml /application.yml
 
