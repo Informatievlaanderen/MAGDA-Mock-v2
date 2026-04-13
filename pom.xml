@@ -20,7 +20,7 @@
 		<sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco-aggregated/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.language>java</sonar.language>
         <jacoco.version>0.8.14</jacoco.version>
-		<logstash.logback.version>8.1</logstash.logback.version>
+		<logstash.logback.version>9.0</logstash.logback.version>
 		<lombok.version>1.18.44</lombok.version>
 		<magda-openjdk.version>21.0.2</magda-openjdk.version>
 		<mapstruct.version>1.6.3</mapstruct.version>
