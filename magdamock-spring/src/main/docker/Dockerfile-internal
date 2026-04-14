@@ -1,4 +1,4 @@
-FROM vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda-openjdk-cacerts:${magda-openjdk.version}
+FROM vlaamseoverheid-magda-docker-public.jfrog.io/magda/vdip-java:${vdip-java.version}
 
 VOLUME /tmp
 
