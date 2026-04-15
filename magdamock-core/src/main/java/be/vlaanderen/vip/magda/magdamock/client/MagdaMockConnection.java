@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.common.Json;
 import com.github.tomakehurst.wiremock.common.Urls;
 import com.github.tomakehurst.wiremock.direct.DirectCallHttpServer;
 import com.github.tomakehurst.wiremock.http.ContentTypeHeader;
@@ -73,7 +74,7 @@ public class MagdaMockConnection implements MagdaConnection {
 
     public static MagdaMockConnection create(String testDataPath, String soapTestPath, String xsdPath) throws IOException {
         List<Domain> domains = SoapResourceUtil.loadDomainsFromPaths(SoapResourceUtil.resolvePaths(soapTestPath));
-        WireMockData wireMockData = EmbeddedWireMockBuilder.wireMockServer(testDataPath);
+        WireMockData wireMockData = EmbeddedWireMockBuilder.wireMockServer(testDataPath, soapTestPath);
         SoapStubRegistrar soapStubRegistrar = new SoapStubRegistrar(wireMockData.wireMockServer(), soapTestPath);
         domains.forEach(soapStubRegistrar::registerDomain);
         SoapBodyValidator soapRequestValidator;
