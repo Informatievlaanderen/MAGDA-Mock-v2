@@ -45,7 +45,7 @@ class SOAPServicesTest {
                         .getResource("soap")
                         .toURI());
 
-                magdaMockConnection = MagdaMockConnection.create("", path.toAbsolutePath().toString());
+                magdaMockConnection = MagdaMockConnection.create("", path.toAbsolutePath().toString(), "");
         }
 
         @ParameterizedTest
