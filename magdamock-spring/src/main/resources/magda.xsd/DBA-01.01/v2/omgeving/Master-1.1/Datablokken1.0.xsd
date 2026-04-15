@@ -1,0 +1,12 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Gebeurtenisdatablokken -->
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:gebeurtenis:GEB_START_OPENBAAR_ONDERZOEK_001:001" schemaLocation="../Datablok/OpenbaarOnderzoek-02.00/GEB_START_OPENBAAR_ONDERZOEK_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:gebeurtenis:GEB_ADVIESBESLISSING_001:001" schemaLocation="../Datablok/AdviesBeslissing-02.00/GEB_ADVIESBESLISSING_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:gebeurtenis:GEB_BESLISSING_EERSTEAANLEG_001:001" schemaLocation="../Datablok/BeslissingEersteAanleg-02.00/GEB_BESLISSING_EERSTEAANLEG_001.xsd"/>
+
+    <!-- Geen dossierstukdatablokken verwijderd -->
+
+    <!-- SituatieDatablokken -->
+    <xsd:include schemaLocation="SituatieDatablokken1.0.xsd"/>
+</xsd:schema>

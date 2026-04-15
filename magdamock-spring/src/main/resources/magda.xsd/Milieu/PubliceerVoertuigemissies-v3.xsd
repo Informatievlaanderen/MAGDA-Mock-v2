@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2020 (http://www.altova.com) by Thomas (Government of Flanders) -->
+<xsd:schema xmlns="http://magda.vlaanderen.be/milieu-v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bericht="http://generiek-02_00.vip.vlaanderen.be" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" targetNamespace="http://magda.vlaanderen.be/milieu-v3" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../Generiek/GeneriekDomein-v3.xsd"/>
+	<!--=> ENKELVOUDIGE TYPE DEFINITES-->
+	<!--=> SAMENGESTELDE TYPE DEFINITES-->
+	<xsd:complexType name="VehicleType">
+		<xsd:annotation>
+			<xsd:documentation>Container voor de gegevens van het voertuig.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="VehicleId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Gepseudonymiseerde id van het voertuig. Deze waarde moet overeen komen met de VehicleId onder MeasuredVehicle</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CommercialName" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Commerciële benaming van het voertuig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MakeTypeDescription" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Omschrijving van het type merk van het voertuig</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FirstRegistrationDate" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De datum in CET waarop het voertuig voor het eerst is geregistreerd.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TechnicalPermissibleMaxMass" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De maximaal toegestane massa van het voertuig volgens technische specificaties.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaxPermMassCombination" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De maximaal toegestane massa van het voertuig inclusief aanhangwagen.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TechControlEntryDatetime" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De datum in CET van de laatste technische controle.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FirstKnownUseDate" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De datum in CET waarop het voertuig voor het eerst in gebruik is genomen.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NumberOfStandingPlaces" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Het aantal staanplaatsen in het voertuig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MassOfTheVehicleInRunningOrder" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De massa van het voertuig in rijklare staat.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ReferenceMass" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De referentiemassa van het voertuig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MakeName" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Merknaam van het voertuig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TypeApprovalType" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Het type goedkeuring voor het voertuig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IndividualApprovalType" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Individueel goedkeuringstype (geharmoniseerd / niet-geharmoniseerd)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaxPermLadenMassNational" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Beoogde maximaal toelaatbare massa in beladen toestand bij registratie / in bedrijf - nationaal</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VehicleType" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Het voertuigtype dat aanduidt tot welke groep van voertuigen, met gemeenschappelijke kenmerken, het voertuig behoort en waarvoor typegoedkeuring is verleend.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Wvta" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Goedkeuringsnummer. Het goedkeuringsnummer is een uniek nummer volgens een geharmoniseerd nummeringssysteem, op basis waarvan tenminste kan worden vastgesteld welke lidstaat de goedkeuring heeft verleend en aan welke voorschriften het voertuig voldoet.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PvaBelgium" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Een uniek nummer volgens een nationaal nummeringssysteem, op basis waarvan tenminste kan worden vastgesteld dat voor het voertuig goedkeuring werd verleend en aan welke voorschriften het voertuig voldoet.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Variant" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De voertuigvariant is de variant van een voertuigtype waartoe het voertuig behoort en die alle voertuigen kenmerkt met specifieke gemeenschappelijke bouwkenmerken.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Version" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De uitvoering van een voertuigvariant waartoe het voertuig behoort en die alle voertuigen kenmerkt met specifieke gemeenschappelijke bouwkenmerken.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateCOC" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De datum in CET waarop de COC (certificate of conformity) werd ondertekend.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="TechControlValidityDate" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Geldigheidsdatum in CET technische keuring.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ImportedCertificateRegistrationDate" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De datum in CET buitenlandse inschrijving is de datum van de inschrijving waarop het buitenlands inschrijvingsbewijs betrekking heeft. Heeft enkel betrekking op geïmporteerde tweedehandsvoertuigen die eerder waren ingeschreven waren in een ander land.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OffRoad" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicator of het een terreinvoertuig betreft. Een terreinvoertuig is een voertuig van categorie M of N met specifieke technische kenmerken waardoor het buiten de normale wegen kan worden gebruikt. Het is een voertuigsubcategorie waarvoor de letter "G" als suffix wordt toegevoegd aan de letter en het cijfer waarmee de voertuigcategorie wordt aangeduid.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ActualMassOfTheVehicle" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De massa van het voertuig in rijklare toestand plus de massa van de optionele uitrusting die op een individueel voertuig is aangebracht.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NumberOfAxles" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Aantal assen van het voertuig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HandicapIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Aanduiding of het voertuig is aangepast aan mindervaliden</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NrOfSeatingPositions" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Aantal zitplaatsen.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ExhaustDirectiveRefCode" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De Europese goedkeuringsreglementering op basis waarvan tenminste kan worden vastgesteld aan welke emissievoorschriften het voertuig voldoet.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CategoryCode" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De code van de categorie van het voertuig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CategoryDescription" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De omschrijving van de categorie van het voertuig</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="KindCode" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Code die het soort voertuig aangeeft.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="KindDescription" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De omschrijving van het soort voertuig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatusCode" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De code die de status van de inschrijving weergeeft.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="StatusDescription" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De omschrijving van de status van het voertuig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BodyWorkcode" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Het carrosserietype is een Europese indeling en duidt aan welke carrosserievorm het voertuig heeft.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="BodyWorkDescription" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De omschrijving van het carosserietype.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NationalBuildupCode" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Er bestaan verschillende vormen van carrosserie opbouw van het voertuig. De opbouw is een nationale indeling en duidt aan welke carrosserie opbouw het voertuig heeft.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NationalBuildupDescription" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De omschrijving van de carosserievorm.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EngineNumber" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De code die door de fabrikant aan een motor wordt toegekend om de adequate identificatie van elke motor mogelijk te maken</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EngineCapacity" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De totale cilinderinhoud van de motor in kubieke centimeters.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ElectricEngineIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicatie electrische motor</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FuelCode" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Code die het type brandstof van het voertuig aangeeft.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FuelDescription" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De omschrijving van het type brandstof van het voertuig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="EuroNormCode" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De emissienorm waaraan het voertuig voldoet.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumNetPower" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Maximaal nettovermogen in kW</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ExhaustEmissionLevelEuro" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Het emissieniveau is een Europese code die wordt toegekend aan de emissienorm waaraan het voertuig voldoet.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="WeightPowerRatio" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De berekende verhouding tussen het nettomaximumvermogen en de rijklare massa van het voertuig bij voertuigen van de categorie L met een verbrandingsmotor.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CombinedFuelConsumption" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De totale door het voertuig verbruikte brandstofhoeveelheid tijdens een combinatie van een gestandaardiseerde stadsrit en een rit buiten de stad.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CombinedCO2" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Gecombineerde CO2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="WLTPcombinedCO2" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Alle aandrijflijnen, CO2-uitstoot van de WLTP gecombineerde testfase</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="WeightedCombinedCO2" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Gewogen, gecombineerde CO2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="WLTPWeightedCombinedCO2" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Alle aandrijflijnen, CO2-uitstoot gewogen gecombineerd met het WLTP-testresultaat</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ParticulatesMassBenchTest" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>De emissies van deeltjes, gekenmerkt als de massa ervan.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--
+	<xsd:complexType name="VehicleErrorTYpe">
+		<xsd:annotation>
+			<xsd:documentation>Container voor de voertuigen waarvoor de gegevens niet (correct) konden opgehaald worden.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="VehicleId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Gepseudonymiseerde id van het voertuig.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Error_type" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Error_code" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation/>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateTime" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Datum en tijdstip van het optreden van de fout.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+-->
+	<xsd:complexType name="MeasurementSetupType">
+		<xsd:annotation>
+			<xsd:documentation>Container for the data of a measurement setup.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MeasurementSetupId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>The unique id of a measurement setup. Typically a GUID</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="InstallationDate" type="xsd:date" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The date of installation of the measurement setup.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Devices" type="DevicesType" minOccurs="0"/>
+			<xsd:element name="Location" type="LocationType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Configuration" type="ConfigurationType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Measurements" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Container for the list of measurements that were executed by the measurement setup.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Measurement" type="MeasurementType" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DevicesType">
+		<xsd:annotation>
+			<xsd:documentation>Container for the list of devices used for the measurements</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Device" type="DeviceType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DeviceType">
+		<xsd:annotation>
+			<xsd:documentation>Container for the data of a measurement device.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="DeviceId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>The unique id of the device.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DeviceType" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The type of the device</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DeviceModel" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The model of the device</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ManufacturerName" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation> The name of the manufacturer of the device.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SerialNumber" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The serial number of the device</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="FirmwareVersion" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The firmware version of the device</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LastCalibrationDate" type="xsd:dateTime" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The date in CET of the last calibration</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LocationType">
+		<xsd:annotation>
+			<xsd:documentation>Container for the location data of the measurement setup.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="StreetName" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The name of the nearest street where the measurement setup is located.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HouseNumber" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The house number of the location.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CityName" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Name of the city (in Dutch)</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CityNISCode" type="generiek:NISCodeGemeenteType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Unique identification of city.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Latitude" type="xsd:double" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The latitude of the location (decimal).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Longitude" type="xsd:double" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The longitude of the location (decimal).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Altitude" type="xsd:double" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The height of the location in meter according to sea level.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Slope" type="xsd:double" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The slope of the road in degrees.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="MaximumSpeed" type="xsd:double" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The maximum speed allowed in km/h.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NumberOfLanes" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The number of lanes of the road in one direction.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RoadVector" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>An indication of the direction in which the road goes, to differentiate on roads that include lanes with opposite directions. (N, S, E, W, NE, NW, SE, SW).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConfigurationType">
+		<xsd:annotation>
+			<xsd:documentation>Container for the configuration data of the measurement setup.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="LaneNumber" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The number of the lane that is measured by the measurement setup. 1 = Rightmost lane, 2 adjacent lane, …</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ReportingAuditIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicator that the measurement setup is audited for reporting.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ReportingCalibrationIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicator that the measurement setup is calibrated for reporting.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VDRType" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>'Audit' or 'Normal'</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MeasurementType">
+		<xsd:annotation>
+			<xsd:documentation>Container for the Measurements</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="MeasurementId" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Unieke id for the measurement.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="DateTime" type="xsd:dateTime">
+				<xsd:annotation>
+					<xsd:documentation>Date of the measurement.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="WeatherCondition" type="WeatherConditionType" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="MeasuredVehicle" type="MeasuredVehicleType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Container for the list of emissions of the vehicles that were measured.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="WeatherConditionType">
+		<xsd:annotation>
+			<xsd:documentation>Container for the measured weather conditions.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="AirTemperature" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Ambient temperature in degrees Celsius.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Humidity" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The relative humidity in percentage.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Windspeed" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Wind speed in m/s.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="WindDirection" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The wind direction in degrees. 0 degrees is North, 90 degrees is East, 180 degrees is South, and 270 degrees is West.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AtmosphericPressure" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The atmospheric pressure in hPa.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RainIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicator for rain (true if raining).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MeasuredVehicleType">
+		<xsd:annotation>
+			<xsd:documentation>Container for the measured emission data of the vehicle.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="VehicleId" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The pseudonymized id of the vehicle.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LicensePlate" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Pseudonymized license plate.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LicensePlateCountryCode" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Country code of the license plate according to ISO 3166-1 alpha-3 standard.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LicensePlateConfidence" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The confidence percentage of the license plate reading.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VehicleType" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Estimation of the vehicle type.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VehicleBrand" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Estimation of the vehicle brand.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VehicleModel" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Estimation of the vehicle model.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LaneNumber" type="xsd:int" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indication of the lane where the vehicle was measured. 1 = Rightmost lane, 2 adjacent lane, …</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ExhaustTemperature" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The temperature of the exhaust in degrees Celsius.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Length" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The length of the vehicle in meters.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Speed" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The speed of the vehicle in km/h at the time of measurement.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Acceleration" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The acceleration of the vehicle in m/s².</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="SpeedAccelerationValidityIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates if the speed and acceleration data is measured correctly (true) or not (false).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="VSP" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The Vehicle Specific Power (VSP) in W/kg.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CORatio" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The CO ratio in %.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="COValidityIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates if the CO data is measured correctly (true) or not (false).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NORatio" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NO ratio in %</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NOValidityIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates if the NO data is measured correctly (true) or not (false).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NO2Ratio" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NO2 ratio in %.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NO2ValidityIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates if the NO2 data is measured correctly (true) or not (false).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HCRatio" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The HC ratio in %.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HCValidityIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates if the HC data is measured correctly (true) or not (false).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PMRatioOpacityBased" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Carbon based particle mass in g/kg</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PMOpacityBasedValidityIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates if the PM ratio data is measured correctly (true) or not (false).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PNRatio" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The Particle Number emission value</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PNValidityIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates if the PN ratio data is measured correctly (true) or not (false).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NH3Ratio" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NH3 ratio in %.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NH3ValidityIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates if the NH3 data is measured correctly (true) or not (false).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LAMax" type="xsd:float" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Level A noise of the vehicle</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LAMaxValidityIndicator" type="xsd:boolean" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indicates if the LAmax data is measured correctly (true) or not (false).</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ======================== PUBLICATIE TYPES ======================= -->
+	<xsd:complexType name="VehicleEmissionsType">
+		<xsd:sequence>
+			<xsd:element name="Vehicles" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Container voor de lijst van voertuigen.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Vehicle" type="VehicleType" minOccurs="0" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<!--
+			<xsd:element name="VehicleErrors" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Container voor de voertuigen waarvoor de gegevens niet (correct) konden opgehaald worden.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="VehicleError" type="VehicleErrorTYpe" minOccurs="0" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+-->
+			<xsd:element name="MeasurementSetups" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation>Container voor de lijst van meetopstellingen.</xsd:documentation>
+				</xsd:annotation>
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="MeasurementSetup" type="MeasurementSetupType" minOccurs="0" maxOccurs="unbounded"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

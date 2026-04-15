@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://justitie-02_00.vip.vlaanderen.be" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://justitie-02_00.vip.vlaanderen.be" 
+	elementFormDefault="unqualified" 
+	attributeFormDefault="unqualified"
+	version="2.00">
+	<!--****************************************-->
+	<!--* Elementen - Code                     *-->
+	<!--****************************************-->
+	<xs:simpleType name="TypeUittrekselCodeType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--****************************************-->
+	<!--* Elementen - Nummer                    *-->
+	<!--****************************************-->
+	<xs:simpleType name="IdentificatienummerType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{8}-[0-9]{1,8}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--****************************************-->
+	<!--* Elementen - Andere                   *-->
+	<!--****************************************-->
+	<xs:simpleType name="TypeUittrekselType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OpmerkingType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReferentieType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ParameterSleutelType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ParameterWaardeType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IdentificatieType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<!--===============================-->
+	<xs:simpleType name="ResultatenPerPaginaType">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="10"/>
+			<xs:maxInclusive value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VraagPaginanummerType">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AntwoordPaginanummerType">
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+	<xs:simpleType name="TotaalAantalPaginasType">
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+	<xs:simpleType name="TotaalAantalResultatenType">
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+</xs:schema>

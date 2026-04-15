@@ -1,0 +1,124 @@
+<xsd:schema targetNamespace="urn:be:vlaanderen:omgeving:vergunning:stedenbouwkundig:v2" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="01.00" xmlns:stedenbouwkundig="urn:be:vlaanderen:omgeving:vergunning:stedenbouwkundig:v2" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+    <xsd:include schemaLocation="StedenbouwkundigEnum.xsd"/>
+    <xsd:include schemaLocation="StedenbouwkundigSimple.xsd"/>
+
+
+    <xsd:complexType name="VergunningWrapper">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:DossierInhoud">
+                <xsd:sequence>
+                    <xsd:element name="vergunning" type="stedenbouwkundig:Vergunning">
+                        <xsd:key name="UitvoeringsfaseId">
+                            <xsd:selector xpath=".//Uitvoeringsfasen/stedenbouwkundig:Uitvoeringsfase"/>
+                            <xsd:field xpath="@id"/>
+                        </xsd:key>
+                        <xsd:key name="VoorwerpId">
+                            <xsd:selector xpath=".//stedenbouwkundig:Voorwerp"/>
+                            <xsd:field xpath="@id"/>
+                        </xsd:key>
+                        <xsd:key name="SituatieId">
+                            <xsd:selector xpath=".//Situatie"/>
+                            <xsd:field xpath="@id"/>
+                        </xsd:key>
+                        <xsd:keyref name="UitvoeringsfaseRef" refer="stedenbouwkundig:UitvoeringsfaseId">
+                            <xsd:selector xpath=".//Handeling/Uitvoeringsfase"/>
+                            <xsd:field xpath="@idref"/>
+                        </xsd:keyref>
+                        <xsd:key name="HandelingId">
+                            <xsd:selector xpath=".//Handelingen/Handeling"/>
+                            <xsd:field xpath="@id"/>
+                        </xsd:key>
+                        <xsd:keyref name="HandelingRef" refer="stedenbouwkundig:HandelingId">
+                            <xsd:selector xpath=".//Handeling"/>
+                            <xsd:field xpath="@idref"/>
+                        </xsd:keyref>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Vergunning">
+        <xsd:sequence>
+            <xsd:element name="omgevingscheck" type="stedenbouwkundig:Omgevingscheck" maxOccurs="unbounded" minOccurs="0"/>
+
+            <xsd:element name="uitvoeringsfase" type="stedenbouwkundig:Uitvoeringsfase" maxOccurs="unbounded" minOccurs="0"/>
+
+            <xsd:element name="voorwerp" minOccurs="0" type="stedenbouwkundig:Voorwerp" maxOccurs="unbounded"/>
+
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Omgevingscheck">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:Omgevingscheck">
+                <xsd:sequence>
+                    <xsd:element name="omgevingselement" type="stedenbouwkundig:Omgevingselement" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="Omgevingselement">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:Omgevingselement">
+                <xsd:sequence>
+                    <xsd:element name="rubriek" type="dossier:Code"/>
+                    <xsd:element name="bestemmingCode" type="dossier:Code"/>
+                    <xsd:element name="bestemmingNaam" type="dossier:Naam"/>
+                    <xsd:element name="voorschrift" type="dossier:Beschrijving"/>
+                    <xsd:element name="voorschriftURL" type="xsd:anyURI"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="Situatie">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:Situatie">
+                <xsd:sequence/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="Voorwerp">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:Voorwerp">
+                <xsd:sequence>
+                    <xsd:element name="handeling" maxOccurs="unbounded" type="stedenbouwkundig:Handeling" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>De handelingen die / uitgevoerd worden op/aanleiding geven tot/toegestaan
+                                zijn in de situatie.
+                            </xsd:documentation>
+                        </xsd:annotation>
+
+                    </xsd:element>
+                    <xsd:element name="voorwerp" type="stedenbouwkundig:Voorwerp" maxOccurs="unbounded" minOccurs="0"/>
+
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="Handeling">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:Handeling">
+                <xsd:sequence>
+                    <xsd:element name="situatie" type="stedenbouwkundig:Situatie" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:annotation>
+                            <xsd:documentation>De potientiele situaties ten gevolge van de handeling.</xsd:documentation>
+                        </xsd:annotation>
+
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="Uitvoeringsfase">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:Uitvoeringsfase"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+
+
+
+
+</xsd:schema>

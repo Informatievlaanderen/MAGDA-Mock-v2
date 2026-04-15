@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://algemeen-02_00.vip.vlaanderen.be"
+		    xmlns="http://algemeen-02_00.vip.vlaanderen.be" 
+		    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		    xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be"
+		    xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be"
+		    elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd" />
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd" />
+	<xs:include schemaLocation="AlgemeenSimple.xsd" />
+	
+	<xs:complexType name="CriteriaGeefAuditLoggingType">
+		<xs:sequence>
+			<xs:element name="Sleutel" type="SleutelType" />
+			<xs:element name="ExterneOmschrijvingen" type="generiek:VlagEnumType" minOccurs="0" />
+			<xs:element name="Periode" type="generiek:PeriodeDatumTijdVerplichtBeginType" minOccurs="0" />
+			<xs:element name="Afnemer" type="AfnemerType" minOccurs="0" />
+			<xs:element name="Dienst" type="DienstType" minOccurs="0" />
+			<xs:element name="Referte" type="ReferteAuditType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CriteriaGeefMachtigingenType">
+		<xs:sequence>
+			<xs:element name="Afnemer" type="AfnemerType" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CriteriaGeefOrganisatieType">
+		<xs:sequence>
+			<xs:element name="OvoSleutel" type="SleutelType" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="AuditLoggingsType">
+		<xs:sequence>
+			<xs:element name="AuditLogging" type="AuditLoggingType" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="AuditLoggingType">
+		<xs:annotation>
+			<xs:documentation>
+				Enkel logging records voor poort = afzender en platform = gateway teruggeven als response
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Kern" type="KernType" />
+			<xs:element name="Sleutels" type="SleutelsType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="SleutelType">
+		<xs:annotation>
+			<xs:documentation>
+				Subject waarvoor logging info gevraagd worden
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Type" type="generiek:TekstKort2_0Type" />
+			<xs:element name="Waarde" type="generiek:TekstKort2_0Type" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AfnemerType">
+		<xs:annotation>
+			<xs:documentation>
+				Afnemer gegevens waarop gefilterd moet worden
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Uri" type="generiek:ApplicatieIdentificatieType" />
+			<xs:element name="Hoedanigheid" type="generiek:NaamKortType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DienstType">
+		<xs:annotation>
+			<xs:documentation>
+				Dienst gegevens waarop gefilterd moet worden
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Naam" type="generiek:NaamLangType" />
+			<xs:element name="Versie" type="generiek:VersieType" minOccurs="0"/>
+			<xs:element name="Type" type="DienstTypeType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DienstTypeType">
+		<xs:annotation>
+			<xs:documentation>
+				Vlaggen om de dienstgegevens te filteren
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Webservice" type="generiek:VlagEnumType" />
+			<xs:element name="Publicatie" type="generiek:VlagEnumType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReferteAuditType">
+		<xs:choice>
+			<xs:element name="Intern" type="generiek:ReferteType">
+				<xs:annotation>
+					<xs:documentation>
+						Referte van de Vraag. NIET AFNEMER!
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extern" type="generiek:ReferteType">
+				<xs:annotation>
+					<xs:documentation>
+						Magda vipdialoog_code waarop gefilterd moet worden
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	
+	<xs:complexType name="KernType">
+		<xs:annotation>
+			<xs:documentation>
+				Gegevens uit LL_KERN_JONL tabel in LOGLITE database
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Afnemer" type="AfnemerAuditResponseType" />
+			<xs:element name="Dienst" type="DienstType" minOccurs="0"/>
+			<xs:element name="DatumTijdstipVraag" type="generiek:DatumTijdType">
+				<xs:annotation>
+					<xs:documentation>
+						Timestamp van opvraging voor het request dat onderwerp is van de audit logging
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatumTijdstipAntwoord" type="generiek:DatumTijdType">
+				<xs:annotation>
+					<xs:documentation>
+						Timestamp van antwoord voor het request dat onderwerp is van de audit logging
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatumTijdstipLog" type="generiek:DatumTijdType">
+				<xs:annotation>
+					<xs:documentation>
+						Moment waarop de logging info in Logging Light database werd opgenomen.
+						Interessant om op te nemen omdat er een vertraging zit op het overhalen van VIPLOG naar LOGLITE</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+				
+	<xs:complexType name="AfnemerAuditResponseType">
+		<xs:annotation>
+			<xs:documentation>
+				Afnemer gegevens voor logging
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Uri" type="DienstUriType" />
+			<xs:element name="Organisatie" type="OrganisatieType" minOccurs="0" />
+			<xs:element name="Dienstverlening" type="DienstverleningType" minOccurs="0" />
+			<xs:element name="Hoedanigheid" type="HoedanigheidType" minOccurs="0" />
+			<xs:element name="Referte" type="ReferteAuditResponseType" />
+			<xs:element name="Machtigingen" type="MachtigingenType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DienstverleningType">
+		<xs:annotation>
+			<xs:documentation>Dienstverlening</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:NaamKortType" minOccurs="0" />
+			<xs:element name="Omschrijving" type="generiek:TekstLang2_0Type">
+				<xs:annotation>
+					<xs:documentation>Tijdsgebonden?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="HoedanigheidType">
+		<xs:annotation>
+			<xs:documentation>Finaliteit (VIPADM)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:NaamKortType" />
+			<xs:element name="Omschrijving" type="generiek:Tekst2_0Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tijdsgebonden?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ReferteAuditResponseType">
+		<xs:annotation>
+			<xs:documentation>Voorbeeld: XE:1047:24493:8066</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Intern" type="generiek:ReferteType" />
+			<xs:element name="Extern" type="generiek:ReferteType" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="MachtigingenType">
+		<xs:sequence>
+			<xs:element name="Machtiging" type="MachtigingType" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="MachtigingType">
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:TekstLang2_0Type">
+				<xs:annotation>
+					<xs:documentation>Voorbeeld: RR_39_2007</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Omschrijving" type="generiek:TekstExtraLang2_0Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Voorbeeld: Beraadslaging RR nr 39/2007 van 14 november2007
+						Machtigingen te bewaren in VIPADM.
+						Naamgeving historisch bewaren, kan wijzigen in de tijd
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="URL" type="generiek:TekstLang2_0Type" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:complexType name="OrganisatiesType">
+        <xs:sequence>
+            <xs:element name="Organisatie" type="OrganisatieType" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+	
+	<xs:complexType name="OrganisatieType">
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:TekstKort2_0Type" minOccurs="0" />
+			<xs:element name="Omschrijving" type="generiek:Tekst2_0Type" />
+			<xs:element name="OmschrijvingActueel" type="generiek:Tekst2_0Type" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SleutelsType">
+		<xs:annotation>
+			<xs:documentation>
+				Gegevens uit LL_SLEUTELS tabel in LOGLITE database
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Sleutel" type="SleutelResponseType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="SleutelResponseType">
+		<xs:sequence>
+			<xs:element name="Type" type="generiek:TekstKort2_0Type">
+				<xs:annotation>
+					<xs:documentation>Overnemen van VRAAG. Voorbeeld: INSZ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Waarde" type="generiek:TekstKort2_0Type">
+				<xs:annotation>
+					<xs:documentation>Voorbeeld: 78122248790</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BerichtType" type="generiek:TekstKort2_0Type">
+				<xs:annotation>
+					<xs:documentation>Voorbeeld: VRAAG</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Bron" type="BronType" minOccurs="0"/>
+			<xs:element name="DatumTijdstipLog" type="generiek:DatumTijdType">
+				<xs:annotation>
+					<xs:documentation>
+						Moment waarop de logging info in Logging Light database werd opgenomen.
+						Interessant om op te nemen omdat er een vertraging zit op het overhalen van VIPLOG naar LOGLITE
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BronType">
+		<xs:annotation>
+			<xs:documentation>
+				Bron waarvan de sleutel uit de logging afkomstig is
+				Voorbeeld: Discimus, KSZ, RR, ...
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:BronType"/>
+			<xs:element name="Omschrijving" type="generiek:Tekst2_0Type" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

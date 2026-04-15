@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://justitie-02_00.vip.vlaanderen.be" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" 
+	xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" 
+	xmlns:xop="http://www.w3.org/2004/08/xop/include" 
+	targetNamespace="http://justitie-02_00.vip.vlaanderen.be" 
+	elementFormDefault="unqualified" 
+	attributeFormDefault="unqualified"
+	version="2.00">
+
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://www.w3.org/2004/08/xop/include" schemaLocation="xop.xsd"/>
+
+	<xs:include schemaLocation="JustitieEnum.xsd"/>
+	<xs:include schemaLocation="JustitieSimple.xsd"/>
+
+	<!--********************************************-->
+	<!--* Segmenten - Niveau 1 (Hoofd)           *-->
+	<!--********************************************-->
+	<xs:complexType name="UittrekselStrafregisterType">
+		<xs:sequence>
+			<xs:element name="INSZ" type="sleutel:INSZType"/>
+			<xs:element name="Status" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="Identificatienummer" type="IdentificatienummerType" minOccurs="0"/>
+			<xs:element name="Bestand" type="BestandType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StatusUittrekselStrafregisterType">
+		<xs:sequence>
+			<xs:element name="Pagina" type="PaginaType"/>
+			<xs:element name="InformatieUittreksels" type="InformatieUittrekselsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TypesUittrekselStrafregisterType">
+		<xs:sequence>
+			<xs:element name="Code" type="TypeUittrekselCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StatusStrafbladType">
+		<xs:sequence>
+			<xs:element name="Status" type="generiek:TekstKort2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OverzichtVeroordelingenType">
+		<xs:sequence>
+			<xs:element name="Pagina" type="PaginaType"/>
+			<xs:element name="Veroordelingen" type="VeroordelingenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefVeroordelingType">
+		<xs:sequence>
+			<xs:element name="Bestand" type="BestandType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegistreerNotificatieStatusUittrekselType">
+		<xs:sequence>
+			<xs:element name="Resultaat" type="generiek:ResultaatCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--********************************************-->
+	<xs:complexType name="CriteriaGeefUittrekselStrafregisterType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="INSZ" type="sleutel:INSZType"/>
+					<xs:element name="INSZOpUittreksel" type="generiek:VlagEnumType"/>
+					<xs:element name="Taal" type="generiek:CodeTaalType"/>
+					<xs:element name="TypeUittreksel" type="TypeUittrekselType"/>
+					<xs:element name="Opmerking" type="OpmerkingType" minOccurs="0"/>
+					<xs:element name="Referentie" type="ReferentieType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element name="Identificatienummer" type="IdentificatienummerType"/>
+			</xs:choice>
+			<xs:element ref="Parameters" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CriteriaGeefStatusUittrekselStrafregisterType">
+		<xs:sequence>
+			<xs:element name="INSZ" type="sleutel:INSZType" minOccurs="0"/>
+			<xs:element name="Referentie" type="ReferentieType" minOccurs="0"/>
+			<xs:element name="KlaarVoorDownload" type="generiek:VlagEnumType" minOccurs="0"/>
+			<xs:element name="Paginering" type="PagineringType" minOccurs="0"/>
+			<xs:element ref="Parameters" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CriteriaGeefTypesUittrekselStrafregisterType">
+		<xs:sequence>
+			<xs:element name="Taal" type="generiek:CodeTaalType"/>
+			<xs:element ref="Parameters" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CriteriaGeefStatusStrafbladType">
+		<xs:sequence>
+			<xs:element name="INSZ" type="sleutel:INSZType"/>
+			<xs:element ref="Parameters" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CriteriaGeefOverzichtVeroordelingenType">
+		<xs:sequence>
+			<xs:element name="INSZ" type="sleutel:INSZType" minOccurs="0"/>
+			<xs:element name="Selectie" type="SelectieType" minOccurs="0"/>
+			<xs:element name="Paginering" type="PagineringType" minOccurs="0"/>
+			<xs:element ref="Parameters" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CriteriaGeefVeroordelingType">
+		<xs:sequence>
+			<xs:element name="Identificatie" type="xs:string"/>
+			<xs:element ref="Parameters" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CriteriaRegistreerNotificatieStatusUittrekselType">
+		<xs:sequence>
+			<xs:element name="Identificatienummer" type="IdentificatienummerType"/>
+			<xs:element name="Email" type="generiek:EmailType" maxOccurs="10"/>
+			<xs:element ref="Parameters" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--********************************************-->
+	<!--* Segmenten - Niveau 2 (Sub)           *-->
+	<!--********************************************-->
+	<xs:complexType name="GemeenteType">
+		<xs:sequence>
+			<xs:element name="NISCode" type="generiek:GemeenteNISCodeType"/>
+			<xs:element name="Aanvrager" type="sleutel:INSZType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Parameters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Parameter" type="ParameterType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:unique name="Parameter">
+			<xs:selector xpath="Parameter"/>
+			<xs:field xpath="Sleutel"/>
+		</xs:unique>
+	</xs:element>
+	<xs:complexType name="ParameterType">
+		<xs:sequence>
+			<xs:element name="Sleutel" type="ParameterSleutelType"/>
+			<xs:element name="Waarde" type="ParameterWaardeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestandType">
+		<xs:sequence>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element ref="xop:Include"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestandInhoudType">
+		<xs:sequence/>
+	</xs:complexType>
+	<!--====================================-->
+	<xs:complexType name="PagineringType">
+		<xs:sequence>
+			<xs:element name="ResultatenPerPagina" type="ResultatenPerPaginaType"/>
+			<xs:element name="Paginanummer" type="VraagPaginanummerType" minOccurs="0"/>
+			<xs:element name="Sortering" type="SorteringType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SorteringType">
+		<xs:sequence>
+			<xs:element name="Kolom" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="Volgorde" type="generiek:TekstKort2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaginaType">
+		<xs:sequence>
+			<xs:element name="Paginanummer" type="AntwoordPaginanummerType"/>
+			<xs:element name="TotaalAantalPaginas" type="TotaalAantalPaginasType"/>
+			<xs:element name="TotaalAantalResultaten" type="TotaalAantalResultatenType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InformatieUittrekselType">
+		<xs:sequence>
+			<xs:element name="Status" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="INSZ" type="sleutel:INSZType"/>
+			<xs:element name="Taal" type="generiek:CodeTaalType"/>
+			<xs:element name="TypeUittreksel" type="TypeUittrekselType"/>
+			<xs:element name="Identificatienummer" type="IdentificatienummerType"/>
+			<xs:element name="Gedownload" type="generiek:VlagCodeType"/>
+			<xs:element name="DatumAanvraag" type="generiek:DatumTijdType"/>
+			<xs:element name="Opmerking" type="OpmerkingType" minOccurs="0"/>
+			<xs:element name="Referentie" type="ReferentieType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InformatieUittrekselsType">
+		<xs:sequence>
+			<xs:element name="InformatieUittreksel" type="InformatieUittrekselType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--====================================-->
+	<xs:complexType name="SelectieType">
+		<xs:sequence>
+			<xs:element name="EnkelNietGedownload" type="generiek:VlagEnumType"/>
+			<xs:element name="Periode" type="generiek:PeriodeVerplichtType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VeroordelingenType">
+		<xs:sequence>
+			<xs:element name="Veroordeling" type="VeroordelingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VeroordelingType">
+		<xs:sequence>
+			<xs:element name="Identificatie" type="IdentificatieType"/>
+			<xs:element name="INSZ" type="sleutel:INSZType"/>
+			<xs:element name="Achternamen" type="AchternaamLijstType" minOccurs="0"/>
+			<xs:element name="Voornamen" type="VoornaamLijstType" minOccurs="0"/>
+			<xs:element name="Geboortedatum" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="DatumRegistratie" type="generiek:Datum2_0Type"/>
+			<xs:element name="ReedsGedownload" type="generiek:VlagCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AchternaamLijstType">
+		<xs:sequence>
+			<xs:element name="Achternaam" type="generiek:NaamLangType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VoornaamLijstType">
+		<xs:sequence>
+			<xs:element name="Voornaam" type="VoornaamType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VoornaamType">
+		<xs:simpleContent>
+			<xs:extension base="generiek:NaamLangType">
+				<xs:attribute name="GebruikelijkeVoornaam" type="generiek:VlagEnumType"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

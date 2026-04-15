@@ -1,0 +1,125 @@
+<xsd:schema targetNamespace="urn:be:vlaanderen:omgeving:plan:v2" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="01.00" xmlns:plan="urn:be:vlaanderen:omgeving:plan:v2" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+    <xsd:include schemaLocation="PlanEnum.xsd"/>
+    <xsd:include schemaLocation="PlanSimple.xsd"/>
+
+    <xsd:complexType name="PlanWrapper">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:DossierInhoud">
+                <xsd:sequence>
+                    <xsd:element name="plan" type="plan:Plan"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="Plan">
+        <xsd:sequence>
+            <xsd:element name="situatie" type="plan:Situatie" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Situatie">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:Situatie">
+                <xsd:sequence>
+                    <xsd:element name="voorwerp" type="plan:Voorwerp" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="Voorwerp" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:Voorwerp">
+                <xsd:sequence/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PlanDeelgebied">
+        <xsd:complexContent>
+            <xsd:extension base="plan:Voorwerp">
+                <xsd:sequence>
+                    <xsd:element name="deelgebiedNummer" type="xsd:integer"/>
+                    <xsd:element name="deelgebiedNaam" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="voorwerp" type="plan:PlanElement" maxOccurs="unbounded" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PlanElement">
+        <xsd:complexContent>
+            <xsd:extension base="plan:Voorwerp">
+                <xsd:sequence>
+                    <xsd:element name="categorie" type="plan:CategorieCode"/>
+                    <xsd:element name="subcategorie" type="plan:SubcategorieCode" minOccurs="0"/>
+                    <xsd:element name="planVoorschrift" type="plan:PlanVoorschrift"/>
+                </xsd:sequence>
+                <xsd:attribute name="type" type="plan:PlanElementTypeEnum" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PlanVoorschrift">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Het identificatienummer van de objectgerichte voorschrifttekst.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="nummer" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>De code die verwijst naar rubriek in plantype.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="naam" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>De naam van het stedenbouwkundig voorschrift.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="link" type="xsd:anyURI" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Een link naar volledige tekst stedenbouwkundige voorschriften in PDF of HTML</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PlanAfgeleide">
+        <xsd:complexContent>
+            <xsd:extension base="plan:Voorwerp">
+                <xsd:sequence>
+                    <xsd:element name="planNaam" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+                <xsd:attribute name="type" type="plan:PlanAfgeleideTypeEnum" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PlanElementTypeCode">
+        <xsd:simpleContent>
+            <xsd:extension base="plan:PlanElementTypeEnum">
+                <xsd:attribute name="beschrijving" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="PlanAfgeleideTypeCode">
+        <xsd:simpleContent>
+            <xsd:extension base="plan:PlanAfgeleideTypeEnum">
+                <xsd:attribute name="beschrijving" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="CategorieCode">
+        <xsd:simpleContent>
+            <xsd:extension base="plan:CategorieEnum">
+                <xsd:attribute name="beschrijving" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="SubcategorieCode">
+        <xsd:simpleContent>
+            <xsd:extension base="plan:SubcategorieEnum">
+                <xsd:attribute name="beschrijving" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+</xsd:schema>

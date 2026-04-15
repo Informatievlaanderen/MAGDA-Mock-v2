@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xsd:schema xmlns="http://filetodbscheduler.vip.vlaanderen.be" xmlns:publicatie="http://publicatie-02_00.vip.vlaanderen.be" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://filetodbscheduler.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+
+	<xsd:import namespace="http://publicatie-02_00.vip.vlaanderen.be" schemaLocation="../../Publicatie-02.00/Publicatie.xsd"/>
+
+	<xsd:element name="FileToDbScheduler">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Naam" type="xsd:string"/>
+				<xsd:element name="Stromen" type="StromenType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="StromenType" >
+		<xsd:sequence>
+			<xsd:element name="Stroom" type="StroomType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="StroomType">
+		<xsd:sequence>
+			<xsd:element name="Domein" type="xsd:string"/>
+			<xsd:element name="Naam" type="xsd:string"/>
+			<xsd:element name="Versie" type="xsd:string"/>
+			<xsd:element name="Type" type="StroomTypeEnumType"/>
+			<xsd:element name="FileLocatie" type="FoldersType"/>
+			<xsd:element name="FilePattern" type="xsd:string"/>
+			<xsd:element name="LegalContext" type="LegalContextType" minOccurs="0"/>
+			<xsd:element name="FileXSDLocatie" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="CronExpressie" type="xsd:string"/>
+			<xsd:element name="Transformatie" type="TransformatieType" minOccurs="0"/>
+			<xsd:element name="NaamPublicatieDomein" type="xsd:string"/>
+			<xsd:element name="VersiePublicatieDomein" type="xsd:string"/>
+			<xsd:element name="DetailTijdelijkeTabel" type="DetailTijdelijkeTabelType" minOccurs="0"/>
+			<xsd:element name="MailAdressen" type="MailAdressenType" minOccurs="0"/>
+			<xsd:element name="EventNaam" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="LegalContextType" >
+		<xsd:sequence>
+			<xsd:element name="LegalContextXpath" type="xsd:string"/>
+			<xsd:element name="LegalContextNamespaceType" type="LegalContextNamespaceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="LegalContextNamespaceType" >
+		<xsd:sequence>
+			<xsd:element name="Prefix" type="xsd:string"/>
+			<xsd:element name="Uri" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="TransformatieType">
+		<xsd:sequence>
+			<xsd:annotation>
+				<xsd:documentation>Type transformatie dat moet uitgevoerd worden, met bijhorend de locatie van het XSD waaraan het getransformeerde bestand moet voldoen.</xsd:documentation>
+			</xsd:annotation>
+			<xsd:element name="TransformatieType" type="TransformatieTypeEnumType"/>
+			<xsd:element name="TransformatieXsdLocatie" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FoldersType">
+		<xsd:sequence>
+			<xsd:element name="InputFolder" type="xsd:string"/>
+			<xsd:element name="OutputFolder" type="xsd:string"/>
+			<xsd:element name="ArchiveFolder" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DetailTijdelijkeTabelType">
+		<xsd:sequence>
+			<xsd:element name="NodeConfiguratie" type="NodeConfiguratieType" minOccurs="1"/>
+			<xsd:element name="TabelConfiguratie" type="publicatie:TabelConfiguratieType" minOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="NodeConfiguratieType">
+		<xsd:sequence>
+			<xsd:element name="BaseNode" type="xsd:string"/>
+			<xsd:element name="NodeSubject" type="xsd:string"/>
+			<xsd:element name="NodeUitzonderingen" type="xsd:string"/>
+			<xsd:element name="NodeSleutelwaarde" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="NodeReferte" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="NodeDatum" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="NodeType" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="NodeDossierType" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="NodeCompanyCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="NodeBusinessUnit" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ExtraNodesLijst" type="ExtraNodesLijstType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ExtraNodesLijstType">
+		<xsd:sequence>
+			<xsd:element name="ExtraNode" type="ExtraNodeType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ExtraNodeType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="KolomNaam" type="xsd:string" use="required"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="MailAdressenType">
+		<xsd:sequence>
+			<xsd:element name="MailAdres" type="xsd:string" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="BooleanType">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="1"/>
+			<xsd:pattern value="(0|1)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="StroomTypeEnumType">
+		<xsd:annotation>
+			<xsd:documentation> DELTA | FULL </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DELTA"/>
+			<xsd:enumeration value="FULL"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransformatieTypeEnumType">
+		<xsd:annotation>
+                <xsd:documentation> RIJKSREGISTERPERSOONMUTATIES | PUBLICEERPERSOONMUTATIES | PUBLICEERPENSIOENRECHTENMUTATIES | PUBLICEERMUTATIEATTESTLOOPBAANONDERBREKING | PUBLICEERCAREERBREAKNOTIFICATIONSTOMUTATIESNOTIFICATIES | PUBLICEERARBEIDSONGESCHIKTHEID | PUBLICEERINSCHRIJVINGWERKZOEKENDE | PUBLICEERMUTATIEHANDICAP | PUBLICEERMUTATIELOOPBAANARZA | PUBLICEERINSCHRIJVINGONDERWIJS | PUBLICEERTIJDELIJKEWERKLOOSHEID | PUBLICEERMUTATIEATTESTARBEIDSONGEVAL | PUBLICEERMUTATIEGEZINSSAMENSTELLING | PUBLICEERATTESTWERKLOOSHEID | PUBLICEERMUTATIESNOTIFICATIES | PUBLICEERMUTATIEDMFAVOORWERKNEMER | PUBLICEERMUTATIEPERSOON | PUBLICEERMUTATIEGEZINSSAMENSTELLING0202 | PUBLICEERDMFAVOORWERKNEMER0202 | PUBLICEERMUTATIEDMFAVOORWERKNEMER0202 | PUBLICEERMUTATIEATTESTBEROEPSZIEKTE | PUBLICEERINSCHRIJVINGWERKZOEKENDE21 | PUBLICEERARBEIDSONGESCHIKTHEID0201 | PUBLICEERINWONERPERADRES | PUBLICEERVERRICHTINGEN</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="RIJKSREGISTERPERSOONMUTATIES"/>
+			<xsd:enumeration value="PUBLICEERPERSOONMUTATIES"/>
+			<xsd:enumeration value="PUBLICEERPENSIOENRECHTENMUTATIES"/>
+			<xsd:enumeration value="PUBLICEERMUTATIEATTESTLOOPBAANONDERBREKING"/>
+			<xsd:enumeration value="PUBLICEERCAREERBREAKNOTIFICATIONSTOMUTATIESNOTIFICATIES"/>
+			<xsd:enumeration value="PUBLICEERMUTATIESWERKRELATIES"/>
+			<xsd:enumeration value="PUBLICEERARBEIDSONGESCHIKTHEID"/>
+			<xsd:enumeration value="PUBLICEERINSCHRIJVINGWERKZOEKENDE"/>
+			<xsd:enumeration value="PUBLICEERMUTATIEHANDICAP"/>
+			<xsd:enumeration value="PUBLICEERMUTATIELOOPBAANARZA"/>
+			<xsd:enumeration value="PUBLICEERINSCHRIJVINGONDERWIJS"/>
+			<xsd:enumeration value="PUBLICEERTIJDELIJKEWERKLOOSHEID"/>
+			<xsd:enumeration value="PUBLICEERMUTATIEATTESTARBEIDSONGEVAL"/>
+			<xsd:enumeration value="PUBLICEERMUTATIEGEZINSSAMENSTELLING"/>
+			<xsd:enumeration value="PUBLICEERATTESTWERKLOOSHEID"/>
+			<xsd:enumeration value="PUBLICEERMUTATIESNOTIFICATIES"/>
+			<xsd:enumeration value="PUBLICEERMUTATIEDMFAVOORWERKNEMER"/>
+			<xsd:enumeration value="PUBLICEERMUTATIEPERSOON"/>
+			<xsd:enumeration value="PUBLICEERMUTATIEGEZINSSAMENSTELLING0202"/>
+			<xsd:enumeration value="PUBLICEERDMFAVOORWERKNEMER0202"/>
+			<xsd:enumeration value="PUBLICEERMUTATIEDMFAVOORWERKNEMER0202"/>
+			<xsd:enumeration value="PUBLICEERMUTATIEATTESTBEROEPSZIEKTE"/>
+			<xsd:enumeration value="PUBLICEERINSCHRIJVINGWERKZOEKENDE21"/>
+			<xsd:enumeration value="PUBLICEERARBEIDSONGESCHIKTHEID0201"/>
+			<xsd:enumeration value="PUBLICEERINWONERPERADRES"/>
+            <xsd:enumeration value="PUBLICEERVERRICHTINGEN"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>

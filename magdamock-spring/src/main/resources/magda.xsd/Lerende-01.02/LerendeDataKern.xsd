@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://lerende-01_02.vip.vlaanderen.be"
+		   xmlns="http://lerende-01_02.vip.vlaanderen.be" 
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+		   elementFormDefault="unqualified" 
+		   attributeFormDefault="unqualified" 
+		   version="1.02.201107141455">
+
+	<xs:simpleType name="IdentificatieNummerAttestType">
+		<xs:annotation>
+			<xs:documentation>IdentificatieNummerAttestType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VolgNummerType">
+		<xs:annotation>
+			<xs:documentation>VolgNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="\p{N}*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InstellingsNummerType">
+		<xs:annotation>
+			<xs:documentation>InstellingsNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="\p{N}*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VestigingsplaatsVolgNummerType">
+		<xs:annotation>
+			<xs:documentation>VestigingsplaatsVolgNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+			<xs:pattern value="\p{N}*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HoofdstructuurType">
+		<xs:annotation>
+			<xs:documentation>HoofdstructuurType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AdministratieveGroepNummerType">
+		<xs:annotation>
+			<xs:documentation>AdministratieveGroepNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="\p{N}*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OpleidingsvormBOType">
+		<xs:annotation>
+			<xs:documentation>OpleidingsvormBuitengewoonOnderwijsType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="\p{N}*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GraadType">
+		<xs:annotation>
+			<xs:documentation>GraadType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JaarInGraadType">
+		<xs:annotation>
+			<xs:documentation>JaarInGraadType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="\p{N}*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AantalStudiepuntenType">
+		<xs:annotation>
+			<xs:documentation>AantalStudiepuntenType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+			<xs:pattern value="\p{N}*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SectorCodeType">
+		<xs:annotation>
+			<xs:documentation>SectorCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2"/>
+			<xs:pattern value="\p{N}*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OndernemingsNummerType">
+		<xs:annotation>
+			<xs:documentation>OndernemingsNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{9,10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

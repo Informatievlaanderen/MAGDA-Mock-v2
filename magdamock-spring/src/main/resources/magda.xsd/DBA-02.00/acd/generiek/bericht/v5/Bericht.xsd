@@ -1,0 +1,306 @@
+<xs:schema targetNamespace="urn:be:milieuinfo:schemas:generiek:bericht:v5" xmlns:bericht="urn:be:milieuinfo:schemas:generiek:bericht:v5" xmlns:uuid="urn:be:milieuinfo:schemas:uuid:v1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:import namespace="urn:be:milieuinfo:schemas:uuid:v1" schemaLocation="../../../core/domain/uuid/Uuid.xsd"/>
+	<!--
+        #############################################################################################
+        VERZOEK / REPLIEK
+        #############################################################################################
+    -->
+	<xs:element name="verzoek" type="bericht:Verzoek"/>
+	<xs:complexType name="Verzoek" abstract="true">
+		<xs:sequence>
+			<xs:element name="context" type="bericht:Context" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="repliek" type="bericht:Repliek"/>
+	<xs:complexType name="Repliek" abstract="true">
+		<xs:sequence>
+			<xs:element name="context" type="bericht:Context" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="berichten" type="bericht:Berichten" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--
+        #############################################################################################
+        CONTEXT
+        #############################################################################################
+    -->
+	<xs:complexType name="Context">
+		<xs:annotation>
+			<xs:documentation>
+                De context bevat extra informatie over het verzoek
+                (i.e., taal, afzenderreferte, en eigenschappen).
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="bericht:taal" minOccurs="1" maxOccurs="1"/>
+			<xs:element ref="bericht:afzenderReferte" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element ref="bericht:eigenschappen" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ### TAAL ### -->
+	<xs:element name="taal" type="bericht:Lang" default="nl"/>
+	<xs:simpleType name="Lang">
+		<xs:annotation>
+			<xs:documentation>De ondersteunde talen bij acd</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="en"/>
+			<xs:enumeration value="fr"/>
+			<xs:enumeration value="de"/>
+			<xs:enumeration value="nl"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ### AFZENDERREFERTE ### -->
+	<xs:element name="afzenderReferte" type="bericht:AfzenderReferte"/>
+	<xs:complexType name="AfzenderReferte" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+                Een abstracte afzenderreferte. Ofwel wordt één van de implementaties uit bericht gekozen, ofwel
+                kan er een eigen implementatie worden voorzien.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="bron" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="UUID">
+		<xs:complexContent>
+			<xs:extension base="bericht:AfzenderReferte">
+				<xs:sequence>
+					<xs:element name="uuid" type="uuid:UUIDSimple"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="UUIDReferte">
+		<xs:complexContent>
+			<xs:extension base="bericht:AfzenderReferte">
+				<xs:sequence>
+					<xs:element name="uuidReferte" type="uuid:UUIDReferteSimple"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ### EIGENSCHAPPEN ### -->
+	<xs:element name="eigenschappen" type="bericht:AbstractEigenschappen"/>
+	<xs:complexType name="AbstractEigenschappen" abstract="true"/>
+	<xs:complexType name="Eigenschappen">
+		<xs:annotation>
+			<xs:documentation>
+                Deze implementatie van AbstractEigenschappen voorzien in een lijst van eigenschappen.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="bericht:AbstractEigenschappen">
+				<xs:sequence>
+					<xs:element name="eigenschap" type="bericht:Eigenschap" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Eigenschap">
+		<xs:annotation>
+			<xs:documentation>
+                Een eigenschap bevat een combinatie van een naam/waarde.
+                Een eigenschap kan verder bestaan uit meerdere eigenschappen.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="eigenschap" type="bericht:Eigenschap" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="naam" type="xs:anySimpleType"/>
+		<xs:attribute name="waarde" type="xs:anySimpleType"/>
+	</xs:complexType>
+	<!--
+        #############################################################################################
+        BERICHTEN
+        #############################################################################################
+    -->
+	<xs:complexType name="Berichten">
+		<xs:annotation>
+			<xs:documentation>
+                Het BerichtenType bevat informatie, inhoudelijke validaties, waarschuwingen of
+                fouten over de afhandeling van het Verzoek.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="bericht" type="bericht:Bericht" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Een unieke aanduiding om de berichten te correleren met logging informatie op de server</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="Bericht">
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="inhoud" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="type" type="bericht:TypeBericht" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="parameter" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="TypeBericht">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FOUT">
+				<xs:annotation>
+					<xs:documentation>
+                        Een FOUT bericht wordt gebruikt om aan te geven dat er een functionele fout is opgetreden
+                        bij het uitvoeren van een verzoek. De reden van een fout is een business regel die faalt
+                        of een logische fout.
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VALIDATIE">
+				<xs:annotation>
+					<xs:documentation>
+                        Een VALIDATIE bericht wordt gebruikt om aan te geven dat de gegevens die in het verzoek
+                        werden opgegeven niet gevalideerd konden worden en dat het verzoek daarom niet succesvol
+                        was. De oorzaak van een validatiefout is dat de ingevoerde gegevens niet vormelijk
+                        correct zijn.
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WAARSCHUWING">
+				<xs:annotation>
+					<xs:documentation>
+                        Een WAARSCHUWING bericht wordt gebruikt om aan te geven dat het verzoek kon uitgevoerd
+                        worden, maar dat er een afwijking is vastgesteld van de normale succesvolle afhandeling
+                        van het verzoek. Het verschil met een FOUT en een VALIDATIE is dat bij de WAARSCHUWING
+                        het verzoek wel werd uitgevoerd. Er wordt echter aangegeven dat er een aandachtspunt is
+                        waarvan de afnemer zich bewust moet zijn.
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INFO">
+				<xs:annotation>
+					<xs:documentation>
+                        Een INFO bericht wordt gebruikt om diverse informatie te geven wanneer een verzoek wordt
+                        uitgevoerd. De informatie kan betrekking hebben op het verzoek zelf, kan betrekking hebben
+                        op de volledige applicatie, of kan zelfs betrekking hebben op de volledige infrastructuur.
+                        Een INFO bericht geeft enkel extra informatie aan de afnemer. Deze informatie mag genegeerd
+                        worden door de afnemer zonder dat dit een impact heeft op het gebruik van de applicatie.
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FALING">
+				<xs:annotation>
+					<xs:documentation>
+                        Een FALING bericht wordt gebruikt om aan te geven dat het verzoek niet kon uitgevoerd
+                        worden door een (onverwacht) systeem falen. In tegenstelling tot een FOUT geeft een FALING
+                        aan dat er een technische fout is opgetreden. Een FALING heeft bijgevolg niet te maken met
+                        een functionele fout die in de applicatie kan optreden (ten gevolge van business regels),
+                        maar wel met fouten ten gevolge van de technische infrastructuur (die buiten de controle
+                        zijn van de applicatie).
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SUCCES">
+				<xs:annotation>
+					<xs:documentation>
+                        Een SUCCES bericht wordt gebruikt om aan te geven dat het verzoek correct werd uitgevoerd
+                        volgens het ideale scenario. Er zijn geen verdere aandachtspunten waarmee de afnemer
+                        rekening moet houden.
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--
+        #############################################################################################
+        TABELFUNCTIES
+        #############################################################################################
+    -->
+	<xs:complexType name="TabelFuncties">
+		<xs:sequence>
+			<xs:element ref="bericht:paginering" minOccurs="1" maxOccurs="1"/>
+			<xs:element ref="bericht:sortering" minOccurs="0" maxOccurs="1"/>
+			<xs:element ref="bericht:filtering" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ### PAGINERING ### -->
+	<xs:element name="paginering" type="bericht:Paginering"/>
+	<xs:complexType name="Paginering">
+		<xs:attribute name="eersteRij" use="required">
+			<xs:annotation>
+				<xs:documentation>Het nummer van de eerste rij is een positieve integer.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:int">
+					<xs:minInclusive value="0"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="aantalRijen" use="required">
+			<xs:annotation>
+				<xs:documentation>Het aantal rijen per pagina bedraagt maximaal 50.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:int">
+					<xs:minInclusive value="1"/>
+					<xs:maxInclusive value="50"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<!-- ### SORTERING ### -->
+	<xs:element name="sortering" type="bericht:Sortering"/>
+	<xs:complexType name="Sortering">
+		<xs:sequence>
+			<xs:element name="kolom" type="bericht:Kolom" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Kolom">
+		<xs:annotation>
+			<xs:documentation>Een kolom waarop gesorteerd moet worden.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="naam" type="xs:string" use="required"/>
+		<xs:attribute name="orde" type="bericht:SorteringEnum"/>
+	</xs:complexType>
+	<xs:simpleType name="SorteringEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OPLOPEND"/>
+			<xs:enumeration value="AFLOPEND"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ### FILTERING ### -->
+	<xs:element name="filtering" type="bericht:Facetten"/>
+	<xs:complexType name="Facetten">
+		<xs:annotation>
+			<xs:documentation>Een lijst van kolommen waarop de resultaten gefilterd moeten worden.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="kolom" type="bericht:Facet" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Facet" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+                Een kolom waarop gefilterd moet worden. Moet worden geïmplementeerd in het verzoek
+                voor elke kolom waarop men wil filteren.
+            </xs:documentation>
+		</xs:annotation>
+	</xs:complexType>
+	<xs:simpleType name="FilteringEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="START"/>
+			<xs:enumeration value="EINDE"/>
+			<xs:enumeration value="EXACT"/>
+			<xs:enumeration value="ERGENS"/>
+			<xs:enumeration value="TUSSEN"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--
+        #############################################################################################
+        TABELFUNCTIES
+        #############################################################################################
+    -->
+	<xs:complexType name="Vraag" abstract="true">
+		<xs:annotation>
+			<xs:documentation>
+                AbstractVraag dient geïmplementeerd te worden binnen Verzoek en Repliek dmv. extensie.
+                Hierdoor kan het specifieke element van de vraag worden toegevoegd.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="tabelFuncties" type="bericht:TabelFuncties" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

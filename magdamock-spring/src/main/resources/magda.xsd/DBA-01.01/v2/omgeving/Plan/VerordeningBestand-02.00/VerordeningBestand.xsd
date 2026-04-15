@@ -1,0 +1,4 @@
+<xsd:schema targetNamespace="urn:be:vlaanderen:omgeving:verordening:bestand:v2" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="01.00" xmlns:verordening="urn:be:vlaanderen:omgeving:verordening:bestand:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <xsd:include schemaLocation="VerordeningBestandComplex.xsd"/>
+
+</xsd:schema>

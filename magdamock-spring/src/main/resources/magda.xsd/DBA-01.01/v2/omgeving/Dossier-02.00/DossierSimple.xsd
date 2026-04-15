@@ -1,0 +1,268 @@
+<xsd:schema xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:be:vlaanderen:omgeving:dossier:v2" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="01.00">
+    <xsd:simpleType name="Aanduiding">
+        <xsd:annotation>
+            <xsd:documentation>Type voor eenheden van waarden.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="50"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Appnummer">
+        <xsd:annotation>
+            <xsd:documentation>Type voor appnummers.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="20"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Bestandsnaam">
+        <xsd:annotation>
+            <xsd:documentation>Type voor de naam van een bestand.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="Busnummer">
+        <xsd:annotation>
+            <xsd:documentation>Type voor busnummers.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="CodeSimple">
+        <xsd:annotation>
+            <xsd:documentation>Type voor allerhande codes in een dossier</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="3"/>
+            <xsd:maxLength value="50"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="Titel">
+        <xsd:annotation>
+            <xsd:documentation>Type voor omschrijvingen en titels.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="80"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="DossierFaseAard">
+        <xsd:annotation>
+            <xsd:documentation>Type voor de aard van een dossierfase.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="DossierId">
+        <xsd:annotation>
+            <xsd:documentation>Type voor dossierids.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="20"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="DossierStukAard">
+        <xsd:annotation>
+            <xsd:documentation>Type voor de aard van een dossierstuk.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="DossierType">
+        <xsd:annotation>
+            <xsd:documentation>Type voor dossiertypes.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="EPSGCode">
+        <xsd:annotation>
+            <xsd:documentation>Type voor EPSG-codes voor coördinaatstelsels te identificeren.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="11"/>
+            <xsd:pattern value="EPSG:[0-9]{1,6}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="ExternIdDatabron">
+        <xsd:annotation>
+            <xsd:documentation>Type voor databronnen van externe ids.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="ExternIdValue">
+        <xsd:annotation>
+            <xsd:documentation>Type voor waarden van externe ids.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="GebeurtenisAard">
+        <xsd:annotation>
+            <xsd:documentation>Type voor de aard van een gebeurtenis.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="Gebruik">
+        <xsd:annotation>
+            <xsd:documentation>Type voor het gebruik van een contactmedium.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="NISCode">
+        <xsd:annotation>
+            <xsd:documentation>NISCodeType</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="5"/>
+            <xsd:pattern value="[0-9]{0,5}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="HandtekeningDoel">
+        <xsd:annotation>
+            <xsd:documentation>Type voor doel van een handtekening.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="HandtekeningWijze">
+        <xsd:annotation>
+            <xsd:documentation>Type voor wijze van een handtekening.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="HoedanigheidSimple">
+        <xsd:annotation>
+            <xsd:documentation>Type voor hoedanigheden van een persoon.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="Huisnummer">
+        <xsd:annotation>
+            <xsd:documentation>Type voor huisnummers.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="20"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Kavelnummer">
+        <xsd:annotation>
+            <xsd:documentation>Type voor kavelnummers.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="LandGemeenteNaam">
+        <xsd:annotation>
+            <xsd:documentation>GemeenteNaamType</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:Naam"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="Legende">
+        <xsd:annotation>
+            <xsd:documentation>Type voor elementen op een legende.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="50"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="MediaAard">
+        <xsd:annotation>
+            <xsd:documentation>Type voor de aard van een contactmedium.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="MimeType">
+        <xsd:annotation>
+            <xsd:documentation>Type voor het mime type van een bestand.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:Titel"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="Moment">
+        <xsd:annotation>
+            <xsd:documentation>Type voor een moment.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="Naam">
+        <xsd:annotation>
+            <xsd:documentation>Type voor namen.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="80"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="OndergrondType">
+        <xsd:annotation>
+            <xsd:documentation>Type voor ondergrondtypes.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="PostCode">
+        <xsd:annotation>
+            <xsd:documentation>PostCodeType</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="20"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="Rechtsvorm">
+        <xsd:annotation>
+            <xsd:documentation>Type voor rechtsvormen van een rechtspersoon.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:Titel"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="Roepnaam">
+        <xsd:annotation>
+            <xsd:documentation>Type voor roepnamen van dossiers.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:Titel"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="StatusVlagSimple">
+        <xsd:annotation>
+            <xsd:documentation>Type voor een statusvlag.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="Straatnaam">
+        <xsd:annotation>
+            <xsd:documentation>Type voor straatnamen.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:Naam"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="UniekeReferte">
+        <xsd:annotation>
+            <xsd:documentation>Type voor Refertes of UUID's.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="80"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="VertegenwoordigingFunctie">
+        <xsd:annotation>
+            <xsd:documentation>Type voor functies van een vertegenwoordiging.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:Titel"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="WaardeEenheid">
+        <xsd:annotation>
+            <xsd:documentation>Type voor eenheden van waarden.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="dossier:CodeSimple"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="Beschrijving">
+        <xsd:annotation>
+            <xsd:documentation>Type voor omschrijvingen en titels.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="500"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="WKT">
+        <xsd:annotation>
+            <xsd:documentation>Type voor geometrieën geëncodeerd als WKT.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+    <!-- gebruikt is dossier:GemeenteKortGroepType -->
+    <!-- in vervanging van vip generiek PostCodeType -->
+    <!-- gebruikt in dossier:GemeenteKortGroepType -->
+</xsd:schema>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://service.publiceermutatiehandicapdienst-02_00.soczek-02_00.vip.vlaanderen.be"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be"
+		   xmlns:soczek="http://soczek-02_00.vip.vlaanderen.be"
+		   elementFormDefault="unqualified"
+		   attributeFormDefault="unqualified"
+		   targetNamespace="http://service.publiceermutatiehandicapdienst-02_00.soczek-02_00.vip.vlaanderen.be">
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://soczek-02_00.vip.vlaanderen.be" schemaLocation="../../SocZek-02.00/SocZek.xsd"/>
+	<xs:element name="PubliceerMutatieHandicap">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Publicatie" type="PublicatieType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="PublicatieType">
+		<xs:sequence>
+			<xs:element name="Context" type="generiek:ContextType"/>
+			<xs:element name="Onderwerpen" type="OnderwerpenType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderwerpenType">
+		<xs:sequence>
+			<xs:element name="Onderwerp" type="OnderwerpType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderwerpType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Inhoud" type="OnderwerpInhoudType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderwerpInhoudType">
+		<xs:sequence>
+			<xs:element name="Handicap" type="soczek:MutatieHandicapType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

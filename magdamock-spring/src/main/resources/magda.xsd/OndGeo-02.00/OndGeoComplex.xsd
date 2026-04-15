@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema 
+	xmlns="http://ondgeo-02_00.vip.vlaanderen.be" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be"
+	xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" 
+	xmlns:onderneming="http://onderneming-02_00.vip.vlaanderen.be"  
+	xmlns:geo="http://geo-02_00.vip.vlaanderen.be"
+	targetNamespace="http://ondgeo-02_00.vip.vlaanderen.be" 
+	elementFormDefault="unqualified" 
+	attributeFormDefault="unqualified" 
+	version="2.00">
+
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://onderneming-02_00.vip.vlaanderen.be" schemaLocation="../Onderneming-02.00/Onderneming.xsd"/>
+	<xs:import namespace="http://geo-02_00.vip.vlaanderen.be" schemaLocation="../Geo-02.00/Geo.xsd"/>
+
+	<xs:include schemaLocation="OndGeoEnum.xsd"/>
+	<xs:include schemaLocation="OndGeoSimple.xsd"/>
+
+	<!--****************************************-->
+	<!--* Segmenten - Niveau 1 (Hoofd)         *-->
+	<!--****************************************-->
+	<xs:complexType name="CriteriaGeefAdressenLocatiesType">
+		<xs:sequence>
+			<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--************************************************-->
+	<!--* Segmenten - Niveau 3 (Samengesteld|Complex)  *-->
+	<!--************************************************-->
+	<xs:complexType name="AdressenLocatiesLijstType">
+		<xs:sequence>
+			<xs:element name="AdresLocaties" type="AdresLocatiesType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="AdresType">
+		<xs:complexContent>
+			<xs:extension base="onderneming:AdresOndernemingBasisType">
+				<xs:sequence>
+					<xs:element name="Taal" type="geo:CrabTaalType"/>
+					<xs:element name="Type" type="onderneming:TypeAdresOndernemingType"/>
+				</xs:sequence>
+				<xs:attribute name="DatumBegin" type="generiek:Datum2_0Type"/>
+				<xs:attribute name="DatumEinde" type="generiek:Datum2_0Type"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="AdresLocatiesType">
+		<xs:sequence>
+			<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType"/>
+			<xs:element name="SoortOnderneming" type="onderneming:SoortOndernemingType" minOccurs="0"/>
+			<xs:element name="KBOAdres" type="AdresType" minOccurs="0"/>
+			<xs:element name="CRABAdressen" type="geo:CRABAdressenType" minOccurs="0"/> 
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

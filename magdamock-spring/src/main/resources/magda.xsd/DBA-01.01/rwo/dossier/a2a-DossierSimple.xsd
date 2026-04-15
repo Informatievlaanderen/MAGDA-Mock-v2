@@ -1,0 +1,136 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="urn:be:vlaanderen:omgeving:dossiervraag:v1"
+           elementFormDefault="unqualified"
+           attributeFormDefault="unqualified">
+	<xs:simpleType name="DossierType">
+		<xs:annotation>
+			<xs:documentation>De dossiertype code, lijk ASTATT, BOUWMIS, PLBATEN, PLSCHADE, GEBOUWEN</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="254"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DossierRoepnaamType">
+		<xs:annotation>
+			<xs:documentation>De dossier naam</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="254"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DossierStatusType">
+		<xs:annotation>
+			<xs:documentation>
+                status code (subtoestand van het dossier)
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersoonVoornaamType">
+		<xs:annotation>
+			<xs:documentation>
+                De voornaam van de persoon. Steeds 'Exact'
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="80"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CapakeyType">
+		<xs:annotation>
+			<xs:documentation>
+                De identificatie van een perceel die in een dossier als locatie aanwezig is
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="254"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LocatieType">
+		<xs:annotation>
+			<xs:documentation>
+                Deel van een straat naam. Steeds 'Bevat'.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="254"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="string254">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="254"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DossierfaseType">
+		<xs:annotation>
+			<xs:documentation>
+                De actuele dossierfase van het dossier.
+                De dossierfase code, lijk samenstelling, aanvraag
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GebeurtenisAardType">
+		<xs:annotation>
+			<xs:documentation>
+                Soort gebeurtenis dat we zoeken met het zoekinterval.
+                Bepaald per code.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GebeurtenisStatusType">
+		<xs:annotation>
+			<xs:documentation>
+                Status, bv POSITIEF
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NISCodeType">
+		<xs:annotation>
+			<xs:documentation>
+                De gemeente waarin het goed is gelegen waarop het dossier betrekking heeft.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExternIdValueType">
+		<xs:annotation>
+			<xs:documentation>Type voor waarden van externe ids.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExternIdDatabronType">
+		<xs:annotation>
+			<xs:documentation>Type voor databronnen van externe ids.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReturnSortType">
+		<xs:annotation>
+			<xs:documentation>
+                De sorteervolgorde
+                Een lijst van veldnamen gescheiden door een +
+                Mogelijk waarden DOSSIERFASE, NAAM, DATUMLAATSTEWIJZIGING, LOCATIE
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,5 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:include schemaLocation="../Datablok/Situatie-1.1/SituatieDatablokken.xsd"/>
+    <xsd:include schemaLocation="DossierStukOmgeving.xsd"/>
+    <xsd:include schemaLocation="Omgeving.xsd"/>
+</xsd:schema>

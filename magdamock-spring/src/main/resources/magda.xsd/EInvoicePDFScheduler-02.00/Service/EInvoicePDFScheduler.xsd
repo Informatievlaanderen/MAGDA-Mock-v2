@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xsd:schema xmlns="http://einvoicepdfscheduler.vip.vlaanderen.be"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xds="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://einvoicepdfscheduler.vip.vlaanderen.be"
+            elementFormDefault="unqualified"
+            attributeFormDefault="unqualified">
+
+    <xsd:element name="EInvoicePDFScheduler">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Stroom" type="StroomType"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="StroomType">
+        <xsd:sequence>
+            <xsd:element name="Domein" type="xsd:string"/>
+            <xsd:element name="Naam" type="xsd:string"/>
+            <xsd:element name="Versie" type="xsd:string"/>
+            <xsd:element name="CronExpressie" type="xsd:string"/>
+            <xsd:element name="Afnemer" type="AfnemerType"/>
+            <xsd:element name="Templates" type="TemplatesType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="AfnemerType">
+        <xsd:sequence>
+            <xsd:element name="URI" type="xsd:string"/>
+            <xds:element name="Mailadressen" type="MailadressenType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MailadressenType">
+        <xsd:sequence>
+            <xsd:element name="Mailadres" type="xsd:string" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TemplatesType">
+        <xsd:sequence>
+            <xsd:element name="Invoice" type="TemplatePathsType"/>
+            <xsd:element name="Creditnota" type="TemplatePathsType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="TemplatePathsType">
+        <xsd:sequence>
+            <xsd:element name="HtmlTemplate" type="xsd:string"/>
+            <xsd:element name="XmlTemplate" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

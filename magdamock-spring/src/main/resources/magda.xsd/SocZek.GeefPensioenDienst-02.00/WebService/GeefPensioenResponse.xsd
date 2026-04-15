@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 sp1 (http://www.altova.com) by Stefan Vleugels (AGENTSCHAP FACILITAIR BEDRIJF) -->
+<xs:schema xmlns="http://webservice.geefpensioendienst-02_00.soczek-02_00.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:soczek="http://soczek-02_00.vip.vlaanderen.be" targetNamespace="http://webservice.geefpensioendienst-02_00.soczek-02_00.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://soczek-02_00.vip.vlaanderen.be" schemaLocation="../../SocZek-02.00/SocZek.xsd"/>
+	<xs:element name="GeefPensioenResponse">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Repliek" type="RepliekType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="RepliekType">
+		<xs:sequence>
+			<xs:element name="Context" type="generiek:ContextType"/>
+			<xs:element name="Antwoorden" type="AntwoordenType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AntwoordenType">
+		<xs:sequence>
+			<xs:element name="Antwoord" type="AntwoordType" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AntwoordType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Inhoud" type="AntwoordInhoudType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AntwoordInhoudType">
+		<xs:sequence>
+			<xs:element name="Pensioen" type="soczek:PensioenType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

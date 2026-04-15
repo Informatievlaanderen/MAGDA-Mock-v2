@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+
+  http://ec.europa.eu/idabc/eupl5
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+<xsd:schema targetNamespace="http://webservice.geefdossier.kbi.vdab.be"
+			xmlns="http://webservice.geefdossier.kbi.vdab.be"
+			elementFormDefault="unqualified"
+			attributeFormDefault="unqualified"
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be">
+	<xsd:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xsd:element name="GeefDossierVDABResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Repliek" type="RepliekType" minOccurs="1"/>
+				
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="RepliekType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="generiek:ContextType"/>
+			<xsd:element name="Antwoorden" type="AntwoordenType" minOccurs="0"/>
+			<xsd:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fouten die voorkomen na de verwerking van de Context maar voor de verwerking van Vraag of Antwoord bv: XSD Validatie fouten</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AntwoordenType">
+		<xsd:sequence>
+			<xsd:element name="Antwoord" type="AntwoordType" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AntwoordType">
+		<xsd:sequence>
+			<xsd:element name="Referte" type="generiek:ReferteType"/>
+			<xsd:element name="Inhoud" type="AntwoordInhoudType" minOccurs="0"/>
+			<xsd:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fouten die voorkomen na de verwerking van Vraag of Antwoord bv: warnings rond ontbrekende data en fouten gelinked aan 1 antwoord</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AntwoordInhoudType">
+		<xsd:sequence>
+			<xsd:element name="DossierVDAB" type="DossierVDABType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DossierVDABType">
+		<xsd:sequence>
+			<xsd:element name="Personalia" type="PersonaliaType" minOccurs="0"/>
+			<xsd:element name="DossierBeheerder" type="PersoonVestigingsType" minOccurs="0"/>
+			<!--<xsd:element name="Doorverwijzer" type="PersoonVestigingsType" minOccurs="0"/>-->
+			<xsd:element name="Dossier" type="DossierType" minOccurs="0"/>
+			<xsd:element name="Adviezen" type="AdviezenType" minOccurs="0"/>
+			<xsd:element name="Testen" type="TestenType" minOccurs="0"/>
+			<xsd:element name="Trajecten" type="TrajectenType" minOccurs="0"/>
+			<xsd:element name="Opleidingen" type="OpleidingenType" minOccurs="0"/>
+			<xsd:element name="Uitnodigingen" type="UitnodigingenType" minOccurs="0"/>
+			<!--<xsd:element name="CategorieWerkzoekende" type="CategorieWerkzoekendeType" minOccurs="0"/>-->
+			<!--<xsd:element name="VrijstellingAttest" type="xsd:boolean" minOccurs="0"/>-->
+			<!--<xsd:element name="Gesprekken" type="GesprekkenType" minOccurs="0"/>
+			<xsd:element name="Loopbaan" type="LoopbaanType" minOccurs="0"/>-->
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PersonaliaType">
+		<xsd:sequence>
+			<xsd:element name="INSZ" type="generiek:INSZType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LoopbaanType">
+		<xsd:sequence>
+			<xsd:element name="Status" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="CodeValueType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SectorValueType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="3"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EventValueType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="6"/>
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="CategorieWerkzoekendeType">
+		<xsd:simpleContent>
+			<xsd:extension base="CodeValueType">
+				<xsd:attribute name="Beschrijving" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="PersoonsgegevensType">
+		<xsd:complexContent>
+			<xsd:extension base="DatumInfoType">
+				<xsd:sequence>
+					<xsd:element name="Naam" type="xsd:string"/>
+					<xsd:element name="Voornaam" type="xsd:string"/>
+					<xsd:element name="Telefoon" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Email" type="xsd:string" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="VestigingsType">
+		<xsd:complexContent>
+			<xsd:extension base="DatumInfoType">
+				<xsd:sequence>
+					<xsd:element name="ID" type="xsd:string"/>
+					<xsd:element name="Omschrijving" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Adres" type="generiek:AdresType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="DossierType">
+		<xsd:complexContent>
+			<xsd:extension base="DatumInfoType">
+				<xsd:sequence>
+					<xsd:element name="Catwz" type="StatusType"/>
+					<xsd:element name="DatumEurostat" type="generiek:DatumType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="StatusType">
+		<xsd:simpleContent>
+			<xsd:extension base="CodeValueType">
+				<xsd:attribute name="Beschrijving" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="AdviezenType">
+		<xsd:sequence>
+			<xsd:element name="Advies" type="AdviesType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AfwezighedenType">
+		<xsd:sequence>
+			<xsd:element name="Duur" type="xsd:string" maxOccurs="1" minOccurs="0"/>
+			<xsd:element name="PeriodeVan" type="generiek:DatumType" minOccurs="0"/>
+			<xsd:element name="PeriodeTot" type="generiek:DatumType" minOccurs="0"/>
+			<xsd:element name="Afwezigheid" type="AfwezigheidType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AfwezigheidType">
+		<xsd:sequence>
+			<xsd:element name="Type" type="xsd:string" minOccurs="1"/>
+			<xsd:element name="AantalUur" type="xsd:string" minOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GesprekkenType">
+		<xsd:sequence>
+			<xsd:element name="Gesprek" type="GesprekType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GesprekType">
+		<xsd:complexContent>
+			<xsd:extension base="DatumInfoType">
+				<xsd:sequence>
+					<xsd:element name="Toestand" type="ToestandType"/>
+					<xsd:element name="Contactpersoon" type="PersoonsgegevensType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="OpleidingenType">
+		<xsd:sequence>
+			<xsd:element name="Opleiding" type="OpleidingType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OpleidingType">
+		<xsd:complexContent>
+			<xsd:extension base="DatumInfoType">
+				<xsd:sequence>
+					<xsd:element name="ID" type="xsd:string"/>
+					<xsd:element name="Startdatum" type="generiek:DatumType" minOccurs="0"/>
+					<xsd:element name="Einddatum" type="generiek:DatumType" minOccurs="0"/>
+					<xsd:element name="Toestand" type="ToestandType"/>
+					<xsd:element name="Resultaat" type="ResultaatType" minOccurs="0"/>
+					<xsd:element name="Code" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Omschrijving" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="OpleidingsOmschrijving" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="Type" type="EventType" minOccurs="0"/>
+					<xsd:element name="Afwezigheden" type="AfwezighedenType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="UitnodigingenType">
+		<xsd:sequence>
+			<xsd:element name="Uitnodiging" type="UitnodigingType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="UitnodigingType">
+		<xsd:complexContent>
+			<xsd:extension base="DatumInfoType">
+				<xsd:sequence>
+					<xsd:element name="ID" type="xsd:string"/>
+					<xsd:element name="ToeleidingsID" type="xsd:string"/>
+					<xsd:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xsd:element name="Toestand" type="ToestandType" minOccurs="0"/>
+					<xsd:element name="Resultaat" type="ResultaatType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="AdviesType">
+		<xsd:complexContent>
+			<xsd:extension base="DatumInfoType">
+				<xsd:sequence>
+					<xsd:element name="ID" type="xsd:string"/>
+					<xsd:element name="ToeleidingsID" type="xsd:string"/>
+					<xsd:element name="Toestand" type="ToestandType"/>
+					<xsd:element name="Resultaat" type="ResultaatType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PersoonVestigingsType">
+		<xsd:sequence>
+			<xsd:element name="Persoon" type="PersoonsgegevensType" minOccurs="0"/>
+			<xsd:element name="Vestiging" type="VestigingsType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TestenType">
+		<xsd:sequence>
+			<xsd:element name="Test" type="TestType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TestType">
+		<xsd:complexContent>
+			<xsd:extension base="DatumInfoType">
+				<xsd:sequence>
+					<xsd:element name="ID" type="xsd:string"/>
+					<xsd:element name="ToeleidingsID" type="xsd:string"/>
+					<xsd:element name="Type" type="EventType"/>
+					<xsd:element name="Toestand" type="ToestandType"/>
+					<xsd:element name="Resultaat" type="ResultaatType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="TrajectenType">
+		<xsd:sequence>
+			<xsd:element name="Trajectbegeleider" type="PersoonVestigingsType" minOccurs="0"/>
+			<xsd:element name="Traject" type="TrajectType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TrajectType">
+		<xsd:complexContent>
+			<xsd:extension base="DatumInfoType">
+				<xsd:sequence>
+					<xsd:element name="ID" type="xsd:string"/>
+					<xsd:element name="Type" type="EventType"/>
+					<xsd:element name="Toestand" type="ToestandType"/>
+					<xsd:element name="Resultaat" type="ResultaatType" minOccurs="0"/>
+					<xsd:element name="Einddatum" type="generiek:DatumType" minOccurs="0"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ToestandType">
+		<xsd:simpleContent>
+			<xsd:extension base="CodeValueType">
+				<xsd:attribute name="Beschrijving" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="ResultaatType">
+		<xsd:simpleContent>
+			<xsd:extension base="CodeValueType">
+				<xsd:attribute name="Beschrijving" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="SectorType">
+		<xsd:simpleContent>
+			<xsd:extension base="SectorValueType">
+				<xsd:attribute name="Beschrijving" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="EventType">
+		<xsd:simpleContent>
+			<xsd:extension base="EventValueType">
+				<xsd:attribute name="Beschrijving" type="xsd:string"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="DatumInfoType">
+		<xsd:annotation>
+			<xsd:documentation>Type noodzakelijk om andere types uit te breiden met de attributen DatumGeldigheid en DatumModificatie.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="DatumGeldigheid" type="generiek:DatumType"/>
+		<xsd:attribute name="DatumModificatie" type="generiek:DatumType"/>
+	</xsd:complexType>
+</xsd:schema>

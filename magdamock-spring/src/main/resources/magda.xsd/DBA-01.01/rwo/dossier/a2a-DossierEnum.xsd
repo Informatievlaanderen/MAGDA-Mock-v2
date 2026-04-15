@@ -1,0 +1,58 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="urn:be:vlaanderen:omgeving:dossiervraag:v1"
+           elementFormDefault="unqualified"
+           attributeFormDefault="unqualified">
+	<xs:simpleType name="UitspraakAardEnum">
+		<xs:annotation>
+			<xs:documentation>
+                Dossiers met een gebeurtenis.uitspraak.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VERGUNNING"/>
+			<xs:enumeration value="WEIGERING"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IntervalEnum">
+		<xs:annotation>
+			<xs:documentation>
+                Het type van het zoekInterval.
+                Bepaal welke tijd interval is van toepassing voor IntervalBegin, IntervalEinde
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CREATIE"/>
+			<xs:enumeration value="INDIENING"/>
+			<xs:enumeration value="BESLISSING"/>
+			<xs:enumeration value="UITERSTE"/>
+			<xs:enumeration value="GEWIJZIGD"/>
+			<xs:enumeration value="DOSSIERFASE"/>
+			<xs:enumeration value="GEBEURTENIS"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ZoekMethodeEnum">
+		<xs:annotation>
+			<xs:documentation>
+                Bepaal hoe moet er gezocht worden in de DB.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Exact"/>
+			<xs:enumeration value="BeginMet"/>
+			<xs:enumeration value="Bevat"/>
+			<xs:enumeration value="KlinktAls"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DBAdatabronEnum">
+		<xs:annotation>
+			<xs:documentation>
+                De DBA-databron waarin gezocht moet worden.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ALLE"/>
+			<xs:enumeration value="LEVEND"/>
+			<xs:enumeration value="ARCHIEF"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

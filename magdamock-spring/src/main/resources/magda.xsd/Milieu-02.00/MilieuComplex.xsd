@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://milieu-02_00.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:mobiliteit="http://mobiliteit-02_00.vip.vlaanderen.be" targetNamespace="http://milieu-02_00.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://mobiliteit-02_00.vip.vlaanderen.be" schemaLocation="../Mobiliteit-02.00/Mobiliteit.xsd"/>
+	<xs:include schemaLocation="MilieuEnum.xsd"/>
+	<xs:include schemaLocation="MilieuSimple.xsd"/>
+	<!--*************REQUEST*****************-->
+	<xs:complexType name="LEZGegevensCriteriaType">
+		<xs:sequence>
+			<xs:element name="Bron" type="LEZBronType"/>
+			<xs:element name="Nummerplaat" type="mobiliteit:NummerplaatType"/>
+			<xs:element name="LandISOCode" type="CodeISOLandType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerwijderLEZVrijstellingRequestType">
+		<xs:sequence>
+			<xs:element name="Bron" type="LEZBronType"/>
+			<xs:element name="Nummerplaat" type="mobiliteit:NummerplaatType"/>
+			<xs:element name="LandISOCode" type="CodeISOLandType"/>
+			<xs:element name="BuitenlandseVoertuigen" type="VerwijderBuitenlandsVoertuigType" minOccurs="0"/>
+			<xs:element name="Vrijstellingen" type="VerwijderVrijstellingType" minOccurs="0"/>
+			<xs:element name="CorrectieEuronormen" type="VerwijderCorrectieEuronormType" minOccurs="0"/>
+			<xs:element name="Roetfilters" type="VerwijderRoetfilterType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--*************RESPONSE*****************-->
+	<xs:complexType name="RegistreerLEZVrijstellingType">
+		<xs:sequence>
+			<xs:element name="Bron" type="LEZBronType"/>
+			<xs:element name="Nummerplaat" type="mobiliteit:NummerplaatType"/>
+			<xs:element name="LandISOCode" type="CodeISOLandType"/>
+			<xs:choice>
+				<xs:element name="BuitenlandsVoertuig" type="BuitenlandsVoertuigType" minOccurs="0"/>
+				<xs:element name="Vrijstellingen" type="VrijstellingenType" minOccurs="0"/>
+				<xs:element name="CorrectieEuronorm" type="CorrectieEuronormType" minOccurs="0"/>
+				<xs:element name="Roetfilter" type="RoetfilterType" minOccurs="0"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefLEZVrijstellingResponseType">
+		<xs:sequence>
+			<xs:element name="Nummerplaat" type="mobiliteit:NummerplaatType"/>
+			<xs:element name="LandISOCode" type="CodeISOLandType"/>
+			<xs:element name="BuitenlandseVoertuigen" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="BuitenlandsVoertuig" type="LEZDBBuitenlandsVoertuigType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Vrijstellingen" type="LEZDBVrijstellingenType" minOccurs="0"/>
+			<xs:element name="CorrectieEuronormen" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CorrectieEuronorm" type="LEZDBCorrectieEuronormType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Roetfilters" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Roetfilter" type="LEZDBRoetfilterType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="BuitenlandseVoertuigenType">
+		<xs:sequence>
+			<xs:element name="BuitenlandsVoertuig" type="BuitenlandsVoertuigType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BuitenlandsVoertuigType">
+		<xs:sequence>
+			<xs:element name="DatumLokaleRegistratieVoertuig" type="generiek:Datum2_0Type"/>
+			<xs:element name="GeldigTotEnMetVoertuig" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="Categorie" type="mobiliteit:CodeCategorieKernType" minOccurs="0"/>
+			<xs:element name="Aard" type="mobiliteit:CodeKleurKernType" minOccurs="0"/>
+			<xs:element name="MassaRijklareToestandKg" type="mobiliteit:MassaRijklareToestandKgType" minOccurs="0"/>
+			<xs:element name="HoogstToegelatenGewicht" type="mobiliteit:MassaRijklareToestandKgType" minOccurs="0"/>
+			<xs:element name="VermogenKW" type="mobiliteit:VermogenKWType" minOccurs="0"/>
+			<xs:element name="AantalZitplaatsen" type="mobiliteit:AantalZitplaatsenType" minOccurs="0"/>
+			<xs:element name="Brandstof" type="mobiliteit:BrandstofType" minOccurs="0"/>
+			<xs:element name="Co2UitstootGrPerKm" type="mobiliteit:Co2UitstootGrPerKmType" minOccurs="0"/>
+			<xs:element name="Euronorm" type="mobiliteit:CodeEuronormKernType" minOccurs="0"/>
+			<xs:element name="DatumEersteInschrijving" type="generiek:Datum2_0Type" minOccurs="1"/>
+			<xs:element name="DatumLaatsteInschrijving" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="Roetfilter" type="generiek:VlagEnumType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ControleType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Nummerplaat" type="mobiliteit:NummerplaatType"/>
+			<xs:element name="LandISOCode" type="CodeISOLandType"/>
+			<xs:element name="DatumControle" type="generiek:Datum2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ControleDatumInschrijvingType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Nummerplaat" type="mobiliteit:NummerplaatType"/>
+			<xs:element name="LandISOCode" type="CodeISOLandType"/>
+			<xs:element name="DatumInschrijving" type="generiek:Datum2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ControlesType">
+		<xs:sequence>
+			<xs:element name="Controle" type="ControleType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CorrectieEuronormType">
+		<xs:sequence>
+			<xs:element name="Datum" type="generiek:Datum2_0Type"/>
+			<xs:element name="Euronorm" type="mobiliteit:CodeEuronormKernType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CorrectiesEuronormenType">
+		<xs:sequence>
+			<xs:element name="CorrectieEurnorm" type="CorrectieEuronormType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LEZBronType">
+		<xs:simpleContent>
+			<xs:extension base="generiek:TekstKort2_0Type"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="LEZDBBuitenlandsVoertuigType">
+		<xs:complexContent>
+			<xs:extension base="BuitenlandsVoertuigType">
+				<xs:sequence>
+					<xs:element name="DatumTijdstipToevoegingLEZ" type="generiek:DatumTijdType"/>
+					<xs:element name="Bron" type="LEZBronType"/>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LEZDBCorrectieEuronormType">
+		<xs:complexContent>
+			<xs:extension base="CorrectieEuronormType">
+				<xs:sequence>
+					<xs:element name="DatumTijdstipToevoegingLEZ" type="generiek:DatumTijdType"/>
+					<xs:element name="Bron" type="LEZBronType"/>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LEZDBRoetfilterType">
+		<xs:complexContent>
+			<xs:extension base="RoetfilterType">
+				<xs:sequence>
+					<xs:element name="DatumTijdstipToevoegingLEZ" type="generiek:DatumTijdType"/>
+					<xs:element name="Bron" type="LEZBronType"/>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LEZDBVrijstellingenType">
+		<xs:sequence>
+			<xs:element name="Vrijstelling" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="VrijstellingType">
+							<xs:sequence>
+								<xs:element name="DatumTijdstipToevoegingLEZ" type="xs:string"/>
+								<xs:element name="DatumTijdstipToevoegingAanLEZDB" type="generiek:DatumTijdType" minOccurs="0"/>
+								<xs:element name="Bron" type="LEZBronType"/>
+								<xs:element name="Referte" type="generiek:ReferteType"/>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LEZRuleset">
+		<xs:sequence>
+			<xs:element name="Periode" type="generiek:PeriodeVerplichtBeginType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LEZToegangType">
+		<xs:sequence>
+			<xs:element name="Toegangsperiode" type="generiek:PeriodeVerplichtBeginType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultaatControle">
+		<xs:sequence>
+			<xs:element name="Voertuigspecificaties" type="mobiliteit:Voertuigspecificaties"/>
+			<xs:element name="GecontroleerdePeriodes" type="GecontroleerdePeriodesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GecontroleerdePeriodesType">
+		<xs:sequence>
+			<xs:element name="GecontroleerdePeriode" type="GecontroleerdePeriodeType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GecontroleerdePeriodeType">
+		<xs:sequence>
+			<xs:element name="Periode" type="generiek:PeriodeVerplichtBeginType"/>
+			<xs:element name="Resultaat" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="VoertuigspecificatiesVerrijkt" type="mobiliteit:Voertuigspecificaties"/>
+			<xs:element name="Vrijstellingen" type="VrijstellingenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultaatControleOpDatumType">
+		<xs:complexContent>
+			<xs:extension base="ControleType">
+				<xs:sequence>
+					<xs:element name="Resultaat" type="generiek:TekstKort2_0Type"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ResultaatToegangObvSpecificaties">
+		<xs:sequence>
+			<xs:element name="VoertuigspecificatiesBasis" type="mobiliteit:VoertuigspecificatiesBasis"/>
+			<xs:element name="VoertuigspecificatiesVerrijkt" type="mobiliteit:VoertuigspecificatiesBasis"/>
+			<xs:element name="ToegangsperiodesRuleset" type="LEZRuleset" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultaatToegangObvVrijstellingen">
+		<xs:sequence>
+			<xs:element name="Vrijstelling" type="VrijstellingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultatenControlesOpDatumType">
+		<xs:sequence>
+			<xs:element name="ResultaatControle" type="ResultaatControleOpDatumType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RoetfilterType">
+		<xs:sequence>
+			<xs:element name="Datum" type="generiek:Datum2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerwijderBuitenlandsVoertuigType">
+		<xs:sequence>
+			<xs:element name="BuitenlandsVoertuig" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Referte" type="generiek:ReferteType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerwijderCorrectieEuronormType">
+		<xs:sequence>
+			<xs:element name="CorrectieEuronorm" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Referte" type="generiek:ReferteType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerwijderRoetfilterType">
+		<xs:sequence>
+			<xs:element name="Roetfilter" maxOccurs="unbounded">
+				<xs:complexType>
+
+					<xs:sequence>
+						<xs:element name="Referte" type="generiek:ReferteType"/>
+					</xs:sequence>
+
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerwijderVrijstellingType">
+		<xs:sequence>
+			<xs:element name="Vrijstelling" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Referte" type="generiek:ReferteType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VrijstellingenType">
+		<xs:sequence>
+			<xs:element name="Vrijstelling" type="VrijstellingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VrijstellingType">
+		<xs:sequence>
+			<xs:element name="Reden" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="Periode" type="generiek:PeriodeVerplichtBeginType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--========================================-->
+	<!--========================================-->
+</xs:schema>

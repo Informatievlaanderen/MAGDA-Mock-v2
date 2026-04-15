@@ -1,0 +1,111 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:V_RECR_VERBLIJF_COMPLEX_004:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:V_RECR_VERBLIJF_COMPLEX_004:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+    <xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+    <xs:complexType name="SituatieDatablok">
+        <xs:complexContent>
+            <xs:extension base="dossier:SituatieDatablok">
+                <xs:sequence>
+                    <xs:element name="IsTent" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:list>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="J"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:list>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="TentAantal" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="TentAantal_asis" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="IsMobilhome" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:list>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="J"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:list>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="MobilhomeAantal" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="MobilhomeAantal_asis" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="IsStacaravan" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:list>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="J"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:list>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="StacaravanAantal" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="StacaravanAantal_asis" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="IsTrekkershut" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:list>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="J"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:list>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="TrekkershutAantal" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="TrekkershutAantal_asis" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

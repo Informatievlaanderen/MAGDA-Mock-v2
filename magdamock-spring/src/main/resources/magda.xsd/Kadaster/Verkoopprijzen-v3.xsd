@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2017 rel. 3 (http://www.altova.com) by Dagmar (Facilipunt - Agentschap Facilitair Bedrijf) -->
+<xs:schema xmlns="http://magda.vlaanderen.be/kadaster-v3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" targetNamespace="http://magda.vlaanderen.be/kadaster-v3" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../Generiek/GeneriekDomein-v3.xsd"/>
+	<xs:include schemaLocation="KadasterGemeenschappelijk-v3.xsd"/>
+	<!--=> ENKELVOUDIGE TYPE DEFINITES-->
+	<xs:simpleType name="CodeProvincieInvoerType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="5"/>
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Fiche60JaarType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="4"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Fiche60KantoornummerType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Fiche60VolgnummerType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Fiche60TypeFicheType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Fiche60GoednummerType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--=> COMPLEX TYPE DEFINITES-->
+	<!--=> Omdat Fiche60 in de request en de response voorkomt, én in de request restricties kent, krijgt Fiche60 zijn eigen elementtypes-->
+	<xs:complexType name="Fiche60Type">
+		<xs:sequence>
+			<xs:element name="Jaar" type="Fiche60JaarType" minOccurs="0"/>
+			<xs:element name="Kantoornummer" type="Fiche60KantoornummerType" minOccurs="0"/>
+			<xs:element name="Volgnummer" type="Fiche60VolgnummerType" minOccurs="0"/>
+			<xs:element name="TypeFiche" type="Fiche60TypeFicheType" minOccurs="0"/>
+			<xs:element name="Goednummer" type="Fiche60GoednummerType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ======================== REQUEST TYPES ======================= -->
+	<xs:complexType name="CriteriaZoekVerkoopprijzenType">
+		<xs:sequence>
+			<xs:element name="Provincie" type="CodeProvincieInvoerType"/>
+			<xs:element name="AdministratieveGemeentes" type="AdministratieveGemeenteLijstInvoerType"/>
+			<xs:element name="KadastraleAfdelingen" type="KadastraleAfdelingLijstInvoerType" minOccurs="0"/>
+			<xs:element name="Straatcode" type="xs:string" minOccurs="0"/>
+			<xs:element name="Sectie" type="xs:string" minOccurs="0"/>
+			<xs:element name="Grondnummer" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="TypesInschrijving" type="TypeInschrijvingLijstInvoerType"/>
+			<xs:element name="DatumAkte" type="generiek:PeriodeDatumBeginEnEindeVerplichtType" minOccurs="0"/>
+			<xs:element name="Loconummer" type="xs:string" minOccurs="0"/>
+			<xs:element name="Fiche60" type="Fiche60Type" minOccurs="0"/>
+			<xs:element name="CodeKadastraleAard" type="xs:string" minOccurs="0"/>
+			<xs:element name="CodesKadastraleAardVolgensAkte" type="CodeKadastraleAardVolgensAkteLijstInvoerType"/>
+			<xs:element name="BeschrijvingPrivatiefDeel" type="xs:string" minOccurs="0"/>
+			<xs:element name="Perceeloppervlakte" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="OppervlakteVolgensAkte" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="Vloeroppervlakte" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="IndicatiesGebouw" type="IndicatieGebouwLijstInvoerType" minOccurs="0"/>
+			<xs:element name="Bouwtype" type="xs:string" minOccurs="0"/>
+			<xs:element name="KwaliteitGebouw" type="xs:string" minOccurs="0"/>
+			<xs:element name="BewoonbareDakverdieping" type="generiek:VlagCodeType" minOccurs="0"/>
+			<xs:element name="CentraleVerwarming" type="generiek:VlagCodeType" minOccurs="0"/>
+			<xs:element name="AantalVerdiepingenBovengronds" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="Bouwjaar" type="BouwjaarType" minOccurs="0"/>
+			<xs:element name="JaarLaatsteFysiekeModificatie" type="generiek:PeriodeJaarBeginEnEindeVerplichtType" minOccurs="0"/>
+			<xs:element name="AantalGarages" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="AantalBadkamers" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="AantalWoongelegenheden" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="AantalWoonplaatsen" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="BebouwdeOppervlakte" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="NuttigeOppervlakte" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="Totaalbedrag" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="BedragGrond" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="Bouwprijs" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="KadastraalInkomen" type="generiek:GeheelGetalIntervalMinEnMaxVerplichtType" minOccurs="0"/>
+			<xs:element name="MaximumAantalResultaten" type="xs:integer" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BouwjaarType">
+		<xs:sequence>
+			<xs:element name="Beginjaar" type="xs:string"/>
+			<xs:element name="Eindjaar" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdministratieveGemeenteLijstInvoerType">
+		<xs:sequence>
+			<xs:element name="AdministratieveGemeente" type="xs:integer" minOccurs="1" maxOccurs="3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KadastraleAfdelingLijstInvoerType">
+		<xs:sequence>
+			<xs:element name="KadastraleAfdeling" type="xs:string" minOccurs="1" maxOccurs="5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TypeInschrijvingLijstInvoerType">
+		<xs:sequence>
+			<xs:element name="TypeInschrijving" type="xs:string" minOccurs="1" maxOccurs="5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeKadastraleAardVolgensAkteLijstInvoerType">
+		<xs:sequence>
+			<xs:element name="CodeKadastraleAardVolgensAkte" type="xs:string" minOccurs="1" maxOccurs="5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndicatieGebouwLijstInvoerType">
+		<xs:sequence>
+			<xs:element name="IndicatieGebouw" type="xs:string" minOccurs="1" maxOccurs="5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ======================== RESPONSE TYPES ======================= -->
+	<xs:complexType name="VerkoopprijzenResultaatType">
+		<xs:sequence>
+			<xs:element name="Transacties" type="EigendomstransactieLijstType"/>
+			<xs:element name="MaximumAantalResultatenBereikt" type="generiek:VlagCodeType" minOccurs="0"/>
+			<xs:element name="AantalResultatenVoorVraag" type="xs:integer" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EigendomstransactieLijstType">
+		<xs:sequence>
+			<xs:element name="Transactie" type="EigendomstransactieType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EigendomstransactieType">
+		<xs:sequence>
+			<xs:element name="DatumRegistratieAkte" type="generiek:DatumType" minOccurs="0"/>
+			<xs:element name="DatumEvenement" type="generiek:DatumType" minOccurs="0"/>
+			<xs:element name="DatumMutatie" type="generiek:DatumType" minOccurs="0"/>
+			<xs:element name="CodeEvenement" type="generiek:CodeOmschrijvingType" minOccurs="0"/>
+			<xs:element name="TypeTransactie" type="generiek:CodeOmschrijvingType" minOccurs="0"/>
+			<xs:element name="NaamNotaris" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="Tekst" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="OnroerendeGoederen" type="OnroerendGoedLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnroerendGoedLijstType">
+		<xs:sequence>
+			<xs:element name="OnroerendGoed" type="OnroerendGoedType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnroerendGoedType">
+		<xs:sequence>
+			<xs:element name="Fiche60" type="Fiche60Type" minOccurs="0"/>
+			<xs:element name="OppervlakteVolgensAkte" type="xs:integer" minOccurs="0"/>
+			<xs:element name="Bedragen" type="VerkoopprijzenBedragLijstType" minOccurs="0"/>
+			<xs:element name="KadastraleAardVolgensAkte" type="generiek:CodeOmschrijvingType" minOccurs="0"/>
+			<xs:element name="Tekst" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="Informatie" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="Percelen" type="VerkoopprijzenPerceelLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerkoopprijzenPerceelLijstType">
+		<xs:sequence>
+			<xs:element name="Perceel" type="VerkoopprijzenPerceelType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerkoopprijzenPerceelType">
+		<xs:sequence>
+			<xs:element name="PerceelIdentificatie" type="PerceelIdentificatieType" minOccurs="0"/>
+			<xs:element name="BeschrijvingPrivatiefDeel" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="Bedragen" type="VerkoopprijzenBedragLijstType" minOccurs="0"/>
+			<xs:element name="KadastraleAard" type="generiek:CodeOmschrijvingType" minOccurs="0"/>
+			<xs:element name="Coordinaten" type="CartesischeCoordinatenType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Lambertcoordinaten van het perceel</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Artikelnummer" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="Tekst" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="Volgnummer" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="Loconummer" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="MeerdereKadastraleInkomens" type="generiek:VlagCodeType"/>
+			<xs:element name="CodeKadastraalInkomen" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="KadastraalInkomen" type="xs:integer" minOccurs="0"/>
+			<xs:element name="Marktwaarde" type="MarktwaardeType" minOccurs="0"/>
+			<xs:element name="TheoretischeOpbrengst" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="VoorgaandeEigendomstoestand" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="VolgendeEigendomstoestand" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="PerceelEntiteiten" type="PerceelEntiteitLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerkoopprijzenBedragLijstType">
+		<xs:sequence>
+			<xs:element name="Bedrag" type="VerkoopprijzenBedragType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerkoopprijzenBedragType">
+		<xs:sequence>
+			<xs:element name="Type" type="xs:integer"/>
+			<xs:element name="Waarde" type="xs:double"/>
+			<xs:element name="Volgnummer" type="generiek:TekstLangType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CartesischeCoordinatenType">
+		<xs:sequence>
+			<xs:element name="X" type="xs:double"/>
+			<xs:element name="Y" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PerceelEntiteitLijstType">
+		<xs:sequence>
+			<xs:element name="PerceelEntiteit" type="PerceelEntiteitType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PerceelEntiteitType">
+		<xs:sequence>
+			<xs:element name="Straat" type="generiek:CodeOmschrijvingType" minOccurs="0"/>
+			<xs:element name="Huisnummer" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="AantalVerdiepingenBovengronds" type="xs:integer" minOccurs="0"/>
+			<xs:element name="BewoonbareDakverdieping" type="generiek:VlagCodeType" minOccurs="0"/>
+			<xs:element name="AantalGarages" type="xs:integer" minOccurs="0"/>
+			<xs:element name="CentraleVerwarming" type="generiek:VlagCodeType" minOccurs="0"/>
+			<xs:element name="AantalBadkamers" type="xs:integer" minOccurs="0"/>
+			<xs:element name="AantalWoongelegenheden" type="xs:integer" minOccurs="0"/>
+			<xs:element name="AantalWoonplaatsen" type="xs:integer" minOccurs="0"/>
+			<xs:element name="Perceeloppervlakte" type="xs:integer" minOccurs="0"/>
+			<xs:element name="BebouwdeOppervlakte" type="xs:integer" minOccurs="0"/>
+			<xs:element name="Vloeroppervlakte" type="xs:integer" minOccurs="0"/>
+			<xs:element name="NuttigeOppervlakte" type="xs:integer" minOccurs="0"/>
+			<xs:element name="JaarLaatsteFysiekeModificatie" type="xs:integer" minOccurs="0"/>
+			<xs:element name="Constructie" type="ConstructieType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

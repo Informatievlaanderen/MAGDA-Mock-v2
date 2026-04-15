@@ -1,0 +1,13 @@
+<!-- Beroeps vraag GeefDossier, ZoekDossier --><!-- Bevat de types van a2a services voor de DBA endpoints --><xs:schema targetNamespace="urn:be:vlaanderen:omgeving:dossiervraag:v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vraag="urn:be:vlaanderen:omgeving:dossiervraag:v1">
+
+	<xs:include schemaLocation="a2a-DossierEnum.xsd"/>
+	<xs:include schemaLocation="a2a-DossierSimple.xsd"/>
+	<xs:include schemaLocation="a2a-DossierComplex.xsd"/>
+	
+	<xs:element name="GeefDossierVraag" type="vraag:GeefDossierVraag"/>
+	<xs:element name="ZoekDossierVraag" type="vraag:ZoekDossierVraag"/>
+    <xs:element name="GeefGebeurtenisVraag" type="vraag:GeefGebeurtenisVraag"/>
+    <xs:element name="BewaarGebeurtenisVraag" type="vraag:BewaarGebeurtenisVraag"/>
+    <xs:element name="ZoekGebeurtenisVraag" type="vraag:ZoekGebeurtenisVraag"/>
+
+</xs:schema>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 sp1 (http://www.altova.com) by Stefan Vleugels (AGENTSCHAP FACILITAIR BEDRIJF) -->
+<xsd:schema xmlns="http://service.publiceerattestkindtenlastedienst-02_00.gezin-02_00.vip.vlaanderen.be" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:gezin="http://gezin-02_00.vip.vlaanderen.be" targetNamespace="http://service.publiceerattestkindtenlastedienst-02_00.gezin-02_00.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xsd:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xsd:import namespace="http://gezin-02_00.vip.vlaanderen.be" schemaLocation="../../Gezin-02.00/Gezin.xsd"/>
+	<xsd:element name="PubliceerAttestKindTenLaste">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Publicatie" type="PublicatieType" minOccurs="0"/>
+				<xsd:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="PublicatieType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="generiek:ContextType"/>
+			<xsd:element name="Onderwerpen" type="OnderwerpenType" minOccurs="0"/>
+			<xsd:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OnderwerpenType">
+		<xsd:sequence>
+			<xsd:element name="Onderwerp" type="OnderwerpType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OnderwerpType">
+		<xsd:sequence>
+			<xsd:element name="Referte" type="generiek:ReferteType"/>
+			<xsd:element name="Inhoud" type="OnderwerpInhoudType" minOccurs="0"/>
+			<xsd:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OnderwerpInhoudType">
+		<xsd:sequence>
+			<xsd:element name="Metadata" type="generiek:MetadataType" minOccurs="0"/>
+			<xsd:element name="IdentificatieBericht" type="generiek:VoorleggingsPrefixType" minOccurs="0"/>
+			<xsd:element name="AttestKindTenLaste" type="gezin:AttestKindTenLasteType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

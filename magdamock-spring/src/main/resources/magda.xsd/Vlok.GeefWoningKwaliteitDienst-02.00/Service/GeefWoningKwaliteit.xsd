@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://service.geefwoningkwaliteitdienst-02_00.vlok-02_00.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:vlok="http://vlok-02_00.vip.vlaanderen.be" targetNamespace="http://service.geefwoningkwaliteitdienst-02_00.vlok-02_00.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://vlok-02_00.vip.vlaanderen.be" schemaLocation="../../Vlok-02.00/Vlok.xsd"/>
+	<xs:element name="GeefWoningKwaliteit">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Verzoek" type="VerzoekType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="VerzoekType">
+		<xs:sequence>
+			<xs:element name="Context" type="generiek:ContextType"/>
+			<xs:element name="Vragen" type="VragenType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VragenType">
+		<xs:sequence>
+			<xs:element name="Vraag" type="VraagType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VraagType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Inhoud" type="VraagInhoudType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VraagInhoudType">
+		<xs:sequence>
+			<xs:element name="Criteria" type="vlok:CriteriaGeefWoningKwaliteitType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

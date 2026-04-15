@@ -1,0 +1,5 @@
+<xsd:schema xmlns:verkaveling="urn:be:vlaanderen:omgeving:vergunning:verkaveling:v2" 
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+       targetNamespace="urn:be:vlaanderen:omgeving:vergunning:verkaveling:v2" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="01.00">
+	
+</xsd:schema>

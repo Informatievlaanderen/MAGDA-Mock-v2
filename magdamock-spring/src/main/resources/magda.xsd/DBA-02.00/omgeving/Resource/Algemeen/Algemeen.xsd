@@ -1,0 +1,148 @@
+<xsd:schema targetNamespace="urn:be:vlaanderen:omgeving:algemeen" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:algemeen="urn:be:vlaanderen:omgeving:algemeen">
+
+    <xsd:include schemaLocation="AlgemeenSimple.xsd"/>
+
+    <xsd:complexType name="ExternId">
+        <xsd:annotation>
+            <xsd:documentation>Type voor referentie naar een id op een externe databron.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="databron" type="algemeen:ExternIdDatabron" use="required">
+            <xsd:annotation>
+                <xsd:documentation>De door alle partijen gekende code van de databron die het extern id van dit element
+                    kwalificeert
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="externIdWaarde" type="algemeen:ExternIdDatabron" use="required">
+            <xsd:annotation>
+                <xsd:documentation>Waarde van externe ids.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="ParameterVersie">
+        <xsd:sequence>
+            <xsd:element name="startDatum" type="xsd:date"/>
+            <xsd:element name="eindDatum" minOccurs="0" type="xsd:date"/>
+        </xsd:sequence>
+        <xsd:attribute name="huidigeVersie" type="xsd:boolean" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="GemeenteKortGroep">
+        <xsd:annotation>
+            <xsd:documentation>GemeenteGroepType</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="nisCode" type="algemeen:NISCode" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Code van de locatie, altijd NIS-codes. Het formaat van gemeentecodes heeft 5
+                        cijfers.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="naam" type="algemeen:LandGemeenteNaam">
+                <xsd:annotation>
+                    <xsd:documentation>Naam van de gemeente</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Straat">
+        <xsd:sequence>
+            <xsd:element name="codeSimple" type="algemeen:ExternId" minOccurs="0"/>
+            <xsd:element name="naam" type="algemeen:Straatnaam"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Ondergrond">
+        <xsd:sequence>
+            <xsd:element name="type" type="algemeen:OndergrondType">
+                <xsd:annotation>
+                    <xsd:documentation>Een code die de ondergrond identificeert die werd gebruikt bij het tekenen van de
+                        geometrie.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="precisie" type="xsd:double" minOccurs="0"/>
+            <xsd:element name="datum" type="xsd:date">
+                <xsd:annotation>
+                    <xsd:documentation>De datum van de ondergrond die werd gebruikt bij het tekenen van de geometrie.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DecimaleWaarde">
+        <xsd:annotation>
+            <xsd:documentation>Type voor waarden met een optionele eenheid.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:decimal">
+                <xsd:attribute name="eenheid" type="algemeen:WaardeEenheid" use="required"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Code">
+        <xsd:sequence>
+            <xsd:element name="code" type="algemeen:CodeSimple"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="ManueleEenheid">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="3"/>
+            <xsd:maxLength value="50"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="OndertekenClausule">
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="4000"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="StatusVlag">
+        <xsd:sequence>
+            <xsd:element name="statusvlag" type="algemeen:StatusVlagSimple"/>
+        </xsd:sequence>
+        <xsd:attribute name="hoofdstatus" type="xsd:boolean" default="false" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Referentie">
+        <xsd:annotation>
+            <xsd:documentation>Type voor referentie naar een interne id binnen dit document.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="idref" type="xsd:IDREF" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Geometrie">
+        <xsd:sequence>
+            <xsd:element name="coordinatenStelsel" type="algemeen:EPSGCode">
+                <xsd:annotation>
+                    <xsd:documentation>De EPSG code van het coordinatenstelsel.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ondergrond" type="algemeen:Ondergrond">
+                <xsd:annotation>
+                    <xsd:documentation>De ondergrond die werd gebruikt bij het tekenen van de geometrie.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="wKT" type="algemeen:WKT">
+                <xsd:annotation>
+                    <xsd:documentation>De geometrie als WKT.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="DatablokDefinitieMetVolgnummer">
+        <xsd:sequence>
+            <xsd:element name="datablokDefinitieNamespace" type="algemeen:Urn"/>
+            <xsd:element name="volgnummer" type="algemeen:RangordeDatablok"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

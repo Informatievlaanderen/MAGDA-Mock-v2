@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://magda.vlaanderen.be/gezin-v3" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://magda.vlaanderen.be/gezin-v3" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GezinGemeenschappelijk-v3.xsd"/>
+	<xs:include schemaLocation="Zorgtoeslag-v3.xsd"/>
+	<xs:include schemaLocation="Kindvoordelen-v3.xsd"/>
+	<xs:include schemaLocation="AttestKindTenLaste-v3.xsd"/>
+</xs:schema>

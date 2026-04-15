@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+
+  http://ec.europa.eu/idabc/eupl5
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://lerende-01_02.vip.vlaanderen.be"
+		   xmlns="http://lerende-01_02.vip.vlaanderen.be"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   xmlns:generiek="http://generiek-01_02.vip.vlaanderen.be"
+		   elementFormDefault="unqualified"
+		   attributeFormDefault="unqualified"
+		   version="1.02.201107141455">
+	<xs:import namespace="http://generiek-01_02.vip.vlaanderen.be" schemaLocation="../Generiek-01.02/Generiek.xsd"/>
+	<xs:include schemaLocation="LerendeDataCodes.xsd"/>
+	<xs:include schemaLocation="LerendeDataKern.xsd"/>
+	<xs:complexType name="AttestStatusCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'AttestStatusEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AttestStatusEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AttestTypeCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'AttestTypeEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AttestTypeEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SoortOnderwijsCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'SoortOnderwijsEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="SoortOnderwijsEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="OnderwijsvormCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'OnderwijsvormEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="OnderwijsvormEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="OpleidingsvormBOCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'OpleidingsvormBOEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="OpleidingsvormBOEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AardInschrijvingCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'AardInschrijvingEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AardInschrijvingEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SoortContractCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'SoortContractEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="SoortContractEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AttestIdentificatieType">
+		<xs:annotation>
+			<xs:documentation>AttestIdentificatieType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IdentificatieNummerAttest" type="IdentificatieNummerAttestType">
+				<xs:annotation>
+					<xs:documentation>Identificatie van het attest</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="AttestStatusCodeType">
+				<xs:annotation>
+					<xs:documentation>Status van het attest</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AttestType" type="AttestTypeCodeType">
+				<xs:annotation>
+					<xs:documentation>Type van het attest</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="INSZ" type="generiek:INSZType">
+				<xs:annotation>
+					<xs:documentation>Identificatie van de lerende mens</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Schooljaar" type="generiek:JaarType">
+				<xs:annotation>
+					<xs:documentation>Beginjaar van het schooljaar/academiejaar</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VolgNummer" type="VolgNummerType">
+				<xs:annotation>
+					<xs:documentation>Nummering attesten van eenzelfde persoon per schooljaar</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CreatieDatum" type="generiek:VolledigDatumType">
+				<xs:annotation>
+					<xs:documentation>datum van creatie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SchoolType">
+		<xs:annotation>
+			<xs:documentation>SchoolType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="InstellingsNummer" type="InstellingsNummerType">
+				<xs:annotation>
+					<xs:documentation>Identificatie van de onderwijsinstellingr</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hoofdstructuur" type="HoofdstructuurType">
+				<xs:annotation>
+					<xs:documentation>Hoofdstructuur</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VestigingsplaatsVolgNummer" type="VestigingsplaatsVolgNummerType">
+				<xs:annotation>
+					<xs:documentation>Nummering van de vestiging binnen de instelling</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdministratieveGroepNummer" type="AdministratieveGroepNummerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>AdministratieveGroepNummer - Niet ingevuld voor hoofdstructuur ‘999’</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OndernemingsNummer" type="OndernemingsNummerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dit identificatienummer is een uniek nummer dat toegekend wordt aan een onderneming of vestigingseenheid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VestigingsNummer" type="OndernemingsNummerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dit identificatienummer is een uniek nummer dat toegekend wordt aan een onderneming of vestigingseenheid, unbounded occurency.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SecundairOnderwijsType">
+		<xs:annotation>
+			<xs:documentation>SecundairOnderwijsType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GeldigheidsDatum" type="generiek:VolledigDatumType">
+				<xs:annotation>
+					<xs:documentation>Datum van de inschrijving of de uitschrijving - Enkel voor een attest van het SO - eerst mogelijke datum is 1 oktober. ( voorlopig )</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SoortOnderwijs" type="SoortOnderwijsCodeType">
+				<xs:annotation>
+					<xs:documentation>SoortOnderwijs - Enkel voor een attest van het SO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Onderwijsvorm" type="OnderwijsvormCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Onderwijsvorm - Enkel voor een attest van het SO - Verplicht bij gewoon onderwijs en buitengewoon opleidingsvorm 4</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Voltijds" type="generiek:VlagCodeType">
+				<xs:annotation>
+					<xs:documentation>Voltijds - Enkel voor een attest van het SO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OpleidingsvormBuitengewoonOnderwijs" type="OpleidingsvormBOCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>OpleidingsvormBuitengewoonOnderwijs - Enkel voor een attest van het SO - Verplicht bij buitengewoon onderwijs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Graad" type="GraadType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Enkel voor een attest van het SO - ‘M’ invullen bij modulair systeem - Verplicht bij gewoon onderwijs en buitengewoon opleidingsvorm 4</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Jaar" type="JaarInGraadType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Enkel voor een attest van het SO - Verplicht bij gewoon onderwijs en buitengewoon opleidingsvorm 4 - uitzondering: Dit veld is 0 bij modulair systeem of Onthaalklas anderstalige nieuwkomers Of schakelklas OKAN proeftuin</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Studiepunten" type="StudiepuntenType" minOccurs="0"/>
+			<xs:element name="DiplomaHaalbaarInSchooljaar" type="generiek:VlagEnumType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HogerOnderwijsType">
+		<xs:annotation>
+			<xs:documentation>HogerOnderwijsType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GeldigheidsDatum" type="generiek:VolledigDatumType">
+				<xs:annotation>
+					<xs:documentation>GeldigheidsDatum - Enkel voor een attest van het HO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InschrijvingsDatum" type="generiek:VolledigDatumType">
+				<xs:annotation>
+					<xs:documentation>InschrijvingsDatum - Enkel voor een attest van het HO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UitschrijvingsDatum" type="generiek:VolledigDatumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>UitschrijvingsDatum - Enkel voor een attest van het HO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AantalStudiepunten" type="AantalStudiepuntenType">
+				<xs:annotation>
+					<xs:documentation>AantalStudiepunten - Enkel voor een attest van het HO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KanDiplomaBehalen" type="generiek:VlagCodeType">
+				<xs:annotation>
+					<xs:documentation>KanDiplomaBehalen - Enkel voor een attest van het HO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AardInschrijving" type="AardInschrijvingCodeType">
+				<xs:annotation>
+					<xs:documentation>AardInschrijving - Enkel voor een attest van het HO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SoortContract" type="SoortContractCodeType">
+				<xs:annotation>
+					<xs:documentation>SoortContract - Enkel voor een attest van het HO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AttestInschrijvingType">
+		<xs:annotation>
+			<xs:documentation>AttestInschrijvingType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AttestIdentificatie" type="AttestIdentificatieType">
+				<xs:annotation>
+					<xs:documentation>AttestIdentificatie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="School" type="SchoolType">
+				<xs:annotation>
+					<xs:documentation>School</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SecundairOnderwijs" type="SecundairOnderwijsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>SecundairOnderwijs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HogerOnderwijs" type="HogerOnderwijsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>HogerOnderwijs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestemmelingType">
+		<xs:annotation>
+			<xs:documentation>BestemmelingType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SectorCode" type="SectorCodeType">
+				<xs:annotation>
+					<xs:documentation>SectorCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestemmelingenType">
+		<xs:annotation>
+			<xs:documentation>BestemmelingenType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Bestemmeling" type="BestemmelingType" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Bestemmeling</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StudiepuntenType">
+		<xs:sequence>
+			<xs:element name="Opgenomen" type="generiek:NumeriekLangType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

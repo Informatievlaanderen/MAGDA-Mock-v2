@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://geo-02_00.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" targetNamespace="http://geo-02_00.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:include schemaLocation="GeoEnum.xsd"/>
+	<xs:include schemaLocation="GeoSimple.xsd"/>
+
+
+	<!--************************************************-->
+	<!--* Segmenten - Niveau 3 (Samengesteld|Complex)  *-->
+	<!--************************************************-->
+	<xs:complexType name="CRABAdressenType">
+		<xs:sequence>
+			<xs:element name="CRABAdres" type="CRABAdresType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AdresPositieLijstType">
+		<xs:sequence>
+			<xs:element name="AdresPositie" type="AdresPositieType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="CRABAdresType">
+		<xs:sequence>
+			<xs:element name="Taal" type="CrabTaalType" />
+			<xs:element name="Straat" type="CrabAdresStraatType" />
+			<xs:element name="HuisNummer" type="CrabHuisnummerType" minOccurs="0"/>
+			<xs:element name="PostKanton" type="PostkantonType" minOccurs="0"/>
+			<xs:element name="SubAdres" type="SubAdresType" minOccurs="0"/>
+			<xs:element name="AdresPosities" type="AdresPositieLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="CrabTaalType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeCrabTaalType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeCrabTaalType">
+		<xs:simpleContent>
+			<xs:extension base="CodeCrabTaalKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="CrabAdresStraatType">
+		<xs:sequence>
+			<xs:element name="AgivID" type="xs:integer"/>
+			<xs:element name="Naam" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="CrabHuisnummerType">
+		<xs:sequence>
+			<xs:element name="AgivID" type="xs:integer" minOccurs="0"/>
+			<xs:element name="Waarde" type="NummerHuisType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="PostkantonType">
+		<xs:sequence>
+			<xs:element name="AgivID" type="xs:integer" minOccurs="0"/>
+			<xs:element name="Code" type="PostKantonCodeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="SubAdresType">
+		<xs:sequence>
+			<xs:element name="AgivID" type="xs:integer"/>
+			<xs:element name="Aard" type="SubAdresAardType"/>
+			<xs:element name="Waarde" type="SubAdresWaardeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="SubAdresAardType">
+		<xs:sequence>
+			<xs:element name="Code" type="SubAdresAardCodeBeschrijvingType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubAdresAardCodeBeschrijvingType">
+		<xs:simpleContent>
+			<xs:extension base="SubAdresAardCodeType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="AdresPositieType">
+		<xs:sequence>
+			<xs:element name="AgivID" type="xs:integer"/>
+			<xs:element name="AdresID" type="xs:integer"/>
+			<xs:element name="Aard" type="AdresPositieAardType"/>
+			<xs:element name="Coordinaat" type="CoordinaatType"/>
+			<xs:element name="Herkomst" type="HerkomstType"/>
+			<xs:element name="EPSGNummer" type="EPSGNummerType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="AdresPositieAardType">
+		<xs:sequence>
+			<xs:element name="Code" type="AdresPositieAardBeschrijvingType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdresPositieAardBeschrijvingType">
+		<xs:simpleContent>
+			<xs:extension base="AdresPositieAardCodeType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

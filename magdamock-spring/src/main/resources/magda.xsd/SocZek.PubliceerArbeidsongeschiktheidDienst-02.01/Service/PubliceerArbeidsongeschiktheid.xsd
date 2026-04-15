@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://service.publiceerarbeidsongeschiktheiddienst-02_01.soczek-02_01.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   xmlns:soczek="http://magda.vlaanderen.be/soczek-v3"
+		   xmlns:bron="http://kszbcss.fgov.be/types/HdiIndemnityAllowanceNotifications/v1" 
+		   xmlns:generiek="http://magda.vlaanderen.be/generiek-v3"
+		   targetNamespace="http://service.publiceerarbeidsongeschiktheiddienst-02_01.soczek-02_01.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://magda.vlaanderen.be/soczek-v3" schemaLocation="../../SocZek/SocZekDomein-v3.xsd"/>
+	<xs:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../../Generiek/GeneriekDomein-v3.xsd"/>
+	<xs:import namespace="http://kszbcss.fgov.be/types/HdiIndemnityAllowanceNotifications/v1" schemaLocation="../../Bronnen/KSZ/be/fgov/kszbcss/types/HdiIndemnityAllowanceNotifications/HdiIndemnityAllowanceNotificationsV1.xsd"/>
+	<xs:element name="PubliceerArbeidsongeschiktheid">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Publicatie" type="PublicatieType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="PublicatieType">
+		<xs:sequence>
+			<xs:element name="Context" type="generiek:ContextType"/>
+			<xs:element name="Onderwerpen" type="OnderwerpenType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="generiek:UitzonderingLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderwerpenType">
+		<xs:sequence>
+			<xs:element name="Onderwerp" type="OnderwerpType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderwerpType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Inhoud" type="OnderwerpInhoudType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="generiek:UitzonderingLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderwerpInhoudType">
+		<xs:sequence>
+			<xs:element name="Arbeidsongeschiktheid" type="ArbeidsongeschiktheidType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArbeidsongeschiktheidType">
+		<xs:sequence>
+			<xs:element name="Attestation" type="bron:HiaIndemnityPeriodsNotificationType"/>
+			<xs:element name="AttestationPeriodStart" type="generiek:DatumStringType" minOccurs="0"/>
+			<xs:element name="AttestationPeriodEnd" type="generiek:DatumStringType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2020 sp1 (x64) (http://www.altova.com) by Test (Government of Flanders) -->
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+<xs:schema xmlns="http://ondgeo-02_02.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:onderneming="http://onderneming-02_00.vip.vlaanderen.be" xmlns:geo="http://geo-02_00.vip.vlaanderen.be" targetNamespace="http://ondgeo-02_02.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.02">
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://onderneming-02_00.vip.vlaanderen.be" schemaLocation="../Onderneming-02.00/Onderneming.xsd"/>
+	<xs:import namespace="http://geo-02_00.vip.vlaanderen.be" schemaLocation="../Geo-02.00/Geo.xsd"/>
+	<xs:include schemaLocation="OndGeoEnum.xsd"/>
+	<xs:include schemaLocation="OndGeoSimple.xsd"/>
+	<!--****************************************-->
+	<!--* Segmenten - Niveau 1 (Hoofd)         *-->
+	<!--****************************************-->
+	<xs:complexType name="CriteriaGeefAdressenLocatiesType">
+		<xs:sequence>
+			<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<!--* Segmenten - Niveau 3 (Samengesteld|Complex)  *-->
+	<!--************************************************-->
+	<xs:complexType name="AdressenLocatiesLijstType">
+		<xs:sequence>
+			<xs:element name="AdresLocaties" type="AdresLocatiesType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="GRARAdressenType">
+		<xs:sequence>
+			<xs:element name="GRARAdres" type="GRARAdresType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GRARAdresType">
+		<xs:sequence>
+			<xs:element name="TaalCode" type="GRARTaalCodeType" minOccurs="0"/>
+			<xs:element name="AgivID" type="xs:integer" minOccurs="0"/>
+			<xs:element name="Straat" type="GrarAdresStraatType" minOccurs="0"/>
+			<xs:element name="HuisNummer" type="NummerHuisType" minOccurs="0"/>
+			<xs:element name="BusNummer" type="NummerBusType" minOccurs="0"/>
+			<xs:element name="PostKanton" type="PostKantonCodeType" minOccurs="0"/>
+			<xs:element name="HomoniemToevoeging" type="HomoniemToevoegingType" minOccurs="0"/>
+			<xs:element name="AdresPositie" type="AdresPositieType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="GrarAdresStraatType">
+		<xs:sequence>
+			<xs:element name="AgivID" type="xs:integer" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="GrarHuisnummerType">
+		<xs:sequence>
+			<xs:element name="Waarde" type="NummerHuisType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="AdresPositieType">
+		<xs:sequence>
+			<xs:element name="Coordinaat" type="CoordinaatType" minOccurs="0"/>
+			<xs:element name="PositieGeometrieMethode" type="PositieGeometrieMethodeType" minOccurs="0"/>
+			<xs:element name="PositieSpecificatie" type="PositieSpecificatieType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdresType">
+		<xs:complexContent>
+			<xs:extension base="onderneming:AdresOndernemingBasisType">
+				<xs:sequence>
+					<xs:element name="Taal" type="geo:CrabTaalType"/>
+					<xs:element name="Type" type="onderneming:TypeAdresOndernemingType"/>
+				</xs:sequence>
+				<xs:attribute name="DatumBegin" type="generiek:Datum2_0Type"/>
+				<xs:attribute name="DatumEinde" type="generiek:Datum2_0Type"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="AdresLocatiesType">
+		<xs:sequence>
+			<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType"/>
+			<xs:element name="SoortOnderneming" type="onderneming:SoortOndernemingType" minOccurs="0"/>
+			<xs:element name="KBOAdres" type="AdresType" minOccurs="0"/>
+			<xs:element name="GRARAdressen" type="GRARAdressenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,10 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:plan:v2" schemaLocation="../Plan/Plan-02.00/Plan.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:plan:bestand:v2" schemaLocation="../Plan/PlanBestand-02.00/PlanBestand.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:verordening:v2" schemaLocation="../Plan/Verordening-02.00/Verordening.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:verordening:bestand:v2" schemaLocation="../Plan/VerordeningBestand-02.00/VerordeningBestand.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:vergunning:stedenbouwkundig:v2" schemaLocation="../Vergunning/Stedenbouwkundig-02.00/Stedenbouwkundig.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:vergunning:verkaveling:v2" schemaLocation="../Vergunning/Verkaveling-02.00/Verkaveling.xsd"/>
+
+</xsd:schema>

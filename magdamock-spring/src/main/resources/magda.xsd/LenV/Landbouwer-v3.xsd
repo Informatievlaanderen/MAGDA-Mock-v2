@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://magda.vlaanderen.be/lenv-v3"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:generiek="http://magda.vlaanderen.be/generiek-v3"
+            xmlns:oslo="http://magda.vlaanderen.be/generiek/oslo-v3" 
+            xmlns:sawsdl="http://www.w3.org/ns/sawsdl"
+            targetNamespace="http://magda.vlaanderen.be/lenv-v3"
+            elementFormDefault="unqualified" 
+            attributeFormDefault="unqualified">
+	<xsd:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../Generiek/GeneriekDomein-v3.xsd"/>
+	<xsd:import namespace="http://magda.vlaanderen.be/generiek/oslo-v3" schemaLocation="../Generiek/oslo/OSLODomein-v3.xsd"/>
+	<!--=> ENKELVOUDIGE TYPE DEFINITES-->
+	<xsd:simpleType name="EmailLijstType">
+		<xsd:annotation>
+			<xsd:documentation>Lijst van e-mailadressen, gescheiden door een komma.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TelefoonLijstType">
+		<xsd:annotation>
+			<xsd:documentation>Lijst van telefoonnummers, gescheiden door een komma.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="GsmLijstType">
+		<xsd:annotation>
+			<xsd:documentation>Lijst van gsm-nummers, gescheiden door een komma.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="4000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BedrijfstypologieBronType">
+		<xsd:annotation>
+			<xsd:documentation>Bron van de bedrijfstypologie. Mogelijke waarden: "BerekeningJJJJ" waarbij JJJJ het jaar is van de bereking, "Aangegeven" wanneer er nog geen officiële berekening is.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BedrijfstypologieStandaardomzetType">
+		<xsd:annotation>
+			<xsd:documentation>BedrijfstypologieStandaardomzetType</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="2"/>
+			<xsd:totalDigits value="12"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<!--=> SAMENGESTELDE TYPE DEFINITES-->
+	<xsd:complexType name="GeefLandbouwerCriteriaType" sawsdl:modelReference="">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="Klantnummer" type="xsd:string" nillable="false" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="Landbouwernummer" type="xsd:string" nillable="false" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="INSZ" type="generiek:INSZType" nillable="false" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="Ondernemingsnummer" type="generiek:OndernemingsnummerType" nillable="false" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="Vestigingseenheidsnummer" type="xsd:string" nillable="false" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="Exploitatienummer" type="xsd:string" nillable="false" minOccurs="1" maxOccurs="1"/>
+				<xsd:element name="Beslagnummer" type="xsd:string" nillable="false" minOccurs="1" maxOccurs="1"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LandbouwerLijstType" sawsdl:modelReference="">
+		<xsd:sequence>
+			<xsd:element name="Landbouwer" type="LandbouwerType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LandbouwerType" sawsdl:modelReference="">
+		<xsd:sequence>
+			<xsd:element name="Klantnummer" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<!--<xsd:element name="Landbouwernummer" type="xsd:string" nillable="true" minOccurs="0" maxOccurs="1"/>-->
+			<xsd:element name="Persoon" type="PersoonType" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Andere" type="AndereType" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Organisatie" type="OrganisatieType" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="ContactInfo" type="ContactInfoType" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Bedrijfstypologie" type="BedrijfstypologieType" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Mestbankaangifteplichtig" type="xsd:boolean" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="VlaamseLandbouwer" type="xsd:boolean" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="ActieveLandbouwerGLB" type="xsd:boolean" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Exploitaties" type="ExploitatieLijstType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Periode" type="PeriodeType" nillable="true" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PersoonType" sawsdl:modelReference="http://www.w3.org/ns/person#Person">
+		<xsd:sequence>
+			<xsd:element name="Voornaam" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1" sawsdl:modelReference="http://xmlns.com/foaf/0.1/givenName"/>
+			<xsd:element name="Achternaam" type="xsd:string" nillable="false" minOccurs="1" maxOccurs="1" sawsdl:modelReference="http://xmlns.com/foaf/0.1/familyName"/>
+			<!-- <xsd:element minOccurs="1" maxOccurs="1" name="Geslacht" nillable="false" type="GeslachtType" sawsdl:modelReference="https://data.vlaanderen.be/ns/persoon#geslacht"/> -->
+			<!-- <xsd:element minOccurs="0" maxOccurs="1" name="VolledigeNaam" nillable="false" type="xsd:string" sawsdl:modelReference="https://data.vlaanderen.be/ns/persoon#volledigeNaam"/> -->
+			<!-- <xsd:element minOccurs="1" maxOccurs="1" name="Geboorte" nillable="false" type="PersoonGeboorteType" sawsdl:modelReference="https://data.vlaanderen.be/ns/persoon#heeftGeboorte"/> -->
+			<xsd:element name="Overlijden" type="PersoonOverlijdenType" nillable="true" minOccurs="0" maxOccurs="1" sawsdl:modelReference="https://data.vlaanderen.be/ns/persoon#heeftOverlijden"/>
+			<xsd:element name="GeregistreerdePersoon" type="GeregistreerdePersoonType" nillable="true" minOccurs="0" maxOccurs="1" sawsdl:modelReference=""/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PersoonOverlijdenType" sawsdl:modelReference="https://data.vlaanderen.be/ns/persoon#Overlijden">
+		<xsd:complexContent>
+			<xsd:extension base="PersoonGebeurtenisType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="AndereType" sawsdl:modelReference="">
+		<xsd:annotation>
+			<xsd:documentation>Bevat eigenschappen van de klant wanneer deze geen persoon en/of organisatie is.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Naam" type="xsd:string" nillable="false" minOccurs="1" maxOccurs="1" sawsdl:modelReference=""/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GeregistreerdePersoonType" sawsdl:modelReference="https://data.vlaanderen.be/ns/persoon#GeregistreerdPersoon">
+		<xsd:sequence>
+			<xsd:element name="INSZ" type="generiek:INSZType" nillable="true" minOccurs="1" maxOccurs="1" sawsdl:modelReference="https://data.vlaanderen.be/ns/persoon#registratie"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PersoonGebeurtenisType" sawsdl:modelReference="https://data.vlaanderen.be/ns/persoon#Persoonsgebeurtenis">
+		<xsd:sequence>
+			<xsd:element name="Datum" type="xsd:dateTime" nillable="false" minOccurs="1" maxOccurs="1" sawsdl:modelReference="https://data.vlaanderen.be/ns/persoon#datum"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrganisatieType" sawsdl:modelReference="http://www.w3.org/ns/org#Organization">
+		<xsd:sequence>
+			<xsd:element name="Organisatienaam" type="oslo:TaalstringType" nillable="false" minOccurs="1" maxOccurs="1" sawsdl:modelReference="http://www.w3.org/2004/02/skos/core#prefLabel"/>
+			<xsd:element name="OndernemingMetLandbouwActiviteit" type="xsd:boolean" nillable="false" minOccurs="0" maxOccurs="1" sawsdl:modelReference=""/>
+			<xsd:element name="NietGestandaardiseerdeRechtsvorm" type="RechtsvormUitbreidingType" nillable="true" minOccurs="0" maxOccurs="1" sawsdl:modelReference=""/>
+			<xsd:element name="GeregistreerdeOrganisatie" type="GeregistreerdeOrganisatieType" nillable="true" minOccurs="0" maxOccurs="1" sawsdl:modelReference=""/>
+			<xsd:element name="Periode" type="PeriodeType" nillable="true" minOccurs="0" maxOccurs="1" sawsdl:modelReference=""/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RechtsvormUitbreidingType" sawsdl:modelReference="http://www.w3.org/2004/02/skos/core#Concept">
+		<xsd:complexContent>
+			<xsd:extension base="RechtsvormType">
+				<xsd:sequence>
+					<xsd:element name="Land" type="oslo:TaalstringType" minOccurs="0" maxOccurs="1" sawsdl:modelReference=""/>
+					<xsd:element name="LandISOCode" type="xsd:string" minOccurs="0" maxOccurs="1" sawsdl:modelReference=""/>
+					<xsd:element name="LandNISCode" type="xsd:string" minOccurs="0" maxOccurs="1" sawsdl:modelReference=""/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="RechtsvormType" sawsdl:modelReference="http://www.w3.org/2004/02/skos/core#Concept">
+		<xsd:complexContent>
+			<xsd:extension base="oslo:CodeOmschrijvingType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="GeregistreerdeOrganisatieType" sawsdl:modelReference="http://www.w3.org/ns/regorg#RegisteredOrganization">
+		<xsd:sequence>
+			<xsd:element name="Ondernemingsnummer" type="generiek:OndernemingsnummerType" nillable="true" minOccurs="1" maxOccurs="1" sawsdl:modelReference="http://www.w3.org/ns/regorg#registration"/>
+			<!-- <xsd:element minOccurs="1" maxOccurs="1" name="Organisatienaam" nillable="false" type="TaalStringType" sawsdl:modelReference="http://www.w3.org/ns/regorg#legalName"/> -->
+			<!--<xsd:element name="Rechtsvorm" type="RechtsvormType" nillable="true" minOccurs="0" maxOccurs="1" sawsdl:modelReference="https://data.vlaanderen.be/ns/organisatie#rechtsvorm"/>-->
+		</xsd:sequence>
+	</xsd:complexType>
+	<!--<xsd:complexType name="RechtstoestandType" sawsdl:modelReference="http://www.w3.org/2004/02/skos/core#Concept">
+		<xsd:complexContent>
+			<xsd:extension base="oslo:CodeOmschrijvingType"/>
+		</xsd:complexContent>
+	</xsd:complexType>-->
+	<xsd:complexType name="ContactInfoType">
+		<xsd:sequence>
+			<xsd:element name="Adres" type="AdresVoorstellingUitbreidingType" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="AdresMogelijkInaccuraat" type="xsd:boolean" nillable="false" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Email" type="EmailLijstType" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Telefoon" type="TelefoonLijstType" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Gsm" type="GsmLijstType" nillable="true" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AdresVoorstellingUitbreidingType" sawsdl:modelReference="">
+		<xsd:complexContent>
+			<xsd:extension base="oslo:AdresvoorstellingType">
+				<xsd:sequence>
+					<xsd:element name="NISCodeLand" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="ISOCodeLand" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="NISCodeGemeente" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+					<xsd:element name="NietGestandaardiseerdeStraatnaam" type="oslo:TaalstringType" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>Een straatnaam in een bepaalde schrijfwijze waarbij niet zeker is of deze gelijk is aan de OSLO schrijfwijze.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="NietGestandaardiseerdeGemeentenaam" type="oslo:TaalstringType" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>Een gemeentenaam in een bepaalde schrijfwijze waarbij niet zeker is of deze gelijk is aan de OSLO schrijfwijze.</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="BedrijfstypologieType">
+		<xsd:complexContent>
+			<xsd:extension base="oslo:CodeOmschrijvingType">
+				<xsd:sequence>
+					<xsd:element name="Bron" type="BedrijfstypologieBronType" nillable="false" minOccurs="1" maxOccurs="1"/>
+					<xsd:element name="Standaardomzet" type="BedrijfstypologieStandaardomzetType" nillable="true" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ExploitatieType">
+		<xsd:sequence>
+			<xsd:element name="Exploitatienummer" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="Adres" type="AdresVoorstellingUitbreidingType" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="AdresPositie" type="PositieType" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="PositieGeometrieMethode" type="PositieGeometrieMethodeType" nillable="true" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Beslagen" type="BeslagLijstType" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="Periode" type="PeriodeType" nillable="true" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ExploitatieLijstType">
+		<xsd:sequence>
+			<xsd:element name="Exploitatie" type="ExploitatieType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PeriodeType" sawsdl:modelReference="http://data.europa.eu/m8g/PeriodOfTime">
+		<xsd:sequence>
+			<xsd:element name="Begin" type="xsd:dateTime" nillable="false" minOccurs="1" maxOccurs="1" sawsdl:modelReference="http://data.europa.eu/m8g/startTime"/>
+			<xsd:element name="Einde" type="xsd:dateTime" nillable="true" minOccurs="0" maxOccurs="1" sawsdl:modelReference="http://data.europa.eu/m8g/endTime" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="PositieType" sawsdl:modelReference="http://www.opengis.net/ont/sf#Point">
+		<xsd:annotation>
+			<xsd:documentation>x en y coordinaat, gescheiden door een spatie, vb. 177328.01 213067.45</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string" sawsdl:modelReference=""/>
+	</xsd:simpleType>
+	<xsd:complexType name="PositieGeometrieMethodeType" sawsdl:modelReference="http://www.w3.org/2004/02/skos/core#Concept">
+		<xsd:complexContent>
+			<xsd:extension base="oslo:CodeOmschrijvingType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="BeslagType">
+		<xsd:sequence>
+			<xsd:element name="Beslagnummer" type="xsd:string" nillable="true" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="Periode" type="PeriodeType" nillable="true" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BeslagLijstType">
+		<xsd:sequence>
+			<xsd:element name="Beslag" type="BeslagType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

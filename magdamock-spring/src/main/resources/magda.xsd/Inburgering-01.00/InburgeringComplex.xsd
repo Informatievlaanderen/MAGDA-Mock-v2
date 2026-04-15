@@ -1,0 +1,994 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://inburgering-01_00.kbi.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" targetNamespace="http://inburgering-01_00.kbi.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.05">
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:include schemaLocation="InburgeringEnum.xsd"/>
+	<xs:include schemaLocation="InburgeringSimple.xsd"/>
+	<xs:complexType name="PeriodeUitgebreidType">
+		<xs:annotation>
+			<xs:documentation>Chronologisch overzicht van de aanmeldingen bij het onthaalbureau tijdens het voorbije jaar.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="generiek:PeriodeType">
+				<xs:sequence>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:attribute name="DatumGeldigheid" type="generiek:DatumType"/>
+				<xs:attribute name="DatumLaatsteWijziging" type="generiek:DatumType"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DatumInfoType">
+		<xs:annotation>
+			<xs:documentation>Type noodzakelijk om andere types uit te breiden met de attributen DatumGeldigheid en DatumLaatsteWijziging.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="DatumGeldigheid" type="generiek:DatumType"/>
+		<xs:attribute name="DatumLaatsteWijziging" type="generiek:DatumType"/>
+	</xs:complexType>
+	<xs:complexType name="ContactgegevensType">
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Telefoon" type="TelefoonTypeType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Email" type="EmailTypeType" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TelefoonTypeType">
+		<xs:sequence>
+			<xs:element name="Type" type="CodeType"/>
+			<xs:element name="Nummer" type="TelFaxType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EmailTypeType">
+		<xs:sequence>
+			<xs:element name="Type" type="CodeType"/>
+			<xs:element name="Adres" type="EmailType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeType">
+		<xs:simpleContent>
+			<xs:extension base="CodeVeldType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="KBICentrumType">
+		<xs:annotation>
+			<xs:documentation>Definiëren van een een centrum binnen de KBI. Ondernemingsnummer en VOPEntiteitNummer definiëren samen eenduidig één centrum.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Ondernemingsnummer" type="OndernemingsNummerType" minOccurs="0"/>
+					<xs:element name="VOPEntiteitNummer" type="VOPEntiteitNummerType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="KBICentrumDetailType">
+		<xs:annotation>
+			<xs:documentation>Uitgebreide voorstelling van een centrum binnen de KBI</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="KBICentrumType">
+				<xs:sequence>
+					<xs:element name="TypeCentrum" type="CodeType" minOccurs="0"/>
+					<xs:element name="Contactgegevens" type="ContactgegevensType" minOccurs="0"/>
+					<xs:element name="Contactpersoon" type="ContactpersoonType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="UitstelType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Begindatum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="Einddatum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="Reden" type="CodeType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SanctioneringsbevoegdhedenType">
+		<xs:sequence>
+			<xs:element name="Sanctioneringsbevoegdheid" type="SanctioneringsbevoegdheidType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SanctioneringsbevoegdheidType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Bevoegdheid" type="CodeType" minOccurs="0"/>
+					<xs:element name="TypeOpvolging" type="CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Enkel beschikbaar indien Bevoegdheid = Sociaal verhuurkantoor.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="UitstellenType">
+		<xs:sequence>
+			<xs:element name="Uitstel" type="UitstelType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AanmeldingenType">
+		<xs:sequence>
+			<xs:element name="Aanmelding" type="AanmeldingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AanmeldingType">
+		<xs:annotation>
+			<xs:documentation>Chronologisch overzicht van de aanmeldingen bij het onthaalbureau tijdens het voorbije jaar.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="KBICentrum" type="KBICentrumType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Onthaalbureau of Huis van het Nederlands van aanmelding.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Aanmeldingsdatum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+					<xs:element name="Type" type="CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Type van de aanmelding.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Reden" type="CodeType" minOccurs="0"/>
+					<xs:element name="Contactpersoon" type="ContactpersoonType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Voor hoedanigheid inburgeraar gegevens van de trajectbegeleider of aanmelder, voor hoedanigheid NT2-cursist gegevens van de intaker.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AanmeldingsgegevensType">
+		<xs:sequence>
+			<xs:element name="Aanmeldingen" type="AanmeldingenType" minOccurs="0"/>
+			<xs:element name="Uitstellen" type="UitstellenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AfsluitenDossierType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="Reden" type="CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Reden van afsluiten dossier.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BehaaldeNiveausType">
+		<xs:sequence>
+			<xs:element name="BehaaldNiveau" type="BehaaldNiveauType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BehaaldNiveauType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TestenType">
+		<xs:sequence>
+			<xs:element name="Test" type="TestType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TestType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Soort" type="CodeType" minOccurs="0"/>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+					<xs:element name="Resultaat" type="CodeType" minOccurs="0"/>
+					<xs:element name="KBICentrum" type="KBICentrumType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Centrum waar de test plaats vond.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RegieType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="CodeType">
+				<xs:attribute name="DatumGeldigheid" type="generiek:VolledigDatumType"/>
+				<xs:attribute name="DatumLaatsteWijziging" type="generiek:VolledigDatumType"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="OpmerkingenBijDossierType">
+		<xs:sequence>
+			<xs:element name="OpmerkingBijDossier" type="OpmerkingBijDossierType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpmerkingBijDossierType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Bestemmeling" type="CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Voor welke partner is deze opmerking bestemd? (Algemeen/OCMW/VDAB/VMSW/...)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+					<xs:element name="Opmerking" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vrij tekstveld waarin de trajectbegeleider extra informatie kan registreren.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InburgeringsgegevensType">
+		<xs:sequence>
+			<xs:element name="Doelgroepbepalingen" type="DoelgroepbepalingenType" minOccurs="0"/>
+			<xs:element name="Contractgegevens" type="ContractgegevensType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DoelgroepbepalingenType">
+		<xs:sequence>
+			<xs:element name="Doelgroepbepaling" type="DoelgroepbepalingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DoelgroepbepalingType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Type doelgroep op moment doelgroepbepaling. (Rechthebbend/Prioritair Rechthebbend/Verplicht volledige gamma/Verplicht MO/Verplicht NT2/Geen doelgroep)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Soort" type="CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Soort doelgroep op moment doelgroepbepaling. (Nieuwkomer/Oudkomer)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vlag die aangeeft of de doelgroepbepaling de meest recente doelgroepbepaling is.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Doelgroepcategorieen" type="DoelgroepcategorieenType" minOccurs="0"/>
+					<xs:element name="RedenGeenDoelgroep" type="CodeType" minOccurs="0"/>
+					<xs:element name="RedenVrijstellingVanVerplichting" type="CodeType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DoelgroepcategorieenType">
+		<xs:sequence>
+			<xs:element name="Doelgroepcategorie" type="CodeType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContractgegevensType">
+		<xs:sequence>
+			<xs:element name="Contracten" type="ContractenType" minOccurs="0"/>
+			<xs:element name="Uitstellen" type="UitstellenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContractOnderdelenType">
+		<xs:sequence>
+			<xs:element name="Onderdeel" type="ContractOnderdeelType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContractOnderdeelDetailsType">
+		<xs:sequence>
+			<xs:element name="Detail" type="CodeType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContractOnderdeelType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Details" type="ContractOnderdeelDetailsType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="Beschrijving" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="ContractAddendaType">
+		<xs:sequence>
+			<xs:element name="Addendum" type="ContractAddendumType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContractAddendumType">
+		<xs:sequence>
+			<xs:element name="Soort" type="CodeType" minOccurs="0"/>
+			<xs:element name="Datum" type="generiek:DatumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Datum van ondertekening addendum.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+			<xs:element name="KBIRapport" type="KBIRapportType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>GUID-sleutel waarmee via GeefRapportKBI het contractaddendum als PDF gedownload kan worden.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContractenType">
+		<xs:sequence>
+			<xs:element name="Contract" type="ContractType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContractType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Soort" type="CodeType" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Datum van ondertekening IB-contract.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vlag die aangeeft of het Contract het meest recente van dit TYPE is.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Onderdelen" type="ContractOnderdelenType" minOccurs="0"/>
+					<xs:element name="KBIRapport" type="KBIRapportType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>GUID-sleutel waarmee via GeefRapportKBI het contract als PDF gedownload kan worden.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Addenda" type="ContractAddendaType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AttestenType">
+		<xs:sequence>
+			<xs:element name="Attest" type="AttestType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AttestType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Status" type="CodeType" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Datum waarop inburgeringsattest wordt behaald / afgeleverd.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+					<xs:element name="KBIRapport" type="KBIRapportType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>GUID-sleutel waarmee via GeefRapportKBI het attest als PDF gedownload kan worden.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AdviezenType">
+		<xs:sequence>
+			<xs:element name="Advies" type="AdviesType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdviesType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Advies" type="CodeType" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+					<xs:element name="TypeTraject" type="CodeType" minOccurs="0"/>
+					<xs:element name="TypeCentrum" type="CodeType" minOccurs="0"/>
+					<xs:element name="Doorverwijzing" type="CodeType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BesluitenType">
+		<xs:sequence>
+			<xs:element name="Besluit" type="BesluitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BesluitType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Soort" type="CodeType" minOccurs="0"/>
+					<xs:element name="Opmerking" type="xs:string" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PerspectievenType">
+		<xs:sequence>
+			<xs:element name="Perspectief" type="PerspectiefType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PerspectiefType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Periode" type="PeriodeUitgebreidType" minOccurs="0"/>
+					<xs:element name="Reden" type="CodeType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VrijstellingType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Reden" type="CodeType" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OpschortingenType">
+		<xs:sequence>
+			<xs:element name="Opschorting" type="OpschortingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpschortingType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Periode" type="PeriodeUitgebreidType" minOccurs="0"/>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Reden" type="CodeType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TrajectonderdeelTestenType">
+		<xs:sequence>
+			<xs:element name="Test" type="TrajectonderdeelTestType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TrajectonderdeelTestType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Soort" type="CodeType" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+					<xs:element name="Resultaat" type="CodeType" minOccurs="0"/>
+					<xs:element name="KBICentrum" type="KBICentrumType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OpleidingType">
+		<xs:sequence>
+			<xs:element name="Type" type="CodeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InschrijvingsgegevensType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Periode" type="PeriodeUitgebreidType" minOccurs="0"/>
+					<xs:element name="TeBehalenAanwezigheidsGraad" type="xs:decimal" minOccurs="0"/>
+					<xs:element name="Uitstapreden" type="CodeType" minOccurs="0"/>
+					<xs:element name="Resultaat" type="CodeType" minOccurs="0"/>
+					<xs:element name="Richtgraad" type="CodeType" minOccurs="0"/>
+					<xs:element name="Status" type="CodeType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ModulesType">
+		<xs:sequence>
+			<xs:element name="Module" type="ModuleType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModuleType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="KBICentrum" type="KBICentrumType" minOccurs="0"/>
+					<xs:element name="Cursusnummer" type="CodeType" minOccurs="0"/>
+					<xs:element name="Periode" type="PeriodeUitgebreidType" minOccurs="0"/>
+					<xs:element name="AantalLestijden" type="xs:decimal" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AfwezighedenType">
+		<xs:sequence>
+			<xs:element name="Afwezigheid" type="AfwezigheidType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AfwezigheidType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Code van de afwezigheid.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+					<xs:element name="AantalLestijden" type="xs:decimal" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CursussenType">
+		<xs:sequence>
+			<xs:element name="Cursus" type="CursusType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CursusType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Opleiding" type="OpleidingType" minOccurs="0"/>
+					<xs:element name="Inschrijvingsgegevens" type="InschrijvingsgegevensType" minOccurs="0"/>
+					<xs:element name="Modules" type="ModulesType" minOccurs="0"/>
+					<xs:element name="Afwezigheden" type="AfwezighedenType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TrajectonderdeelBesluitenType">
+		<xs:sequence>
+			<xs:element name="Besluit" type="TrajectonderdeelBesluitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TrajectonderdeelBesluitType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Soort" type="CodeType" minOccurs="0"/>
+					<xs:element name="Opmerking" type="xs:string" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TrajectonderdelenType">
+		<xs:sequence>
+			<xs:element name="Trajectonderdeel" type="TrajectonderdeelType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TrajectonderdeelType">
+		<xs:sequence>
+			<xs:element name="Type" type="CodeType" minOccurs="0"/>
+			<xs:element name="Vrijstelling" type="VrijstellingType" minOccurs="0"/>
+			<xs:element name="Opschortingen" type="OpschortingenType" minOccurs="0"/>
+			<xs:element name="Besluiten" type="TrajectonderdeelBesluitenType" minOccurs="0"/>
+			<xs:element name="Testen" type="TrajectonderdeelTestenType" minOccurs="0"/>
+			<xs:element name="Cursussen" type="CursussenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TrajectBesluitenType">
+		<xs:sequence>
+			<xs:element name="Besluit" type="TrajectBesluitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TrajectBesluitType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Soort" type="CodeType" minOccurs="0"/>
+					<xs:element name="Opmerking" type="xs:string" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TrajectenType">
+		<xs:sequence>
+			<xs:element name="Traject" type="TrajectType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TrajectType">
+		<xs:sequence>
+			<xs:element name="Periode" type="PeriodeUitgebreidType" minOccurs="0"/>
+			<xs:element name="RedenEindeTraject" type="CodeType" minOccurs="0"/>
+			<xs:element name="Besluiten" type="TrajectBesluitenType" minOccurs="0"/>
+			<xs:element name="Perspectieven" type="PerspectievenType" minOccurs="0"/>
+			<xs:element name="Trajectonderdelen" type="TrajectonderdelenType" minOccurs="0"/>
+			<xs:element name="Inbreukdossiers" type="InbreukdossiersType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VaststellingType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+					<xs:element name="RelaasVanDeFeiten" type="xs:string" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vrij tekstveld waarin de trajectbegeleider extra informatie kan registreren.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="KBIRapport" type="KBIRapportType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>GUID-sleutel waarmee via GeefRapportKBI de vaststelling als PDF gedownload kan worden.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IngebrekestellingType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="KBIRapport" type="KBIRapportType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>GUID-sleutel waarmee via GeefRapportKBI de ingebrekestelling als PDF gedownload kan worden.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InregelstellingType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="RelaasVanDeFeiten" type="xs:string" minOccurs="0"/>
+					<xs:element name="KBIRapport" type="KBIRapportType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>GUID-sleutel waarmee via GeefRapportKBI de inregelstelling als PDF gedownload kan worden.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DossieractiesType">
+		<xs:sequence>
+			<xs:element name="Dossieractie" type="DossieractieType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DossieractieType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="TypeActie" type="CodeType" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+					<xs:element name="Info" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RechtzettingType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="MeestRecentVlag" type="generiek:VlagEnumType" minOccurs="0"/>
+					<xs:element name="RelaasVanDeFeiten" type="xs:string" minOccurs="0"/>
+					<xs:element name="KBIRapport" type="KBIRapportType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>GUID-sleutel waarmee via GeefRapportKBI de rechtzetting als PDF gedownload kan worden.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InbreukdossierBesluitType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="Reden" type="CodeType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Reden geen gevolg</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Nota" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InbreukStatusType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InbreukType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
+					<xs:element name="Ingebrekestelling" type="IngebrekestellingType" minOccurs="0"/>
+					<xs:element name="Regelgeving" type="CodeType" minOccurs="0"/>
+					<xs:element name="Boetevork" type="CodeType" minOccurs="0"/>
+					<xs:element name="Inregelstelling" type="InregelstellingType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InbreukdossiersType">
+		<xs:sequence>
+			<xs:element name="Inbreukdossier" type="InbreukdossierType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InbreukdossierType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Dossiernummer" type="xs:string" minOccurs="0"/>
+					<xs:element name="Bestemmeling" type="CodeType" minOccurs="0"/>
+					<xs:element name="Vaststelling" type="VaststellingType" minOccurs="0"/>
+					<xs:element name="Inbreuk" type="InbreukType" minOccurs="0"/>
+					<xs:element name="Dossieracties" type="DossieractiesType" minOccurs="0"/>
+					<xs:element name="Rechtzetting" type="RechtzettingType" minOccurs="0"/>
+					<xs:element name="Besluit" type="InbreukdossierBesluitType" minOccurs="0"/>
+					<xs:element name="Status" type="InbreukStatusType" minOccurs="0"/>
+					<xs:element name="Contactpersoon" type="ContactpersoonType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Behandelende handhavingsambtenaren</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ContactpersoonType">
+		<xs:annotation>
+			<xs:documentation>Beschrijving van een persoon en zijn contactgegevens.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ContactType">
+				<xs:sequence>
+					<xs:element name="Achternaam" type="xs:string" minOccurs="0"/>
+					<xs:element name="Voornaam" type="xs:string" minOccurs="0"/>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ContactType">
+		<xs:annotation>
+			<xs:documentation>Bevat algemene contactinformatie.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Contactgegevens" type="ContactgegevensType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="TalenType">
+		<xs:sequence>
+			<xs:element name="Taal" type="TaalType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaalType">
+		<xs:complexContent>
+			<xs:extension base="DatumInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="CodeType" minOccurs="0"/>
+					<xs:element name="Taal" type="CodeType" minOccurs="0"/>
+					<xs:element name="Niveau" type="CodeType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Specifieke types noodzakelijk voor antwoord -->
+	<xs:complexType name="HoedanighedenType">
+		<xs:sequence>
+			<xs:element name="Hoedanigheid" type="HoedanigheidType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HoedanigheidType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Periode" type="PeriodeUitgebreidType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Beschrijft de periode van de hoedanigheid: startdatum/einddatum.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hoedanigheidscode" type="CodeType" minOccurs="0"/>
+			<xs:element name="KBICentrum" type="KBICentrumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Centrum, vestiging of loket van Onthaalbureau of HvN dat het dossier beheert.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Regie" type="RegieType" minOccurs="0"/>
+			<xs:element name="Sanctioneringsbevoegdheden" type="SanctioneringsbevoegdhedenType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Partner waarbij op dit moment sanctioneringbevoegdheid ligt.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Aanmeldingsgegevens" type="AanmeldingsgegevensType" minOccurs="0"/>
+			<xs:element name="AfsluitenDossier" type="AfsluitenDossierType" minOccurs="0"/>
+			<xs:element name="OpmerkingenBijDossier" type="OpmerkingenBijDossierType" minOccurs="0"/>
+			<xs:element name="Inburgeringsgegevens" type="InburgeringsgegevensType" minOccurs="0"/>
+			<xs:element name="Attesten" type="AttestenType" minOccurs="0"/>
+			<xs:element name="BehaaldeNiveaus" type="BehaaldeNiveausType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Niveau bepaald op basis van testen, loopbaan en certificaat.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Testen" type="TestenType" minOccurs="0"/>
+			<xs:element name="Adviezen" type="AdviezenType" minOccurs="0"/>
+			<xs:element name="Trajecten" type="TrajectenType" minOccurs="0"/>
+			<xs:element name="Talenkennis" type="TalenkennisType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TalenkennisType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Talen" type="TalenType" minOccurs="0"/>
+			<xs:element name="Alfabetisering" type="CodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Graad van alfabetisering</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

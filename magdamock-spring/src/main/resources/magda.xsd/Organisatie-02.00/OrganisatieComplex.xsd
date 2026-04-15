@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://organisatie-02_00.vip.vlaanderen.be" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" 
+	xmlns:personeel="http://personeel-02_00.vip.vlaanderen.be" 
+	targetNamespace="http://organisatie-02_00.vip.vlaanderen.be" 
+	elementFormDefault="unqualified" 
+	attributeFormDefault="unqualified" 
+	version="2.00">
+
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://personeel-02_00.vip.vlaanderen.be" schemaLocation="../Personeel-02.00/Personeel.xsd"/>
+	<xs:include schemaLocation="OrganisatieEnum.xsd"/>
+	<xs:include schemaLocation="OrganisatieSimple.xsd"/>
+
+	<xs:complexType name="OrganisatieStructuurType">
+		<xs:sequence>
+			<xs:element name="BeleidsDomein" type="OrganisatieIdentificatieType"/>
+			<xs:element name="BusinessUnit" type="OrganisatieIdentificatieType"/>
+			<xs:element name="Agentschap" type="OrganisatieIdentificatieType"/>
+			<xs:element name="Afdeling" type="OrganisatieIdentificatieType"/>
+			<xs:element name="EntiteitIdentificatie" type="EntiteitIDType"/>
+			<xs:element name="EntiteitMVGIdentificatie" type="OrganisatieIdentificatieKernType" minOccurs="0"/>
+			<xs:element name="LocatieCode" type="LocatieCodeType" minOccurs="0"/>
+			<xs:element name="Manager" type="personeel:ManagerType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArbeidsplaatsIdentificatieType">
+		<xs:sequence>
+			<xs:element name="Nummer" type="NummerType"/>
+			<xs:element name="Datum" type="generiek:Datum2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganisatieIdentificatieType">
+		<xs:sequence>
+			<xs:element name="Code" type="OrganisatieIdentificatieCodeType" minOccurs="0"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganisatieIdentificatieCodeType">
+		<xs:simpleContent>
+			<xs:extension base="OrganisatieIdentificatieKernType">
+				<xs:attribute name="Beschrijving" type="generiek:TekstKort2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="EntiteitType">
+		<xs:sequence>
+			<xs:element name="EntiteitIdentificatie" type="EntiteitIDType"/>
+			<xs:element name="BeleidsDomein" type="OrganisatieIdentificatieType" minOccurs="0"/>
+			<xs:element name="BusinessUnit" type="OrganisatieIdentificatieType" minOccurs="0"/>
+			<xs:element name="Agentschap" type="OrganisatieIdentificatieType" minOccurs="0"/>
+			<xs:element name="Afdeling" type="OrganisatieIdentificatieType" minOccurs="0"/>
+			<xs:element name="EntiteitPGIdentificatie" type="OrganisatieIdentificatieKernType" minOccurs="0"/>
+			<xs:element name="Managers" type="ManagerLijstType" minOccurs="0"/>
+			<xs:element name="Niveaus" type="NiveauLijstType" minOccurs="0"/>
+			<xs:element name="DatumModificatie" type="generiek:Datum2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ManagerLijstType">
+		<xs:sequence>
+			<xs:element name="Manager" type="personeel:ManagerType" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NiveauLijstType">
+		<xs:sequence>
+			<xs:element name="Niveau" type="NiveauType" maxOccurs="4"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NiveauType">
+		<xs:simpleContent>
+			<xs:extension base="generiek:TekstKort2_0Type">
+				<xs:attribute name="Type" type="generiek:CijferType" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="EntiteitIDType">
+		<xs:sequence>
+			<xs:element name="EntiteitSetCode" type="EntiteitSetCodeType" minOccurs="0"/>
+			<xs:element name="EntiteitCode" type="EntiteitCodeType" minOccurs="0"/>
+			<xs:element name="DatumIngang" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="Status" type="StatusType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LocatieType">
+		<xs:sequence>
+			<xs:element name="Adres" type="personeel:PersoneelAdresType"/>
+			<xs:element name="LocatieCode" type="LocatieCodeType"/>
+			<xs:element name="Exploitatiezetel" type="ExploitatiezetelType"/>
+			<xs:element name="Contact" type="personeel:ContactType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LocatieCodeType">
+		<xs:sequence>
+			<xs:element name="Code" type="OrganisatieIdentificatieCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExploitatiezetelType">
+		<xs:sequence>
+			<xs:element name="Code" type="OrganisatieIdentificatieCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitSetCodeType">
+		<xs:sequence>
+			<xs:element name="Code" type="OrganisatieIdentificatieCodeType" minOccurs="0"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitCodeType">
+		<xs:sequence>
+			<xs:element name="Code" type="OrganisatieIdentificatieCodeType" minOccurs="0"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

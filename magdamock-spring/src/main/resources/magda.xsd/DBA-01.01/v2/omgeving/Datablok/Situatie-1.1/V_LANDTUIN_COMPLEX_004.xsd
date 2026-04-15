@@ -1,0 +1,81 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:V_LANDTUIN_COMPLEX_004:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:V_LANDTUIN_COMPLEX_004:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+    <xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+    <xs:complexType name="SituatieDatablok">
+        <xs:complexContent>
+            <xs:extension base="dossier:SituatieDatablok">
+                <xs:sequence>
+                    <xs:element name="ComplexConstructieAantal">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer"/>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="ComplexConstructieAantal_asis">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string"/>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="ComplexGlasAantal">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer"/>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="ComplexGlasAantal_asis">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer"/>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Aard">
+                        <xs:simpleType>
+                            <xs:list>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="VEE"/>
+                                        <xs:enumeration value="AQUA"/>
+                                        <xs:enumeration value="AKKER"/>
+                                        <xs:enumeration value="GROENTE"/>
+                                        <xs:enumeration value="FRUIT"/>
+                                        <xs:enumeration value="SIER"/>
+                                        <xs:enumeration value="BOOM"/>
+                                        <xs:enumeration value="PARAAGRARISCH"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:list>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Aard_asis">
+                        <xs:simpleType>
+                            <xs:list>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="VEE"/>
+                                        <xs:enumeration value="AQUA"/>
+                                        <xs:enumeration value="AKKER"/>
+                                        <xs:enumeration value="GROENTE"/>
+                                        <xs:enumeration value="FRUIT"/>
+                                        <xs:enumeration value="SIER"/>
+                                        <xs:enumeration value="BOOM"/>
+                                        <xs:enumeration value="PARAAGRARISCH"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:list>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="ParaAgrarischOmschrijving" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="ParaAgrarischOmschrijving_asis" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

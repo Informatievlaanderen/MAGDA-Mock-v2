@@ -1,0 +1,1117 @@
+<xsd:schema targetNamespace="urn:be:vlaanderen:omgeving:dossier:v2" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <xsd:include schemaLocation="DossierEnum.xsd"/>
+        <xsd:include schemaLocation="DossierSimple.xsd"/>
+        <!-- -->
+        <!-- TODO merge/reuse BewaarGebeurtenisResponseType and DossierIdentificatieMetGebeurtenisType -->
+
+        <xsd:complexType name="AdresLigging">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Ligging">
+                                <xsd:sequence>
+                                        <xsd:element name="straat" type="dossier:Straat"/>
+                                        <xsd:element name="huisnummer" type="dossier:Huisnummer" minOccurs="0"/>
+                                        <xsd:element name="busnummer" type="dossier:Busnummer" minOccurs="0"/>
+                                        <xsd:element name="appnummer" type="dossier:Appnummer" minOccurs="0"/>
+                                        <xsd:element name="postCode" type="dossier:PostCode"/>
+                                        <xsd:element name="deelgemeente" type="dossier:GemeenteKortGroep" minOccurs="0" maxOccurs="1"/>
+                                        <xsd:element name="gemeente" type="dossier:GemeenteKortGroep" minOccurs="1" maxOccurs="1"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>               
+        </xsd:complexType>
+        <xsd:complexType name="Bestand">
+                <xsd:sequence>
+                        <xsd:element name="bestandsnaam" type="dossier:Bestandsnaam" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element name="bestandsgrootte" type="xsd:long" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element name="mime" type="dossier:MimeType" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element name="referte" type="dossier:ExternId" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element name="hash" type="xsd:base64Binary" minOccurs="1" maxOccurs="1"/>
+                </xsd:sequence>
+                <xsd:attribute name="src" type="xsd:anyURI">
+                        <xsd:annotation>
+                                <xsd:documentation>De locatie van het bronbestand.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="status" type="dossier:CodeSimple">
+                        <xsd:annotation/>
+                </xsd:attribute>
+        </xsd:complexType>
+        <xsd:complexType name="BestandGeometrie" abstract="true">
+                <xsd:sequence>
+                        <xsd:element name="coordinatenStelsel" type="dossier:EPSGCode" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>De EPSG code van het coordinatenstelsel.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="ondergrond" type="dossier:Ondergrond" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>De ondergrond die werd gebruikt bij het tekenen van de geometrie.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="locatie" type="dossier:Referentie" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>De locatie waar de objecten zich bevinden.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="src" type="xsd:anyURI" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType name="Contours">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:BestandGeometrie"/>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="CodeMetReferentie">
+                <xsd:annotation>
+                        <xsd:documentation>Type voor referentie naar een interne id binnen dit document.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:attribute name="idref" type="xsd:IDREF" use="optional"/>
+                <xsd:attribute name="aard" type="dossier:CodeSimple" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType name="Contact">
+                <xsd:sequence>
+                        <xsd:element name="aanspreking" type="dossier:Titel" minOccurs="0"/>
+                        <xsd:element name="postadres" type="dossier:Postadres" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>Dit object beschrijft een contactpunt aan de hand van een postadres.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="medium" type="dossier:Medium" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>Dit object beschrijft een multimediacontactpunt zoals een telefoonnummer, faxnummer, e-mailadres, twitter, ... .</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:group name="ContourGroup">
+                <xsd:sequence>
+                        <xsd:element name="aanduiding" type="dossier:Aanduiding" minOccurs="0" maxOccurs="1">
+                                <xsd:annotation>
+                                        <xsd:documentation>Het identificerend nummer dat is aangewend op de plannen.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="legende" type="dossier:Legende" minOccurs="0" maxOccurs="1">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een code op basis waarvan het geometrisch element zijn symbool krijgt.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="contour" type="dossier:Geometrie" minOccurs="0" maxOccurs="1">
+                                <xsd:annotation>
+                                        <xsd:documentation>De ligging van de contour van de geneste geometrieën voor gebruik in geografische informatiesystemen.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+        </xsd:group>
+        <xsd:complexType name="DossierFase">
+                <xsd:sequence>
+                        <xsd:element name="eigenaar" type="dossier:PersoonOfPersoonReferentie">
+                                <xsd:annotation>
+                                        <xsd:documentation>eigenaar van het dossier op het einde van deze fase</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="startdatum" type="xsd:date">
+                                <xsd:annotation>
+                                        <xsd:documentation>De datum waarop deze fase is van start gegaan.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="einddatum" type="xsd:date" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>De datum waarop deze fase is beëindigd.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="statusvlag" type="dossier:StatusVlag" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>Het geheel van de gezette statusvlaggen op het einde van de fase</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="gebeurtenis" type="dossier:Gebeurtenis" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>De gebeurtenissen aangebracht gedurende de fase. Een Gebeurtenis omvat een registratie van een actie die een persoon uitvoert tijdens de levensloop van een dossier. Dit concept wordt gebruikt bij verschillende acties binnen het dossier.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+                <xsd:attribute name="aard" type="dossier:DossierFaseAard" use="required">
+                        <xsd:annotation>
+                                <xsd:documentation>Een code die de aard van deze fase aangeeft.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+        </xsd:complexType>
+        <xsd:complexType name="DossierIdentificatie">
+                <xsd:sequence>
+                        <xsd:element name="dossierId" type="dossier:DossierId">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een unieke sleutel die het dossier identificeert binnen het platform. Bij het creëren van een dossier moet dit gelijk gesteld worden aan NIEUW.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dossierType" type="dossier:DossierType">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een code die aangeeft welk type dossier het betreft.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="roepnaam" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>De benaming van het dossier zoals opgegeven door de ?beheerder?.</xsd:documentation>
+                                </xsd:annotation>
+                                <xsd:simpleType>
+                                        <xsd:restriction base="dossier:Roepnaam"/>
+                                </xsd:simpleType>
+                        </xsd:element>
+                        <xsd:element name="dossiernummer" type="dossier:ExternId" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>Sleutel van het dossier zoals deze gekend is in andere systemen.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="DossierInhoud" abstract="true"/>
+        <xsd:complexType name="DossierStukDatablok" abstract="true"/>
+        <xsd:complexType name="AbstractDossierStukLijst" abstract="true"/>
+        <xsd:complexType name="DossierStukLijst">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:AbstractDossierStukLijst">
+                                <xsd:sequence>
+                                        <xsd:element name="dossierStuk" type="dossier:DossierStuk" minOccurs="0" maxOccurs="unbounded"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="DossierStukRefLijst">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:AbstractDossierStukLijst">
+                                <xsd:sequence>
+                                        <xsd:element name="dossierStukReferentie" type="dossier:Referentie" minOccurs="0" maxOccurs="unbounded"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="DossierStuk">
+                
+                <xsd:sequence>
+                        <xsd:element name="dossierFase" type="dossier:CodeMetReferentie" minOccurs="0" maxOccurs="1"/>
+                        <xsd:element name="naam" type="dossier:Naam" minOccurs="0" maxOccurs="1">
+                                <xsd:annotation>
+                                        <xsd:documentation>De naam van het dossierstuk.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="referte" type="dossier:ExternId" minOccurs="1" maxOccurs="1">
+                                <xsd:annotation>
+                                        <xsd:documentation>De uniek referte van het dossierstuk volgens de in het attribuut vermelde databron.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="omschrijving" type="dossier:Beschrijving" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een omschrijving van de inhoud van het dossierstuk.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="eigenaar" type="dossier:PersoonOfPersoonReferentie" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>De eigenaar van het dossierstuk.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        
+                        <xsd:element name="dossierStukDatablok" type="dossier:DossierStukDatablok" minOccurs="0" maxOccurs="unbounded"/>
+                        <xsd:element name="bestand" type="dossier:Bestand" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>Van elke dossierstuk wordt de metadata bewaard. Een bestand kan een referentie naar bronlocatie omsluiten of kan bevraagbaar zijn aan de hand van een operatie aan de hand van zijn id.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="analoog" type="dossier:ExternId" minOccurs="0"/>
+                        
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+                <xsd:attribute name="aard" type="dossier:DossierStukAard" use="required">
+                        <xsd:annotation>
+                                <xsd:documentation>Een code die aangeeft wat voor aard van dossierstuk dit betreft.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+                
+        </xsd:complexType>
+        <xsd:complexType name="Dossier">
+                <xsd:sequence>
+                        <xsd:element name="dossierIdentificatie" type="dossier:DossierIdentificatie">
+                                <xsd:annotation>
+                                        <xsd:documentation>De dossieridentificatie bevat de gegevens om een dossier te kunnen identificeren</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="persoon" type="dossier:Persoon" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>Dit object omvat alle gegevens van een bij het dossier betrokken persoon. Iemand die de dossiergegevens binnenhaalt hoeft geen authentieke databronnen te consulteren om de gegevens van de persoon op te halen.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        
+                        <xsd:element name="locatie" type="dossier:Locatie" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een locatie is de éénduidige bepaling van een ligging.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dossierVerloop" type="dossier:DossierVerloop" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Het verloop van een dossier wordt beschreven aan de hand van verschillende fases. Deze fasen bevinden zich in het DossierVerloop. Er kan maar 1 actuele fase zijn die op het moment nog in behandeling is. Deze fase wordt geïdentificeerd aan de hand van de toestand.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dossierStukken" type="dossier:DossierStukLijst" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een dossierstuk is een document dat informatie bevat die noodzakelijk is voor het dossier. Sommige dossierstukken worden in de regelgeving opgelegd (in de aanstiplijst). De indiener kan echter zoveel stukken aanhechten als hij nodig acht voor het documenteren. Een dossierstuk kan een referentie naar een bestand of een datablok omvatten.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dossierInhoud" type="dossier:DossierInhoud" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>De inhoudelijke informatie van een dossier is te vinden in het DossierInhoud component. Dit kan informatie zijn over een plan, verordening of een verkaveling. De concrete informatie in deze component wordt bepaald door het applicatieschema.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="creatietijdstip" type="xsd:dateTime">
+                        <xsd:annotation>
+                                <xsd:documentation>Het moment van create van het dossier. Dit tijdstip wordt automatisch ingevuld bij het aanmaken van het dossier.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="wijzigingstijdstip" type="xsd:dateTime">
+                        <xsd:annotation>
+                                <xsd:documentation>Het tijdstip waarop het dossier laatst werd gewijzigd. Dit tijdstip wordt automatisch aangepast bij elke wijziging van het dossier.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="versie">
+                        <xsd:annotation>
+                                <xsd:documentation>Een sequentieel nummer dat aangeeft hoeveel keer het dossier is aangepast Dit nummer wordt automatisch verhoogd bij elke wijziging van het dossier.</xsd:documentation>
+                        </xsd:annotation>
+                        <xsd:simpleType>
+                                <xsd:restriction base="xsd:int">
+                                        <xsd:minInclusive value="1"/>
+                                </xsd:restriction>
+                        </xsd:simpleType>
+                </xsd:attribute>
+        </xsd:complexType>
+        
+        <xsd:complexType name="ExternId">
+                <xsd:annotation>
+                        <xsd:documentation>Type voor referentie naar een id op een externe databron.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:attribute name="databron" type="dossier:ExternIdDatabron" use="required">
+                        
+                        <xsd:annotation>
+                                <xsd:documentation>De door alle partijen gekende code van de databron die het extern id van dit element kwalificeert</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="externIdWaarde" type="dossier:ExternIdDatabron" use="required">
+                        <xsd:annotation>
+                                <xsd:documentation>Waarde van externe ids.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+        </xsd:complexType>
+        <xsd:complexType name="DossierVerloop">
+                <xsd:sequence>
+                        <xsd:element name="toestand" type="dossier:Toestand">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een dossier doorloopt meerdere fases, telkens met een andere persoon aan het stuur. Op niveau van een fase kunnen enkele attributen worden bijgehouden, doch de eigenlijke inhoud over het verloop van het dossier zit in de onderliggende gebeurtenissen en statusvlaggen.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dossierFase" type="dossier:DossierFase" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een dossier doorloopt meerdere fases. Op niveau van een fase kunnen enkele attributen worden bijgehouden, doch de eigenlijke inhoud over het verloop van het dossier zit in de onderliggende gebeurtenissen en statusvlaggen.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+        </xsd:complexType>
+        
+        <xsd:complexType name="GebeurtenisDatablok" abstract="true"/>
+        <xsd:complexType name="Bestemmeling" abstract="true">
+                
+                <xsd:attribute name="orde" type="dossier:CodeSimple" use="optional" default="primair">
+                        <xsd:annotation>
+                                <xsd:documentation>De orde van de bestemmeling, zijnde primair (To, moet antwoorden) of secundair (CC, mag meekijken). default is primair.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+        </xsd:complexType>
+        <xsd:complexType name="BestemmelingReferentie">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Bestemmeling">
+                                <xsd:sequence>
+                                        <xsd:element name="persoonRef" type="dossier:Referentie" minOccurs="1" maxOccurs="2"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="BestemmelingPersoon">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Bestemmeling">
+                                <xsd:sequence>
+                                        <xsd:element name="persoon" type="dossier:Persoon" minOccurs="1" maxOccurs="2"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="Gebeurtenis">
+                <xsd:sequence>
+                        <xsd:element name="referte" type="dossier:ExternId"/>
+                        <xsd:element name="dossierFaseCodeSimple" type="dossier:CodeSimple" minOccurs="0"/>
+                        <xsd:element name="bronActor" type="dossier:PersoonOfPersoonReferentie"/>
+                        <xsd:element name="datum" type="xsd:date" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>De datum waarop de gebeurtenis plaatsvond.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        
+                        <xsd:element name="bestemmeling" type="dossier:Bestemmeling" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>De bestemmeling van deze gebeurtenis.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        
+                        <xsd:element name="vraag" minOccurs="0" type="dossier:VraagReferte">
+                                <xsd:annotation>
+                                        <xsd:documentation>De gebeurtenis die een vraag heeft uitgestuurd voor deze gebeurtenis.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="gebeurtenisDatablok" type="dossier:GebeurtenisDatablok" minOccurs="0"/>
+                        <xsd:element name="dossierStukken" minOccurs="0" type="dossier:AbstractDossierStukLijst"/>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+                <xsd:attribute name="aard" type="dossier:GebeurtenisAard" use="required">
+                        <xsd:annotation>
+                                <xsd:documentation>Een code die aangeeft wat voor aard van gebeurtenis dit betreft.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="registratieTijdstip" type="xsd:dateTime">
+                        <xsd:annotation>
+                                <xsd:documentation>het moment waarop de gebeurtenis door DBA opgenomen werd.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="status" type="dossier:CodeSimple">
+                        <xsd:annotation>
+                                <xsd:documentation>De actuele status van de gebeurtenis. Geeft aan of de gebeurtenis verwerkt werd en of iedereen verwittigd werd.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+        </xsd:complexType>
+        <xsd:complexType name="Geboorte">
+                <xsd:sequence>
+                        <xsd:element name="datum" type="xsd:date">
+                                <xsd:annotation>
+                                        <xsd:documentation>De geboortedatum van deze persoon.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="plaats" type="dossier:Naam">
+                                <xsd:annotation>
+                                        <xsd:documentation>De geboorteplaats van deze persoon.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="land" type="dossier:Naam" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Het geboorteland van deze persoon.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="GemeenteKortGroep">
+                <xsd:annotation>
+                        <xsd:documentation>GemeenteGroepType</xsd:documentation>
+                </xsd:annotation>
+                <xsd:sequence>
+                        <xsd:element name="nISCode" type="dossier:NISCode" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Code van de locatie, altijd NIS-codes. Het formaat van gemeentecodes heeft 5 cijfers.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="naam" type="dossier:LandGemeenteNaam">
+                                <xsd:annotation>
+                                        <xsd:documentation>Naam van de gemeente</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:group name="GeometrieGroup">
+                <xsd:sequence>
+                        <xsd:element name="aanduiding" type="dossier:Aanduiding" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Het identificerend nummer dat is aangewend op de plannen.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="legende" type="dossier:Legende" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een code op basis waarvan het geometrisch element zijn symbool krijgt.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="geometrie" type="dossier:Geometrie" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>De geometrische ligging die bruikbaar is in geografische informatiesystemen.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+        </xsd:group>
+        <xsd:complexType name="Geometrie">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Ligging">
+                                <xsd:sequence>
+                                        <xsd:element name="coordinatenStelsel" type="dossier:EPSGCode">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De EPSG code van het coordinatenstelsel.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="ondergrond" type="dossier:Ondergrond">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De ondergrond die werd gebruikt bij het tekenen van de geometrie.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="wKT" type="dossier:WKT">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De geometrie als WKT.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="Handeling" abstract="true">
+                <xsd:sequence>
+                        <xsd:element name="context" type="dossier:CodeSimple">
+                                <xsd:annotation>
+                                        <xsd:documentation>Geeft de context van de handeling - met name RWO of Milieu, etc.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="omschrijving" type="dossier:Beschrijving"/>
+                        <xsd:element name="actor" type="dossier:PersoonOfPersoonReferentie" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Aanspreekpunt voor de handeling? bvb verschillende architecten of milieucoordinator </xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="uitvoeringsfase" type="dossier:Referentie" minOccurs="0"/>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+                <xsd:attribute name="idref" type="xsd:IDREF"/>
+                <xsd:attribute name="aard" type="dossier:CodeSimple" use="required">
+                        <xsd:annotation>
+                                <xsd:documentation>HandelingType</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+        </xsd:complexType>
+        <xsd:complexType name="Handtekening">
+                <xsd:sequence>
+                        <xsd:element name="doel" type="dossier:HandtekeningDoel">
+                                <xsd:annotation>
+                                        <xsd:documentation>Het doel van de geplaatste handtekening.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="verklaring" type="dossier:Beschrijving">
+                                <xsd:annotation>
+                                        <xsd:documentation>De verklaring die ondertekend wordt. Bijvoorbeeld: “Bij deze is de persoon XYZ gemachtigd om me te vertegenwoordigen in dit dossier”.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="wijze" type="dossier:HandtekeningWijze">
+                                <xsd:annotation>
+                                        <xsd:documentation>De wijze waarop ondertekend werd.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="tijdstip" type="xsd:dateTime">
+                                <xsd:annotation>
+                                        <xsd:documentation>Het tijdstip waarop ondertekend werd.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+        </xsd:complexType>  
+        <xsd:complexType name="KavelLigging">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Ligging">
+                                <xsd:sequence>
+                                        <xsd:element name="dossiernummer" type="dossier:ExternId" maxOccurs="unbounded"/>
+                                        <xsd:element name="kavelnummer" type="dossier:Aanduiding"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="Ligging" abstract="true"/>
+        <xsd:complexType name="BeschrijvingLigging">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Ligging">
+                                <xsd:sequence>
+                                        <xsd:element name="beschrijving" type="dossier:Beschrijving"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="Locatie">
+                <xsd:sequence>
+                        <xsd:element name="ligging" type="dossier:Ligging" minOccurs="1" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>De ligging van de locatie als adres.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+        </xsd:complexType>
+        <xsd:complexType name="Medium">
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                                <xsd:attribute name="aard" type="dossier:MediaAard" use="required">
+                                        <xsd:annotation>
+                                                <xsd:documentation>De aard van het contactmedium.</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:attribute>
+                                <xsd:attribute name="gebruik" type="dossier:Gebruik">
+                                        <xsd:annotation>
+                                                <xsd:documentation>Bepaalt waarvoor dit medium voor gebruikt wordt door de betrokken persoon. </xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:attribute>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType name="OmgevingscheckDatablok" abstract="true"/>
+        <xsd:complexType name="Omgevingscheck" abstract="true">
+                <xsd:sequence>
+                        <xsd:element name="actor" type="dossier:PersoonOfPersoonReferentie"/>
+                        <xsd:group ref="dossier:ContourGroup"/>
+                        <xsd:element name="omgevingscheckDatablok" type="dossier:OmgevingscheckDatablok" minOccurs="0"/>
+                        <xsd:element name="dossierStukken" minOccurs="0" type="dossier:AbstractDossierStukLijst">
+                                <xsd:annotation>
+                                        <xsd:documentation>Verwijzingen naar op het voorwerp betrekking hebbende dossierstukken.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+        </xsd:complexType>
+        <xsd:complexType name="OmgevingselementDatablok" abstract="true"/>
+        <xsd:complexType name="Omgevingselement">
+                <xsd:sequence>
+                        <xsd:element name="externId" type="dossier:ExternId" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een unieke sleutel van het omgevingselement die door een externe authentieke databron wordt toegekend.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="omschrijving" type="dossier:Beschrijving" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een omschrijving van het omgevingselement.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="beheerder" type="dossier:PersoonOfPersoonReferentie" minOccurs="0"/>
+                        <xsd:element name="belangRelatie" type="dossier:Beschrijving"/>
+                        <xsd:element name="behouden" type="xsd:boolean" minOccurs="0"/>
+                        <xsd:group ref="dossier:GeometrieGroup"/>
+                        <xsd:element name="omgevingselementDatablok" type="dossier:OmgevingselementDatablok" minOccurs="0" maxOccurs="unbounded"/>
+                        <xsd:element name="dossierStukken" minOccurs="0" type="dossier:AbstractDossierStukLijst">
+                                <xsd:annotation>
+                                        <xsd:documentation>Verwijzingen naar op het voorwerp betrekking hebbende dossierstukken.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+        </xsd:complexType>
+        <xsd:complexType name="Ondergrond">
+                <xsd:sequence>
+                        <xsd:element name="type" type="dossier:OndergrondType">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een code die de ondergrond identificeert die werd gebruikt bij het tekenen van de geometrie.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="aard" type="dossier:Beschrijving" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een omschrijving van de ondergrond die werd gebruikt bij het tekenen van de geometrie.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="precisie" type="dossier:DecimaleWaarde" minOccurs="0"/>
+                        <xsd:element name="metadata" type="xsd:anyURI" minOccurs="0"/>
+                        <xsd:element name="datum" type="xsd:date">
+                                <xsd:annotation>
+                                        <xsd:documentation>De datum van de ondergrond die werd gebruikt bij het tekenen van de geometrie.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="PerceelLigging">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Ligging">
+                                <xsd:sequence>
+                                        <xsd:element name="capakey" type="dossier:ExternId"/>
+                                        <xsd:element name="toestand" type="dossier:Naam" minOccurs="0"/>
+                                        <xsd:element name="deelPerceel" type="xsd:boolean">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>Indien aanvraag slaat op deel van perceel.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <!--    <xsd:complexType name="PersoonAbstract">
+                <xsd:sequence>
+                        <xsd:element name="hoedanigheid" type="dossier:Hoedanigheid">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een persoon heeft een hoedanigheid binnen een dossier.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="persoon" type="dossier:Persoon"/>
+                </xsd:sequence>
+        </xsd:complexType>-->
+        <xsd:complexType name="PersoonOfPersoonReferentie">
+                <xsd:choice>
+                        <xsd:element name="persoon" type="dossier:Persoon" minOccurs="1" maxOccurs="2"/>
+                        <xsd:element name="persoonRef" type="dossier:Referentie" minOccurs="1" maxOccurs="2"/>
+                </xsd:choice>
+        </xsd:complexType>
+       <!-- voorlopig choice implementatie
+        <xsd:complexType name="PersoonOfPersoonReferentie" abstract="true"/>
+        <xsd:complexType name="PersoonLijst">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:PersoonOfPersoonReferentie">
+                                <xsd:sequence>
+                                        <xsd:element name="persoon" type="dossier:Persoon" minOccurs="1" maxOccurs="2"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="PersoonReferentieTypeLijst">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:PersoonOfPersoonReferentie">
+                                <xsd:sequence>
+                                        <xsd:element name="persoonRef" type="dossier:Referentie" minOccurs="1" maxOccurs="2"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        -->
+        <xsd:complexType name="Hoedanigheid">
+                <xsd:sequence>
+                        <xsd:element name="naam" type="dossier:HoedanigheidSimple">
+                                <xsd:annotation>
+                                        <xsd:documentation>Naam of code van de hoedanigheid.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="contact" type="dossier:Contact" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Beschrijving van hoe een betrokken persoon kan worden gecontacteerd.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+        </xsd:complexType>
+        <xsd:complexType name="Postadres">
+                <xsd:sequence>
+                        <xsd:element name="subadres" type="dossier:Naam" minOccurs="0"/>
+                        <xsd:choice>
+                                <xsd:sequence>
+                                        <xsd:element name="straat" type="dossier:Straat"/>
+                                        <xsd:element name="huisnummer" type="dossier:Huisnummer"/>
+                                        <xsd:element name="busnummer" type="dossier:Busnummer" minOccurs="0"/>
+                                </xsd:sequence>
+                                <xsd:element name="adres" type="dossier:Beschrijving">
+                                        <xsd:annotation>
+                                                <xsd:documentation>Uitgeschreven adres dat niet past in het standaard formaat. bvb een postbus</xsd:documentation>
+                                        </xsd:annotation>
+                                </xsd:element>
+                        </xsd:choice>
+                        <xsd:element name="postcode" type="dossier:PostCode"/>
+                        <xsd:element name="gemeente" type="dossier:GemeenteKortGroep"/>
+                        <xsd:element name="regio" type="dossier:Naam" minOccurs="0"/>
+                        <xsd:element name="land" type="dossier:Naam" minOccurs="0"/>
+                </xsd:sequence>
+                <xsd:attribute name="gebruik" type="dossier:Gebruik" use="optional" default="POA">
+                        <xsd:annotation>
+                                <xsd:documentation>Bepaalt waarvoor dit adres voor gebruikt wordt door de betrokken persoon. </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+        </xsd:complexType>
+     <!--   voorlopig choice implementatie
+        <xsd:complexType name="Postadres" abstract="true">
+                <xsd:sequence>
+                        <xsd:element name="subadres" type="dossier:Naam" minOccurs="0"/>
+                        <xsd:element name="postCode" type="dossier:PostCode"/>
+                        <xsd:element name="gemeente" type="dossier:GemeenteKortGroep"/>
+                        <xsd:element name="regio" type="dossier:Naam" minOccurs="0"/>
+                        <xsd:element name="land" type="dossier:Naam" minOccurs="0"/>
+                </xsd:sequence>
+                <xsd:attribute name="gebruik" type="dossier:Gebruik" use="optional" default="POA">
+                        <xsd:annotation>
+                                <xsd:documentation>Bepaalt waarvoor dit adres voor gebruikt wordt door de betrokken persoon. </xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+        </xsd:complexType>
+        <xsd:complexType name="PostadresMetBeschrijving">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Postadres">
+                                <xsd:sequence>
+                                        <xsd:element name="adres" type="dossier:Beschrijving">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>Uitgeschreven adres dat niet past in het standaard formaat. bvb een postbus</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="StandaardPostadres">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Postadres">
+                                <xsd:sequence>
+                                        <xsd:element name="straat" type="dossier:Straat"/>
+                                        <xsd:element name="huisnummer" type="dossier:Huisnummer"/>
+                                        <xsd:element name="busnummer" type="dossier:Busnummer" minOccurs="0"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+     -->
+        <xsd:complexType name="Persoon" abstract="true">
+                <xsd:sequence>
+                        <xsd:element name="persoonId" type="dossier:ExternId">
+                                <xsd:annotation>
+                                        <xsd:documentation>De identificatie waarmee deze persoon in externe systemen gekend is.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="hoedanigheid" type="dossier:Hoedanigheid" minOccurs="1" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een persoon heeft minstens 1 hoedanigheid binnen een dossier.</xsd:documentation>
+                                </xsd:annotation>
+
+                        </xsd:element>
+
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+        </xsd:complexType>
+        <xsd:complexType name="PrivaatPersoon">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Persoon">
+                                <xsd:sequence>
+                                        <xsd:element name="naam" type="dossier:Naam">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De naam van deze persoon.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="voornaam" type="dossier:Naam">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De voornaam van deze persoon.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="geboorte" type="dossier:Geboorte" minOccurs="0">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>Dit object bescrijft de geboortegegevens van een persoon.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="handtekening" type="dossier:Handtekening" minOccurs="0" maxOccurs="unbounded">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>Een handtekening bevat geen digitale handtekening in de strikte zin van het woord. Wanneer een persoon die ingelogd is met E-ID een vakje aankruist met een bepaalde verklaring ontstaat een moeilijk weerlegbaar vermoeden dat deze persoon de verklaring ondertekent.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="Project" abstract="true">
+                <xsd:sequence>
+                        <xsd:element name="dossierFase" type="dossier:Referentie"/>
+                        <xsd:group ref="dossier:ContourGroup"/>
+                        <xsd:element name="dossierStuk" type="dossier:Referentie" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+                <xsd:attribute name="moment" type="dossier:Moment"/>
+        </xsd:complexType>
+        <xsd:complexType name="RechtsPersoon">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Persoon">
+                                <xsd:sequence>
+                                        <xsd:element name="maatschappelijkeNaam" type="dossier:Naam">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De naam van deze rechtspersoon.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="commercieleNaam" type="dossier:Naam" minOccurs="0">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De commerciële naam van deze rechtspersoon.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="afgekorteNaam" type="dossier:Naam" minOccurs="0">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De afkorting van de naam van deze rechtspersoon.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="rechtsvorm" type="dossier:Rechtsvorm" minOccurs="0">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De rechtsvorm waar deze rechtspersoon aan voldoet.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="Referentie">
+                <xsd:annotation>
+                        <xsd:documentation>Type voor referentie naar een interne id binnen dit document.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:attribute name="idref" type="xsd:IDREF" use="required"/>
+        </xsd:complexType>
+        <xsd:complexType name="SituatieDatablok" abstract="true"/>
+        <xsd:complexType name="Situatie">
+                <xsd:sequence>
+                        <xsd:element name="dossierFase" type="dossier:CodeMetReferentie">
+                                <xsd:annotation>
+                                        <xsd:documentation>De dossierfase waarin deze situatie toegevoegd werd.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:group ref="dossier:ContourGroup" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Geografische beschrijving van het voorwerp in deze situatie</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:group>
+                        <xsd:element name="functie" type="dossier:Code" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>De in de situatie toepasselijke functiecodes van het voorwerp</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="situatieDatablok" type="dossier:SituatieDatablok" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>De details omtrent het voorwerp in de aangegeven situatie</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="dossierStukken" type="dossier:AbstractDossierStukLijst" minOccurs="0"/>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+                <xsd:attribute name="moment" type="xsd:dateTime">
+                        <xsd:annotation>
+                                <xsd:documentation>Het tijdstip van deze situatie</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="aard" type="dossier:CodeSimple" use="required">
+                        <xsd:annotation>
+                                <xsd:documentation>Eem kwalificatie van de situatie, bvb ASIS, AANGEVRAAGD, VERGUND, ASBUILT, ...</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+        </xsd:complexType>
+        <xsd:complexType name="Straat">
+                <xsd:sequence>
+                        <xsd:element name="CodeSimple" type="dossier:ExternId" minOccurs="0"/>
+                        <xsd:element name="naam" type="dossier:Straatnaam"/>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="Toestand">
+                <xsd:sequence>
+                        <xsd:element name="dossierFase" type="dossier:Referentie"/>
+                        <xsd:element name="indieningsdatum" type="xsd:dateTime" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>De datum waarop het dossier oorspronkelijk is ingediend.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="uitersteDatum" type="xsd:dateTime" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>De datum waarop het dossier volledig moet afgerond zijn.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+        </xsd:complexType>
+       <!-- 
+               choice implementatie
+        <xsd:complexType name="AbstractAanvang" abstract="true"/>
+        <xsd:complexType name="DatumAanvang">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:AbstractAanvang">
+                                <xsd:attribute name="Startdatum" type="xsd:date" use="required"/>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="AanvangNaGunning">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:AbstractAanvang">
+                                <xsd:sequence>
+                                        <xsd:element name="aanvangNaGunning" type="dossier:DecimaleWaarde"/>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="Uitvoeringsfase" abstract="true">
+                <xsd:sequence>
+                        <xsd:element name="omschrijving" type="dossier:Titel"/>
+                        <xsd:element name="aanvang" type="dossier:AbstractAanvang"/>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+        </xsd:complexType>
+        
+        -->
+        <xsd:complexType name="Uitvoeringsfase" abstract="true">
+                <xsd:sequence>
+                        <xsd:element name="omschrijving" type="dossier:Titel"/>
+                        <xsd:choice>
+                                <xsd:annotation>
+                                        <xsd:documentation>de aanvrager geeft hier zijn wens in, ofwe via een datum of een offset na de gunning - de gemeente kan dit aanpassen of aanvullen bvb offset naar datum brengen (de gemeente MOET een datum opgeven in de vergunning) - de momentopnamen kunnen het verschil aantonen tussen aanvraag en gunning</xsd:documentation>
+                                </xsd:annotation>
+                                <xsd:element name="startdatum" type="xsd:date" minOccurs="0"/>
+                                <xsd:element name="aanvangNaGunning" type="dossier:DecimaleWaarde" minOccurs="1"/>
+                        </xsd:choice>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+        </xsd:complexType>
+        <xsd:complexType name="Vertegenwoordiging">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:Hoedanigheid">
+                                <xsd:sequence>
+                                        <xsd:element name="rol" type="dossier:Beschrijving" minOccurs="0">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De functie die de persoon uitoefent ten opzichte van de vertegenwoordigde persoon.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="functie" type="dossier:VertegenwoordigingFunctie">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De functie die de persoon uitoefent ten opzichte van de vertegenwoordigde persoon.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="vertegenwoordigde" type="dossier:Referentie">
+                                                <xsd:annotation>
+                                                        <xsd:documentation>De persoon die wordt vertegenwoordigd.</xsd:documentation>
+                                                </xsd:annotation>
+                                        </xsd:element>
+                                </xsd:sequence>
+                        </xsd:extension>
+                </xsd:complexContent>
+        </xsd:complexType>
+
+
+        <xsd:complexType name="Voorwerp">
+                <xsd:sequence>
+                        <xsd:element name="externId" type="dossier:ExternId" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een unieke sleutel van het Voorwerp die door een externe authentieke databron wordt toegekend.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="omschrijving" type="dossier:Titel" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een tekstuele omschrijving van het voorwerp.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="plansymbool" type="dossier:Aanduiding" minOccurs="1" maxOccurs="1"/>
+                        <xsd:element name="locatie" type="dossier:Referentie" minOccurs="1" maxOccurs="1">
+                                <xsd:annotation>
+                                        <xsd:documentation>Verwijst naar de locatie waar het voorwerp zich bevindt.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="situatie" type="dossier:Situatie" minOccurs="0" maxOccurs="2">
+                                <xsd:annotation>
+                                        <xsd:documentation>Er zijn 2 Voorwerp Situaties mogelijk: ASIS en TOBE</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="id" type="xsd:ID"/>
+                <xsd:attribute name="aard" type="dossier:CodeSimple">
+                        <xsd:annotation>
+                                <xsd:documentation>De aard van het voorwerp</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+        </xsd:complexType>
+        <xsd:complexType name="VraagReferte">
+                <xsd:sequence>
+                        <xsd:element name="referte" type="dossier:ExternId"/>
+                </xsd:sequence>
+        </xsd:complexType>
+     <!--   
+             Dit complextype wordt nergens gebruikt
+             <xsd:complexType name="GeheleWaarde">
+                <xsd:annotation>
+                        <xsd:documentation>Type voor waarden met een optionele eenheid.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:integer">
+                                <xsd:attribute name="eenheid" type="dossier:WaardeEenheid" use="required"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>-->
+        <xsd:complexType name="DecimaleWaarde">
+                <xsd:annotation>
+                        <xsd:documentation>Type voor waarden met een optionele eenheid.</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                        <xsd:extension base="xsd:decimal">
+                                <xsd:attribute name="eenheid" type="dossier:WaardeEenheid" use="required"/>
+                        </xsd:extension>
+                </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:complexType name="ZoekDossierAbstract" xml:base="xsd:string">
+                <xsd:sequence>
+                        <xsd:element name="dossierIdentificatie" type="dossier:DossierIdentificatie">
+                                <xsd:annotation>
+                                        <xsd:documentation>De dossieridentificatie bevat de gegevens om een dossier te kunnen identificeren</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <!-- <xsd:element name="persoonAbstract" type="dossier:PersoonAbstract"/>-->
+                        <xsd:element name="persoon" type="dossier:Persoon" minOccurs="1" maxOccurs="2"/>
+                        <xsd:element name="locatie" type="dossier:Locatie">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een locatie is de éénduidige bepaling van een ligging.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <!-- TODO MDP - DossierVerloop.Toestand.dossierfase vs DossierVerloop.Fase -->
+                        <xsd:element name="dossierVerloop" type="dossier:DossierVerloop" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Het verloop van een dossier wordt beschreven aan de hand van verschillende fases. Deze fasen bevinden zich in het DossierVerloop. Er kan maar 1 actuele fase zijn die op het moment nog in behandeling is. Deze fase wordt geïdentificeerd aan de hand van de toestand.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <!-- TODO MDP - Kom hier overeen met  Beslissing van zoekDossier -->
+                        <xsd:element name="gebeurtenis" type="dossier:Gebeurtenis" minOccurs="0">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een Gebeurtenis omvat een registratie van een actie die een persoon uitvoert tijdens de levensloop van een dossier. Dit concept wordt gebruikt bij verschillende acties binnen het dossier.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                </xsd:sequence>
+                <xsd:attribute name="creatietijdstip" type="xsd:dateTime">
+                        <xsd:annotation>
+                                <xsd:documentation>Het moment van create van het dossier. Dit tijdstip wordt automatisch ingevuld bij het aanmaken van het dossier.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="wijzigingstijdstip" type="xsd:dateTime">
+                        <xsd:annotation>
+                                <xsd:documentation>Het tijdstip waarop het dossier laatst werd gewijzigd. Dit tijdstip wordt automatisch aangepast bij elke wijziging van het dossier.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="versie" type="xsd:int">
+                        <xsd:annotation>
+                                <xsd:documentation>Een sequentieel nummer dat aangeeft hoeveel keer het dossier is aangepast Dit nummer wordt automatisch verhoogd bij elke wijziging van het dossier.</xsd:documentation>
+                        </xsd:annotation>
+                </xsd:attribute>
+        </xsd:complexType>
+        <xsd:complexType name="ZoekDossierResponse">
+                <xsd:sequence>
+                        <xsd:element name="zoekDossierAbstract" type="dossier:ZoekDossierAbstract" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="BewaarGebeurtenisResponse">
+                <xsd:sequence>
+                        <xsd:element name="dossierId" type="dossier:DossierId" minOccurs="0" maxOccurs="1">
+                                <xsd:annotation>
+                                        <xsd:documentation>Een unieke sleutel die het dossier identificeert binnen het platform. Bij het creëren van een dossier moet dit gelijk gesteld worden aan NIEUW.</xsd:documentation>
+                                </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="gebeurtenis" type="dossier:Gebeurtenis" minOccurs="0" maxOccurs="1"/>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="DossierIdentificatieMetGebeurtenis">
+                <xsd:complexContent>
+                        <xsd:extension base="dossier:BewaarGebeurtenisResponse"/>
+                </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:complexType name="ZoekGebeurtenisResponse">
+                <xsd:sequence>
+                        <xsd:element name="gebeurtenisInDossier" type="dossier:DossierIdentificatieMetGebeurtenis" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+        </xsd:complexType>
+
+
+        <!--
+           JSR-303 types
+
+    -->
+        <xsd:complexType name="StatusVlag">
+                <xsd:sequence>
+                        <xsd:element name="statusvlag" type="dossier:StatusVlagSimple"/>
+                </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="Code">
+                <xsd:sequence>
+                        <xsd:element name="code" type="dossier:CodeSimple"/>
+                </xsd:sequence>
+        </xsd:complexType>
+
+
+
+        <!--
+           JSR-303 types: gewijzigde extension base simplecontent voor JSR-303 validatie compliancy  
+           
+    -->
+
+       
+
+
+</xsd:schema>

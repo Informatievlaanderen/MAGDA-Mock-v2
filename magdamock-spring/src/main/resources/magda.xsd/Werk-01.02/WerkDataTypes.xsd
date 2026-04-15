@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://werk-01_02.vip.vlaanderen.be"
+		   xmlns="http://werk-01_02.vip.vlaanderen.be" 
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:generiek="http://generiek-01_02.vip.vlaanderen.be"
+           elementFormDefault="unqualified"
+           attributeFormDefault="unqualified" 
+           version="1.02">
+           
+    <xs:import namespace="http://generiek-01_02.vip.vlaanderen.be" schemaLocation="../Generiek-01.02/Generiek.xsd"/>
+    <xs:include schemaLocation="WerkDataKern.xsd"/>
+    <xs:include schemaLocation="WerkDataCodes.xsd"/>
+    
+    <xs:complexType name="WerkgeverVraagType">
+        <xs:annotation>
+            <xs:documentation>Werkgever</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Bron" type="BronInputEnumType" minOccurs="0"/>
+            <xs:element name="RSZNummer" type="RSZNummerInputType" minOccurs="0"/>
+            <xs:element name="OndernemingsNummer" type="OndernemingsNummerInputType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="WerknemerVraagType">
+        <xs:sequence>
+            <xs:element name="INSZ" type="generiek:INSZType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VolgendType">
+        <xs:sequence>
+            <xs:element name="LijnNummer" type="VolgendLijnNrType"/>
+            <xs:element name="Ticket" type="VolgendTicketType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="VolgendAntwoordType">
+        <xs:sequence>
+            <xs:element name="LijnNummer" type="VolgendLijnNrType" minOccurs="0"/>
+            <xs:element name="Ticket" type="VolgendTicketType" minOccurs="0"/>
+            <xs:element name="TotaalAantalLijnen" type="VolgendTotaalAantalLijnenType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="WerkgeverAntwoordType">
+        <xs:annotation>
+            <xs:documentation>Werkgever</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="RSZNummer" type="RSZNummerType" minOccurs="0"/>
+            <xs:element name="OndernemingsNummer" type="OndernemingsNummerType" minOccurs="0"/>
+            <xs:element name="Bron" type="BronCodeType" minOccurs="0"/>
+            <xs:element name="DeelEntiteit" type="DeelEntiteitType" minOccurs="0"/>
+            <xs:element name="Kinderbijslagfonds" type="KinderbijslagfondsType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="KinderbijslagfondsType">
+        <xs:sequence>
+            <xs:element name="Nummer" type="KBFondsNummerType"/>
+            <xs:element name="Dossier" type="KBFondsDossierType" minOccurs="0"/>
+            <xs:element name="Bureau" type="KBFondsBureauType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="WerknemerAntwoordType">
+        <xs:sequence>
+            <xs:element name="INSZ" type="generiek:INSZType"/>
+            <xs:element name="IdentificatiePersoon" type="generiek:VlagCodeType"/>
+            <xs:element name="Naam" type="generiek:NaamLangType" minOccurs="0"/>
+            <xs:element name="Voornaam" type="generiek:NaamKortType" minOccurs="0"/>
+            <xs:element name="Geboortedatum" type="generiek:DatumType" minOccurs="0"/>
+            <xs:element name="Geslacht" type="GeslachtCodeType" minOccurs="0"/>
+            <xs:element name="Nationaliteit" type="NationaliteitsType" minOccurs="0"/>            
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AangifteType">
+        <xs:sequence>
+            <xs:element name="DimonaNummer" type="DimonaNummerType"/>
+            <xs:element name="Periode" type="generiek:PeriodeType" minOccurs="0"/>
+            <xs:element name="ParitairComite" type="ParitairComiteType" minOccurs="0"/>
+            <xs:element name="AardWerknemer" type="AardWerknemerType" minOccurs="0"/>
+            <xs:element name="DimonaActie" type="DimonaActieType" minOccurs="0"/>
+            <xs:element name="ValidatieStatus" type="generiek:VlagCodeType" minOccurs="0"/>
+            <xs:element name="Tijdsregistratie" type="TijdsRegistratieType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="TijdsRegistratieType">
+        <xs:sequence>
+            <xs:element name="BeginTijd" type="generiek:TijdType" minOccurs="0"/>
+            <xs:element name="EindTijd" type="generiek:TijdType" minOccurs="0"/>
+            <xs:element name="DuurCode" type="DuurCodeType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GebruikerType">
+        <xs:sequence>
+            <xs:element name="Benaming" type="BenamingType" minOccurs="0"/>
+            <xs:element name="RSZNummer" type="RSZNummerType" minOccurs="0"/>
+            <xs:element name="OndernemingsNummer" type="OndernemingsNummerType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PlaatsTewerkstellingType">
+        <xs:sequence>
+            <xs:element name="Adres" type="AdresType" minOccurs="0"/>
+            <xs:element name="Benaming" type="generiek:NaamLangType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AdresType">
+        <xs:sequence>
+            <xs:element name="Straat" type="generiek:StraatNaamType"/>
+            <xs:element name="Busnummer" type="BusNummerType" minOccurs="0"/>
+            <xs:element name="Gemeente" type="GemeenteInternationaalType"/>
+            <xs:element name="Land" type="generiek:LandType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GemeenteInternationaalType">
+        <xs:annotation>
+            <xs:documentation>GemeenteInternationaalType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="NISCode" type="generiek:GemeenteNISCodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Code van de locatie, altijd NIS-codes. Het formaat van gemeentecodes heeft 5 cijfers.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PostCode" type="PostCodeInternationaalType">
+                <xs:annotation>
+                    <xs:documentation>Postcode van de gemeente</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Naam" type="generiek:NaamLangType">
+                <xs:annotation>
+                    <xs:documentation>Naam van de gemeente</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+	<!-- 
+	<xs:complexType name="LandType">
+		<xs:annotation>
+			<xs:documentation>LandType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ISOCode" type="generiek:LandISOCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Land of nationaliteitscode in ISO formaat, er moet een omzetting gebeuren van NIS code naar iso code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NISCode" type="generiek:LandNISCodeType">
+				<xs:annotation>
+					<xs:documentation>Land of nationaliteitscode in NIS formaat. Het formaat van landcodes heeft 3 cijfers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Naam" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Land naam</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	 -->
+	 
+    <xs:complexType name="BronCodeType">
+        <xs:annotation>
+            <xs:documentation>is een extension van simpel Type 'BronCodeType' + beschrijving</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="BronEnumType">
+                <xs:attribute name="Beschrijving" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="ContractType">
+        <xs:sequence>
+            <xs:element name="Werkgever" type="WerkgeverAntwoordType" minOccurs="0"/>
+            <xs:element name="Werknemer" type="WerknemerAntwoordType"/>
+            <xs:element name="Aangifte" type="AangifteType"/>
+            <xs:element name="Gebruiker" type="GebruikerType" minOccurs="0"/>
+            <xs:element name="PlaatsTewerkstelling" type="PlaatsTewerkstellingType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GeslachtCodeType">
+        <xs:annotation>
+            <xs:documentation>is een extension van simpel Type 'GeslachtEnumType' + beschrijving</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="GeslachtEnumType">
+                <xs:attribute name="Beschrijving" type="xs:string"/>
+                <xs:attribute name="DatumModificatie" type="generiek:DatumType">
+                    <xs:annotation>
+                        <xs:documentation>Geeft aan wanneer de laatste wijziging aan de naam van deze persoon is gebeurd, enkel gebruik bij Antwoord.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:complexType name="NationaliteitsType">
+        <xs:complexContent>
+            <xs:extension base="generiek:LandType">
+                <xs:attribute name="DatumModificatie" type="generiek:DatumType">
+                    <xs:annotation>
+                        <xs:documentation>Dag waarop de nationaliteit werd verworven. Indien niet ingevuld is dit ofwel niet gekend ofwel de geboortedatum. Enkel gebruik bij Antwoord.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+</xs:schema>

@@ -1,0 +1,371 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:V_CONSTR_ALG_004:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:V_CONSTR_ALG_004:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+    <xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+    <xs:complexType name="SituatieDatablok">
+        <xs:complexContent>
+            <xs:extension base="dossier:SituatieDatablok">
+                <xs:sequence>
+                    <xs:element name="IsBovengronds">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="J"/>
+                                <xs:enumeration value="N"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="BovengrondsGrondOppervlakte" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.BovengrondsGrondOppervlakte">
+                                    <xs:attribute name="eenheid" fixed="m²">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BovengrondsNuttigeOppervlakte" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.BovengrondsNuttigeOppervlakte">
+                                    <xs:attribute name="eenheid" fixed="m²">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BovengrondsConstructieVolume" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.BovengrondsConstructieVolume">
+                                    <xs:attribute name="eenheid" fixed="m³">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BovengrondsNokHoogte" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.BovengrondsNokHoogte">
+                                    <xs:attribute name="eenheid" fixed="m">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BovengrondsKroonlijstHoogte" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.BovengrondsKroonlijstHoogte">
+                                    <xs:attribute name="eenheid" fixed="m">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BebouwingType" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value=".+"/>
+                                <xs:enumeration value="VRIJSTAAND"/>
+                                <xs:enumeration value="HALFOPEN"/>
+                                <xs:enumeration value="GESLOTEN"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="BrandweerReferentie" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value=".+"/>
+                                <xs:enumeration value="LAAG"/>
+                                <xs:enumeration value="MIDDEL"/>
+                                <xs:enumeration value="HOOG"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="IsVerwarmVerkoel" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value=".+"/>
+                                <xs:enumeration value="J"/>
+                                <xs:enumeration value="N"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="IsBovengronds_asis">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="J"/>
+                                <xs:enumeration value="N"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="BovengrondsGrondOppervlakte_asis" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.BovengrondsGrondOppervlakte_asis">
+                                    <xs:attribute name="eenheid" fixed="m²">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BovengrondsNuttigeOppervlakte_asis" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.BovengrondsNuttigeOppervlakte_asis">
+                                    <xs:attribute name="eenheid" fixed="m²">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BovengrondsConstructieVolume_asis" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.BovengrondsConstructieVolume_asis">
+                                    <xs:attribute name="eenheid" fixed="m³">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BovengrondsNokHoogte_asis" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.BovengrondsNokHoogte_asis">
+                                    <xs:attribute name="eenheid" fixed="m">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BovengrondsKroonlijstHoogte_asis" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.BovengrondsKroonlijstHoogte_asis">
+                                    <xs:attribute name="eenheid" fixed="m">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="BebouwingType_asis" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value=".+"/>
+                                <xs:enumeration value="VRIJSTAAND"/>
+                                <xs:enumeration value="HALFOPEN"/>
+                                <xs:enumeration value="GESLOTEN"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="IsOndergronds">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="J"/>
+                                <xs:enumeration value="N"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="OndergrondsNuttigeOppervlakte" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.OndergrondsNuttigeOppervlakte">
+                                    <xs:attribute name="eenheid" fixed="m²">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="OndergrondsConstructieVolume" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.OndergrondsConstructieVolume">
+                                    <xs:attribute name="eenheid" fixed="m³">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="OndergrondsDiepte" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.OndergrondsDiepte">
+                                    <xs:attribute name="eenheid" fixed="m">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="IsOndergronds_asis">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="J"/>
+                                <xs:enumeration value="N"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="OndergrondsNuttigeOppervlakte_asis" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.OndergrondsNuttigeOppervlakte_asis">
+                                    <xs:attribute name="eenheid" fixed="m²">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="OndergrondsConstructieVolume_asis" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.OndergrondsConstructieVolume_asis">
+                                    <xs:attribute name="eenheid" fixed="m³">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="OndergrondsDiepte_asis" minOccurs="0">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="type.OndergrondsDiepte_asis">
+                                    <xs:attribute name="eenheid" fixed="m">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="type.BovengrondsGrondOppervlakte">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.BovengrondsNuttigeOppervlakte">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.BovengrondsConstructieVolume">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.BovengrondsNokHoogte">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.BovengrondsKroonlijstHoogte">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.BovengrondsGrondOppervlakte_asis">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.BovengrondsNuttigeOppervlakte_asis">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.BovengrondsConstructieVolume_asis">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.BovengrondsNokHoogte_asis">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.BovengrondsKroonlijstHoogte_asis">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.OndergrondsNuttigeOppervlakte">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.OndergrondsConstructieVolume">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.OndergrondsDiepte">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.OndergrondsNuttigeOppervlakte_asis">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.OndergrondsConstructieVolume_asis">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="type.OndergrondsDiepte_asis">
+        <xs:restriction base="xs:decimal">
+            <xs:pattern value=".+"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

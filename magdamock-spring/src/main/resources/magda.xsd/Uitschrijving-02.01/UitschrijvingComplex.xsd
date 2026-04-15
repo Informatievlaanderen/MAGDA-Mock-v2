@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+<xs:schema xmlns="http://uitschrijving-02_01.onderwijs.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:onderwijs="http://onderwijs-02_01.onderwijs.vlaanderen.be" xmlns:inschrijving="http://inschrijving-02_01.onderwijs.vlaanderen.be" xmlns:persoon="http://persoon-02_00.vip.vlaanderen.be" targetNamespace="http://uitschrijving-02_01.onderwijs.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.01">
+	<xs:include schemaLocation="UitschrijvingSimple.xsd"/>
+	<xs:include schemaLocation="UitschrijvingEnum.xsd"/>
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://onderwijs-02_01.onderwijs.vlaanderen.be" schemaLocation="../Onderwijs-02.01/Onderwijs.xsd"/>
+	<xs:import namespace="http://inschrijving-02_01.onderwijs.vlaanderen.be" schemaLocation="../Inschrijving-02.01/Inschrijving.xsd"/>
+	<xs:import namespace="http://persoon-02_00.vip.vlaanderen.be" schemaLocation="../Persoon-02.00/Persoon.xsd"/>
+	<!-- Zoekcriteria definitie -->
+	<xs:complexType name="CriteriaGeefUitschrijvingOpPeriodeType">
+		<xs:annotation>
+			<xs:documentation>
+                Bevat de input elementen/data die nodig zijn om de operatie uit te kunnen voeren.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Periode" type="onderwijs:PeriodeType"/>
+			<xs:element name="Geboortedag" type="dagVanDeMaandType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Inschrijvingstypes -->
+	<xs:complexType name="UitschrijvingenType">
+		<xs:sequence>
+			<xs:element name="Uitschrijving" type="UitschrijvingType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UitschrijvingType">
+		<xs:annotation>
+			<xs:documentation>Vertegenwoordigt het antwoord met inschrijvingen van het leerplichtonderwijs of
+                volwassenenonderwijs of hoger onderwijs
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<!-- Gemeenschappelijke Inschrijvingselementen -->
+			<xs:element name="INSZ" type="sleutel:INSZType"/>
+			<xs:element name="Bron" type="inschrijving:BronEnumType"/>
+			<xs:element name="DatumUitschrijving" type="generiek:Datum2_0Type"/>
+			<xs:element name="Naam" type="persoon:NaamPersoonType" minOccurs="0"/>
+			<xs:element name="Geboortedatum" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="Geslacht" type="persoon:GeslachtPersoonType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

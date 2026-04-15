@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+<xs:schema xmlns="http://ondgeo-02_02.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ondgeo-02_02.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.02">
+	<xs:simpleType name="GRARTaalCodeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="nl"/>
+			<xs:enumeration value="fr"/>
+			<xs:enumeration value="de"/>
+			<xs:enumeration value="en"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PositieGeometrieMethodeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="aangeduidDoorBeheerder"/>
+			<xs:enumeration value="afgeleidVanObject"/>
+			<xs:enumeration value="geïnterpoleerd"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PositieSpecificatieType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="gemeente"/>
+			<xs:enumeration value="straat"/>
+			<xs:enumeration value="perceel"/>
+			<xs:enumeration value="lot"/>
+			<xs:enumeration value="standplaats"/>
+			<xs:enumeration value="ligplaats"/>
+			<xs:enumeration value="gebouw"/>
+			<xs:enumeration value="gebouweenheid"/>
+			<xs:enumeration value="ingang"/>
+			<xs:enumeration value="wegsegment"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
