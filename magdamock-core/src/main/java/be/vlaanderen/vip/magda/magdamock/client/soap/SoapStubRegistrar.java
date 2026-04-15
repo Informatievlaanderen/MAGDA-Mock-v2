@@ -48,9 +48,6 @@ public class SoapStubRegistrar {
 
     private void registerFile(Domain domain, Service service, Version version, String file) {
         try {
-            if (service.name().equals("GeefPCenTW")) {
-                System.out.println();
-            }
             SoapStubHandler soapStubHandler = determineSoapStubHandler(service.name(), version.name());
             if (soapStubHandler != null) {
                 soapStubHandler.register(
