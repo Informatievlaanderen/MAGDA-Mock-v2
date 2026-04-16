@@ -12,7 +12,7 @@
 		<maven.compiler.source>25</maven.compiler.source>
 		<maven.compiler.target>25</maven.compiler.target>
 		<!-- Used for Docker image -->
-		<vdip-java.version>25-builder</vdip-java.version>
+		<vdip-java.version>25-jre</vdip-java.version>
 		<docker.image>magda.magdamock</docker.image>
 		<mockito.version>5.3.1</mockito.version>
 		<slf4j.version>2.0.17</slf4j.version>
