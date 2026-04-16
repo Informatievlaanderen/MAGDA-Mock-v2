@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://onderneming.vip.vlaanderen.be" 
+           xmlns="http://onderneming.vip.vlaanderen.be" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:generiek="http://generiek.vip.vlaanderen.be" 
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.01">
+           
+	<xs:import namespace="http://generiek.vip.vlaanderen.be" schemaLocation="../Generiek-01.01/Generiek.xsd"/>
+	<xs:include schemaLocation="Onderneming.xsd"/>
+	<xs:include schemaLocation="OndernemingExtensieDataCodes.xsd"/>
+	<xs:include schemaLocation="OndernemingExtensieDataKern.xsd"/>
+	
+	<xs:complexType name="AuditLogType">
+		<xs:sequence>
+			<xs:element name="GebruikerCreatie" type="AuditLogGebruikerType"/>
+			<xs:element name="GebruikerModificatie" type="AuditLogGebruikerType"/>
+			<xs:element name="DatumCreatie" type="AuditLogTijdstipType"/>
+			<xs:element name="DatumModificatie" type="AuditLogTijdstipType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NaamExtraLangTaal1_1Type">
+		<xs:simpleContent>
+			<xs:extension base="NaamExtraLangType">
+				<xs:attribute name="TaalCode" type="CijferLetter1_1Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="NaamExtraLangTaal1_2Type">
+		<xs:simpleContent>
+			<xs:extension base="NaamExtraLangType">
+				<xs:attribute name="TaalCode" type="TaalCodeKern1_1Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="NaamExtraLangTaal1_3Type">
+		<xs:simpleContent>
+			<xs:extension base="NaamExtraLangType">
+				<xs:attribute name="TaalCode" type="TaalCodeKern1_1Type"/>
+				<xs:attribute name="DatumModificatie" type="generiek:DatumType"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ParitairComiteCodeType">
+		<xs:simpleContent>
+			<xs:extension base="ParitairComiteEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CodeOmschrijving1_1Type">
+		<xs:sequence>
+			<xs:element name="Letterwoord" type="CodeOmschrijvingLetterwoord1_1Type"/>
+			<xs:element name="Kort" type="CodeOmschrijvingKort1_1Type"/>
+			<xs:element name="Lang" type="CodeOmschrijvingLang1_1Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeOmschrijvingRV1_1Type">
+		<xs:sequence>
+			<xs:element name="Officieel" type="CodeOmschrijvingOfficieel1_1Type"/>
+			<xs:element name="Kort" type="CodeOmschrijvingKort1_1Type"/>
+			<xs:element name="Lang" type="CodeOmschrijvingLang1_1Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeOmschrijvingAF1_1Type">
+		<xs:sequence>
+			<xs:element name="Officieel" type="CodeOmschrijvingAFOfficieel1_1Type"/>
+			<xs:element name="Kort" type="CodeOmschrijvingAFKort1_1Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeEigenschappenRV1_1Type">
+		<xs:sequence>
+			<xs:element name="Rechtspersoon" type="generiek:VlagEnumType"/>
+			<xs:element name="PrivaatPubliek" type="VlagPlusCodeKern1_1Type"/>
+			<xs:element name="Publicatieplicht" type="generiek:VlagEnumType"/>
+			<xs:element name="UniekeNaam" type="generiek:VlagEnumType"/>
+			<xs:element name="FunctieVerplicht" type="generiek:VlagEnumType"/>
+			<xs:element name="Klasse" type="CodeKlasse1_1Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeEigenschappenTL1_1Type">
+		<xs:sequence>
+			<xs:element name="Tijdelijk" type="generiek:VlagEnumType"/>
+			<xs:element name="Niveau" type="generiek:VlagEnumType"/>
+			<xs:element name="Toelating" type="VlagPlusCodeKern1_1Type"/>
+			<xs:element name="Duurtijd" type="DuurtijdType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeKwalificaties1_1Type">
+		<xs:sequence>
+			<xs:element name="Kwalificatie" type="CodeKwalificatie1_1Type" minOccurs="1" maxOccurs="3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeDeelGemeenteType">
+		<xs:sequence>
+			<xs:element name="PostCode" type="GemeentePostCode1_1Type"/>
+			<xs:element name="Naam" type="generiek:NaamLangType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeHoofdGemeenteType">
+		<xs:sequence>
+			<xs:element name="NISCode" type="GemeenteNISCode1_1Type"/>
+			<xs:element name="Naam" type="generiek:NaamLangType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Vervangen van Enumeraties Onderneming.Pub___-01.01 -->
+	<xs:complexType name="VlagPlusCode1_1Type">
+        <xs:simpleContent>
+			<xs:extension base="VlagPlusCodeKern1_1Type">
+        		<xs:attribute name="Beschrijving" type="generiek:TekstLangType"/>
+			</xs:extension>
+		</xs:simpleContent>
+    </xs:complexType>
+	<xs:complexType name="TaalCode1_1Type">
+		<xs:simpleContent>
+			<xs:extension base="TaalCodeKern1_1Type">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="StatusKBOCode1_1Type">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'StatusKBOCodeKern1_1Type' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StatusKBOCodeKern1_1Type">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+ 
+	<xs:complexType name="StatusKBOCode1_3Type">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'StatusKBOCodeKern1_1Type' + beschrijving + datum modificatie</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StatusKBOCodeKern1_1Type">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+				<xs:attribute name="DatumModificatie" type="generiek:DatumType"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType> 
+  	<xs:complexType name="OndernemingsNummer1_3Type">
+		<xs:simpleContent>
+			<xs:extension base="OndernemingsNummerType">
+				<xs:attribute name="DatumModificatie" type="generiek:DatumType"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

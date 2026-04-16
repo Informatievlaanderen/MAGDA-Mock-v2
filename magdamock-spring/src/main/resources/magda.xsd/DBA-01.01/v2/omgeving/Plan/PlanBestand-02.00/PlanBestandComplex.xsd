@@ -1,0 +1,72 @@
+<xsd:schema targetNamespace="urn:be:vlaanderen:omgeving:plan:bestand:v2" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="01.00" xmlns:planbestand="urn:be:vlaanderen:omgeving:plan:bestand:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2" xmlns:plan="urn:be:vlaanderen:omgeving:plan:v2">
+  <!--  <xsd:import namespace="http://generiek-02_00.vip.vlaanderen.be"/>-->
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+        <xsd:import namespace="urn:be:vlaanderen:omgeving:plan:v2" schemaLocation="../Plan-02.00/PlanEnum.xsd"/>
+    <xsd:include schemaLocation="PlanBestandEnum.xsd"/>
+    <xsd:include schemaLocation="PlanBestandSimple.xsd"/>
+    <xsd:complexType name="PlanWrapper">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:DossierInhoud">
+                <xsd:sequence>
+                        <xsd:element name="plan" type="planbestand:Plan"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="Plan">
+        <xsd:sequence>
+                <xsd:element name="situatie" type="planbestand:Situatie" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="Situatie">
+        <xsd:complexContent>
+            <xsd:extension base="dossier:Situatie">
+                <xsd:sequence>
+                        <xsd:element name="contours" type="dossier:Contours" minOccurs="0"/>
+                        <xsd:element name="voorwerp" type="planbestand:Voorwerpen" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+  
+    <xsd:complexType name="Voorwerpen" abstract="true">
+        <xsd:complexContent>
+                <xsd:extension base="dossier:BestandGeometrie"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PlanElementen">
+        <xsd:complexContent>
+                <xsd:extension base="planbestand:Voorwerpen">
+                    <xsd:attribute name="type" type="plan:PlanElementTypeEnum" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PlanDeelgebieden">
+        <xsd:complexContent>
+                <xsd:extension base="planbestand:Voorwerpen">
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PlanAfgeleiden">
+        <xsd:complexContent>
+                <xsd:extension base="planbestand:Voorwerpen">
+                        <xsd:attribute name="type" type="plan:PlanAfgeleideTypeEnum" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PlanElementTypeCode">
+        <xsd:simpleContent>
+                <xsd:extension base="plan:PlanElementTypeEnum">
+                <xsd:attribute name="beschrijving" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="PlanAfgeleideTypeCode">
+        <xsd:simpleContent>
+                <xsd:extension base="plan:PlanAfgeleideTypeEnum">
+                <xsd:attribute name="beschrijving" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+</xsd:schema>

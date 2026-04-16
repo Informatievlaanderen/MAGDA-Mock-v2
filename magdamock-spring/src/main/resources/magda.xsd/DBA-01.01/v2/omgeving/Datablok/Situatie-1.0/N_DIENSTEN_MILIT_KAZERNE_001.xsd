@@ -1,0 +1,569 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:N_DIENSTEN_MILIT_KAZERNE_001:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:N_DIENSTEN_MILIT_KAZERNE_001:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+<xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+	<xs:complexType name="SituatieDatablok">
+		<xs:complexContent>
+			<xs:extension base="dossier:SituatieDatablok">
+			<xs:sequence>
+	<xs:element name="IsKamer1" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="Kamer1Aantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="Kamer1Oppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Kamer1Oppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsKamer2" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="Kamer2Aantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="Kamer2Oppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Kamer2Oppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsKamer3plus" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="Kamer3plusAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="Kamer3plusOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Kamer3plusOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsSchietstand">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="SchietstandAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="SchietstandOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.SchietstandOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsLeslokaal">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="LeslokaalAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="LeslokaalOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.LeslokaalOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsWerkplaats" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="WerkplaatsOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.WerkplaatsOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsKantoorAdmin" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="KantoorAdminOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.KantoorAdminOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsPolyvalenteRuimte" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="PolyvalenteRuimteOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.PolyvalenteRuimteOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsSportzaal" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="SportzaalOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.SportzaalOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsCinema" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="CinemaOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.CinemaOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsCafetaria" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="CafetariaOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.CafetariaOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsWinkel" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="WinkelOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.WinkelOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTechnisch" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TechnischOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TechnischOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsOpslagArchief" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="OpslagArchiefOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.OpslagArchiefOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsMunitiedepot" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="MunitiedepotOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.MunitiedepotOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsKeuken" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="KeukenOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.KeukenOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsRefter" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="RefterOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.RefterOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAndereFunctie" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereFunctie" minOccurs="0" maxOccurs="unbounded">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="AndereFunctieType">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereFunctieOppervlakte">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type.Kamer1Oppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Kamer2Oppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Kamer3plusOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.SchietstandOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.LeslokaalOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.WerkplaatsOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.KantoorAdminOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.PolyvalenteRuimteOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.SportzaalOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.CinemaOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.CafetariaOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.WinkelOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TechnischOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.OpslagArchiefOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.MunitiedepotOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.KeukenOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.RefterOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="urn:be:milieuinfo:schemas:uuid:v1"
+	xmlns:uuid="urn:be:milieuinfo:schemas:uuid:v1"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	
+	
+	elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2">
+
+    <!--
+<xs:element name="uuid" type="uuid:UUIDSimple"/>
+
+  
+
+   <xs:complexType name="UUID">
+
+        <xs:simpleContent>
+
+            <xs:extension base="uuid:UUIDSimple"/>
+        </xs:simpleContent>
+    </xs:complexType>-->
+	<xs:simpleType name="UUIDSimple">
+		<xs:annotation>
+			<xs:documentation>Universally unique identifier</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+		    <xs:pattern value="([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12})"/>
+			<xs:maxLength value="36"/>
+		    <xs:minLength value="36"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+  <!-- <xs:complexType name="UUIDReferte">
+        <xs:annotation>
+            <xs:documentation>
+                 Class die een {@link UUID} Base64 encodeert.
+
+
+                 Dit zorgt ervoor dat de UUID via XML, URL en Mail veilig getransfereerd kan worden zonder veel plaats in te nemen. Voor sommige Service aanbieders is de
+                 standaard lengte van een UUID (32 of 36 karakters) namelijk te lang.
+
+                 De referte kan een applicatie of service call specifieke postfix bevatten, deze postfix moet van de eigenlijke referte gescheiden worden door een '=' teken.
+                 Als men dus een referte FGnl9jYJSPaCGTDFmHHimg de applicatie eigen postfix 2012_0019876234 wil meegeven kan men als referte
+                 FGnl9jYJSPaCGTDFmHHimg=2012_0019876234 gebruiken. De constructor die een UUID Referte String als argument neemt zal de postfix negeren waardoor de UUIDReferte
+                 de originele UUID bevat.
+
+                 @author <a href="mailto:gert@hobbiton.be">Gert Dewit</a>
+            </xs:documentation>
+        </xs:annotation>
+           <xs:simpleContent>
+               <xs:extension base="uuid:UUIDReferteSimple">
+
+               </xs:extension>
+           </xs:simpleContent>
+       </xs:complexType>-->
+       <xs:simpleType name="UUIDReferteSimple">
+           <xs:annotation>
+               <xs:documentation>Het AfzenderReferteType bevat een unieke aanduiding om het Verzoek te correleren met de Repliek
+               
+               Class die een {@link UUID} Base64 encodeert.
+               
+               
+               Dit zorgt ervoor dat de UUID via XML, URL en Mail veilig getransfereerd kan worden zonder veel plaats in te nemen. Voor sommige Service aanbieders is de
+               standaard lengte van een UUID (32 of 36 karakters) namelijk te lang.
+               
+               De referte kan een applicatie of service call specifieke postfix bevatten, deze postfix moet van de eigenlijke referte gescheiden worden door een '=' teken.
+               Als men dus een referte FGnl9jYJSPaCGTDFmHHimg de applicatie eigen postfix 2012_0019876234 wil meegeven kan men als referte
+               FGnl9jYJSPaCGTDFmHHimg=2012_0019876234 gebruiken. De constructor die een UUID Referte String als argument neemt zal de postfix negeren waardoor de UUIDReferte
+               de originele UUID bevat.
+               
+               @author <a href="mailto:gert@hobbiton.be">Gert Dewit</a>
+               </xs:documentation>
+           </xs:annotation>
+           <xs:restriction base="xs:string">
+               <xs:maxLength value="50"/>
+               <xs:pattern value="([A-Za-z0-9+/\-_]{22}=[=A-Za-z0-9+/\-_]*)|([A-Za-z0-9+/\-_]{22})"/>
+           </xs:restriction>
+       </xs:simpleType>
+</xs:schema>

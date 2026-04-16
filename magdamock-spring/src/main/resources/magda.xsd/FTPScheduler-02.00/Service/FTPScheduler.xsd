@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://gui.ftpscheduler.vip.vlaanderen.be"
+            xmlns="http://gui.ftpscheduler.vip.vlaanderen.be"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:element name="FTPScheduler">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="ApplicatieIdentificatie" type="ApplicatieIdentificatieType" />
+                <xsd:element name="Opdrachten" type="OpdrachtenType" minOccurs="0" />
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:simpleType name="ApplicatieIdentificatieType">
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="120"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="OpdrachtenType">
+        <xsd:sequence>
+            <xsd:element name="Opdracht" type="OpdrachtType" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="OpdrachtType">
+        <xsd:sequence>
+            <xsd:element name="Naam" type="xsd:string" />
+            <xsd:element name="Actie" type="ActieType" />
+            <xsd:element name="Server" type="ServerType" />
+            <xsd:element name="FilenamePattern" type="xsd:string" />
+            <xsd:choice>
+                <xsd:element name="StoreFolders" type="StoreFoldersType" />
+                <xsd:element name="RetrieveFolders" type="RetrieveFoldersType" />
+            </xsd:choice>
+            <!-- WLCronExpression:
+                 Optional element for migration. Allows to keep backup of WebLogic cron expression while keeping another cron expression for Opensihft
+                 Can (should) be removed after migration to openshift
+            -->
+            <xsd:element name="WLCronExpression" type="xsd:string" minOccurs="0" />
+            <xsd:element name="CronExpression" type="xsd:string" minOccurs="0" />
+            <xsd:element name="EmailAdres" type="xsd:string" minOccurs="0" />
+            <xsd:element name="ZipUnzip" type="xsd:boolean"  minOccurs="0" default="false" />
+            <xsd:element name="CacheProcessedFiles" type="xsd:boolean" minOccurs="0" default="true" />
+            <xsd:element name="TrackProcessedFiles" type="xsd:boolean" default="false" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="ActieType">
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="8" />
+            <xsd:enumeration value="STORE" />
+            <xsd:enumeration value="RETRIEVE" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ServerType">
+        <xsd:sequence>
+            <xsd:element name="Host" type="xsd:string" />
+            <xsd:element name="Port" type="xsd:positiveInteger" />
+            <xsd:element name="Userid" type="xsd:string" />
+            <xsd:element name="Password" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="KeystoreLocation" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="KeystoreAlias" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="KeystorePassword" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="Protocol" type="ProtocolEnumType" />
+            <xsd:element name="ServerConfiguration" type="ServerConfigurationType" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FoldersType">
+        <xsd:choice>
+            <xsd:element name="StoreFolders" type="StoreFoldersType" />
+            <xsd:element name="RetrieveFolders" type="RetrieveFoldersType" />
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="StoreFoldersType">
+        <xsd:sequence>
+            <xsd:element name="LocalSourceFolder" type="xsd:string" />
+            <xsd:element name="LocalCacheFolder" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="RemoteTargetFolders" type="TargetFoldersType" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="RetrieveFoldersType">
+        <xsd:sequence>
+            <xsd:element name="RemoteSourceFolder" type="xsd:string" />
+            <xsd:element name="RemoteCacheFolder" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="LocalTargetFolders" type="TargetFoldersType" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TargetFoldersType">
+        <xsd:sequence>
+            <xsd:element name="TargetFolder" type="xsd:string" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="ProtocolEnumType">
+        <xsd:annotation>
+            <xsd:documentation> SFTP | SSH | FTPS | FTP </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="SFTP"/>
+            <xsd:enumeration value="FTPS"/>
+            <xsd:enumeration value="FTP"/>
+            <xsd:enumeration value="SSH"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="ServerConfigurationType">
+        <xsd:sequence>
+            <xsd:element name="SetRemoteVerificationEnabled" type="xsd:boolean" minOccurs="0" default="true" />
+            <xsd:element name="HostKeyConfig" type="HostKeyConfig" minOccurs="0"/>
+            <xsd:element name="PassiveFTP" type="xsd:boolean" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="HostKeyConfig">
+        <xsd:sequence>
+            <xsd:element name="HostKeyAlias" type="xsd:string" minOccurs="0"/>
+            <xsd:choice>
+                <xsd:element name="HostKey" type="xsd:string" maxOccurs="unbounded"/>
+                <xsd:element name="KnownHostFile" type="xsd:string"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

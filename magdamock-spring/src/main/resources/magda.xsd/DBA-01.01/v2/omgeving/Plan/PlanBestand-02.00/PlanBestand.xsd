@@ -1,0 +1,5 @@
+<xsd:schema targetNamespace="urn:be:vlaanderen:omgeving:plan:bestand:v2" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="01.00" xmlns:planbestand="urn:be:vlaanderen:omgeving:plan:bestand:v2" xmlns:dossier="urn:be:vlaanderen:omgeving:vergunning:dossier:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	
+	<xsd:include schemaLocation="PlanBestandComplex.xsd"/>
+	
+</xsd:schema>

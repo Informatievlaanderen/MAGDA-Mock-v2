@@ -1,0 +1,11 @@
+<xsd:schema targetNamespace="http://webservice.BewaarDossierDienst-01_01.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00" xmlns="http://webservice.BewaarDossierDienst-01_01.vip.vlaanderen.be" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../DBA-01.01/v2/omgeving/Dossier-02.00/Dossier.xsd"/>
+
+    <xsd:complexType name="InhoudType">
+        <xsd:sequence>
+            <xsd:element ref="dossier:dossier" minOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

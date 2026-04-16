@@ -1,0 +1,77 @@
+<xsd:schema targetNamespace="urn:be:vlaanderen:omgeving:dossier:v2" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="01.00" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:include schemaLocation="DossierComplex.xsd"/>
+    <!-- element Inhoud, gebruikt door Magda diensten -->
+    <xsd:element name="dossier" type="dossier:Dossier">
+        <xsd:annotation>
+            <xsd:documentation>Een dossier bevat alle gegevens en alle documenten met betrekking tot één aanvraag, melding of plan. Dus zowel over de aanvraag of melding als over de administratieve afhandeling, de uitvoering en de controle.</xsd:documentation>
+            <xsd:documentation>Bij gebruik in een service altijd naar dit element refereren om de validatie mee te nemen.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:key name="hoedanigheidId">
+            <xsd:selector xpath=".//hoedanigheid"/>
+            <xsd:field xpath="@id"/>
+        </xsd:key>
+        <xsd:keyref refer="dossier:hoedanigheidId" name="hoedanigheidIdRefer">
+            <xsd:selector xpath=".//hoedanigheid/vertegenwoordigde"/>
+            <xsd:field xpath="@idref"/>
+        </xsd:keyref>
+        <xsd:key name="PersoonId">
+            <xsd:selector xpath=".//persoon"/>
+            <xsd:field xpath="@id"/>
+        </xsd:key>
+        <xsd:key name="DossierFaseId">
+            <xsd:selector xpath="dossierVerloop/dossierFase"/>
+            <xsd:field xpath="@id"/>
+        </xsd:key>
+        <xsd:keyref name="DossierFaseRef" refer="dossier:DossierFaseId">
+            <xsd:selector xpath=".//dossierFase"/>
+            <xsd:field xpath="@idref"/>
+        </xsd:keyref>
+        <xsd:key name="GebeurtenisId">
+            <xsd:selector xpath="./dossierVerloop/dossierFase/gebeurtenis"/>
+            <xsd:field xpath="@id"/>
+        </xsd:key>
+        <xsd:keyref name="GeschiedenisRef" refer="dossier:GebeurtenisId">
+            <xsd:selector xpath=".//gebeurtenis/vraag"/>
+            <xsd:field xpath="@idref"/>
+        </xsd:keyref>
+        <xsd:key name="DossierStukId">
+            <xsd:selector xpath="dossierStukken/dossierStuk"/>
+            <xsd:field xpath="@id"/>
+        </xsd:key>
+        <xsd:keyref name="DossierStukRef" refer="dossier:DossierStukId">
+            <xsd:selector xpath=".//dossierStukReferentie"/>
+            <xsd:field xpath="@idref"/>
+        </xsd:keyref>
+        <xsd:key name="LocatieId">
+            <xsd:selector xpath="./locatie"/>
+            <xsd:field xpath="@id"/>
+        </xsd:key>
+        <xsd:keyref name="LocatieRef" refer="dossier:LocatieId">
+            <xsd:selector xpath=".//locatie"/>
+            <xsd:field xpath="@idref"/>
+        </xsd:keyref>
+        <xsd:keyref name="Eigenaar" refer="dossier:PersoonId">
+            <xsd:selector xpath="./dossierVerloop/dossierFase/eigenaar"/>
+            <xsd:field xpath="@idref"/>
+        </xsd:keyref>
+        <xsd:keyref name="PersoonRef" refer="dossier:PersoonId">
+            <xsd:selector xpath=".//persoonRef"/>
+            <xsd:field xpath="@idref"/>
+        </xsd:keyref>
+    </xsd:element>
+    <xsd:element name="zoekDossierResponse" type="dossier:ZoekDossierResponse">
+        <xsd:annotation>
+            <xsd:documentation>Een dossier lijst van dossier abstract als resultaat van een ZoekDossier Dienst oproep </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="bewaarGebeurtenisResponse" type="dossier:BewaarGebeurtenisResponse">
+        <xsd:annotation>
+            <xsd:documentation>De dossierId en de gebeurtenis als resultaat van een BewaarGebeurtenis Dienst oproep </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="zoekGebeurtenisResponse" type="dossier:ZoekGebeurtenisResponse">
+        <xsd:annotation>
+            <xsd:documentation>Een lijst van (dossierId en gebeurtenis) als resultaat van een ZoekGebeurtenis Dienst oproep </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

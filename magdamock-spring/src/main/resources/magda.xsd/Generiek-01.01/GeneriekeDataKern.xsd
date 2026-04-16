@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://generiek.vip.vlaanderen.be" 
+           xmlns="http://generiek.vip.vlaanderen.be" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.01">
+           
+	<xs:simpleType name="JaarType">
+		<xs:annotation>
+			<xs:documentation>JaarType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="4"/>
+			<xs:pattern value="[0-2,9][0-9]{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DatumType">
+		<xs:annotation>
+			<xs:documentation>DatumType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="10"/>
+			<xs:pattern value="[0-2,9][0-9]{3}-[0-1][0-9]-[0-3][0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VolledigDatumType">
+		<xs:annotation>
+			<xs:documentation>VolledigDatumType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="10"/>
+			<xs:pattern value="((((19|20)(([02468][048])|([13579][26]))-02-29))|((20[0-9][0-9])|(19[0-9][0-9]))-((((0[1-9])|(1[0-2]))-((0[1-9])|(1\d)|(2[0-8])))|((((0[13578])|(1[02]))-31)|(((0[1,3-9])|(1[0-2]))-(29|30)))))"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TijdType">
+		<xs:annotation>
+			<xs:documentation>TijdType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="12"/>
+			<xs:minLength value="5"/>
+			<xs:pattern value="[0-2][0-9]:[0-5][0-9](:[0-5][0-9](\.[0-9]{3})?)?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NaamKortType">
+		<xs:annotation>
+			<xs:documentation>NaamKortType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="24"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NaamLangType">
+		<xs:annotation>
+			<xs:documentation>NaamLangType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="48"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="INSZType">
+		<xs:annotation>
+			<xs:documentation>INSZType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="11"/>
+			<xs:pattern value="\p{N}{11}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HuisNummerType">
+		<xs:annotation>
+			<xs:documentation>HuisNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BusNummerType">
+		<xs:annotation>
+			<xs:documentation>BusNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TelFaxType">
+		<xs:annotation>
+			<xs:documentation>TelFaxType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EmailType">
+		<xs:annotation>
+			<xs:documentation>EmailType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="120"/>
+			<xs:pattern value=".+@.+\..+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LandISOCodeType">
+		<xs:annotation>
+			<xs:documentation>LandISOCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GemeenteNISCodeType">
+		<xs:annotation>
+			<xs:documentation>GemeenteNISCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="5"/>
+			<xs:pattern value="[0-9]{0,5}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PostCodeType">
+		<xs:annotation>
+			<xs:documentation>PostCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="6"/>
+			<xs:pattern value="[\p{L}\p{N}\s\-]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LandNISCodeType">
+		<xs:annotation>
+			<xs:documentation>LandNISCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StraatNISCodeType">
+		<xs:annotation>
+			<xs:documentation>StraatNISCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4"/>
+			<xs:pattern value="[0-9a-zA-Z][0-9]{0,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TekstType">
+		<xs:annotation>
+			<xs:documentation>TekstType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="120"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TekstLangType">
+		<xs:annotation>
+			<xs:documentation>TekstLangType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".*"/>
+		</xs:restriction>
+	</xs:simpleType>	
+	<xs:simpleType name="BankrekeningNummerType">
+		<xs:annotation>
+			<xs:documentation>BankrekeningNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumeriekLangType">
+		<xs:annotation>
+			<xs:documentation>NumeriekLangType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

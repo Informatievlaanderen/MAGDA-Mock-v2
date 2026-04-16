@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://rapporteringtofilescheduler.vip.vlaanderen.be"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://rapporteringtofilescheduler.vip.vlaanderen.be"
+           elementFormDefault="unqualified"
+           attributeFormDefault="unqualified">
+    <xs:element name="RapporteringToFileScheduler">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Stromen" type="StromenType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="StromenType">
+        <xs:sequence>
+            <xs:element name="Stroom" type="StroomType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="StroomType">
+        <xs:sequence>
+            <xs:element name="Naam" type="xs:string" minOccurs="1"/>
+            <xs:element name="Versie" type="xs:string" minOccurs="1"/>
+            <xs:element name="Locatie" type="xs:string" minOccurs="1"/>
+            <xs:element name="CronExpressie" type="xs:string" minOccurs="1"/>
+            <xs:element name="Scheidingsteken" type="xs:string" minOccurs="1"/>
+            <xs:element name="Vervangteken" type="xs:string" minOccurs="0"/>
+            <xs:element name="Nilwaarde" type="xs:string" minOccurs="0"/>
+            <xs:element name="Decimaalteken" type="xs:string" minOccurs="0"/>
+            <xs:element name="TijdFormaat" type="xs:string" minOccurs="0"/>
+            <xs:element name="Bestanden" type="BestandenType" minOccurs="1"/>
+            <xs:element name="MailAdressen" type="MailAdressenType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BestandenType">
+        <xs:sequence>
+            <xs:element name="Bestand" type="BestandType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BestandType">
+        <xs:sequence>
+            <xs:element name="View" type="xs:string" minOccurs="1"/>
+            <xs:element name="Naam" type="xs:string" minOccurs="1"/>
+            <xs:element name="TijdFormaat" type="xs:string" minOccurs="0"/>
+            <xs:element name="Extensie" type="xs:string" minOccurs="0"/>
+            <xs:element name="Incrementeel" type="xs:boolean" default="true" minOccurs="0"/>
+            <xs:element name="FoutBlokkerend" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Database" type="DatabaseEnum" minOccurs="1"/>
+            <xs:element name="ComprimeerOutput" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="PeriodeUren" type="xs:int" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MailAdressenType">
+        <xs:sequence>
+            <xs:element name="MailAdres" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="DatabaseEnum" final="restriction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="vipadm"/>
+            <xs:enumeration value="viplog"/>
+            <xs:enumeration value="vipmagda"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

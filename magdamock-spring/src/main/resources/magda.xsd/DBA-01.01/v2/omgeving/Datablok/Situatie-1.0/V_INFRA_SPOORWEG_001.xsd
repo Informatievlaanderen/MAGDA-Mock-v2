@@ -1,0 +1,336 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:V_INFRA_SPOORWEG_001:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:V_INFRA_SPOORWEG_001:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+<xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+	<xs:complexType name="SituatieDatablok">
+		<xs:complexContent>
+			<xs:extension base="dossier:SituatieDatablok">
+			<xs:sequence>
+	<xs:element name="IsTreinspoor_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TreinspoorAantal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TreinspoorLengte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TreinspoorLengte_asis">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="TreinspoorBreedte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TreinspoorBreedte_asis">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTreinspoorBedding_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TreinspoorBeddingBreedte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TreinspoorBeddingBreedte_asis">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTramMetrospoor_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TramMetrospoorAantal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TramMetrospoorLengte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TramMetrospoorLengte_asis">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="TramMetrospoorBreedte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TramMetrospoorBreedte_asis">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTramMetrospoorBedding_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TramMetrospoorBeddingBreedte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TramMetrospoorBeddingBreedte_asis">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTreinspoor" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TreinspoorAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TreinspoorLengte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TreinspoorLengte">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="TreinspoorBreedte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TreinspoorBreedte">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTreinspoorBedding" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TreinspoorBeddingBreedte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TreinspoorBeddingBreedte">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTramMetrospoor" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TramMetrospoorAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TramMetrospoorLengte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TramMetrospoorLengte">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="TramMetrospoorBreedte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TramMetrospoorBreedte">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTramMetrospoorBedding" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TramMetrospoorBeddingBreedte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TramMetrospoorBeddingBreedte">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type.TreinspoorLengte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TreinspoorBreedte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TreinspoorBeddingBreedte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TramMetrospoorLengte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TramMetrospoorBreedte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TramMetrospoorBeddingBreedte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TreinspoorLengte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TreinspoorBreedte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TreinspoorBeddingBreedte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TramMetrospoorLengte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TramMetrospoorBreedte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TramMetrospoorBeddingBreedte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

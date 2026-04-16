@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://mobiliteit-02_00.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:persoon="http://persoon-02_00.vip.vlaanderen.be" targetNamespace="http://mobiliteit-02_00.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:include schemaLocation="MobiliteitEnum.xsd"/>
+	<xs:include schemaLocation="MobiliteitSimple.xsd"/>
+	<!--*************** Toegevoegd voor Buitenlandse nummerplaten ******-->
+	<xs:complexType name="CriteriaGeefBuitenlandsVoertuigType">
+		<xs:sequence>
+			<xs:element name="Nummerplaat" type="BuitenlandsNummerplaatType"/>
+			<xs:element name="Land" type="generiek:LandISOCodeType"/>
+			<xs:element name="DatumTijd" type="generiek:Tijdstip2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BuitenlandsNummerplaatType">
+		<xs:sequence>
+			<xs:element name="Deel1" type="NummerplaatDeelType"/>
+			<xs:element name="Deel2" type="NummerplaatDeelType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BuitenlandsEigenaarType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Bedrijf" type="BedrijfType"/>
+				<xs:element name="Persoon" type="PersoonType"/>
+			</xs:choice>
+			<xs:element name="Adres" type="generiek:GeneriekAdresTypeMetLangBusEnHuisNummer"/>
+			<xs:element name="PrintbaarAdres" type="PrintbaarAdres"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersoonType">
+		<xs:sequence>
+			<xs:element name="Voornaam1" type="VoornaamType" minOccurs="0"/>
+			<xs:element name="Voornaam2" type="VoornaamType"  minOccurs="0"/>
+			<xs:element name="Voornaam3" type="VoornaamType" minOccurs="0"/>
+			<xs:element name="Tussennaam" type="VoornaamType" minOccurs="0"/>
+			<xs:element name="Achternaam" type="AchternaamType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="VoornaamType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AchternaamType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="160"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BedrijfType">
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:CodeOmschrijvingType" minOccurs="0" />
+			<xs:element name="Naam" type="generiek:TekstKort2_0Type" minOccurs="0" />
+			<xs:element name="Id" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="TavNaam" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BuitenlandsVoertuigType">
+		<xs:complexContent>
+			<xs:extension base="Voertuigspecificaties">
+				<xs:sequence>
+					<xs:element name="Nummerplaat" type="BuitenlandsNummerplaatType"/>
+					<xs:element name="Land" type="generiek:LandISOCodeType"/>
+					<xs:element name="DatumTijd" type="generiek:Tijdstip2_0Type"/>
+					<xs:element name="Eigenaar" type="BuitenlandsEigenaarType" minOccurs="0"/>
+					<xs:element name="CommercieleNaam" type="generiek:TekstType" minOccurs="0"/>
+					<xs:element name="Merk" type="generiek:TekstType" minOccurs="0"/>
+					<xs:element name="Kleur" type="KleurType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PrintbaarAdres">
+		<xs:sequence>
+			<xs:element name="NaamLijn" type="generiek:TekstVanMax80"/>
+			<xs:element name="Lijn1" type="generiek:TekstVanMax80"/>
+			<xs:element name="Lijn2" type="generiek:TekstVanMax80"/>
+			<xs:element name="Lijn3" type="generiek:TekstVanMax80"/>
+			<xs:element name="Lijn4" type="generiek:TekstVanMax80" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="CriteriaGeefVoertuigType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="Nummerplaat" type="NummerplaatType"/>
+					<xs:element name="Datum" type="generiek:Datum2_0Type" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element name="Chassisnummer" type="ChassisnummerType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<xs:complexType name="Voertuigtype">
+		<xs:sequence>
+			<xs:element name="Nummerplaat" type="NummerplaatType"/>
+			<xs:element name="Chassisnummer" type="ChassisnummerType"/>
+			<xs:element name="Eigenaar" type="EigenaarType"/>
+			<xs:element name="CommercieleNaam" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Kleur" type="KleurType" minOccurs="0"/>
+			<xs:element name="Categorie" type="CategorieType" minOccurs="0"/>
+			<xs:element name="Euronorm" type="EuronormType" minOccurs="0"/>
+			<xs:element name="DatumEersteInschrijving" type="generiek:Datum2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ChassisnummerType">
+		<xs:simpleContent>
+			<xs:extension base="ChassisnummerKernType">
+				<xs:attribute name="Identificatienummer" type="IdentificatienummerType"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="EigenaarType">
+		<xs:choice>
+			<xs:element name="INSZ" type="sleutel:INSZType"/>
+			<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType"/>
+		</xs:choice>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="KleurType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeKleurType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeKleurType">
+		<xs:simpleContent>
+			<xs:extension base="CodeKleurKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="CategorieType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeCategorieType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeCategorieType">
+		<xs:simpleContent>
+			<xs:extension base="CodeCategorieKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="EuronormType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeEuronormType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeEuronormType">
+		<xs:simpleContent>
+			<xs:extension base="CodeEuronormKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="VoertuigspecificatiesBasis">
+		<xs:sequence>
+			<xs:element name="Categorie" type="CodeCategorieKernType" minOccurs="0"/>
+			<xs:element name="Brandstof" type="BrandstofType" minOccurs="0"/>
+			<xs:element name="Roetfilter" type="generiek:VlagEnumType" minOccurs="0"/>
+			<xs:element name="Euronorm" type="CodeEuronormKernType" minOccurs="0"/>
+			<xs:element name="DatumEersteInschrijving" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="DatumLaatsteInschrijving" type="generiek:Datum2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Voertuigspecificaties">
+		<xs:complexContent>
+			<xs:extension base="VoertuigspecificatiesBasis">
+				<xs:sequence>
+					<xs:element name="Aard" type="AardType" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="MassaRijklareToestandKg" type="MassaRijklareToestandKgType" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="AantalZitplaatsen" type="AantalZitplaatsenType" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="Co2UitstootGrPerKm" type="Co2UitstootGrPerKmType" minOccurs="0" maxOccurs="1"/>
+					<xs:element name="HoogstToegelatenGewichtKg" type="HoogstToegelatenGewichtKgType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

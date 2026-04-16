@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://onderneming.vip.vlaanderen.be" 
+           xmlns="http://onderneming.vip.vlaanderen.be" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.01">
+           
+	<xs:simpleType name="OndernemingsNummerType">
+		<xs:annotation>
+			<xs:documentation>OndernemingsNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{9,10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RSZNummerType">
+		<xs:annotation>
+			<xs:documentation>RSZNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NaamExtraLangType">
+		<xs:annotation>
+			<xs:documentation>NaamExtraLangType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="160"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StaatType">
+		<xs:annotation>
+			<xs:documentation>StaatType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AantalWerknemersType">
+		<xs:annotation>
+			<xs:documentation>AantalWerknemersType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ActiviteitNiveauType">
+		<xs:annotation>
+			<xs:documentation>ActiviteitNiveauType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ActiviteitTypeType">
+		<xs:annotation>
+			<xs:documentation>ActiviteitTypeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NaceCodeType">
+		<xs:annotation>
+			<xs:documentation>NaceCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NaceOmschrijvingType">
+		<xs:annotation>
+			<xs:documentation>NaceOmschrijvingType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RechtsToestandEnumType">
+		<xs:annotation>
+			<xs:documentation> | 000( Normale toestand ) | 001( Juridische oprichting ) | 003( Vervanging van het nummer ) | 010( Ontbinding van rechtswege ) | 011( Activiteitsopzegging in België ) | 012( Vrijwillige ontbinding ) | 013( Gerechtelijke ontbinding en nietigheid ) | 014( Sluiting van vereffening ) | 015( Activiteitsopzegging rechtspersoon publiek recht ) | 016( Activiteitsopzegging natuurlijke persoon ) | 017( Overdracht onderneming van een natuurlijke persoon. ) | 020( Verzameling aandelen in hoofde van één persoon ) | 021( Fusie door overneming ) | 022( Fusie door oprichting van een nieuwe vennootschap ) | 023( Splitsing ) | 024( Splitsing door overneming ) | 025( Splitsing door oprichting van een nieuwe vennootschap ) | 026( Gemengde splitsing ) | 030( Konkordaat vóór faling ) | 031( Konkordaat na faling ) | 040( Voorlopige opschorting van betaling ) | 041( Definitieve opschorting van betaling ) | 042( Herroeping van de opschorting ) | 043( Einde van de opschorting ) | 050( Opening van het faillissement ) | 051( Sluiting van het faillissement met verschoonbaarheid ) | 052( Sluiting van het faillissement zonder verschoonbaarheid ) | 053( Vonnis sluiting van het faillissement ) | 091( Uitstel van betaling ) | 999( Geannuleerd dossier ) | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RechtsVormEnumType">
+		<xs:annotation>
+			<xs:documentation> | 001( commerciële rechtspersonen ) | 002( niet commerciële rechtspersonen ) | 003( rechtspersonen met sociaal oogmerk ) | 004( economische samenwerkingsverbanden ) | 005( vereniging van mede-eigenaars ) | 006( buitenlandse ondernemingen en verenigingen ) | 007( speciale gevallen met rechtspersoonlijkheid ) | 008( vennootschappen zonder rechtspersoonlijkheid ) | 009( verenigingen zonder rechtspersoonlijkheid ) | 010( diversen zonder rechtspersoonlijkheid ) | 011( publieke belgische organismen onder rechtsvorm ) | 012( publieke belgische organismen onder rechtsvorm met sociaal oogmerk ) | 013( gemeenschappen belgisch grondgebied ) | 014( andere belgische publiekrechtelijke instellingen ) | 015( buitenlandse of internationale publieke organisaties ) | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RedenStopzettingEnumType">
+		<xs:annotation>
+			<xs:documentation> | 010( Ontbinding van rechtswege ) | 011( Activiteitsopzegging in België ) | 012( Vrijwillige ontbinding ) | 013( Gerechtelijke ontbinding en nietigheid ) | 014( Sluiting van de vereffening ) | 015( Activiteitsopzegging publieke rechtspersoon ) | 016( Activiteitsopzegging natuulijk persoon ) | 017( Overdracht onderneming van een natuurlijke persoon ) | 021( Fusie door overneming ) | 022( Fusie door oprichting van een nieuwe vennootschap ) | 023( Splitsing ) | 024( Splitsing door overneming ) | 025( Splitsing door oprichting van een nieuwe vennootschap ) | 026( Gemengde splitsing ) | 051( Sluiting van het faillissement met verschoonbaarheid ) | 052( Sluiting van het faillissement zonder verschoonbaarheid ) | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PersoneelsklasseEnumType">
+		<xs:annotation>
+			<xs:documentation> | 0( 0 tot 0 ) | 1( 1 tot 4 ) | 2( 5 tot 0 ) | 3( 10 tot 19 ) | 4( 20 tot 49 ) | 5( 50 tot 99 ) | 6( 100 tot 199 ) | 7( 200 tot 499 ) | 8( 500 tot 999 ) | 9( 1000 en meer ) | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="PostCodeType">
+		<xs:annotation>
+			<xs:documentation>PostCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GemeenteNISCodeType">
+		<xs:annotation>
+			<xs:documentation>GemeenteNISCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StraatNISCodeType">
+		<xs:annotation>
+			<xs:documentation>StraatNISCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EmailType">
+		<xs:annotation>
+			<xs:documentation>EmailType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="254"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HuisNummerType">
+		<xs:annotation>
+			<xs:documentation>HuisNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="11"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HoedanigheidEnumType">
+		<xs:annotation>
+			<xs:documentation> | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HoedanigheidFaseEnumType">
+		<xs:annotation>
+			<xs:documentation> | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DuurtijdType">
+		<xs:annotation>
+			<xs:documentation>DuurtijdType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RedenEnumType">
+		<xs:annotation>
+			<xs:documentation> | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ZoekNaamType">
+		<xs:annotation>
+			<xs:documentation>ZoekNaamType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KwartaalType">
+		<xs:annotation>
+			<xs:documentation>KwartaalType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="[0-4]{1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumeriekKortType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,5}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 sp1 (http://www.altova.com) by Stefan Vleugels (AGENTSCHAP FACILITAIR BEDRIJF) -->
+<xsd:schema xmlns="http://magda.vlaanderen.be/gezin/soap/geefzorgtoeslag/v02_00" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bericht="http://generiek-02_00.vip.vlaanderen.be" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" xmlns:gezin="http://magda.vlaanderen.be/gezin-v3" targetNamespace="http://magda.vlaanderen.be/gezin/soap/geefzorgtoeslag/v02_00" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../../Sleutel-02.00/Sleutel.xsd"/>
+	<xsd:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xsd:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../../Generiek/GeneriekDomein-v3.xsd"/>
+	<xsd:import namespace="http://magda.vlaanderen.be/gezin-v3" schemaLocation="../../Gezin/GezinDomein-v3.xsd"/>
+	<xsd:element name="GeefZorgtoeslagResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Repliek" type="RepliekType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="RepliekType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="bericht:ContextType"/>
+			<xsd:element name="Antwoorden" type="AntwoordenType" minOccurs="0"/>
+			<xsd:element name="Uitzonderingen" type="bericht:UitzonderingenType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fouten die voorkomen na de verwerking van de Context maar voor de verwerking van Vraag of Antwoord bv: XSD Validatie fouten</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AntwoordenType">
+		<xsd:sequence>
+			<xsd:element name="Antwoord" type="AntwoordType" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AntwoordType">
+		<xsd:sequence>
+			<xsd:element name="Referte" type="bericht:ReferteType"/>
+			<xsd:element name="Inhoud" type="AntwoordInhoudType" minOccurs="0"/>
+			<xsd:element name="Uitzonderingen" type="bericht:UitzonderingenType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fouten die voorkomen na de verwerking van Vraag of Antwoord bv: warnings rond ontbrekende data en fouten gelinked aan 1 antwoord</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AntwoordInhoudType">
+		<xsd:sequence>
+			<xsd:element name="Zorgtoeslag" type="gezin:ZorgtoeslagType">
+				<xsd:annotation>
+					<xsd:documentation>Zorgtoeslag informatie die betrekking heeft op de op vraag criteria</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

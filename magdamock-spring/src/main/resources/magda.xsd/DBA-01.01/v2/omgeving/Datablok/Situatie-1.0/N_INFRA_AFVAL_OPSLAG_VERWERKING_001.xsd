@@ -1,0 +1,128 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:N_INFRA_AFVAL_OPSLAG_VERWERKING_001:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:N_INFRA_AFVAL_OPSLAG_VERWERKING_001:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+<xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+	<xs:complexType name="SituatieDatablok">
+		<xs:complexContent>
+			<xs:extension base="dossier:SituatieDatablok">
+			<xs:sequence>
+	<xs:element name="IsStortterrein" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="StortterreinOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.StortterreinOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsContainerpark" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="ContainerparkOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.ContainerparkOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAfvalverwerking" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AfvalverwerkingOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.AfvalverwerkingOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsRadioactiefAfval" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="RadioactiefAfvalOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.RadioactiefAfvalOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type.StortterreinOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.ContainerparkOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.AfvalverwerkingOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.RadioactiefAfvalOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

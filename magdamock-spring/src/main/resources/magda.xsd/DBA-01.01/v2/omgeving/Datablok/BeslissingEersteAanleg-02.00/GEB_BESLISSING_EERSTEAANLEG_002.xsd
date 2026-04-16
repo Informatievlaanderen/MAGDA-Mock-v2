@@ -1,0 +1,52 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:gebeurtenis:GEB_BESLISSING_EERSTEAANLEG_002:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:gebeurtenis:GEB_BESLISSING_EERSTEAANLEG_002:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+<xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+	<xs:complexType name="GebeurtenisDatablok">
+		<xs:complexContent>
+			<xs:extension base="dossier:GebeurtenisDatablok">
+			<xs:sequence>
+	<xs:element name="BeslissingDatum">
+	<xs:simpleType>
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="BeslissingAard">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VERGUNNING"/>
+			<xs:enumeration value="WEIGERING"/>
+			<xs:enumeration value="STILWEIGER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="BeslissingVolledig" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="VOLLEDIG"/>
+			<xs:enumeration value="GEDEELTELIJK"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="OnderVoorwaarden" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AanplakkingDoor" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="AANVRAGER"/>
+			<xs:enumeration value="LOKAALBESTUUR"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+			</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

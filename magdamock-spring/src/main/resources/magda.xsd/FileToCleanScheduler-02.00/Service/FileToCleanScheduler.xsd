@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xsd:schema xmlns="http://filetocleanscheduler.vip.vlaanderen.be" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://filetocleanscheduler.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+
+	<xsd:element name="FileToCleanScheduler">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Stroom" type="StroomType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="StroomType">
+		<xsd:sequence>
+			<xsd:element name="Domein" type="xsd:string"/>
+			<xsd:element name="Naam" type="xsd:string"/>
+			<xsd:element name="Versie" type="xsd:string"/>
+			<xsd:element name="Actie" type="ActieType"/>
+			<xsd:element name="CronExpressie" type="xsd:string"/>
+			<xsd:element name="MailAdressen" type="MailAdressenType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ActieType">
+		<xsd:sequence>
+			<xsd:element name="Type" type="TypeEnumType"/>
+			<xsd:choice>
+				<xsd:element name="FileCleanParameters" type="FileCleanParametersType"/>
+				<xsd:element name="FilePermissionParameters" type="FilePermissionParametersType"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="FileCleanParametersType">
+		<xsd:sequence>
+			<xsd:element name="FileLocation" type="FileLocationType"/>
+			<xsd:element name="FileAge" type="FileAgeType"/>
+			<xsd:element name="FilePattern" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="FilePermissionParametersType">
+		<xsd:sequence>
+			<xsd:element name="Folder" type="notEmptyString"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="FileLocationType">
+		<xsd:sequence>
+			<xsd:element name="Folders" type="FolderLijstType"/>
+			<xsd:element name="ConnectionParameters" type="ConnectionParametersType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FolderLijstType">
+		<xsd:sequence>
+			<xsd:element name="Folder" type="notEmptyString" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ConnectionParametersType">
+		<xsd:sequence>
+			<xsd:element name="Protocol" type="ProtocolEnumType"/>
+			<xsd:element name="Credentials" type="CredentialsType"/>
+			<xsd:element name="KnownHostsFileLocatie" type="notEmptyString" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CredentialsType">
+		<xsd:sequence>
+			<xsd:element name="Gebruiker" type="notEmptyString"/>
+			<xsd:element name="Paswoord" type="notEmptyString"/>
+			<xsd:element name="Hostname" type="notEmptyString"/>
+			<xsd:element name="Poort" type="PortNumberType" minOccurs="0"/>
+			<xsd:element name="KeyStore" type="KeyStoreType" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MailAdressenType">
+		<xsd:sequence>
+			<xsd:element name="MailAdres" type="notEmptyString" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="notEmptyString">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1" />
+		</xsd:restriction>			
+	</xsd:simpleType>	
+
+	<xsd:simpleType name="FileAgeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="12"/>
+			<xsd:minLength value="1"/>
+			<xsd:pattern value="[0-9]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PortNumberType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5"/>
+			<xsd:minLength value="1"/>
+			<xsd:pattern value="[0-9]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="KeyStoreType">
+		<xsd:sequence>
+			<xsd:element name="Locatie" type="notEmptyString" />
+			<xsd:element name="Paswoord" type="notEmptyString" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="ProtocolEnumType">
+		<xsd:annotation>
+			<xsd:documentation> SFTP | SSH | FTPS | FTP </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="SFTP"/>
+			<xsd:enumeration value="FTPS"/>
+			<xsd:enumeration value="FTP"/>
+			<xsd:enumeration value="SSH"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="TypeEnumType">
+		<xsd:annotation>
+			<xsd:documentation> CLEAN | PERMISSIONS </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CLEAN"/>
+			<xsd:enumeration value="PERMISSIONS"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+		
+</xsd:schema>

@@ -1,0 +1,30 @@
+<xsd:schema targetNamespace="urn:be:vlaanderen:omgeving:resource" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:resource="urn:be:vlaanderen:omgeving:resource" xmlns:algemeen="urn:be:vlaanderen:omgeving:algemeen">
+
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:algemeen" schemaLocation="Algemeen/Algemeen.xsd"/>
+
+    <xsd:complexType name="AbstractResource" abstract="true">
+        <xsd:sequence>
+            <xsd:element name="url" type="algemeen:Url" minOccurs="0"/>
+            <xsd:element name="uuid" type="algemeen:UUID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>De uuid van de component. Deze mag leeg zijn bij het bewaren van een nieuwe component.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="puuid" type="algemeen:UUID" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Deze permanente uuid zal gebruikt worden om duplicaten van een object te identificeren.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="urn" type="algemeen:Urn" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="AbstractVersieResource" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="resource:AbstractResource">
+                <xsd:attribute name="versie" type="algemeen:Versie" use="optional"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+</xsd:schema>

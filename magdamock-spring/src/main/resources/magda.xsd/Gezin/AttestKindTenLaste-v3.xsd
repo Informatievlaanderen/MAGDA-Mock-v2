@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://magda.vlaanderen.be/gezin-v3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" targetNamespace="http://magda.vlaanderen.be/gezin-v3" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../Generiek/GeneriekDomein-v3.xsd"/>
+	<!--=> ENKELVOUDIGE TYPE DEFINITES-->
+	<!--=> SAMENGESTELDE TYPE DEFINITES-->
+	<xs:complexType name="AttestKindTenLasteType">
+		<xs:sequence>
+			<xs:element name="INSZ" type="generiek:INSZType"/>
+			<xs:element name="Situaties" type="SituatieLijstType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SituatieLijstType">
+		<xs:sequence>
+			<xs:element name="Situatie" type="SituatieType" minOccurs="1" maxOccurs="10"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SituatieType">
+		<xs:sequence>
+			<xs:element name="Naam" type="generiek:TekstLangType"/>
+			<xs:element name="Periodes" type="PeriodeLijstType" minOccurs="0"/>
+			<xs:element name="ExtraInformaties" type="ExtraInformatieLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PeriodeLijstType">
+		<xs:sequence>
+			<xs:element name="Periode" type="generiek:PeriodeDatumBeginEnEindeVerplichtType" minOccurs="1" maxOccurs="10"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExtraInformatieLijstType">
+		<xs:sequence>
+			<xs:element name="ExtraInformatie" type="ExtraInformatieType" minOccurs="1" maxOccurs="10"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExtraInformatieType">
+		<xs:sequence>
+			<xs:element name="Naam" type="generiek:TekstLangType"/>
+			<xs:element name="Waarde" type="generiek:TekstLangType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

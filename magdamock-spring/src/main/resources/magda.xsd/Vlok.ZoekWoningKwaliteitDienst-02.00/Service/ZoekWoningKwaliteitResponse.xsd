@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://service.zoekwoningkwaliteitdienst-02_00.vlok-02_00.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:vlok="http://vlok-02_00.vip.vlaanderen.be" targetNamespace="http://service.zoekwoningkwaliteitdienst-02_00.vlok-02_00.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://vlok-02_00.vip.vlaanderen.be" schemaLocation="../../Vlok-02.00/Vlok.xsd"/>
+	<xs:element name="ZoekWoningKwaliteitResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Repliek" type="RepliekType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="RepliekType">
+		<xs:sequence>
+			<xs:element name="Context" type="generiek:ContextType"/>
+			<xs:element name="Antwoorden" type="AntwoordenType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fouten die voorkomen na de verwerking van de Context maar voor de verwerking van Vraag of Antwoord bv: XSD Validatie fouten</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AntwoordenType">
+		<xs:sequence>
+			<xs:element name="Antwoord" type="AntwoordType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AntwoordType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Inhoud" type="AntwoordInhoudType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fouten die voorkomen na de verwerking van Vraag of Antwoord bv: warnings rond ontbrekende data en fouten gelinked aan 1 antwoord</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AntwoordInhoudType">
+		<xs:sequence>
+			<xs:element name="Panden" type="vlok:PandLijstType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

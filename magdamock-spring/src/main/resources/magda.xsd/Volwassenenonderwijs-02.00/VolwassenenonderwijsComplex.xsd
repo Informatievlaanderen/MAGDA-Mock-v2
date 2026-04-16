@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://vwo-02_00.vip.vlaanderen.be"
+		   xmlns:onderwijs="http://onderwijs-02_00.vip.vlaanderen.be"
+		   xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   targetNamespace="http://vwo-02_00.vip.vlaanderen.be"
+		   elementFormDefault="unqualified"
+		   attributeFormDefault="unqualified"
+		   version="2.00">
+
+	<xs:include schemaLocation="VolwassenenonderwijsSimple.xsd"/>
+	<xs:include schemaLocation="VolwassenenonderwijsEnum.xsd"/>
+
+	<xs:import namespace="http://onderwijs-02_00.vip.vlaanderen.be" schemaLocation="../Onderwijs-02.00/Onderwijs.xsd"/>
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+
+	<!--****************************************-->
+	<!--* Segmenten - Niveau 1 (Hoofd)         *-->
+	<!--****************************************-->
+	<!--****************************************-->	
+	<!--* Segmenten - Niveau 2 (Sub)           *-->
+	<!--****************************************-->
+	<xs:complexType name="CriteriaZoekParticipatiesType">
+		<xs:sequence>
+			<xs:element name="Instellingsnummer" type="onderwijs:InstellingsNummerType" minOccurs="0"/>
+			<xs:element name="DatumWijziging" type="generiek:VolledigDatumType" minOccurs="0"/>
+			<xs:element name="ModuleVariant" type="ModuleVariantVraagType" minOccurs="0"/>
+			<xs:element name="Module" type="ModuleVraagType" minOccurs="0"/>
+			<xs:element name="OpleidingsVariant" type="OpleidingsVariantVraagType" minOccurs="0"/>
+			<xs:element name="Opleiding" type="OpleidingsVraagType" minOccurs="0"/>
+			<xs:element name="OpleidingsGebied" type="OpleidingsGebiedVraagType" minOccurs="0"/>
+			<xs:element name="OpleidingsType" type="OpleidingsTypeVraagType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParticipatieType">
+		<xs:sequence>
+			<xs:element name="Module" type="ModuleType"/>
+			<xs:element name="ModuleVariant" type="ModuleVariantType"/>
+			<xs:element name="IngerichteModuleVariant" type="IngerichteModuleVariantType"/>
+			<xs:element name="Les" type="LesType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<!--* Segmenten - Niveau 3 (Samengesteld|Complex)  *-->
+	<!--************************************************-->
+	<xs:complexType name="IngerichteModuleVariantType">
+		<xs:sequence>
+			<xs:element name="CommunicatieCode" type="CommunicatieCodeIngerichteModuleVariantType" minOccurs="0"/>
+			<xs:element name="CursusCode" type="CursusCodeIngerichteModuleVariantType"/>
+			<xs:element name="Instellingsnummer" type="onderwijs:InstellingsNummerType"/>
+			<xs:element name="Instellingsnaam" type="onderwijs:InstellingsnaamType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LesType">
+		<xs:sequence>
+			<xs:element name="Aanvangstijd" type="generiek:Tijd2_0Type"/>
+			<xs:element name="Eindtijd" type="generiek:Tijd2_0Type"/>
+			<xs:element name="Duurtijd" type="onderwijs:NatuurlijkGetalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+                        De duurtijd van een Les in minuten. Deze duurtijd kan soms afwijken
+                        van de tijd tussen begin- en eindtijdstip van de Les.
+                    </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--***********************************************-->
+	<!--* Segmenten - Niveau 4 (Enkelvoudig|Simple)   *-->
+	<!--***********************************************-->
+	<!--****************************************-->
+	<!--* Segmenten - Niveau 5 (Simple Extend) *-->
+	<!--****************************************-->
+	<xs:complexType name="ModuleVariantType">
+		<xs:annotation>
+			<xs:documentation>ModuleVariant</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="ModuleVariantCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModuleVariantVraagType">
+		<xs:annotation>
+			<xs:documentation>ModuleVariant</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="ModuleVariantCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModuleVraagType">
+		<xs:annotation>
+			<xs:documentation>Module</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="ModulecodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpleidingsVariantVraagType">
+		<xs:annotation>
+			<xs:documentation>OpleidingsVariant</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="OpleidingsVariantCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpleidingsVraagType">
+		<xs:annotation>
+			<xs:documentation>Opleiding</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="OpleidingCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpleidingsGebiedVraagType">
+		<xs:annotation>
+			<xs:documentation>Opleidingsgebied</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="OpleidingsGebiedCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpleidingsTypeVraagType">
+		<xs:annotation>
+			<xs:documentation>OpleidingsType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="OpleidingsTypeCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ModuleType">
+		<xs:annotation>
+			<xs:documentation>Module</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="ModulecodeType"/>
+			<xs:element name="Naam" type="ModulenaamType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

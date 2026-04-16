@@ -12,10 +12,15 @@ import be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar;
 import be.vlaanderen.vip.magda.magdamock.config.EmbeddedWireMockBuilder;
 import be.vlaanderen.vip.magda.magdamock.config.MockRestMagdaEndpoints;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
+import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
+import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
+import be.vlaanderen.vip.magda.magdamock.soap.SoapRequestValidatorImpl;
 import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.common.Json;
 import com.github.tomakehurst.wiremock.common.Urls;
 import com.github.tomakehurst.wiremock.direct.DirectCallHttpServer;
 import com.github.tomakehurst.wiremock.http.ContentTypeHeader;
@@ -53,29 +58,41 @@ public class MagdaMockConnection implements MagdaConnection {
     private final ObjectMapper mapper;
     private final DirectCallHttpServer internalWiremockHttpServer;
     private final SoapResponsePatcher soapResponsePatcher = new SoapResponsePatcherImpl();
+    private final SoapBodyValidator soapRequestValidator;
 
 
-    MagdaMockConnection(WireMockData wiremockServerData) {
+    MagdaMockConnection(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator) {
         this.wireMockServer = wiremockServerData.wireMockServer();
         internalWiremockHttpServer = wiremockServerData.factory().getHttpServer();
+        this.soapRequestValidator = soapRequestValidator;
         mapper = new ObjectMapper();
     }
 
-    public static MagdaMockConnection create(WireMockData wiremockServerData) {
-        return new MagdaMockConnection(wiremockServerData);
+    public static MagdaMockConnection create(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator) {
+        return new MagdaMockConnection(wiremockServerData, soapRequestValidator);
     }
 
-    public static MagdaMockConnection create(String testDataPath, String soapTestPath) throws IOException {
+    public static MagdaMockConnection create(String testDataPath, String soapTestPath, String xsdPath) throws IOException {
         List<Domain> domains = SoapResourceUtil.loadDomainsFromPaths(SoapResourceUtil.resolvePaths(soapTestPath));
-        WireMockData wireMockData = EmbeddedWireMockBuilder.wireMockServer(testDataPath);
+        WireMockData wireMockData = EmbeddedWireMockBuilder.wireMockServer(testDataPath, soapTestPath);
         SoapStubRegistrar soapStubRegistrar = new SoapStubRegistrar(wireMockData.wireMockServer(), soapTestPath);
         domains.forEach(soapStubRegistrar::registerDomain);
-        return create(wireMockData);
+        SoapBodyValidator soapRequestValidator;
+        if (xsdPath == null || xsdPath.isBlank()) {
+            soapRequestValidator = new LenientSoapBodyValidator();
+        } else {
+            soapRequestValidator = new SoapRequestValidatorImpl(xsdPath);
+        }
+        return create(wireMockData, soapRequestValidator);
     }
 
     @Override
     public Document sendDocument(Document xml) {
         MagdaDocument request = MagdaDocument.fromDocument(xml);
+        Optional<Document> validationError = soapRequestValidator.validateXml(request);
+        if (validationError.isPresent()) {
+            return validationError.get();
+        }
         String dateHeader = getDateHeaderFromSoapRequest(request);
         String soapUrl = wireMockServer.url("/soap");
         Request mockRequest = createInternalWiremockRequest(soapUrl, "POST", request.toString(), dateHeader, "text/xml");
@@ -83,7 +100,8 @@ public class MagdaMockConnection implements MagdaConnection {
         if (response.getStatus() == 404) {
             return null;
         }
-        return patchResponse(request, parseSoapResponse(response));
+        Document document = parseSoapResponse(response);
+        return patchResponse(request, document);
     }
 
     private String getDateHeaderFromSoapRequest(MagdaDocument request) {
@@ -127,15 +145,41 @@ public class MagdaMockConnection implements MagdaConnection {
         if (query != null && !query.isEmpty()) {
             parts.add(query);
         }
+
+        Optional<Pair<JsonNode, Integer>> validationRequest = validateRestJson(requestBody, true);
+        if (validationRequest.isPresent()) {
+            return validationRequest.get();
+        }
+
         String url = String.join("?", parts);
         Request mockRequest = createInternalWiremockRequest(url, method, requestBody, dateHeader, "application/json");
         Response response = routeRequest(mockRequest);
+        Optional<Pair<JsonNode, Integer>> validationResponse = validateRestJson(response.getBodyAsString(), false);
+        if (validationResponse.isPresent()) {
+            return validationResponse.get();
+        }
+
         return parseRestResponse(response);
+    }
+
+    public Optional<Pair<JsonNode, Integer>> validateRestJson(String requestBody, boolean request) {
+        // Not a valid json request -> 400, response -> 502
+        int statusCode = request ? 400 : 502;
+        try {
+            mapper.readTree(requestBody);
+        } catch (IOException e) {
+            ObjectNode node = mapper.createObjectNode();
+            node.put("errorMessage", e.getMessage());
+            node.put("exceptionClass", e.getClass().getName());
+            return Optional.of(Pair.of(node, statusCode));
+        }
+        return Optional.empty();
     }
 
     private Pair<JsonNode, Integer> parseRestResponse(Response response) {
         try {
             if (response.getStatus() == 404) {
+                log.info("Received status 404 while parsing rest response");
                 return Pair.of(null, 404);
             }
             return Pair.of(mapper.readTree(response.getBody()), response.getStatus());

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://onderwijs-02_00.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://onderwijs-02_00.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+		   version="2.00">
+	<!--****************************************-->
+	<!--* Elementen - Code                     *-->
+	<!--****************************************-->
+	<xs:simpleType name="AdmgrNiveauCodeType">
+		<xs:annotation>
+			<xs:documentation>Type AdmgrNiveau code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="([1234569])"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AdmgrSoortOnderwijsCodeType">
+		<xs:annotation>
+			<xs:documentation>Type AdmgrSoortOnderwijs code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="(1|2)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TypeBuitengewoonCodeType">
+		<xs:annotation>
+			<xs:documentation>Type Buitengewoon code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2"/>
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="(\d{1,2}|[A-Z]{2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SoortProgrammaCodeType">
+		<xs:annotation>
+			<xs:documentation>Type SoortProgramma code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="([1-8])"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AanleidingUitschrijvingCodeType">
+		<xs:annotation>
+			<xs:documentation>Type Aanleiding uitschrijving code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1"/>
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="([A-Z]{1})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SituatieNaUitschrijvingCodeType">
+		<xs:annotation>
+			<xs:documentation>Type Situatie na uitschrijving code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2"/>
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="(\d{1,2})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GraadSecundairOnderwijsType">
+		<xs:annotation>
+			<xs:documentation>Graad binnen het secundair onderwijs</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--****************************************-->
+	<!--* Elementen - Nummer                   *-->
+	<!--****************************************-->
+	<xs:simpleType name="InstellingsNummerType">
+		<xs:annotation>
+			<xs:documentation>Instellingsnummer max 6 numerieke posities</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="(\d{1,6})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AdmgrNummerType">
+		<xs:annotation>
+			<xs:documentation>Administratieve groep nummer (max 6 numeriek)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+			<xs:pattern value="(\d{1,6})"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AttestIdentificatienummerType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--****************************************-->
+	<!--* Elementen - Andere                   *-->
+	<!--****************************************-->
+	<xs:simpleType name="AnderstaligeNieuwkomerType">
+		<xs:annotation>
+			<xs:documentation>Anderstalige nieuwkomer J = Ja N = Neen</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="J|N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GewezenAnderstaligeNieuwkomerType">
+		<xs:annotation>
+			<xs:documentation>Gewezen anderstalige nieuwkomer J = Ja N = Neen</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="J|N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SoortOnderwijsType">
+		<xs:annotation>
+			<xs:documentation>Soort Onderwijs behorend bij een instelling uit Discimus 1 = gewoon 2 = buitengewoon</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="(1|2)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InstantieNaamType">
+		<xs:annotation>
+			<xs:documentation>Naam van een dimensie van de Instelling
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DiscimusReferteType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InstantieType">
+		<xs:annotation>
+			<xs:documentation>Typering van een dimensie van de Instelling
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InstellingsnaamType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NatuurlijkGetalType">
+		<xs:annotation>
+			<xs:documentation>Een getal zonder cijfers na de komma, en groter dan of gelijk aan nul.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,20}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

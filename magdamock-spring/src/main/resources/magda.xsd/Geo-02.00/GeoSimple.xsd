@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://geo-02_00.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://geo-02_00.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:simpleType name="NummerHuisType">
+		<xs:annotation>
+			<xs:documentation>NummerHuisType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PostKantonCodeType">
+		<xs:annotation>
+			<xs:documentation>PostKantonCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[1-9][0-9]{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SubAdresAardCodeType">
+		<xs:annotation>
+			<xs:documentation>SubAdresAardCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{0,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SubAdresWaardeType">
+		<xs:annotation>
+			<xs:documentation>SubAdresType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HerkomstType">
+		<xs:annotation>
+			<xs:documentation>HerkomstType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="18"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AdresPositieAardCodeType">
+		<xs:annotation>
+			<xs:documentation>AdresPositieAardCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{0,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CoordinaatType">
+		<xs:annotation>
+			<xs:documentation>CoordinaatType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EPSGNummerType">
+		<xs:annotation>
+			<xs:documentation>EPSGNummerType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+    	<xs:simpleType name="CodeCrabTaalKernType">
+    		<xs:restriction base="xs:string">
+    			<xs:pattern value="[0-9]{1,2}"/>
+    		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

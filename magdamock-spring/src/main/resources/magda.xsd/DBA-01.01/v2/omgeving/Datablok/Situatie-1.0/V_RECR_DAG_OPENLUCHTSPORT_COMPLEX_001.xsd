@@ -1,0 +1,596 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:V_RECR_DAG_OPENLUCHTSPORT_COMPLEX_001:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:V_RECR_DAG_OPENLUCHTSPORT_COMPLEX_001:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+<xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+	<xs:complexType name="SituatieDatablok">
+		<xs:complexContent>
+			<xs:extension base="dossier:SituatieDatablok">
+			<xs:sequence>
+	<xs:element name="ConstructieAantal_asis">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="ComplexOppervlakte_asis">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="VerhardingOppervlakte_asis">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="PersoonAantal_asis">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="IsTennis_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TennisAantal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TennisOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TennisOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAtletiek_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AtletiekAantal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AtletiekOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.AtletiekOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsHockey_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="HockeyAantal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="HockeyOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.HockeyOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsRugby_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="RugbyAantal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="RugbyOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.RugbyOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsVoetbal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="VoetbalAantal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="VoetbalOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.VoetbalOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsHonkbal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="HonkbalAantal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="HonkbalOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.HonkbalOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAndereSport_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereSport_asis" minOccurs="0" maxOccurs="unbounded">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="AndereSportType_asis">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereSportAantal_asis">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereSportOppervlakte_asis">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="ConstructieAantal">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="ComplexOppervlakte">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="VerhardingOppervlakte">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="PersoonAantal">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="IsTennis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TennisAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TennisOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.TennisOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAtletiek" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AtletiekAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AtletiekOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.AtletiekOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsHockey" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="HockeyAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="HockeyOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.HockeyOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsRugby" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="RugbyAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="RugbyOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.RugbyOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsVoetbal" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="VoetbalAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="VoetbalOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.VoetbalOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsHonkbal" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="HonkbalAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="HonkbalOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.HonkbalOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAndereSport" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereSport" minOccurs="0" maxOccurs="unbounded">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="AndereSportType">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereSportAantal">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereSportOppervlakte">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type.TennisOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.AtletiekOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.HockeyOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.RugbyOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.VoetbalOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.HonkbalOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.TennisOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.AtletiekOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.HockeyOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.RugbyOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.VoetbalOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.HonkbalOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

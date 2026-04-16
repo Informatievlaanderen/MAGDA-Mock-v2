@@ -1,0 +1,212 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:V_SECCONSTR_ZONNEPANEEL_OPGEBOUW_001:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:V_SECCONSTR_ZONNEPANEEL_OPGEBOUW_001:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+<xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+	<xs:complexType name="SituatieDatablok">
+		<xs:complexContent>
+			<xs:extension base="dossier:SituatieDatablok">
+			<xs:sequence>
+	<xs:element name="Ligging_asis" minOccurs="0" maxOccurs="1">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="PerceelsgrensLinksAfstand_asis">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="PerceelsgrensRechtsAfstand_asis">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="Kenmerken_asis" minOccurs="0" maxOccurs="1">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="DakType_asis">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PLAT"/>
+			<xs:enumeration value="HELLEND"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="PlatDakUitsteekBovenDakrand_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="PlatDakZonnepaneelOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Kenmerken_asis.PlatDakZonnepaneelOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="HellendDakVolgensDakhelling_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="HellendDakZonnepaneelOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Kenmerken_asis.HellendDakZonnepaneelOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="Ligging" minOccurs="0" maxOccurs="1">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="PerceelsgrensLinksAfstand">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="PerceelsgrensRechtsAfstand">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="Kenmerken" minOccurs="0" maxOccurs="1">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="DakType">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PLAT"/>
+			<xs:enumeration value="HELLEND"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="PlatDakUitsteekBovenDakrand" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="PlatDakZonnepaneelOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Kenmerken.PlatDakZonnepaneelOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="HellendDakVolgensDakhelling" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="HellendDakZonnepaneelOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Kenmerken.HellendDakZonnepaneelOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type.Kenmerken_asis.PlatDakZonnepaneelOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Kenmerken_asis.HellendDakZonnepaneelOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Kenmerken.PlatDakZonnepaneelOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Kenmerken.HellendDakZonnepaneelOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

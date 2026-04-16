@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2017 rel. 3 sp1 (x64) (http://www.altova.com) by Bart Olaerts (Facilipunt - Agentschap Facilitair Bedrijf) -->
+<xsd:schema xmlns="http://magda.vlaanderen.be/soczek/file/publiceerinschrijvingwerkzoekende/v02_01" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:generiek="http://magda.vlaanderen.be/generiek-v3"
+			xmlns:bron="http://kszbcss.fgov.be/intf/jobseekerstatus/notify/v1"
+			targetNamespace="http://magda.vlaanderen.be/soczek/file/publiceerinschrijvingwerkzoekende/v02_01"
+			elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../../Generiek/Generiek-v3.xsd"/>
+	<xsd:import namespace="http://kszbcss.fgov.be/intf/jobseekerstatus/notify/v1" schemaLocation="../../Bronnen/KSZ/be/fgov/kszbcss/intf/jobseekerstatus/notify/notifyJobSeekerStatusV1.xsd"/>
+	<!--Mutatie bericht-->
+	<xsd:element name="PubliceerInschrijvingWerkzoekende" type="PubliceerInschrijvingWerkzoekendeType"/>
+	<!--Mutatie types-->
+	<xsd:complexType name="PubliceerInschrijvingWerkzoekendeType">
+		<xsd:sequence>
+			<xsd:element name="Publicatie" type="PublicatieType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PublicatieType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="generiek:ContextType"/>
+			<xsd:element name="Onderwerpen" type="OnderwerpLijstType" minOccurs="0"/>
+			<xsd:element name="Uitzonderingen" type="generiek:UitzonderingLijstType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OnderwerpLijstType">
+		<xsd:sequence>
+			<xsd:element name="Onderwerp" type="OnderwerpType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OnderwerpType">
+		<xsd:sequence>
+			<xsd:element name="Referte" type="generiek:ReferteType"/>
+			<xsd:element name="Inhoud" type="InhoudType" minOccurs="0"/>
+			<xsd:element name="Uitzonderingen" type="generiek:UitzonderingLijstType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InhoudType">
+		<xsd:sequence>
+			<xsd:element name="Metadata" type="generiek:MetadataType" minOccurs="0"/>
+			<xsd:element name="jobSeeker" type="bron:JobSeekerType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

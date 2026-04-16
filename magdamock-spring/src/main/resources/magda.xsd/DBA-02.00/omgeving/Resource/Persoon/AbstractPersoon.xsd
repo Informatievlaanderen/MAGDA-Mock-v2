@@ -1,0 +1,16 @@
+<xsd:schema targetNamespace="urn:be:vlaanderen:omgeving:persoon" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:persoon="urn:be:vlaanderen:omgeving:persoon" xmlns:resource="urn:be:vlaanderen:omgeving:resource">
+
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:resource" schemaLocation="../Resource.xsd"/>
+
+    <xsd:complexType name="AbstractPersoon" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="resource:AbstractVersieResource"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="PersoonRef">
+        <xsd:complexContent>
+            <xsd:extension base="persoon:AbstractPersoon"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>

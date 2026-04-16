@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://participatie-02_01.onderwijs.vlaanderen.be" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:onderwijs="http://onderwijs-02_01.onderwijs.vlaanderen.be" xmlns:vwo="http://volwassenenonderwijs-02_01.onderwijs.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://participatie-02_01.onderwijs.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.01">
+	<xs:include schemaLocation="ParticipatieSimple.xsd"/>
+	<xs:include schemaLocation="ParticipatieEnum.xsd"/>
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://onderwijs-02_01.onderwijs.vlaanderen.be" schemaLocation="../Onderwijs-02.01/Onderwijs.xsd"/>
+	<xs:import namespace="http://volwassenenonderwijs-02_01.onderwijs.vlaanderen.be" schemaLocation="../Volwassenenonderwijs-02.01/Volwassenenonderwijs.xsd"/>
+	<!-- Historiekperiode defintie -->
+	<xs:complexType name="PeriodeType">
+		<xs:annotation>
+			<xs:documentation>Periode waarbij begin en einddatum optioneel kunnen zijn</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Begin" type="generiek:VolledigDatumType">
+				<xs:annotation>
+					<xs:documentation>Begin datum</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Einde" type="generiek:VolledigDatumType">
+				<xs:annotation>
+					<xs:documentation>Eind datum</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Zoekcriteria definitie -->
+	<xs:complexType name="CriteriaZoekParticipatiesType">
+		<xs:annotation>
+			<xs:documentation>
+                Bevat de input elementen/data die nodig zijn om de operatie uit te kunnen voeren.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="INSZ" type="sleutel:INSZType"/>
+			<xs:element name="Periode" type="PeriodeType"/>
+			<xs:element name="Volwassenenonderwijs" type="vwo:CriteriaZoekParticipatiesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Antwoord definities -->
+	<xs:complexType name="ParticipatiesType">
+		<xs:sequence>
+			<xs:element name="Participatie" type="ParticipatieType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParticipatieType">
+		<xs:sequence>
+			<xs:element name="Oorsprong" type="generiek:TekstType"/>
+			<xs:element name="Referte" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Lesdatum" type="generiek:VolledigDatumType"/>
+			<xs:element name="Status" type="ParticipatieStatusType"/>
+			<xs:element name="Volwassenenonderwijs" type="vwo:ParticipatieType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParticipatieStatusType">
+		<xs:annotation>
+			<xs:documentation>Mate in hoeverre een cursist aan- dan wel afwezig was tijdens een les.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="OpsommingsType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Basisdefinities -->
+	<xs:complexType name="OpsommingsType">
+		<xs:annotation>
+			<xs:documentation>Abstract generalisatie type voor alle opsomming subtypes.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="OpsommingsTypeCodeType"/>
+			<xs:element name="Omschrijving" type="OpsommingsTypeOmschrijvingType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="OpsommingsTypeCodeType">
+		<xs:annotation>
+			<xs:documentation>De gecodeerde waarde van een bepaald soort Opsomming.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OpsommingsTypeOmschrijvingType">
+		<xs:annotation>
+			<xs:documentation>De beschrijving van de waarde van een bepaald soort Opsomming.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

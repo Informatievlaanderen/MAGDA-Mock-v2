@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xsd:schema xmlns="http://clbovscheduler.vip.vlaanderen.be" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://clbovscheduler.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:element name="CLBOVScheduler">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Stroom" type="StroomType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="StroomType">
+		<xsd:sequence>
+			<xsd:element name="Naam" type="xsd:string"/>
+			<xsd:element name="CronExpressie" type="xsd:string"/>
+			<xsd:element name="FilePattern" type="xsd:string"/>
+			<xsd:element name="FileLocatie" type="FoldersType"/>
+			<xsd:element name="Aanlevering" type="AanleveringEnumType"/>
+			<xsd:element name="XSD" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FoldersType">
+		<xsd:sequence>
+			<xsd:element name="InputFolder" type="xsd:string"/>
+			<xsd:element name="OutputFolder" type="xsd:string"/>
+			<xsd:element name="ArchiveFolder" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="AanleveringEnumType">
+		<xsd:annotation>
+			<xsd:documentation> CLB | OV : bepaalt welke verwerking uitgevoerd zal worden </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CLB"/>
+			<xsd:enumeration value="OV"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

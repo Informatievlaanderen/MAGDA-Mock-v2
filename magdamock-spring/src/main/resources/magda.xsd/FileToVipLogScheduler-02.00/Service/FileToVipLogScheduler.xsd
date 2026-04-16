@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xsd:schema xmlns="http://filetoviplogscheduler.vip.vlaanderen.be" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://filetoviplogscheduler.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:element name="FileToVipLogScheduler">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Stroom" type="StroomType" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="StroomType">
+		<xsd:sequence>
+			<xsd:element name="Naam" type="xsd:string"/>
+			<xsd:element name="FileLocatie" type="FoldersType"/>
+			<xsd:element name="FilePattern" type="xsd:string"/>
+			<xsd:element name="FileEncoding" type="xsd:string"/>
+			<xsd:element name="SchemaFile" type="xsd:string"/>
+			<xsd:element name="CronExpressie" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ContextParameters" type="ContextParameterLijstType" minOccurs="0"/>
+			<xsd:element name="SleutelwaardeExpressies" type="SleutelwaardeExpressieLijstType" minOccurs="0"/>
+			<xsd:element name="IsFoutBlokkerend" type="BooleanType"/>
+			<xsd:element name="MailAdressen" type="MailAdressenType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FoldersType">
+		<xsd:sequence>
+			<xsd:element name="InputFolder" type="xsd:string"/>
+			<xsd:element name="OutputFolder" type="xsd:string"/>
+			<xsd:element name="ArchiveFolder" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ContextParameterLijstType">
+		<xsd:sequence>
+			<xsd:element name="ContextParameter" type="ContextParameterType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ContextParameterType">
+		<xsd:sequence>
+			<xsd:element name="ViplogKolom" type="ViplogKolomType" />
+			<xsd:element name="Expressie" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="ViplogKolomType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AFZENDER_URI"/>
+			<xsd:enumeration value="AFZENDER_HOEDANIGHEID_CODE"/>
+			<xsd:enumeration value="AFZENDER_GEBR_CODE"/>
+			<xsd:enumeration value="AFZENDER_NAAM"/>
+			<xsd:enumeration value="AFZENDER_ORGS_EENHEID_CODE"/>
+			<xsd:enumeration value="AFZENDER_REFERTE_CODE"/>
+			<xsd:enumeration value="BERICHT_OVERHANDIGING_MOMT"/>			
+			<xsd:enumeration value="ONTVANGER_GEBR_CODE"/>
+			<xsd:enumeration value="ONTVANGER_HOEDANIGHEID_CODE"/>
+			<xsd:enumeration value="ONTVANGER_URI"/>
+			<xsd:enumeration value="ONTVANGER_NAAM"/>
+			<xsd:enumeration value="ONTVANGER_ORGS_EENHEID_CODE"/>
+			<xsd:enumeration value="ONTVANGER_REFERTE_CODE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="SleutelwaardeExpressieLijstType">
+		<xsd:sequence>
+			<xsd:element name="SleutelwaardeExpressie" type="xsd:string" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="BooleanType">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="1"/>
+			<xsd:pattern value="(0|1)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="MailAdressenType">
+		<xsd:sequence>
+			<xsd:element name="MailAdres" type="xsd:string" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

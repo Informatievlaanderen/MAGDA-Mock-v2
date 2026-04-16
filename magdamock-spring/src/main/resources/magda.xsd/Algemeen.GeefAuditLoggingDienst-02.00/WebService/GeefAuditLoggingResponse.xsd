@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://webservice.geefauditloggingdienst-02_00.algemeen-02_00.vip.vlaanderen.be"
+            xmlns="http://webservice.geefauditloggingdienst-02_00.algemeen-02_00.vip.vlaanderen.be" 
+			xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be"
+			xmlns:algemeen="http://algemeen-02_00.vip.vlaanderen.be"
+			elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://algemeen-02_00.vip.vlaanderen.be" schemaLocation="../../Algemeen-02.00/Algemeen.xsd"/>
+	
+	<xs:element name="GeefAuditLoggingResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Repliek" type="RepliekType" minOccurs="1"/>
+				
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="RepliekType">
+		<xs:sequence>
+			<xs:element name="Context" type="generiek:ContextType"/>
+			<xs:element name="Antwoorden" type="AntwoordenType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fouten die voorkomen na de verwerking van de Context maar voor de verwerking van Vraag of Antwoord bv: XSD Validatie fouten</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AntwoordenType">
+		<xs:sequence>
+			<xs:element name="Antwoord" type="AntwoordType" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AntwoordType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Inhoud" type="AntwoordInhoudType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="generiek:UitzonderingenType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fouten die voorkomen na de verwerking van Vraag of Antwoord bv: warnings rond ontbrekende data en fouten gelinked aan 1 antwoord</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AntwoordInhoudType">
+		<xs:sequence>
+			<xs:element name="AuditLoggings" type="algemeen:AuditLoggingsType" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

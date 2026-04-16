@@ -1,0 +1,3058 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://vlok-02_00.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:kadaster="http://kadaster-02_00.vip.vlaanderen.be" targetNamespace="http://vlok-02_00.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://kadaster-02_00.vip.vlaanderen.be" schemaLocation="../Kadaster-02.00/Kadaster.xsd"/>
+	<xs:include schemaLocation="VlokSimple.xsd"/>
+	<xs:complexType name="AandeelEigenaarschapType">
+		<xs:sequence>
+			<xs:element name="Teller" type="xs:decimal"/>
+			<xs:element name="Noemer" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdresLijstType">
+		<xs:sequence>
+			<xs:element name="Adres" type="AdresMetTijdstipLaatstGewijzigdType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdresMetTijdstipLaatstGewijzigdType">
+		<xs:complexContent>
+			<xs:extension base="VlokLocatieType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GeografischeCoordinatenType">
+		<xs:sequence>
+			<xs:element name="AdresPositieX" type="xs:double"/>
+			<xs:element name="AdresPositieY" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdviesLijstType">
+		<xs:sequence>
+			<xs:element name="Advies" type="AdviesType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdviesType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="Status" type="EnumType"/>
+			<xs:element name="DatumStatuswijziging" type="xs:date"/>
+			<xs:element name="GewestelijkeAmbtenaar" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Snelherstel" type="xs:boolean"/>
+			<xs:element name="Organisatie" type="EnumType" minOccurs="0"/>
+			<xs:element name="ReferteOnderzoek" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="SoortAdvies" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BelanghebbendeLijstType">
+		<xs:sequence>
+			<xs:element name="Belanghebbende" type="BelanghebbendeType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BelanghebbendeType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="INSZ" type="sleutel:INSZType" minOccurs="0"/>
+			<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType" minOccurs="0"/>
+			<xs:element name="Rol" type="EnumType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeoordelingGemeenschappelijkeFunctiesType">
+		<xs:sequence>
+			<xs:element name="BezettingWcCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="BezettingWcCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="BezettingWcCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="BezettingBadCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="BezettingBadCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="BezettingBadCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="BezettingKookCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="BezettingKookCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="BezettingKookCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="BezettingRuimteCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="BezettingRuimteCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="BezettingRuimteCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitWcCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitWcCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitWcCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitBadCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitBadCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitBadCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitKookCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitKookCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitKookCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitLeefruimteCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitLeefruimteCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="KwaliteitLeefruimteCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="AantalConformWC" type="xs:int" minOccurs="0"/>
+			<xs:element name="AantalConformBad" type="xs:int" minOccurs="0"/>
+			<xs:element name="OppervlakteConformKook" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="ConformPersonenWc" type="xs:int" minOccurs="0"/>
+			<xs:element name="ConformPersonenBad" type="xs:int" minOccurs="0"/>
+			<xs:element name="ConformPersonenKook" type="xs:int" minOccurs="0"/>
+			<xs:element name="ConformPersonenLeefruimteSA" type="xs:int" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeoordelingWoningKamerType">
+		<xs:sequence>
+			<xs:element name="EntiteitAantalCat1" type="xs:int"/>
+			<xs:element name="EntiteitAantalCat2" type="xs:int"/>
+			<xs:element name="EntiteitAantalCat3" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeroepIngediendLijstType">
+		<xs:sequence>
+			<xs:element name="Beroep" type="BeroepIngediendType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeroepIngediendType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="DatumBeroep" type="xs:date"/>
+			<xs:element name="BeroepTegen" type="EnumType"/>
+			<xs:element name="Ontvankelijkheid" type="EnumType"/>
+			<xs:element name="MondelingeHoorzitting" type="xs:boolean"/>
+			<xs:element name="BeroepDoorGa" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DatumHoorzitting" type="xs:date" minOccurs="0"/>
+			<xs:element name="HoorzittingIsGeannuleerd" type="xs:boolean"/>
+			<xs:element name="IndienerType" type="EnumType" minOccurs="0"/>
+			<xs:element name="Indieners" type="IndienerVerzoekerLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeroepsprocedureLijstType">
+		<xs:sequence>
+			<xs:element name="Beroepsprocedure" type="BeroepsprocedureType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeroepsprocedureType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Status" type="EnumType"/>
+			<xs:element name="StartDatum" type="xs:date"/>
+			<xs:element name="BeroepRaadVanState" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="BeroepsschriftenAantal" type="xs:int"/>
+			<xs:element name="Entiteiten" type="BestaandeEntiteitLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeroepType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="ReferteOnderzoek" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="DatumOntwerpMB" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumCorrigerendMb" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumBetekeningCorrigerendMb" type="xs:date" minOccurs="0"/>
+			<xs:element name="BeschrijvingCorrectieEnGevolgen" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="DatumBeroepRvs" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumBeslissingRvs" type="xs:date" minOccurs="0"/>
+			<xs:element name="BeslissingRvs" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Beroepen" type="BeroepIngediendLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeslissingLijstType">
+		<xs:sequence>
+			<xs:element name="Beslissing" type="BeslissingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeslissingType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Status" type="EnumType"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="DatumBetekening" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumUitstel" type="xs:date" minOccurs="0"/>
+			<xs:element name="Snelherstel" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Herhuisvesting" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="SloopOfHerbestemming" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="RedenBeslissingAnder" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="DatumOpheffing" type="xs:date" minOccurs="0"/>
+			<xs:element name="RedenOpheffing" type="EnumType" minOccurs="0"/>
+			<xs:element name="DatumSloop" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumHerbestemming" type="xs:date" minOccurs="0"/>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DatumBetekeningAanWvl" type="xs:date" minOccurs="0"/>
+			<xs:element name="ReferteOnderzoek" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="RedenGeenBesluit" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="TermijnSnelherstel" type="xs:int" minOccurs="0"/>
+			<xs:element name="StopzettingBewoning" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DatumStopzettingBewoning" type="xs:date" minOccurs="0"/>
+			<xs:element name="RecupererenHerhuisvestingkosten" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="WerkenOpKostenEigenaar" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeslissingVersturenLijstType">
+		<xs:sequence>
+			<xs:element name="Beslissing" type="BeslissingVersturenType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BeslissingVersturenType">
+		<xs:complexContent>
+			<xs:extension base="BeslissingWvlType">
+				<xs:sequence>
+					<xs:element name="Entiteit" type="BestaandeEntiteitType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BeslissingWvlType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="DatumBetekening" type="xs:date"/>
+			<xs:element name="DatumUitstel" type="xs:date" minOccurs="0"/>
+			<xs:element name="Snelherstel" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Herhuisvesting" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="SloopOfHerbestemming" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="RedenBeslissingAnder" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="RedenGeenBesluit" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="TermijnSnelherstel" type="xs:int" minOccurs="0"/>
+			<xs:element name="StopzettingBewoning" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DatumStopzettingBewoning" type="xs:date" minOccurs="0"/>
+			<xs:element name="RecupererenHerhuisvestingkosten" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="WerkenOpKostenEigenaar" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BesluitLijstType">
+		<xs:sequence>
+			<xs:element name="Besluit" type="BesluitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BesluitNgwLijstType">
+		<xs:sequence>
+			<xs:element name="BesluitNgw" type="BesluitNgwType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BesluitNgwType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="DatumOpheffing" type="xs:date" minOccurs="0"/>
+			<xs:element name="RedenOpheffing" type="EnumType" minOccurs="0"/>
+			<xs:element name="DatumSloop" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumHerbestemming" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumBetekeningAanWvl" type="xs:date" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BesluitType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="ReferteBesluitOo" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="ReferteBesluitNGW" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="ReferteBesluitReferteMB" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+			<xs:element name="GebouwEenheidId" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="DatumBesluit" type="xs:date"/>
+			<xs:element name="DatumOpheffing" type="xs:date"/>
+			<xs:element name="RedenOpheffing" type="EnumType"/>
+			<xs:element name="DatumSloop" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumHerbestemming" type="xs:date" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BesluitBeperktLijstType">
+		<xs:sequence>
+			<xs:element name="Besluit" type="BesluitBeperktType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BesluitBeperktType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="OorsprongBesluit" type="EnumType"/>
+			<xs:element name="ResultaatBesluit" type="EnumType"/>
+			<xs:element name="DatumBesluit" type="xs:date"/>
+			<xs:element name="Snelherstel" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Herhuisvesting" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="SloopOfHerbestemming" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="TermijnSnelherstel" type="xs:int" minOccurs="0"/>
+			<xs:element name="StopzettingBewoning" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DatumStopzettingBewoning" type="xs:date" minOccurs="0"/>
+			<xs:element name="RecupererenHerhuisvestingkosten" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="WerkenOpKostenEigenaar" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="ReferteOnderzoek" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Documenten" type="GeefWoningKwaliteitBijlageBeperktBestandLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestaandeEntiteitLijstType">
+		<xs:sequence>
+			<xs:element name="Entiteit" type="BestaandeEntiteitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestaandeEntiteitLijstWithBezettingsnormType">
+		<xs:sequence>
+			<xs:element name="Entiteit" type="BestaandeEntiteitWithBezettingsnormType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestaandeEntiteitType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestaandeEntiteitWithBezettingsnormType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Bezettingsnorm" type="xs:int" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestaandeEntiteitWithTijdstipLaatstGewijzigdLijstType">
+		<xs:sequence>
+			<xs:element name="Entiteit" type="BestaandeEntiteitWithTijdstipLaatstGewijzigdType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestaandeEntiteitWithTijdstipLaatstGewijzigdType">
+		<xs:complexContent>
+			<xs:extension base="BestaandeEntiteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BestaandeGemeenschappelijkeRuimteLijstType">
+		<xs:sequence>
+			<xs:element name="GemeenschappelijkeRuimte" type="BestaandeGemeenschappelijkeRuimteType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestaandeGemeenschappelijkeRuimteType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BestandType">
+		<xs:sequence>
+			<xs:element name="Type" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="Data" type="DataType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BetrokkeneLijstType">
+		<xs:sequence>
+			<xs:element name="Betrokkene" type="BetrokkeneType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BetrokkeneType">
+		<xs:sequence>
+			<xs:element name="Identificatie" type="INSZOfOndernemingsnummerType"/>
+			<xs:element name="Rollen" type="BetrokkenheidLijstType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BetrokkenheidLijstType">
+		<xs:sequence>
+			<xs:element name="Rol" type="BetrokkenheidType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BetrokkenheidType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Rol" type="EnumType"/>
+			<xs:element name="Startdatum" type="xs:date"/>
+			<xs:element name="StartdatumVastgesteld" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Einddatum" type="xs:date" minOccurs="0"/>
+			<xs:element name="EinddatumVastgesteld" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Bron" type="EnumType" minOccurs="0"/>
+			<xs:element name="AandeelEigenaarschap" type="AandeelEigenaarschapType" minOccurs="0"/>
+			<xs:element name="DatumKennisgeving" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarAdresLijstType">
+		<xs:sequence>
+			<xs:element name="Adres" type="BewaarAdresType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarAdresType">
+		<xs:complexContent>
+			<xs:extension base="VlokLocatieType">
+				<xs:sequence>
+					<xs:element name="Verwijder" type="xs:boolean"/>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarBetrokkeneLijstType">
+		<xs:sequence>
+			<xs:element name="Persoon" type="BewaarPersoonType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarBetrokkenheidLijstType">
+		<xs:sequence>
+			<xs:element name="BetrokkenheidType" type="BewaarBetrokkenheidType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarBetrokkenheidType">
+		<xs:complexContent>
+			<xs:extension base="BetrokkenheidType">
+				<xs:sequence>
+					<xs:element name="Verwijder" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarBijlageType">
+		<xs:sequence>
+			<xs:element name="Verwijder" type="xs:boolean"/>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="ExterneReferte" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Bestand" type="BestandType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarCapakeyLijstType">
+		<xs:sequence>
+			<xs:element name="Capakey" type="BewaarCapakeyType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarCapakeyType">
+		<xs:sequence>
+			<xs:element name="Verwijder" type="xs:boolean"/>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="KadastraleAfdeling" type="kadaster:PerceelKadastraleAfdelingType"/>
+			<xs:element name="Sectie" type="kadaster:SectieType"/>
+			<xs:element name="Grondnummer" type="generiek:Tekst2_0Type"/>
+			<xs:element name="ToevoegenAanAlleEntiteiten" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarContactpersoonLijstType">
+		<xs:sequence>
+			<xs:element name="Contactpersoon" type="BewaarContactpersoonType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarContactpersoonRolLijstType">
+		<xs:sequence>
+			<xs:element name="Rol" type="BewaarContactpersoonRolType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarContactpersoonRolType">
+		<xs:complexContent>
+			<xs:extension base="ContactpersoonRolType">
+				<xs:sequence>
+					<xs:element name="Verwijder" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarContactpersoonType">
+		<xs:complexContent>
+			<xs:extension base="ContactpersoonGeneriekType">
+				<xs:sequence>
+					<xs:element name="Verwijder" type="xs:boolean"/>
+					<xs:element name="Rollen" type="BewaarContactpersoonRolLijstType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarDocumentType">
+		<xs:complexContent>
+			<xs:extension base="BewaarBijlageType">
+				<xs:sequence>
+					<xs:element name="DocumentType" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+					<xs:element name="Correspondenten" type="CorrespondentenLijstType" minOccurs="0"/>
+					<xs:element name="Status" type="EnumType" minOccurs="0"/>
+					<xs:element name="Koppelingen" type="KoppelingLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarEntiteitType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitCrudType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="TijdstipLaatstGewijzigdPand" type="xs:dateTime"/>
+					<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Adressen" type="BewaarAdresLijstType" minOccurs="0"/>
+					<xs:element name="Capakeys" type="BewaarCapakeyLijstType" minOccurs="0"/>
+					<xs:element name="CapakeyNietAutomatischBijwerken" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Type" type="EnumType" minOccurs="0"/>
+					<xs:element name="Verdieping" type="EnumType" minOccurs="0"/>
+					<xs:element name="VerdiepingAndere" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Beschrijving" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+					<xs:element name="NettoVloeroppervlakte" type="xs:decimal" minOccurs="0"/>
+					<xs:element name="AantalWoonlokalen" type="xs:int" minOccurs="0"/>
+					<xs:element name="InterneBadFunctie" type="EnumType" minOccurs="0"/>
+					<xs:element name="InterneWc" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="InterneKeuken" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Oppervlakteverhouding" type="OppervlakteverhoudingType" minOccurs="0"/>
+					<xs:element name="HeeftUitzondering98VoorStudentenKamers" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Betrokkenen" type="BewaarBetrokkeneLijstType" minOccurs="0"/>
+					<xs:element name="Epc" type="EpcType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarFotoType">
+		<xs:complexContent>
+			<xs:extension base="BewaarBijlageType">
+				<xs:sequence>
+					<xs:element name="Omschrijving" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="TagPand" type="generiek:ReferteType" minOccurs="0"/>
+					<xs:element name="TagEntiteit" type="generiek:ReferteType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarGemeenschappelijkeRuimteLijstType">
+		<xs:sequence>
+			<xs:element name="GemeenschappelijkeRuimte" type="BewaarGemeenschappelijkeRuimteType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarGemeenschappelijkeRuimteType">
+		<xs:complexContent>
+			<xs:extension base="GemeenschappelijkeRuimteType">
+				<xs:sequence>
+					<xs:element name="Verwijder" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarPandType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitCrudType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Adressen" type="BewaarAdresLijstType" minOccurs="0"/>
+					<xs:element name="Capakeys" type="BewaarCapakeyLijstType" minOccurs="0"/>
+					<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Beschrijving" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+					<xs:element name="VerslagBrandweer" type="VerslagBrandweerType" minOccurs="0"/>
+					<xs:element name="EpcRWaarde" type="EnumType" minOccurs="0"/>
+					<xs:element name="CapakeyNietAutomatischBijwerken" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="GemeenschappelijkeRuimtes" type="BewaarGemeenschappelijkeRuimteLijstType" minOccurs="0"/>
+					<xs:element name="Betrokkenen" type="BewaarBetrokkeneLijstType" minOccurs="0"/>
+					<xs:element name="Herindelingen" type="HerindelingPandLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarPersoonType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="INSZ" type="sleutel:INSZType" minOccurs="0"/>
+			<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType" minOccurs="0"/>
+			<xs:element name="Type" type="EnumType" minOccurs="0"/>
+			<xs:element name="Actief" type="xs:boolean"/>
+			<xs:element name="Correspondentieadres" type="BewaarAdresType" minOccurs="0"/>
+			<xs:element name="Email" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Telefoon" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Telefoon2" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Betrokkenheid" type="BewaarBetrokkenheidLijstType"/>
+			<xs:element name="Contactpersonen" type="BewaarContactpersoonLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarProcedureCaType" mixed="false">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+					<xs:element name="RedenAfwijzing" type="EnumType" minOccurs="0"/>
+					<xs:element name="DatumAfwijzing" type="xs:date" minOccurs="0"/>
+					<xs:element name="Verzoek" type="BewaarVerzoekCaType" minOccurs="0"/>
+					<xs:element name="Entiteiten" type="KoppelEntiteitLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarProcedureOoType" mixed="false">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+					<xs:element name="RedenAfwijzing" type="EnumType" minOccurs="0"/>
+					<xs:element name="DatumAfwijzing" type="xs:date" minOccurs="0"/>
+					<xs:element name="Verzoek" type="BewaarVerzoekOoType" minOccurs="0"/>
+					<xs:element name="Entiteiten" type="KoppelEntiteitLijstType" minOccurs="0"/>
+					<xs:element name="Onderzoeken" type="KoppelOnderzoekLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarRisicoLijstType">
+		<xs:sequence>
+			<xs:element name="Risico" type="BewaarVerzoekRisicoType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarVerzoekCaType">
+		<xs:sequence>
+			<xs:element name="DatumVerzoek" type="xs:date"/>
+			<xs:element name="DatumVolledig" type="xs:date" minOccurs="0"/>
+			<xs:element name="RedenAanvraag" type="EnumType"/>
+			<xs:element name="MeegestuurdeDocumenten" type="VerzoekCaDocumentType" minOccurs="0"/>
+			<xs:element name="Verzoekers" type="BewaarVerzoekerLijstType" minOccurs="0"/>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarVerzoekerLijstType">
+		<xs:sequence>
+			<xs:element name="Verzoeker" type="BewaarVerzoekerType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarVerzoekerType">
+		<xs:complexContent>
+			<xs:extension base="IndienerVerzoekerType">
+				<xs:sequence>
+					<xs:element name="Verwijder" type="xs:boolean"/>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+					<xs:element name="Telefoon" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Telefoon2" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Email" type="generiek:Tekst2_0Type" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarVerzoekOoType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="Dienst" type="EnumType" minOccurs="0"/>
+			<xs:element name="Belanghebbende" type="EnumType" minOccurs="0"/>
+			<xs:element name="Medium" type="EnumType" minOccurs="0"/>
+			<xs:element name="TeOnderzoeken" type="EnumType" minOccurs="0"/>
+			<xs:element name="VolledigPand" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="BeschrijvingTeOnderzoekenWoning" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Risicos" type="BewaarRisicoLijstType" minOccurs="0"/>
+			<xs:element name="Verzoekers" type="BewaarVerzoekerLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarVerzoekRisicoType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Verwijder" type="xs:boolean"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="BeschrijvingAndere" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarWoningKwaliteitBijlageLijstType">
+		<xs:sequence>
+			<xs:element name="Bijlage" type="BewaarWoningKwaliteitBijlageType" maxOccurs="10"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarWoningKwaliteitBijlageType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Foto" type="BewaarFotoType"/>
+				<xs:element name="Document" type="BewaarDocumentType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewaarWoningKwaliteitCrudType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="Verwijder" type="xs:boolean"/>
+					<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewaarWoningKwaliteitType">
+		<xs:annotation>
+			<xs:documentation>
+				Dit is een basistype voor al de types die meegestuurd kunnen worden met de BewaarwoningkwaliteitDienst. Op deze manier kan hier in code rekening mee gehouden worden, en moet er dus niet met het default basistype (object) gewerkt worden.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="BewijsstukBeperktLijstType">
+		<xs:sequence>
+			<xs:element name="Bewijsstuk" type="BewijsstukBeperktType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewijsstukBeperktType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="GeldigVanaf" type="xs:date"/>
+			<xs:element name="GeldigTot" type="xs:date" minOccurs="0"/>
+			<xs:element name="ReferteDocument" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Status" type="EnumType" minOccurs="0"/>
+			<xs:element name="Referentie" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+			<xs:element name="DatumVerval" type="xs:date" minOccurs="0"/>
+			<xs:element name="RedenVerval" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewijsstukPandLijstType">
+		<xs:sequence>
+			<xs:element name="Bewijsstuk" type="BewijsstukPandType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewijsstukPandType">
+		<xs:complexContent>
+			<xs:extension base="BewijsstukEntiteitType">
+				<xs:sequence>
+					<xs:element name="BewijsstukEntiteiten" type="BewijsstukPandEntiteitLijst" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewijsstukEntiteitLijstType">
+		<xs:sequence>
+			<xs:element name="Bewijsstuk" type="BewijsstukEntiteitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewijsstukEntiteitType">
+		<xs:complexContent>
+			<xs:extension base="BewijsstukBeperktType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="ToegevoegdDoorOrganisatie" type="generiek:Tekst2_0Type"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BewijsstukPandEntiteitLijst">
+		<xs:sequence>
+			<xs:element name="Entiteit" type="BewijsstukPandEntiteitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BewijsstukPandEntiteitType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="DatumVerval" type="xs:date" minOccurs="0"/>
+			<xs:element name="RedenVerval" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BijlageLijstType">
+		<xs:sequence>
+			<xs:element name="Bijlage" type="BijlageType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BijlageType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Type" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Bestand" type="BestandType"/>
+			<xs:element name="DocumentType" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Correspondenten" type="CorrespondentenLijstType" minOccurs="0"/>
+			<xs:element name="Status" type="EnumType" minOccurs="0"/>
+			<xs:element name="Koppelingen" type="KoppelingLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BusnummerType">
+		<xs:sequence>
+			<xs:element name="CrabCode" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Busnummer" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CaLijstType">
+		<xs:sequence>
+			<xs:element name="Ca" type="CaType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CapakeyLijstType">
+		<xs:sequence>
+			<xs:element name="Capakey" type="CapakeyType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CapakeyType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Capakey" type="generiek:Tekst2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CaType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="DatumAttest" type="xs:date"/>
+			<xs:element name="Oorsprong" type="EnumType"/>
+			<xs:element name="DatumAttestGeldigTot" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumAfgifteAttest" type="xs:date" minOccurs="0"/>
+			<xs:element name="Verval" type="VervalType" minOccurs="0"/>
+			<xs:element name="Bezettingsnorm" type="xs:int" minOccurs="0"/>
+			<xs:element name="Soort" type="EnumType" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CaBeperktLijstType">
+		<xs:sequence>
+			<xs:element name="Ca" type="CaBeperktType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CaBeperktType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="DatumAttest" type="xs:date"/>
+			<xs:element name="DatumAttestGeldigTot" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumAfgifteAttest" type="xs:date" minOccurs="0"/>
+			<xs:element name="Bezettingsnorm" type="xs:int" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="ReferteOnderzoek" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Documenten" type="GeefWoningKwaliteitBijlageBeperktBestandLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactpersoonGeneriekType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Identificatie" type="INSZOfOndernemingsnummerType"/>
+			<xs:element name="Actief" type="xs:boolean"/>
+			<xs:element name="Email" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Telefoon" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Telefoon2" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactpersoonLijstType">
+		<xs:sequence>
+			<xs:element name="Contactpersoon" type="ContactpersoonType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactpersoonRolLijstType">
+		<xs:sequence>
+			<xs:element name="Rol" type="ContactpersoonRolType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactpersoonRolType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Rol" type="EnumType"/>
+			<xs:element name="Startdatum" type="xs:date"/>
+			<xs:element name="StartdatumVastgesteld" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Einddatum" type="xs:date" minOccurs="0"/>
+			<xs:element name="EinddatumVastgesteld" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DatumKennisgeving" type="xs:date" minOccurs="0"/>
+			<xs:element name="Bron" type="EnumType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactpersoonType">
+		<xs:complexContent>
+			<xs:extension base="ContactpersoonGeneriekType">
+				<xs:sequence>
+					<xs:element name="Rollen" type="ContactpersoonRolLijstType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CorrespondentenLijstType">
+		<xs:sequence>
+			<xs:element name="Correspondent" type="CorrespondentType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CorrespondentType">
+		<xs:complexContent>
+			<xs:extension base="IndienerVerzoekerType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+					<xs:element name="Telefoon" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Telefoon2" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Email" type="generiek:Tekst2_0Type" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CriteriaBewaarWoningKwaliteitBijlageType">
+		<xs:sequence>
+			<xs:element name="NISCode" type="generiek:GemeenteNISCodeType"/>
+			<xs:element name="Bijlagen" type="BewaarWoningKwaliteitBijlageLijstType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CriteriaBewaarWoningKwaliteitType">
+		<xs:sequence>
+			<xs:element name="NISCode" type="generiek:GemeenteNISCodeType"/>
+			<xs:choice>
+				<xs:element name="BewaarPand" type="BewaarPandType"/>
+				<xs:element name="BewaarEntiteit" type="BewaarEntiteitType"/>
+				<xs:element name="BewaarProcedureOo" type="BewaarProcedureOoType"/>
+				<xs:element name="BewaarProcedureCa" type="BewaarProcedureCaType"/>
+				<xs:element name="WijzigPandStructuur" type="WijzigPandStructuurType"/>
+				<xs:element name="ZetPandGesloopt" type="ZetPandGeslooptType"/>
+				<xs:element name="ZetEntiteitGesloopt" type="ZetEntiteitGeslooptType"/>
+				<xs:element name="ZetGemeenschappelijkeRuimteGesloopt" type="ZetGemeenschappelijkeRuimteGeslooptType"/>
+				<xs:element name="WijsProcedureOoAf" type="WijsProcedureOoAfType"/>
+				<xs:element name="WijsProcedureCaAf" type="WijsProcedureCaAfType"/>
+				<xs:element name="HefBesluitenOp" type="HefBesluitenOpType"/>
+				<xs:element name="VraagAdviesAanWvl" type="VraagAdviesAanWvlType"/>
+				<xs:element name="VraagOnderzoekVoorPand" type="VraagOnderzoekVoorPandType"/>
+				<xs:element name="VraagOnderzoekVoorProcedureOo" type="VraagOnderzoekVoorProcedureOoType"/>
+				<xs:element name="VraagOnderzoekVoorProcedureCa" type="VraagOnderzoekVoorProcedureCaType"/>
+				<xs:element name="StartProcedureOoViaVerzoek" type="StartProcedureOoViaVerzoekType"/>
+				<xs:element name="RegistreerBesluitNgw" type="RegistreerBesluitNgwType"/>
+				<xs:element name="RegistreerConformiteitsattest" type="RegistreerConformiteitsattestType"/>
+				<xs:element name="StartProcedureCaViaEersteAanleg" type="StartProcedureCaViaEersteAanlegType"/>
+				<xs:element name="VerstuurBeslissingNaarWvl" type="VerstuurBeslissingNaarWvlType"/>
+				<xs:element name="WijzigBeslissingen" type="WijzigBeslissingenType"/>
+				<xs:element name="WijzigCas" type="WijzigCasType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CriteriaGeefWoningKwaliteitBijlagenType">
+		<xs:sequence>
+			<xs:element name="NISCode" type="generiek:GemeenteNISCodeType"/>
+			<xs:element name="Bijlagen" type="GeefWoningKwaliteitBijlageLijstType"/>
+			<xs:element name="Rol" type="generiek:CijferDubbelType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CriteriaGeefWoningKwaliteitType">
+		<xs:sequence>
+			<xs:element name="NISCode" type="generiek:GemeenteNISCodeType"/>
+			<xs:element name="Referte" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="Type" type="generiek:TekstKort2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CriteriaZoekWoningKwaliteitType">
+		<xs:sequence>
+			<xs:element name="NISCode" type="generiek:GemeenteNISCodeType"/>
+			<xs:element name="Zoekterm" type="generiek:Tekst2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureCaGeefType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="ReferteDeelprocedureCa" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+					<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="ReferteHoofdProcedureCa" type="generiek:ReferteType"/>
+					<xs:element name="Status" type="EnumType"/>
+					<xs:element name="DatumStatuswijziging" type="xs:date"/>
+					<xs:element name="DatumWeigering" type="xs:date" minOccurs="0"/>
+					<xs:element name="RedenenWeigering" type="RedenWeigeringLijstType" minOccurs="0"/>
+					<xs:element name="Voldoetrookmeldersverplichtingen" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Voorhuisvestingstudenten" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Voorbehoudbrandweerattest" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="RookmelderOpElkeBouwlaagVerplicht" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DatumAttest" type="xs:date" minOccurs="0"/>
+					<xs:element name="DatumAfgifteAttest" type="xs:date" minOccurs="0"/>
+					<xs:element name="DatumAttestGeldigTot" type="xs:date" minOccurs="0"/>
+					<xs:element name="DatumKennisgeving" type="xs:date" minOccurs="0"/>
+					<xs:element name="Personen" type="PersoonLijstType" minOccurs="0"/>
+					<xs:element name="Documenten" type="GeefWoningKwaliteitBijlageBestandLijstType" minOccurs="0"/>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="Bezettingsnorm" type="xs:int" minOccurs="0"/>
+					<xs:element name="AttestType" type="EnumType" minOccurs="0"/>
+					<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="ReferteCa" type="generiek:ReferteType" minOccurs="0"/>
+					<xs:element name="DatumBetekening" type="xs:date" minOccurs="0"/>
+					<xs:element name="TermijnBeroepDoorBetrokkenen" type="xs:date" minOccurs="0"/>
+					<xs:element name="BeroepCaResultaat" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="ReferteAdviesNaBeroep" type="generiek:ReferteType" minOccurs="0"/>
+					<xs:element name="DatumBeslissing" type="xs:date" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureCaLijstType">
+		<xs:sequence>
+			<xs:element name="DeelprocedureCa" type="DeelprocedureType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureOoCaType">
+		<xs:sequence>
+			<xs:element name="ReferteCa" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="DatumAttest" type="xs:date"/>
+			<xs:element name="DatumAfgifteAttest" type="xs:date"/>
+			<xs:element name="DatumAttestGeldigTot" type="xs:date"/>
+			<xs:element name="DatumKennisgeving" type="xs:date" minOccurs="0"/>
+			<xs:element name="Voorbehoudbrandweerattest" type="xs:boolean"/>
+			<xs:element name="Bezettingsnorm" type="xs:int"/>
+			<xs:element name="AttestType" type="EnumType"/>
+			<xs:element name="Studentenkamer" type="xs:boolean"/>
+			<xs:element name="DatumBetekeningCa" type="xs:date" minOccurs="0"/>
+			<xs:element name="TermijnBeroepDoorBewoner" type="xs:date" minOccurs="0"/>
+			<xs:element name="BeroepCaIngediend" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="BeroepCaResultaat" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="BeroepCaDatumBeslissing" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureKotlabelBeperktType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="ReferteHoofdProcedure" type="generiek:ReferteType"/>
+			<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+			<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Status" type="EnumType"/>
+			<xs:element name="Criteria" type="DeelprocedureKotlabelCriteriumBeperktLijstType" minOccurs="0"/>
+			<xs:element name="KotlabelBewijsstuk" type="generiek:ReferteType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureKotlabelBeperktLijstType">
+		<xs:sequence>
+			<xs:element name="DeelprocedureKotlabel" type="DeelprocedureKotlabelBeperktType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureKotlabelCriteriumBeperktLijstType">
+		<xs:sequence>
+			<xs:element name="DeelprocedureKotlabelCriterium" type="DeelprocedureKotlabelCriteriumBeperktType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureKotlabelCriteriumBeperktType">
+		<xs:sequence>
+			<xs:element name="Criterium" type="EnumType"/>
+			<xs:element name="Beoordelingen" type="KotlabelCriteriumBeoordelingBeperktLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureKotlabelCriteriumLijstType">
+		<xs:sequence>
+			<xs:element name="DeelprocedureKotlabelCriterium" type="DeelprocedureKotlabelCriteriumType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureKotlabelCriteriumType">
+		<xs:sequence>
+			<xs:element name="Criterium" type="EnumType"/>
+			<xs:element name="Beoordelingen" type="KotlabelCriteriumBeoordelingLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureKotlabelType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="ReferteHoofdProcedure" type="generiek:ReferteType"/>
+			<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+			<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Status" type="EnumType"/>
+			<xs:element name="Criteria" type="DeelprocedureKotlabelCriteriumLijstType" minOccurs="0"/>
+			<xs:element name="Kotlabels" type="BewijsstukEntiteitLijstType" minOccurs="0"/>
+			<xs:element name="Documenten" type="GeefWoningKwaliteitBijlageBestandLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureKotlabelLijstType">
+		<xs:sequence>
+			<xs:element name="DeelprocedureKotlabel" type="DeelprocedureKotlabelType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureOoGeefType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="ReferteHoofdProcedureOo" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+					<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="ReferteDeelprocedureOo" type="generiek:ReferteType"/>
+					<xs:element name="Status" type="EnumType"/>
+					<xs:element name="DatumStatuswijziging" type="xs:date"/>
+					<xs:element name="Adviezen" type="AdviesLijstType" minOccurs="0"/>
+					<xs:element name="Hoorplicht" type="HoorplichtType" minOccurs="0"/>
+					<xs:element name="Beslissingen" type="BeslissingLijstType" minOccurs="0"/>
+					<xs:element name="Beroep" type="BeroepType" minOccurs="0"/>
+					<xs:element name="MB" type="MBLijstType" minOccurs="0"/>
+					<xs:element name="Personen" type="ProcedurePersoonLijstType" minOccurs="0"/>
+					<xs:element name="Documenten" type="GeefWoningKwaliteitBijlageBestandLijstType" minOccurs="0"/>
+					<xs:element name="Ca" type="DeelprocedureOoCaType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureOoLijstType">
+		<xs:sequence>
+			<xs:element name="DeelprocedureOo" type="DeelprocedureType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeelprocedureType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Status" type="EnumType"/>
+			<xs:element name="DatumStatuswijziging" type="xs:date"/>
+			<xs:element name="ReferteHoofdProcedure" type="generiek:ReferteType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EindbeoordelingEntiteitType">
+		<xs:sequence>
+			<xs:element name="EindbeoordelingCat1" type="xs:int"/>
+			<xs:element name="EindbeoordelingCat2" type="xs:int"/>
+			<xs:element name="EindbeoordelingCat3" type="xs:int"/>
+			<xs:element name="EntiteitAantalCat2Extra" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EindbeoordelingEntiteitBeperktType">
+		<xs:sequence>
+			<xs:element name="EindBeoordeling" type="xs:int" minOccurs="0"/>
+			<xs:element name="EindbeoordelingCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="EindbeoordelingCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="EindbeoordelingCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="EntiteitAantalCat2Extra" type="xs:int" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitAdviesWVLType">
+		<xs:sequence>
+			<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+			<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitBeslissingLijstType">
+		<xs:sequence>
+			<xs:element name="Beslissing" type="EntiteitBeslissingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitBeslissingType">
+		<xs:complexContent>
+			<xs:extension base="BeslissingType">
+				<xs:sequence>
+					<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+					<xs:element name="GebouwEenheidId" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EntiteitBesluitNgwLijstType">
+		<xs:sequence>
+			<xs:element name="Besluit" type="EntiteitBesluitNgwType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitBesluitNgwType">
+		<xs:complexContent>
+			<xs:extension base="BesluitNgwType">
+				<xs:sequence>
+					<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+					<xs:element name="GebouwEenheidId" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EntiteitCaLijstType">
+		<xs:sequence>
+			<xs:element name="Ca" type="EntiteitCaType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitCaType">
+		<xs:complexContent>
+			<xs:extension base="CaType">
+				<xs:sequence>
+					<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+					<xs:element name="GebouwEenheidId" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EntiteitDeelprocedureLijstType">
+		<xs:sequence>
+			<xs:element name="EntiteitDeelprocedure" type="EntiteitDeelprocedureType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitDeelprocedureType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="TypeEntiteit" type="EnumType"/>
+			<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+			<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="AdressenEntiteit" type="AdresLijstType"/>
+			<xs:element name="VerdiepingEntiteit" type="EnumType"/>
+			<xs:element name="VerdiepingAndereEntiteit" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="LocatieEntiteit" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="StatusEntiteit" type="EnumType"/>
+			<xs:element name="ReferteDeelprocedure" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Status" type="EnumType" minOccurs="0"/>
+			<xs:element name="DatumStatuswijziging" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitenAdviesWVLLijstType">
+		<xs:sequence>
+			<xs:element name="EntiteitAdviesWVL" type="EntiteitAdviesWVLType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitBeperktGeefType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+					<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Verdieping" type="EnumType"/>
+					<xs:element name="VerdiepingAndere" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Type" type="generiek:TekstKort2_0Type"/>
+					<xs:element name="Adressen" type="AdresLijstType"/>
+					<xs:element name="GeografischeCoordinaten" type="GeografischeCoordinatenType" minOccurs="0"/>
+					<xs:element name="Capakeys" type="CapakeyLijstType" minOccurs="0"/>
+					<xs:element name="Status" type="EnumType" minOccurs="0"/>
+					<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Beschrijving" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+					<xs:element name="NettoVloeroppervlakte" type="xs:decimal" minOccurs="0"/>
+					<xs:element name="AantalWoonlokalen" type="xs:int" minOccurs="0"/>
+					<xs:element name="MeldingStudentenhuisvesting" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Cas" type="CaBeperktLijstType" minOccurs="0"/>
+					<xs:element name="Vivoos" type="VivooBeperktLijstType" minOccurs="0"/>
+					<xs:element name="OpgeschorteVivoos" type="VivooBeperktLijstType" minOccurs="0"/>
+					<xs:element name="Besluiten" type="BesluitBeperktLijstType" minOccurs="0"/>
+					<xs:element name="Onderzoeken" type="OnderzoekBeperktLijstType" minOccurs="0"/>
+					<xs:element name="DeelproceduresKotlabel" type="DeelprocedureKotlabelBeperktLijstType" minOccurs="0"/>
+					<xs:element name="LopendeProcedures" type="LopendeProceduresType" minOccurs="0"/>
+					<xs:element name="Bewijsstukken" type="BewijsstukBeperktLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EntiteitGeefType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+					<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Verdieping" type="EnumType"/>
+					<xs:element name="VerdiepingAndere" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Type" type="generiek:TekstKort2_0Type"/>
+					<xs:element name="Status" type="EnumType"/>
+					<xs:element name="DatumStatuswijziging" type="xs:date"/>
+					<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Beschrijving" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+					<xs:element name="NettoVloeroppervlakte" type="xs:decimal" minOccurs="0"/>
+					<xs:element name="Oppervlakteverhouding" type="OppervlakteverhoudingType" minOccurs="0"/>
+					<xs:element name="AantalWoonlokalen" type="xs:int" minOccurs="0"/>
+					<xs:element name="InterneBadFunctie" type="EnumType"/>
+					<xs:element name="HeeftToilet" type="xs:boolean"/>
+					<xs:element name="HeeftKeuken" type="xs:boolean"/>
+					<xs:element name="HeeftUitzondering98VoorStudentenkamer" type="xs:boolean"/>
+					<xs:element name="IsGemeldAanWI" type="xs:boolean"/>
+					<xs:element name="Herstelvordering" type="xs:boolean"/>
+					<xs:element name="MeldingStudentenhuisvesting" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Adressen" type="AdresLijstType"/>
+					<xs:element name="Capakeys" type="CapakeyLijstType" minOccurs="0"/>
+					<xs:element name="CapakeyNietAutomatischBijwerken" type="xs:boolean"/>
+					<xs:element name="Opmerkingen" type="OpmerkingLijstType" minOccurs="0"/>
+					<xs:element name="Onderzoeken" type="OnderzoekEntiteitLijstType" minOccurs="0"/>
+					<xs:element name="BesluitenNgw" type="BesluitNgwLijstType" minOccurs="0"/>
+					<xs:element name="Vivoos" type="VivooLijstType" minOccurs="0"/>
+					<xs:element name="OpgeschorteVivoos" type="VivooLijstType" minOccurs="0"/>
+					<xs:element name="Cas" type="CaLijstType" minOccurs="0"/>
+					<xs:element name="DeelproceduresOo" type="DeelprocedureOoLijstType" minOccurs="0"/>
+					<xs:element name="DeelproceduresCa" type="DeelprocedureCaLijstType" minOccurs="0"/>
+					<xs:element name="Fotos" type="FotoLijstType" minOccurs="0"/>
+					<xs:element name="Betrokkenen" type="BetrokkeneLijstType" minOccurs="0"/>
+					<xs:element name="Personen" type="PersoonLijstType" minOccurs="0"/>
+					<xs:element name="Bewijsstukken" type="BewijsstukEntiteitLijstType" minOccurs="0"/>
+					<xs:element name="Documenten" type="GeefWoningKwaliteitBijlageBestandLijstType" minOccurs="0"/>
+					<xs:element name="Epc" type="EpcType" minOccurs="0"/>
+					<xs:element name="Beslissingen" type="BeslissingLijstType" minOccurs="0"/>
+					<xs:element name="MinisterieleBesluiten" type="MBLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EntiteitLijstType">
+		<xs:sequence>
+			<xs:element name="Entiteit" type="EntiteitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitMBLijstType">
+		<xs:sequence>
+			<xs:element name="Besluit" type="EntiteitMBType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitMBType">
+		<xs:complexContent>
+			<xs:extension base="MBType">
+				<xs:sequence>
+					<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+					<xs:element name="GebouwEenheidId" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EntiteitOnderzoekLijstType">
+		<xs:sequence>
+			<xs:element name="EntiteitOnderzoek" type="EntiteitOnderzoekType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitOnderzoekType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="KamerType" type="EnumType" minOccurs="0"/>
+			<xs:element name="Adressen" type="AdresLijstType"/>
+			<xs:element name="DatumOnderzoek" type="xs:date"/>
+			<xs:element name="ControleurWoning" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Verdieping" type="EnumType"/>
+			<xs:element name="VerdiepingAndere" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Beschrijving" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="NettoVloerOppervlakte" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="AantalWoonlokalen" type="xs:int" minOccurs="0"/>
+			<xs:element name="AantalBewoners" type="xs:int" minOccurs="0"/>
+			<xs:element name="InterneBadFunctie" type="EnumType"/>
+			<xs:element name="HeeftToilet" type="xs:boolean"/>
+			<xs:element name="HeeftKeuken" type="xs:boolean"/>
+			<xs:element name="Uitzondering98VoorStudentenKamers" type="xs:boolean"/>
+			<xs:element name="Oppervlakteverhouding" type="OppervlakteverhoudingType" minOccurs="0"/>
+			<xs:element name="ToegangsPogingen" type="ToegangsPogingLijstType" minOccurs="0"/>
+			<xs:element name="BranddetectieSysteem" type="EnumType" minOccurs="0"/>
+			<xs:element name="MobiliteitCriteria" type="MobiliteitCriteriaType"/>
+			<xs:element name="PuntenOnderzoek" type="PuntenOnderzoekLijstType" minOccurs="0"/>
+			<xs:element name="OpmerkingenEntiteitOnderzoek" type="OpmerkingenEntiteitOnderzoekType" minOccurs="0"/>
+			<xs:element name="OpmerkingenOV" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="ResultaatEntiteitOnderzoek" type="ResultaatEntiteitOnderzoekType"/>
+			<xs:element name="Epc" type="EpcType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitOnderzoekBeperktType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="KamerType" type="EnumType" minOccurs="0"/>
+			<xs:element name="Adressen" type="AdresLijstType"/>
+			<xs:element name="DatumOnderzoek" type="xs:date"/>
+			<xs:element name="Verdieping" type="EnumType"/>
+			<xs:element name="VerdiepingAndere" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Beschrijving" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="NettoVloerOppervlakte" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="AantalWoonlokalen" type="xs:int" minOccurs="0"/>
+			<xs:element name="InterneBadFunctie" type="EnumType"/>
+			<xs:element name="HeeftToilet" type="xs:boolean"/>
+			<xs:element name="HeeftKeuken" type="xs:boolean"/>
+			<xs:element name="Uitzondering98VoorStudentenKamers" type="xs:boolean"/>
+			<xs:element name="OpmerkingBijkomend" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="OpmerkingOV" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="EntiteitGebreken" type="PuntenOnderzoekLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EntiteitType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Adressen" type="AdresLijstType"/>
+			<xs:element name="Status" type="EnumType" minOccurs="0"/>
+			<xs:element name="DatumStatuswijziging" type="xs:date" minOccurs="0"/>
+			<xs:element name="Verdieping" type="generiek:Tekst2_0Type"/>
+			<xs:element name="VerdiepingAndere" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="IsGemeldAanWI" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Herstelvordering" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="MeldingStudentenhuisvesting" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EnumType">
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="Omschrijving" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EpcType">
+		<xs:sequence>
+			<xs:element name="Waarde" type="xs:int"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="WoningType" type="EnumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FotoLijstType">
+		<xs:sequence>
+			<xs:element name="Foto" type="FotoType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FotoMetTagLijstType">
+		<xs:sequence>
+			<xs:element name="FotoMetTagType" type="FotoMetTagType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FotoMetTagType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Omschrijving" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type"/>
+			<xs:element name="GekoppeldGoed" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="GekoppeldGebrek" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FotoType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Omschrijving" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type"/>
+			<xs:element name="GekoppeldGoed" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="GekoppeldOnderzoek" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="GekoppeldGebrek" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeboorteType">
+		<xs:sequence>
+			<xs:element name="Datum" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Plaats" type="generiek:Tekst2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefBeslissingenType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+					<xs:element name="BesluitenNgw" type="EntiteitBesluitNgwLijstType" minOccurs="0"/>
+					<xs:element name="Beslissingen" type="EntiteitBeslissingLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GeefBesluitenOpheffenType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+					<xs:element name="Besluiten" type="BesluitLijstType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GeefBesluitNgwType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="Besluiten" type="EntiteitBesluitNgwLijstType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GeefBijlageBestandType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Bestand" type="BestandType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefBijlageBijlageLijstType">
+		<xs:sequence>
+			<xs:element name="Bijlage" type="GeefBijlageBijlageType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefBijlageBijlageType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Foto" type="GeefBijlageFotoType"/>
+				<xs:element name="Document" type="GeefBijlageDocumentType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefBijlageDocumentType">
+		<xs:complexContent>
+			<xs:extension base="GeefBijlageBestandType">
+				<xs:sequence>
+					<xs:element name="DocumentType" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+					<xs:element name="ExterneReferte" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Correspondenten" type="CorrespondentenLijstType" minOccurs="0"/>
+					<xs:element name="Status" type="EnumType" minOccurs="0"/>
+					<xs:element name="Koppelingen" type="KoppelingLijstType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GeefBijlageFotoType">
+		<xs:complexContent>
+			<xs:extension base="GeefBijlageBestandType">
+				<xs:sequence>
+					<xs:element name="Omschrijving" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+					<xs:element name="GekoppeldGoed" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="GekoppeldOnderzoek" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="GekoppeldGebrek" type="generiek:Tekst2_0Type" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GeefBijlageLijstType">
+		<xs:sequence>
+			<xs:element name="Bijlage" type="GeefBijlageType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefBijlageType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Type" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="DocumentType" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Correspondenten" type="CorrespondentenLijstType" minOccurs="0"/>
+			<xs:element name="Status" type="EnumType" minOccurs="0"/>
+			<xs:element name="Koppelingen" type="KoppelingLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefCasType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+					<xs:element name="Cas" type="EntiteitCaLijstType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GeefGemeenschappelijkeRuimteType">
+		<xs:complexContent>
+			<xs:extension base="GemeenschappelijkeRuimteType">
+				<xs:sequence>
+					<xs:element name="Status" type="EnumType" minOccurs="0"/>
+					<xs:element name="DatumStatusWijziging" type="xs:date" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GeefWoningKwaliteitBerichtType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="Inhoud" type="generiek:Tekst2_0Type"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="GeefWoningKwaliteitBijlageBestandLijstType">
+		<xs:sequence>
+			<xs:element name="Document" type="GeefWoningKwaliteitBijlageBestandType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefWoningKwaliteitBijlageBestandType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="DocumentType" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="ExterneReferte" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Correspondenten" type="CorrespondentenLijstType" minOccurs="0"/>
+			<xs:element name="Status" type="EnumType"/>
+			<xs:element name="Koppelingen" type="KoppelingLijstType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefWoningKwaliteitBijlageBeperktBestandLijstType">
+		<xs:sequence>
+			<xs:element name="Document" type="GeefWoningKwaliteitBijlageBeperktBestandType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefWoningKwaliteitBijlageBeperktBestandType">
+		<xs:sequence>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="DocumentType" type="generiek:TekstKort2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefWoningKwaliteitBijlageLijstType">
+		<xs:sequence>
+			<xs:element name="Bijlage" type="GeefWoningKwaliteitBijlageType" maxOccurs="10"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefWoningKwaliteitBijlageType">
+		<xs:sequence>
+			<xs:element name="Type" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeefWoningKwaliteitType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="GemeenschappelijkeRuimteLijstType">
+		<xs:sequence>
+			<xs:element name="GemeenschappelijkeRuimte" type="GeefGemeenschappelijkeRuimteType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GemeenschappelijkeRuimteOnderzoekLijstType">
+		<xs:sequence>
+			<xs:element name="GemeenschappelijkeRuimteOnderzoek" type="GemeenschappelijkeRuimteOnderzoekType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GemeenschappelijkeRuimteOnderzoekType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Nummer" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="ControleurWoning" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Verdieping" type="EnumType"/>
+			<xs:element name="VerdiepingAnder" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Beschrijving" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Kookhoek" type="KookhoekType" minOccurs="0"/>
+			<xs:element name="ToiletAantal" type="xs:int" minOccurs="0"/>
+			<xs:element name="WasruimteAantal" type="xs:int" minOccurs="0"/>
+			<xs:element name="OppervlakteLeefruimte" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="ToegangVerkregen" type="xs:boolean"/>
+			<xs:element name="ToegangsPogingen" type="ToegangsPogingLijstType" minOccurs="0"/>
+			<xs:element name="PuntenOnderzoek" type="PuntenOnderzoekLijstType" minOccurs="0"/>
+			<xs:element name="OpmerkingenGrOnderzoek" type="OpmerkingenGrOnderzoekType" minOccurs="0"/>
+			<xs:element name="OpmerkingenOV" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="ResultaatGrOnderzoek" type="ResultaatGrOnderzoekType"/>
+			<xs:element name="ExternOnderzoekReferte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="ExternPandReferte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="ExternBrandweerVerslag" type="VerslagBrandweerType" minOccurs="0"/>
+			<xs:element name="ExternOnderzoekBrandveiligheidGeadviseerd" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="ExternOpmerkingenBijkomendDeelB" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="ExternAdviesBijkomendOnderzoek" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GemeenschappelijkeRuimteOnderzoekBeperktLijstType">
+		<xs:sequence>
+			<xs:element name="GemeenschappelijkeRuimteOnderzoek" type="GemeenschappelijkeRuimteOnderzoekBeperktType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GemeenschappelijkeRuimteOnderzoekBeperktType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Nummer" type="generiek:Tekst2_0Type"/>
+			<xs:element name="DatumOnderzoek" type="xs:date"/>
+			<xs:element name="Verdieping" type="EnumType"/>
+			<xs:element name="VerdiepingAndere" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Beschrijving" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Kookhoek" type="KookhoekType" minOccurs="0"/>
+			<xs:element name="ToiletAantal" type="xs:int" minOccurs="0"/>
+			<xs:element name="WasruimteAantal" type="xs:int" minOccurs="0"/>
+			<xs:element name="OppervlakteLeefruimte" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="ToegangVerkregen" type="xs:boolean"/>
+			<xs:element name="OpmerkingBijkomend" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="OpmerkingOV" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="GemeenschappelijkeRuimteGebreken" type="PuntenOnderzoekLijstType" minOccurs="0"/>
+			<xs:element name="ExternOnderzoekReferte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="ExternPandReferte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="ExternBrandweerVerslag" type="VerslagBrandweerType" minOccurs="0"/>
+			<xs:element name="ExternOnderzoekBrandveiligheidGeadviseerd" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="ExternOpmerkingenBijkomendDeelB" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="ExternAdviesBijkomendOnderzoek" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GemeenschappelijkeRuimteType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Nummer" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Verdieping" type="EnumType" minOccurs="0"/>
+			<xs:element name="VerdiepingAndere" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Beschrijving" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Kookhoek" type="KookhoekType" minOccurs="0"/>
+			<xs:element name="ToiletAantal" type="xs:int" minOccurs="0"/>
+			<xs:element name="WasruimteAantal" type="xs:int" minOccurs="0"/>
+			<xs:element name="OppervlakteLeefruimte" type="xs:decimal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GemeenteType">
+		<xs:sequence>
+			<xs:element name="NISCode" type="generiek:GemeenteNISCodeType" minOccurs="0"/>
+			<xs:element name="CrabCode" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Gemeentenaam" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HefBesluitenOpType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="DatumOpheffing" type="xs:date"/>
+					<xs:element name="RedenOpheffing" type="EnumType"/>
+					<xs:element name="DatumSloop" type="xs:date" minOccurs="0"/>
+					<xs:element name="DatumHerbestemming" type="xs:date" minOccurs="0"/>
+					<xs:element name="MBRefertes" type="ReferteLijstType" minOccurs="0"/>
+					<xs:element name="BesluitNGWRefertes" type="ReferteLijstType" minOccurs="0"/>
+					<xs:element name="BesluitOORefertes" type="ReferteLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="HerindelingEntiteitLijstType">
+		<xs:sequence>
+			<xs:element name="HerindelingEntiteit" type="HerindelingEntiteitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HerindelingEntiteitType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="OudOfNieuwStatus" type="EnumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HerindelingGemeenschappelijkeruimteLijstType">
+		<xs:sequence>
+			<xs:element name="HerindelingGemeenschappelijkeruimte" type="HerindelingGemeenschappelijkeruimteType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HerindelingGemeenschappelijkeruimteType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="OudOfNieuwStatus" type="EnumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HerindelingLijstType">
+		<xs:sequence>
+			<xs:element name="Herindeling" type="HerindelingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HerindelingPandLijstType">
+		<xs:sequence>
+			<xs:element name="Herindeling" type="HerindelingPandType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HerindelingPandType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="DatumHerindeling" type="xs:date"/>
+			<xs:element name="VergundStatus" type="EnumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HerindelingType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="DatumHerindeling" type="xs:date"/>
+			<xs:element name="VergundStatus" type="EnumType"/>
+			<xs:element name="HerindelingEntiteiten" type="HerindelingEntiteitLijstType" minOccurs="0"/>
+			<xs:element name="HerindelingGemeenschappelijkeruimtes" type="HerindelingGemeenschappelijkeruimteLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HerstelvorderingType">
+		<xs:sequence>
+			<xs:element name="DossierReferte" type="generiek:ReferteType"/>
+			<xs:element name="PVNummer" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="Voorwerp" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="Dagvaarding" type="xs:boolean"/>
+			<xs:element name="DefinitieveVeroordeling" type="xs:boolean"/>
+			<xs:element name="OpgelegdeMaatregel" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HoofdBeroepType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="BeroepTegen" type="EnumType"/>
+			<xs:element name="MondelingeHoorzitting" type="xs:boolean"/>
+			<xs:element name="IndienerType" type="EnumType"/>
+			<xs:element name="WoningType" type="EnumType" minOccurs="0"/>
+			<xs:element name="Ontvankelijkheid" type="EnumType"/>
+			<xs:element name="BeroepDoorGa" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DatumHoorzitting" type="xs:date" minOccurs="0"/>
+			<xs:element name="HoorzittingIsGeannuleerd" type="xs:boolean"/>
+			<xs:element name="BeschrijvingTeOnderzoekenWoning" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="DientVolledigOnderzochtTeWorden" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Indieners" type="IndienerVerzoekerLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HoorplichtType">
+		<xs:sequence>
+			<xs:element name="DatumHoorplicht" type="xs:date" minOccurs="0"/>
+			<xs:element name="Reacties" type="ReactieLijstType" minOccurs="0"/>
+			<xs:element name="DatumMeldingAdvies" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HuisnummerType">
+		<xs:sequence>
+			<xs:element name="CrabCode" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Huisnummer" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndienerVerzoekerLijstType">
+		<xs:sequence>
+			<xs:element name="IndienerVerzoek" type="IndienerVerzoekerType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IndienerVerzoekerType">
+		<xs:sequence>
+			<xs:element name="Identificatie" type="INSZOfOndernemingsnummerOfNietAuthentiekeIdentificatieType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="INSZOfOndernemingsnummerOfNietAuthentiekeIdentificatieType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="INSZ" type="sleutel:INSZType"/>
+				<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType"/>
+				<xs:element name="NietAuthentiekeIdentificatie" type="NietAuthentiekeIdentificatieType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="INSZOfOndernemingsnummerType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="INSZ" type="sleutel:INSZType"/>
+				<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KookhoekType">
+		<xs:sequence>
+			<xs:element name="Aantal" type="xs:int"/>
+			<xs:element name="Oppervlakte" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KoppelEntiteitLijstType">
+		<xs:sequence>
+			<xs:element name="Entiteit" type="KoppelEntiteitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KoppelEntiteitType">
+		<xs:sequence>
+			<xs:element name="Verwijder" type="xs:boolean"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="GebouwEenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KoppelingLijstType">
+		<xs:sequence>
+			<xs:element name="Koppeling" type="KoppelingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KoppelingType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Type" type="generiek:TekstKort2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KoppelOnderzoekLijstType">
+		<xs:sequence>
+			<xs:element name="Onderzoek" type="KoppelOnderzoekType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KoppelOnderzoekType">
+		<xs:sequence>
+			<xs:element name="Verwijder" type="xs:boolean"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KotlabelCriteriumBeoordelingBeperktLijstType">
+		<xs:sequence>
+			<xs:element name="Beoordeling" type="KotlabelCriteriumBeoordelingBeperktType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KotlabelCriteriumBeoordelingBeperktType">
+		<xs:sequence>
+			<xs:element name="DatumBeoordeling" type="xs:date"/>
+			<xs:element name="Beoordeling" type="EnumType"/>
+			<xs:element name="Vaststellingen" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KotlabelCriteriumBeoordelingLijstType">
+		<xs:sequence>
+			<xs:element name="Beoordeling" type="KotlabelCriteriumBeoordelingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KotlabelCriteriumBeoordelingType">
+		<xs:complexContent>
+			<xs:extension base="KotlabelCriteriumBeoordelingBeperktType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LandType">
+		<xs:sequence>
+			<xs:element name="ISOCode" type="generiek:LandISOCodeType" minOccurs="0"/>
+			<xs:element name="NISCode" type="generiek:LandNISCodeType" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:NaamLangType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LopendeProceduresType">
+		<xs:sequence>
+			<xs:element name="VerzoekCa" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="MeldingWoningKwaliteit" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="VerzoekOo" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="BeroepOo" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MaakRisicoLijstType">
+		<xs:sequence>
+			<xs:element name="Risico" type="MaakVerzoekRisicoType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MaakVerzoekCaType">
+		<xs:sequence>
+			<xs:element name="DatumVerzoek" type="xs:date"/>
+			<xs:element name="DatumVolledig" type="xs:date" minOccurs="0"/>
+			<xs:element name="RedenAanvraag" type="EnumType"/>
+			<xs:element name="MeegestuurdeDocumenten" type="VerzoekCaDocumentType" minOccurs="0"/>
+			<xs:element name="Verzoekers" type="MaakVerzoekerLijstType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MaakVerzoekerLijstType">
+		<xs:sequence>
+			<xs:element name="Verzoeker" type="MaakVerzoekerType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MaakVerzoekerType">
+		<xs:complexContent>
+			<xs:extension base="IndienerVerzoekerType">
+				<xs:sequence>
+					<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+					<xs:element name="Telefoon" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Telefoon2" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Email" type="generiek:Tekst2_0Type" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MaakVerzoekOoType">
+		<xs:sequence>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="Dienst" type="EnumType" minOccurs="0"/>
+			<xs:element name="Belanghebbende" type="EnumType" minOccurs="0"/>
+			<xs:element name="Medium" type="EnumType" minOccurs="0"/>
+			<xs:element name="TeOnderzoeken" type="EnumType" minOccurs="0"/>
+			<xs:element name="VolledigPand" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="BeschrijvingTeOnderzoekenWoning" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Risicos" type="MaakRisicoLijstType" minOccurs="0"/>
+			<xs:element name="Verzoekers" type="MaakVerzoekerLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MaakVerzoekRisicoType">
+		<xs:sequence>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="BeschrijvingAndere" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MBLijstType">
+		<xs:sequence>
+			<xs:element name="MB" type="MBType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MBType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="DatumBetekening" type="xs:date" minOccurs="0"/>
+			<xs:element name="Resultaat" type="EnumType"/>
+			<xs:element name="Status" type="EnumType"/>
+			<xs:element name="DatumOpheffing" type="xs:date" minOccurs="0"/>
+			<xs:element name="RedenOpheffing" type="EnumType" minOccurs="0"/>
+			<xs:element name="DatumSloop" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumHerbestemming" type="xs:date" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MobiliteitCriteriaType">
+		<xs:sequence>
+			<xs:element name="VoldoendeTechnischeUitrusting" type="EnumType"/>
+			<xs:element name="InterneMobiliteit" type="EnumType"/>
+			<xs:element name="VeiligToegankelijk" type="EnumType"/>
+			<xs:element name="VoldoendeVoorzieningenInOmgeving" type="EnumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NietAuthentiekeIdentificatieType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Voornaam" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Correspondentieadres" type="AdresMetTijdstipLaatstGewijzigdType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NieuweEntiteitLijstType">
+		<xs:sequence>
+			<xs:element name="Entiteit" type="NieuweEntiteitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NieuweEntiteitType">
+		<xs:sequence>
+			<xs:element name="GebouweenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Adres" type="VlokLocatieType"/>
+			<xs:element name="Verdieping" type="EnumType"/>
+			<xs:element name="VerdiepingAndere" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NieuweGemeenschappelijkeRuimteLijstType">
+		<xs:sequence>
+			<xs:element name="GemeenschappelijkeRuimte" type="NieuweGemeenschappelijkeRuimteType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NieuweGemeenschappelijkeRuimteType">
+		<xs:sequence>
+			<xs:element name="Nummer" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Verdieping" type="EnumType"/>
+			<xs:element name="VerdiepingAndere" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Beschrijving" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Kookhoek" type="KookhoekType" minOccurs="0"/>
+			<xs:element name="ToiletAantal" type="xs:int" minOccurs="0"/>
+			<xs:element name="WasruimteAantal" type="xs:int" minOccurs="0"/>
+			<xs:element name="OppervlakteLeefruimte" type="xs:decimal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderzoekBeperktLijstType">
+		<xs:sequence>
+			<xs:element name="Onderzoek" type="OnderzoekBeperktType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderzoekBeperktType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="Pand" type="PandOnderzoekBeperktType"/>
+			<xs:element name="Entiteit" type="EntiteitOnderzoekBeperktType"/>
+			<xs:element name="GemeenschappelijkeRuimten" type="GemeenschappelijkeRuimteOnderzoekBeperktLijstType" minOccurs="0"/>
+			<xs:element name="Resultaat" type="ResultaatEntiteitOnderzoekBeperktType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderzoekEntiteitLijstType">
+		<xs:sequence>
+			<xs:element name="Onderzoek" type="OnderzoekEntiteitType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderzoekEntiteitType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="KamerType" type="EnumType" minOccurs="0"/>
+			<xs:element name="Reden" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="ToegangVerkregen" type="xs:boolean"/>
+			<xs:element name="Onbewoonbaar" type="xs:boolean"/>
+			<xs:element name="Ongeschikt" type="xs:boolean"/>
+			<xs:element name="Overbewoond" type="xs:boolean"/>
+			<xs:element name="Eindbeoordeling" type="xs:int" minOccurs="0"/>
+			<xs:element name="AantalBewoners" type="xs:int" minOccurs="0"/>
+			<xs:element name="Bezettingsnorm" type="xs:int"/>
+			<xs:element name="InterneMobiliteit" type="EnumType"/>
+			<xs:element name="BranddetectieSysteem" type="EnumType" minOccurs="0"/>
+			<xs:element name="Voorrang" type="xs:boolean"/>
+			<xs:element name="NettoVloeroppervlakte" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="AantalWoonlokalen" type="xs:int" minOccurs="0"/>
+			<xs:element name="HeeftKeuken" type="xs:boolean"/>
+			<xs:element name="HeeftToilet" type="xs:boolean"/>
+			<xs:element name="InterneBadFunctie" type="EnumType"/>
+			<xs:element name="SoortVerslag" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Huursubsidie" type="xs:boolean"/>
+			<xs:element name="RedenHuurSubsidie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="ControleurWoning" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Epc" type="EpcType" minOccurs="0"/>
+			<xs:element name="PuntenEntiteit" type="xs:int" minOccurs="0"/>
+			<xs:element name="EindbeoordelingEntiteit" type="EindbeoordelingEntiteitType" minOccurs="0"/>
+			<xs:element name="BeoordelingWoningKamer" type="BeoordelingWoningKamerType" minOccurs="0"/>
+			<xs:element name="BeoordelingGemeenschappelijkeFuncties" type="BeoordelingGemeenschappelijkeFunctiesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderzoekGeefType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+					<xs:element name="Reden" type="generiek:Tekst2_0Type"/>
+					<xs:element name="Datum" type="xs:date"/>
+					<xs:element name="ControleurWoning" type="generiek:Tekst2_0Type"/>
+					<xs:element name="ExterneReferte" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="VersieVerslag" type="generiek:Tekst2_0Type"/>
+					<xs:element name="PandOnderzoek" type="PandOnderzoekType"/>
+					<xs:element name="EntiteitenOnderzoek" type="EntiteitOnderzoekLijstType" minOccurs="0"/>
+					<xs:element name="GemeenschappelijkeRuimtesOnderzoek" type="GemeenschappelijkeRuimteOnderzoekLijstType" minOccurs="0"/>
+					<xs:element name="Fotos" type="FotoMetTagLijstType" minOccurs="0"/>
+					<xs:element name="Documenten" type="GeefWoningKwaliteitBijlageBestandLijstType" minOccurs="0"/>
+					<xs:element name="Toewijzingen" type="ToewijzingLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OnderzoekLijstType">
+		<xs:sequence>
+			<xs:element name="Onderzoek" type="OnderzoekType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderzoekType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Status" type="EnumType"/>
+			<xs:element name="Reden" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="ControleurWoning" type="generiek:Tekst2_0Type"/>
+			<xs:element name="AantalEntiteiten" type="xs:int"/>
+			<xs:element name="ExterneReferte" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OorsprongType">
+		<xs:complexContent>
+			<xs:extension base="EnumType">
+				<xs:sequence>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OpmerkingenEntiteitOnderzoekType">
+		<xs:sequence>
+			<xs:element name="OpmerkingenBijkomendDeelC" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="OpmerkingenOV" type="OpmerkingOnderzoekLijstType" minOccurs="0"/>
+			<xs:element name="OpmerkingenBijkomendOV" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpmerkingenGrOnderzoekType">
+		<xs:sequence>
+			<xs:element name="OpmerkingenDeelD" type="OpmerkingOnderzoekLijstType" minOccurs="0"/>
+			<xs:element name="BijkomendeOpmerkingen" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpmerkingLijstType">
+		<xs:sequence>
+			<xs:element name="Opmerking" type="OpmerkingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpmerkingOnderzoekLijstType">
+		<xs:sequence>
+			<xs:element name="OpmerkingOnderzoek" type="OpmerkingOnderzoekType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpmerkingOnderzoekType">
+		<xs:sequence>
+			<xs:element name="Opmerking" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpmerkingType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Rubriek" type="EnumType"/>
+			<xs:element name="Auteur" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Inhoud" type="generiek:TekstExtraLang2_1Type"/>
+			<xs:element name="Oorsprong" type="OorsprongType"/>
+			<xs:element name="IsGedeeld" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OppervlakteverhoudingType">
+		<xs:sequence>
+			<xs:element name="Pand" type="xs:decimal"/>
+			<xs:element name="Entiteit" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PandGeefType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Adressen" type="AdresLijstType"/>
+					<xs:element name="GeografischeCoordinaten" type="GeografischeCoordinatenType" minOccurs="0"/>
+					<xs:element name="Capakeys" type="CapakeyLijstType" minOccurs="0"/>
+					<xs:element name="Status" type="EnumType"/>
+					<xs:element name="DatumStatuswijziging" type="xs:date"/>
+					<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Beschrijving" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+					<xs:element name="VerslagBrandweer" type="VerslagBrandweerType"/>
+					<xs:element name="Herstelvordering" type="xs:boolean"/>
+					<xs:element name="IsGemeldAanWI" type="xs:boolean"/>
+					<xs:element name="MeldingStudentenhuisvesting" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="EpcRWaarde" type="EnumType"/>
+					<xs:element name="CapakeyNietAutomatischBijwerken" type="xs:boolean"/>
+					<xs:element name="Opmerkingen" type="OpmerkingLijstType" minOccurs="0"/>
+					<xs:element name="Entiteiten" type="EntiteitLijstType" minOccurs="0"/>
+					<xs:element name="Herindelingen" type="HerindelingLijstType" minOccurs="0"/>
+					<xs:element name="GemeenschappelijkeRuimtes" type="GemeenschappelijkeRuimteLijstType" minOccurs="0"/>
+					<xs:element name="Onderzoeken" type="OnderzoekLijstType" minOccurs="0"/>
+					<xs:element name="ProceduresOo" type="ProcedureOoLijstType" minOccurs="0"/>
+					<xs:element name="ProceduresCa" type="ProcedureCaLijstType" minOccurs="0"/>
+					<xs:element name="ProceduresKotlabel" type="ProcedureKotlabelLijstType" minOccurs="0"/>
+					<xs:element name="Beroepsprocedures" type="BeroepsprocedureLijstType" minOccurs="0"/>
+					<xs:element name="Betrokkenen" type="BetrokkeneLijstType" minOccurs="0"/>
+					<xs:element name="Fotos" type="FotoLijstType" minOccurs="0"/>
+					<xs:element name="Taken" type="TaakLijstType" minOccurs="0"/>
+					<xs:element name="Personen" type="PersoonLijstType" minOccurs="0"/>
+					<xs:element name="Bewijsstukken" type="BewijsstukPandLijstType" minOccurs="0"/>
+					<xs:element name="Documenten" type="GeefWoningKwaliteitBijlageBestandLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PandBeperktGeefType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Adressen" type="AdresLijstType"/>
+					<xs:element name="GeografischeCoordinaten" type="GeografischeCoordinatenType" minOccurs="0"/>
+					<xs:element name="Capakeys" type="CapakeyLijstType" minOccurs="0"/>
+					<xs:element name="Status" type="EnumType" minOccurs="0"/>
+					<xs:element name="MeldingStudentenhuisvesting" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Herstelvordering" type="HerstelvorderingType" minOccurs="0"/>
+					<xs:element name="ProceduresKotlabel" type="ProcedureKotlabelBeperktLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PandLijstType">
+		<xs:sequence>
+			<xs:element name="Pand" type="PandType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PandOnderzoekType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Adressen" type="AdresLijstType"/>
+			<xs:element name="ToegangVerkregen" type="xs:boolean"/>
+			<xs:element name="ToegangsPogingen" type="ToegangsPogingLijstType" minOccurs="0"/>
+			<xs:element name="OnderzoekBrandveiligheidGeadviseerd" type="xs:boolean"/>
+			<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="BeschrijvingPand" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="BranddetectieSysteem" type="EnumType" minOccurs="0"/>
+			<xs:element name="VerslagBrandweer" type="VerslagBrandweerType"/>
+			<xs:element name="PuntenOnderzoek" type="PuntenOnderzoekLijstType" minOccurs="0"/>
+			<xs:element name="EpcRWaarde" type="EnumType"/>
+			<xs:element name="Dakisolatie" type="EnumType" minOccurs="0"/>
+			<xs:element name="AantalLavabos" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Ruimten" type="RuimteLijstype" minOccurs="0"/>
+			<xs:element name="OpmerkingenBijkomendDeelB" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="OpmerkingenBerekeningGr" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+			<xs:element name="OpmerkingenOV" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="ResultaatPandOnderzoek" type="ResultaatPandOnderzoekType"/>
+			<xs:element name="AdviesBijkomendOnderzoek" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PandOnderzoekBeperktType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Adressen" type="AdresLijstType"/>
+			<xs:element name="OnderzoekBrandveiligheidGeadviseerd" type="xs:boolean"/>
+			<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Beschrijving" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="OpmerkingBijkomendDeelB" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="OpmerkingBerekeningGr" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+			<xs:element name="OpmerkingOV" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="AdviesBijkomendOnderzoek" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="PandGebreken" type="PuntenOnderzoekLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PandType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Adressen" type="AdresLijstType"/>
+			<xs:element name="Entiteiten" type="EntiteitLijstType" minOccurs="0"/>
+			<xs:element name="Herstelvordering" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="IsGemeldAanWI" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Locatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Status" type="EnumType" minOccurs="0"/>
+			<xs:element name="DatumStatuswijziging" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersoonGeneriekType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Type" type="EnumType" minOccurs="0"/>
+			<xs:element name="Actief" type="xs:boolean"/>
+			<xs:element name="Correspondentieadres" type="AdresMetTijdstipLaatstGewijzigdType" minOccurs="0"/>
+			<xs:element name="Email" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Telefoon" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Telefoon2" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Contactpersonen" type="ContactpersoonLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersoonLijstType">
+		<xs:sequence>
+			<xs:element name="Persoon" type="PersoonType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersoonType">
+		<xs:complexContent>
+			<xs:extension base="PersoonGeneriekType">
+				<xs:sequence>
+					<xs:element name="INSZ" type="sleutel:INSZType" minOccurs="0"/>
+					<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PostcodeType">
+		<xs:sequence>
+			<xs:element name="CrabCode" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Postcode" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcedureCaGeefType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="Status" type="EnumType"/>
+					<xs:element name="Type" type="EnumType"/>
+					<xs:element name="DatumAanmaak" type="xs:date"/>
+					<xs:element name="DatumStart" type="xs:date" minOccurs="0"/>
+					<xs:element name="DatumVolledig" type="xs:date" minOccurs="0"/>
+					<xs:element name="DatumAfwijzing" type="xs:date" minOccurs="0"/>
+					<xs:element name="RedenAfwijzing" type="EnumType" minOccurs="0"/>
+					<xs:element name="DeadlineBeslissing" type="xs:date" minOccurs="0"/>
+					<xs:element name="DeadlineAanvraagTweedeOpinie" type="xs:date" minOccurs="0"/>
+					<xs:element name="VerzoekCa" type="VerzoekCaType" minOccurs="0"/>
+					<xs:element name="Onderzoeken" type="OnderzoekLijstType" minOccurs="0"/>
+					<xs:element name="ProcedureEntiteiten" type="EntiteitDeelprocedureLijstType" minOccurs="0"/>
+					<xs:element name="Personen" type="ProcedurePersoonLijstType" minOccurs="0"/>
+					<xs:element name="Documenten" type="GeefWoningKwaliteitBijlageBestandLijstType" minOccurs="0"/>
+					<xs:element name="AfsluitInfo" type="EnumType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ProcedureCaLijstType">
+		<xs:sequence>
+			<xs:element name="ProcedureCa" type="ProcedureCaType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcedureCaType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="DatumAanmaak" type="xs:date"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="Status" type="EnumType"/>
+			<xs:element name="AfsluitInfo" type="EnumType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcedureKotlabelGeefType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="DatumAanvraag" type="xs:date" minOccurs="0"/>
+					<xs:element name="DatumOpstart" type="xs:date" minOccurs="0"/>
+					<xs:element name="VerzoekerType" type="EnumType"/>
+					<xs:element name="Status" type="EnumType"/>
+					<xs:element name="Dossierbeheerder" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+					<xs:element name="Woningcontroleur" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+					<xs:element name="ExtraInfo" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+					<xs:element name="DatumStopzetting" type="xs:date" minOccurs="0"/>
+					<xs:element name="RedenStopzetting" type="EnumType" minOccurs="0"/>
+					<xs:element name="ExtraInfoStopzetting" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+					<xs:element name="Deelprocedures" type="DeelprocedureKotlabelLijstType" minOccurs="0"/>
+					<xs:element name="Documenten" type="GeefWoningKwaliteitBijlageBestandLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ProcedureKotlabelBeperktLijstType">
+		<xs:sequence>
+			<xs:element name="ProcedureKotlabel" type="ProcedureKotlabelBeperktType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcedureKotlabelBeperktType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="DatumAanvraag" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumOpstart" type="xs:date" minOccurs="0"/>
+			<xs:element name="VerzoekerType" type="EnumType"/>
+			<xs:element name="Status" type="EnumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcedureKotlabelLijstType">
+		<xs:sequence>
+			<xs:element name="ProcedureKotlabel" type="ProcedureKotlabelType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcedureKotlabelType">
+		<xs:complexContent>
+			<xs:extension base="ProcedureKotlabelBeperktType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ProcedureOoGeefType">
+		<xs:complexContent>
+			<xs:extension base="GeefWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="Status" type="EnumType"/>
+					<xs:element name="DatumAanmaak" type="xs:date"/>
+					<xs:element name="Initiatiefnemer" type="EnumType"/>
+					<xs:element name="DatumStart" type="xs:date" minOccurs="0"/>
+					<xs:element name="DatumVraagAdvies" type="xs:date" minOccurs="0"/>
+					<xs:element name="DatumTermijnAdvies" type="xs:date" minOccurs="0"/>
+					<xs:element name="DatumTermijnMB" type="xs:date" minOccurs="0"/>
+					<xs:element name="BeroepMogelijkVanaf" type="xs:date" minOccurs="0"/>
+					<xs:element name="DatumAfwijzing" type="xs:date" minOccurs="0"/>
+					<xs:element name="RedenAfwijzing" type="EnumType" minOccurs="0"/>
+					<xs:element name="BeroepIngediend" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="BeroepOntvankelijk" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Verzoek" type="VerzoekType" minOccurs="0"/>
+					<xs:element name="HoofdBeroep" type="HoofdBeroepType" minOccurs="0"/>
+					<xs:element name="Onderzoeken" type="OnderzoekLijstType" minOccurs="0"/>
+					<xs:element name="ProcedureEntiteiten" type="EntiteitDeelprocedureLijstType" minOccurs="0"/>
+					<xs:element name="Personen" type="ProcedurePersoonLijstType" minOccurs="0"/>
+					<xs:element name="Documenten" type="GeefWoningKwaliteitBijlageBestandLijstType" minOccurs="0"/>
+					<xs:element name="HersteltermijnTot" type="xs:date" minOccurs="0"/>
+					<xs:element name="MeldingHerstel" type="xs:date" minOccurs="0"/>
+					<xs:element name="Hersteld" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="AfsluitInfo" type="EnumType" minOccurs="0"/>
+					<xs:element name="HPinfo" type="EnumType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ProcedureOoLijstType">
+		<xs:sequence>
+			<xs:element name="ProcedureOo" type="ProcedureOoType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcedureOoType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="DatumAanmaak" type="xs:date"/>
+			<xs:element name="Initiatiefnemer" type="EnumType"/>
+			<xs:element name="Status" type="EnumType"/>
+			<xs:element name="AfsluitInfo" type="EnumType" minOccurs="0"/>
+			<xs:element name="HPinfo" type="EnumType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcedurePersoonLijstType">
+		<xs:sequence>
+			<xs:element name="Persoon" type="ProcedurePersoonType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcedurePersoonType">
+		<xs:complexContent>
+			<xs:extension base="PersoonGeneriekType">
+				<xs:sequence>
+					<xs:element name="Identificatie" type="INSZOfOndernemingsnummerOfNietAuthentiekeIdentificatieType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PuntenOnderzoekLijstType">
+		<xs:sequence>
+			<xs:element name="PuntenOnderzoek" type="PuntenOnderzoekType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PuntenOnderzoekType">
+		<xs:sequence>
+			<xs:element name="GebrekCode" type="generiek:Tekst2_0Type"/>
+			<xs:element name="OmschrijvingGebrek" type="generiek:TekstLang2_0Type"/>
+			<xs:element name="AantalPunten" type="EnumType" minOccurs="0"/>
+			<xs:element name="SnelHerstel" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="IsSelected" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="OmstandigVerslag" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Opmerking" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="OpmerkingOV" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReactieLijstType">
+		<xs:sequence>
+			<xs:element name="Reactie" type="ReactieType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReactieType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="Belanghebbenden" type="BelanghebbendeLijstType"/>
+			<xs:element name="Argumenten" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="AkkoordVaststellingen" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DatumBrief" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RechtstoestandType">
+		<xs:sequence>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Code" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Datum" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RechtsvormType">
+		<xs:sequence>
+			<xs:element name="Naam" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Code" type="generiek:Tekst2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RedenWeigeringLijstType">
+		<xs:sequence>
+			<xs:element name="RedenWeigering" type="EnumType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReferteBeslissingType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReferteLijstType">
+		<xs:sequence>
+			<xs:element name="ReferteBeslissing" type="ReferteBeslissingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RegistreerBesluitNgwType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="DatumBesluitNgw" type="xs:date"/>
+					<xs:element name="Entiteiten" type="BestaandeEntiteitLijstType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="RegistreerConformiteitsattestType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+					<xs:element name="Type" type="EnumType"/>
+					<xs:element name="DatumAttest" type="xs:date"/>
+					<xs:element name="DatumAfgifteAttest" type="xs:date"/>
+					<xs:element name="DatumAttestGeldigTot" type="xs:date"/>
+					<xs:element name="Entiteiten" type="BestaandeEntiteitLijstWithBezettingsnormType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ResultaatEntiteitOnderzoekType">
+		<xs:sequence>
+			<xs:element name="SoortVerslag" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="PuntenEntiteit" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="Overbewoond" type="xs:boolean"/>
+			<xs:element name="Onbewoonbaar" type="xs:boolean"/>
+			<xs:element name="Ongeschikt" type="xs:boolean"/>
+			<xs:element name="ToegangVerkregen" type="xs:boolean"/>
+			<xs:element name="Bezettingsnorm" type="xs:int"/>
+			<xs:element name="Voorrang" type="xs:boolean"/>
+			<xs:element name="HuurSubsidie" type="xs:boolean"/>
+			<xs:element name="RedenHuurSubsidie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="EindBeoordeling" type="xs:int" minOccurs="0"/>
+			<xs:element name="InterneMobiliteit" type="EnumType"/>
+			<xs:element name="ArgumentenOverbenutting" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="ArgumentenOverbewoning" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="EindbeoordelingEntiteit" type="EindbeoordelingEntiteitType" minOccurs="0"/>
+			<xs:element name="BeoordelingWoningKamer" type="BeoordelingWoningKamerType" minOccurs="0"/>
+			<xs:element name="BeoordelingGemeenschappelijkeFuncties" type="BeoordelingGemeenschappelijkeFunctiesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultaatEntiteitOnderzoekBeperktType">
+		<xs:sequence>
+			<xs:element name="SoortVerslag" type="EnumType" minOccurs="0"/>
+			<xs:element name="Onbewoonbaar" type="xs:boolean"/>
+			<xs:element name="Ongeschikt" type="xs:boolean"/>
+			<xs:element name="ToegangVerkregen" type="xs:boolean"/>
+			<xs:element name="Bezettingsnorm" type="xs:int" minOccurs="0"/>
+			<xs:element name="EindbeoordelingEntiteit" type="EindbeoordelingEntiteitBeperktType" minOccurs="0"/>
+			<xs:element name="BeoordelingGemeenschappelijkeFuncties" type="BeoordelingGemeenschappelijkeFunctiesType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultaatGrOnderzoekType">
+		<xs:sequence>
+			<xs:element name="PuntenLokaal" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="GewogenPuntenKookfunctie" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="BezettingsnormKookfunctie" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="GewogenPuntenBadfunctie" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="GewogenPuntenBadfunctieSA" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="BezettingsnormBadfunctie" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="GewogenPuntenToiletfunctie" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="GewogenPuntenToiletfunctieSA" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="BezettingsnormToiletfunctie" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="LokaalAantalCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="LokaalAantalCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="LokaalAantalCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="LokaalAantalCat1SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="LokaalAantalCat2SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="LokaalAantalCat3SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="AantalConformToiletfunctie" type="xs:int" minOccurs="0"/>
+			<xs:element name="AantalConformBadfunctie" type="xs:int" minOccurs="0"/>
+			<xs:element name="OppervlakteConformKookfunctie" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="AantalConformToiletfunctieSA" type="xs:int" minOccurs="0"/>
+			<xs:element name="AantalConformBadfunctieSA" type="xs:int" minOccurs="0"/>
+			<xs:element name="ToiletfunctieCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="ToiletfunctieCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="ToiletfunctieCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="ToiletfunctieCat1SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="ToiletfunctieCat2SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="ToiletfunctieCat3SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="BadfunctieCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="BadfunctieCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="BadfunctieCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="BadfunctieCat1SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="BadfunctieCat2SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="BadfunctieCat3SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="KookfunctieCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="KookfunctieCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="KookfunctieCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="KookfunctieCat1SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="KookfunctieCat2SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="KookfunctieCat3SA" type="xs:int" minOccurs="0"/>
+			<xs:element name="GebouwCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="GebouwCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="GebouwCat3" type="xs:int" minOccurs="0"/>
+			<xs:element name="LeeffunctieCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="LeeffunctieCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="LeeffunctieCat3" type="xs:int" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultaatPandOnderzoekType">
+		<xs:sequence>
+			<xs:element name="PuntenDeelBKamers" type="xs:decimal"/>
+			<xs:element name="PuntenDeelBWoningen" type="xs:decimal"/>
+			<xs:element name="PandAantalCat1" type="xs:int" minOccurs="0"/>
+			<xs:element name="PandAantalCat2" type="xs:int" minOccurs="0"/>
+			<xs:element name="PandAantalCat3" type="xs:int" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RisicoLijstType">
+		<xs:sequence>
+			<xs:element name="Risico" type="VerzoekRisicoType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RuimteLijstype">
+		<xs:sequence>
+			<xs:element name="Ruimte" type="RuimteType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RuimteType">
+		<xs:sequence>
+			<xs:element name="NaamRuimte" type="generiek:Tekst2_0Type"/>
+			<xs:element name="OppervlakteRuimte" type="xs:decimal"/>
+			<xs:element name="Conform" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SchrappingType">
+		<xs:sequence>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="RedenNGW" type="EnumType" minOccurs="0"/>
+			<xs:element name="RedenOO" type="EnumType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StartProcedureCaViaEersteAanlegType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="VerzoekCa" type="MaakVerzoekCaType"/>
+					<xs:element name="Entiteiten" type="BestaandeEntiteitLijstType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="StartProcedureOoViaVerzoekType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="VerzoekOo" type="MaakVerzoekOoType"/>
+					<xs:element name="Entiteiten" type="BestaandeEntiteitLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="StraatType">
+		<xs:sequence>
+			<xs:element name="CrabCode" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Straatnaam" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaakLijstType">
+		<xs:sequence>
+			<xs:element name="Taak" type="TaakType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaakType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="DefinitieBenaming" type="generiek:Tekst2_0Type"/>
+			<xs:element name="ToegekendAanRol" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="DatumUitersteUitvoering" type="xs:date"/>
+			<xs:element name="ExtraInfo" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="ToegekendAanOrganisatie" type="generiek:Tekst2_0Type"/>
+			<xs:element name="ExterneReferte" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Koppelingen" type="KoppelingLijstType"/>
+			<xs:element name="Omschrijving" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+			<xs:element name="SoortTaak" type="EnumType"/>
+			<xs:element name="AfsluitType" type="EnumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ToegangsPogingLijstType">
+		<xs:sequence>
+			<xs:element name="ToegangsPoging" type="ToegangsPogingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ToegangsPogingType">
+		<xs:sequence>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="Reden" type="generiek:Tekst2_0Type"/>
+			<xs:element name="ControleurWoning" type="generiek:Tekst2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ToewijzingLijstType">
+		<xs:sequence>
+			<xs:element name="Toewijzing" type="ToewijzingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ToewijzingType">
+		<xs:sequence>
+			<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+			<xs:element name="ReferteGemeenschappelijkeRuimte" type="generiek:ReferteType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerslagBrandweerType">
+		<xs:complexContent>
+			<xs:extension base="EnumType">
+				<xs:sequence>
+					<xs:element name="Datum" type="xs:date" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VerstuurBeslissingNaarWvlType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="ReferteProcedureOo" type="generiek:ReferteType" minOccurs="0"/>
+					<xs:element name="Beslissingen" type="BeslissingVersturenLijstType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VervalType">
+		<xs:sequence>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="Reden" type="EnumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerzoekCaDocumentType">
+		<xs:sequence>
+			<xs:element name="AfschriftAttestBrandweer" type="xs:boolean"/>
+			<xs:element name="AfschriftAttestElektrisch" type="xs:boolean"/>
+			<xs:element name="SchemaGebouw" type="xs:boolean"/>
+			<xs:element name="AfschriftAttestGas" type="xs:boolean"/>
+			<xs:element name="SchemaWoning" type="xs:boolean"/>
+			<xs:element name="BewijsVanIndiening" type="xs:boolean"/>
+			<xs:element name="OntvangstbewijsBurgemeester" type="xs:boolean"/>
+			<xs:element name="BeslissingBurgemeester" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerzoekCaType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="DatumVerzoek" type="xs:date"/>
+			<xs:element name="DatumVerzoekEersteAanleg" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumWeigeringEersteAanleg" type="xs:date" minOccurs="0"/>
+			<xs:element name="RedenAanvraag" type="EnumType" minOccurs="0"/>
+			<xs:element name="RedenTweedeOpinie" type="EnumType" minOccurs="0"/>
+			<xs:element name="MeegestuurdeDocumenten" type="VerzoekCaDocumentType" minOccurs="0"/>
+			<xs:element name="Verzoekers" type="IndienerVerzoekerLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerzoekRisicoType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="BeschrijvingAndere" type="generiek:TekstLang2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerzoekType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Datum" type="xs:date"/>
+			<xs:element name="Initiatiefnemer" type="EnumType" minOccurs="0"/>
+			<xs:element name="Dienst" type="EnumType" minOccurs="0"/>
+			<xs:element name="Belanghebbende" type="EnumType" minOccurs="0"/>
+			<xs:element name="Medium" type="EnumType" minOccurs="0"/>
+			<xs:element name="BeschrijvingTeOnderzoekenWoning" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="VolledigPand" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="TeOnderzoeken" type="EnumType" minOccurs="0"/>
+			<xs:element name="Verzoekers" type="IndienerVerzoekerLijstType" minOccurs="0"/>
+			<xs:element name="Risicos" type="RisicoLijstType" minOccurs="0"/>
+			<xs:element name="DatumMelding" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VivooLijstType">
+		<xs:sequence>
+			<xs:element name="Vivoo" type="VivooType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VivooType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="DatumOpname" type="xs:date"/>
+			<xs:element name="DatumSloop" type="xs:date" minOccurs="0"/>
+			<xs:element name="DatumBestemmingswijziging" type="xs:date" minOccurs="0"/>
+			<xs:element name="Procedure" type="EnumType"/>
+			<xs:element name="Schrapping" type="SchrappingType" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="OpnameOpgeschortDoorBeroep" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VivooBeperktLijstType">
+		<xs:sequence>
+			<xs:element name="Vivoo" type="VivooBeperktType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VivooBeperktType">
+		<xs:sequence>
+			<xs:element name="DatumOpname" type="xs:date"/>
+			<xs:element name="Procedure" type="EnumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VlokAdresType">
+		<xs:sequence>
+			<xs:element name="AdresObjectId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Land" type="LandType" minOccurs="0"/>
+			<xs:element name="Gemeente" type="GemeenteType" minOccurs="0"/>
+			<xs:element name="Postcode" type="PostcodeType" minOccurs="0"/>
+			<xs:element name="Straat" type="StraatType" minOccurs="0"/>
+			<xs:element name="Huisnummer" type="HuisnummerType" minOccurs="0"/>
+			<xs:element name="Busnummer" type="BusnummerType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VlokLocatieType">
+		<xs:sequence>
+			<xs:element name="VlokId" type="GuidType" minOccurs="0"/>
+			<xs:element name="VlokAdres" type="VlokAdresType" minOccurs="0"/>
+			<xs:element name="EigenNummer" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VraagAdviesAanWvlType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="ReferteProcedureOo" type="generiek:ReferteType"/>
+					<xs:element name="DatumAdviesVraag" type="xs:date"/>
+					<xs:element name="TeOnderzoeken" type="EnumType" minOccurs="0"/>
+					<xs:element name="VolledigPand" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="BeschrijvingTeOnderzoekenWoning" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="EntiteitenAdviesWVLLijst" type="EntiteitenAdviesWVLLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VraagOnderzoekVoorPandType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="Reden" type="generiek:Tekst2_0Type"/>
+					<xs:element name="UitersteDatumOnderzoek" type="xs:date"/>
+					<xs:element name="VolledigPand" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="ExterneReferte" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="ExtraInfo" type="generiek:TekstExtraLang2_1Type"/>
+					<xs:element name="Entiteiten" type="BestaandeEntiteitLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VraagOnderzoekVoorProcedureCaType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="ReferteProcedureCa" type="generiek:ReferteType"/>
+					<xs:element name="UitersteDatumOnderzoek" type="xs:date"/>
+					<xs:element name="VolledigPand" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="ExterneReferte" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="ExtraInfo" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+					<xs:element name="Entiteiten" type="BestaandeEntiteitLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VraagOnderzoekVoorProcedureOoType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="ReferteProcedureOo" type="generiek:ReferteType"/>
+					<xs:element name="UitersteDatumOnderzoek" type="xs:date"/>
+					<xs:element name="VolledigPand" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="ExterneReferte" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="ExtraInfo" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+					<xs:element name="Entiteiten" type="BestaandeEntiteitLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WijsProcedureCaAfType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="ReferteProcedureCa" type="generiek:ReferteType"/>
+					<xs:element name="RedenAfwijzing" type="EnumType"/>
+					<xs:element name="DatumStopzetting" type="xs:date"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WijsProcedureOoAfType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="ReferteProcedureOo" type="generiek:ReferteType"/>
+					<xs:element name="RedenAfwijzing" type="EnumType"/>
+					<xs:element name="DatumStopzetting" type="xs:date"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WijzigBeslissingenType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="BesluitenNgw" type="WijzigBesluitNgwLijstType" minOccurs="0"/>
+					<xs:element name="Beslissingen" type="WijzigBeslissingLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WijzigBeslissingLijstType">
+		<xs:sequence>
+			<xs:element name="Beslissing" type="WijzigBeslissingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WijzigBeslissingType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="DatumBetekening" type="xs:date" minOccurs="0"/>
+			<xs:element name="SnelHerstel" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Herhuisvesting" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="SloopOfHerbestemming" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="RedenBeslissingAnder" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="RedenGeenBesluit" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="TermijnSnelherstel" type="xs:int" minOccurs="0"/>
+			<xs:element name="StopzettingBewoning" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DatumStopzettingBewoning" type="xs:date" minOccurs="0"/>
+			<xs:element name="RecupererenHerhuisvestingkosten" type="generiek:TekstExtraLang2_1Type" minOccurs="0"/>
+			<xs:element name="WerkenOpKostenEigenaar" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WijzigBesluitNgwLijstType">
+		<xs:sequence>
+			<xs:element name="BesluitNgw" type="WijzigBesluitNgwType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WijzigBesluitNgwType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="DatumBesluit" type="xs:date"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WijzigCaLijstType">
+		<xs:sequence>
+			<xs:element name="Ca" type="WijzigCaType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WijzigCasType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="Cas" type="WijzigCaLijstType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WijzigCaType">
+		<xs:sequence>
+			<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Type" type="EnumType"/>
+			<xs:element name="DatumAttest" type="xs:date"/>
+			<xs:element name="DatumAfgifteAttest" type="xs:date"/>
+			<xs:element name="DatumAttestGeldigTot" type="xs:date"/>
+			<xs:element name="Bezettingsnorm" type="xs:int" minOccurs="0"/>
+			<xs:element name="Studentenkamer" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WijzigPandStructuurType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="Referte" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="DatumHerindeling" type="xs:date"/>
+					<xs:element name="VergundStatus" type="EnumType"/>
+					<xs:element name="BestaandeEntiteiten" type="BestaandeEntiteitLijstType" minOccurs="0"/>
+					<xs:element name="BestaandeGemeenschappelijkeRuimtes" type="BestaandeGemeenschappelijkeRuimteLijstType" minOccurs="0"/>
+					<xs:element name="NieuweEntiteiten" type="NieuweEntiteitLijstType" minOccurs="0"/>
+					<xs:element name="NieuweGemeenschappelijkeRuimtes" type="NieuweGemeenschappelijkeRuimteLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="WoningKwaliteitBijlageLijstType">
+		<xs:sequence>
+			<xs:element name="Bijlage" type="WoningKwaliteitBijlageType" maxOccurs="10"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WoningKwaliteitBijlageType">
+		<xs:sequence>
+			<xs:element name="ExterneReferte" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Type" type="generiek:Tekst2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ZetEntiteitGeslooptType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="ReferteEntiteit" type="generiek:ReferteType"/>
+					<xs:element name="GebouweenheidId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="DatumSloop" type="xs:date"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ZetGemeenschappelijkeRuimteGeslooptType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="ReferteGemeenschappelijkeRuimte" type="generiek:ReferteType"/>
+					<xs:element name="DatumSloop" type="xs:date"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ZetPandGeslooptType">
+		<xs:complexContent>
+			<xs:extension base="BewaarWoningKwaliteitType">
+				<xs:sequence>
+					<xs:element name="TijdstipLaatstGewijzigd" type="xs:dateTime" minOccurs="0"/>
+					<xs:element name="RefertePand" type="generiek:ReferteType"/>
+					<xs:element name="GebouwId" type="generiek:Tekst2_0Type" minOccurs="0"/>
+					<xs:element name="DatumSloop" type="xs:date"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

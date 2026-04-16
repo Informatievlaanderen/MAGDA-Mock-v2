@@ -1,0 +1,1072 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:V_INDUS_EEN_001:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:V_INDUS_EEN_001:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+<xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+	<xs:complexType name="SituatieDatablok">
+		<xs:complexContent>
+			<xs:extension base="dossier:SituatieDatablok">
+			<xs:sequence>
+	<xs:element name="Unit_asis" minOccurs="0" maxOccurs="1">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="IsOpslag_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="OpslagOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit_asis.OpslagOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsProductie_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="ProductieOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit_asis.ProductieOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsKantoor_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="KantoorOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit_asis.KantoorOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsPersoneel_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="PersoneelOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit_asis.PersoneelOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTechnisch_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TechnischOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit_asis.TechnischOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAndereOndersteuning_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereOndersteuningOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit_asis.AndereOndersteuningOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsWoningConcierge_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="WoningConciergeOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit_asis.WoningConciergeOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="WoningConciergeSlaapkamerAantal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="WoningConciergeVerwarmingType_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="AARDGAS"/>
+			<xs:enumeration value="STOOKOLIE"/>
+			<xs:enumeration value="ELEKTRICITEIT"/>
+			<xs:enumeration value="ZON"/>
+			<xs:enumeration value="STEENKOOL"/>
+			<xs:enumeration value="HOUT"/>
+			<xs:enumeration value="BUTAAN_PROPAANGAS"/>
+			<xs:enumeration value="WARMTEPOMP"/>
+			<xs:enumeration value="ANDER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="IsCasco_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="CascoOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit_asis.CascoOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAndereUnit_asis">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="Totaal_asis" minOccurs="0" maxOccurs="1">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="IsOpslagTot_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="OpslagTotOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal_asis.OpslagTotOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsProductieTot_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="ProductieTotOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal_asis.ProductieTotOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsKantoorTot_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="KantoorTotOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal_asis.KantoorTotOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsPersoneelTot_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="PersoneelTotOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal_asis.PersoneelTotOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTechnischTot_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TechnischTotOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal_asis.TechnischTotOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAndereOndersteuningTot_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereOndersteuningTotOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal_asis.AndereOndersteuningTotOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsWoningConciergeTot_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="WoningConciergeTotOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal_asis.WoningConciergeTotOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="WoningConciergeTotSlaapkamerAantal_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="WoningConciergeTotVerwarmingType_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="AARDGAS"/>
+			<xs:enumeration value="STOOKOLIE"/>
+			<xs:enumeration value="ELEKTRICITEIT"/>
+			<xs:enumeration value="ZON"/>
+			<xs:enumeration value="STEENKOOL"/>
+			<xs:enumeration value="HOUT"/>
+			<xs:enumeration value="BUTAAN_PROPAANGAS"/>
+			<xs:enumeration value="WARMTEPOMP"/>
+			<xs:enumeration value="ANDER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="IsCascoTot_asis" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="CascoTotOppervlakte_asis" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal_asis.CascoTotOppervlakte_asis">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="Unit" minOccurs="0" maxOccurs="1">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="IsOpslag" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="OpslagOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit.OpslagOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsProductie" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="ProductieOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit.ProductieOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsKantoor" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="KantoorOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit.KantoorOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsPersoneel" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="PersoneelOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit.PersoneelOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTechnisch" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TechnischOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit.TechnischOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAndereOndersteuning" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereOndersteuningOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit.AndereOndersteuningOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsWoningConcierge" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="WoningConciergeOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit.WoningConciergeOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="WoningConciergeSlaapkamerAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="WoningConciergeVerwarmingType" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="AARDGAS"/>
+			<xs:enumeration value="STOOKOLIE"/>
+			<xs:enumeration value="ELEKTRICITEIT"/>
+			<xs:enumeration value="ZON"/>
+			<xs:enumeration value="STEENKOOL"/>
+			<xs:enumeration value="HOUT"/>
+			<xs:enumeration value="BUTAAN_PROPAANGAS"/>
+			<xs:enumeration value="WARMTEPOMP"/>
+			<xs:enumeration value="ANDER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="IsCasco" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="CascoOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Unit.CascoOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAndereUnit">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+			<xs:enumeration value="N"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="Totaal" minOccurs="0" maxOccurs="1">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="IsOpslagTot" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="OpslagTotOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal.OpslagTotOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsProductieTot" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="ProductieTotOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal.ProductieTotOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsKantoorTot" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="KantoorTotOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal.KantoorTotOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsPersoneelTot" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="PersoneelTotOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal.PersoneelTotOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsTechnischTot" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="TechnischTotOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal.TechnischTotOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsAndereOndersteuningTot" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="AndereOndersteuningTotOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal.AndereOndersteuningTotOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsWoningConciergeTot" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="WoningConciergeTotOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal.WoningConciergeTotOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="WoningConciergeTotSlaapkamerAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="WoningConciergeTotVerwarmingType" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:pattern value=".+"/>
+			<xs:enumeration value="AARDGAS"/>
+			<xs:enumeration value="STOOKOLIE"/>
+			<xs:enumeration value="ELEKTRICITEIT"/>
+			<xs:enumeration value="ZON"/>
+			<xs:enumeration value="STEENKOOL"/>
+			<xs:enumeration value="HOUT"/>
+			<xs:enumeration value="BUTAAN_PROPAANGAS"/>
+			<xs:enumeration value="WARMTEPOMP"/>
+			<xs:enumeration value="ANDER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="IsCascoTot" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="CascoTotOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Totaal.CascoTotOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type.Unit_asis.OpslagOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit_asis.ProductieOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit_asis.KantoorOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit_asis.PersoneelOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit_asis.TechnischOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit_asis.AndereOndersteuningOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit_asis.WoningConciergeOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit_asis.CascoOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal_asis.OpslagTotOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal_asis.ProductieTotOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal_asis.KantoorTotOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal_asis.PersoneelTotOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal_asis.TechnischTotOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal_asis.AndereOndersteuningTotOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal_asis.WoningConciergeTotOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal_asis.CascoTotOppervlakte_asis">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit.OpslagOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit.ProductieOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit.KantoorOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit.PersoneelOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit.TechnischOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit.AndereOndersteuningOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit.WoningConciergeOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Unit.CascoOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal.OpslagTotOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal.ProductieTotOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal.KantoorTotOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal.PersoneelTotOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal.TechnischTotOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal.AndereOndersteuningTotOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal.WoningConciergeTotOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Totaal.CascoTotOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

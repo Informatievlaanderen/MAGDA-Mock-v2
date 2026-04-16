@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://magda.vlaanderen.be/gezin-v3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" targetNamespace="http://magda.vlaanderen.be/gezin-v3" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../Generiek/GeneriekDomein-v3.xsd"/>
+	
+	<xs:complexType name="GeefKindVoordelenCriteriaType">
+		<xs:sequence>
+			<xs:element name="INSZ" type="generiek:INSZType"/>
+			<xs:element name="Periode" type="generiek:PeriodeJaarMaandBeginVerplichtType"/>
+			<xs:element name="BetalingsperiodeWeergaveOpties" type="BetalingsperiodeWeergaveOptiesType" minOccurs="0"/>
+			<xs:element name="Bronnen" type="KindVoordeelBronLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelBronLijstType">
+		<xs:sequence>
+			<xs:element name="Bron" type="KindVoordeelBronEnumType" minOccurs="1" maxOccurs="5"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="KindVoordeelBronEnumType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FEDERAAL"/>
+			<xs:enumeration value="VLAANDEREN"/>
+			<xs:enumeration value="BRUSSEL"/>
+			<xs:enumeration value="WALLONIE"/>
+			<xs:enumeration value="OOST-BELGIE"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="BetalingsperiodeWeergaveOptiesType">
+		<xs:sequence>
+			<xs:element name="BetalingsperiodeFilter" type="FilterBetalingsperiodeType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="FilterBetalingsperiodeType">
+		<xs:choice>
+			<xs:element name="TypeFilter" type="FilterBetalingsperiodeEnum"/>
+			<xs:element name="SociaalFilter" type="FilterTypeSociaalType"/>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:simpleType name="FilterBetalingsperiodeEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BASIS"/>
+			<xs:enumeration value="KINDEROPVANG"/>
+			<xs:enumeration value="KLEUTER"/>
+			<xs:enumeration value="ONDERSTEUNINGSTOESLAG"/>
+			<xs:enumeration value="PARTICIPATIE_SELECTIEF"/>
+			<xs:enumeration value="PARTICIPATIE_UNIVERSEEL"/>
+			<xs:enumeration value="ZORG_PLEEG"/>
+			<xs:enumeration value="ZORG_SPECIALE_NODEN"/>
+			<xs:enumeration value="ZORG_WEES"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="FilterTypeSociaalType">
+		<xs:sequence>
+			<xs:element name="TypeSociaalInvoegen" type="TypeSociaalInvoegenEnum" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="TypeSociaalInvoegenEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MET_TYPE_SOCIAAL"/>
+			<xs:enumeration value="ZONDER_TYPE_SOCIAAL"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="KindVoordeelLijstType">
+		<xs:sequence>
+			<xs:element name="KindVoordeel" type="KindVoordeelType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelType">
+		<xs:sequence>
+			<xs:element name="Bron" type="generiek:TekstType" minOccurs="1"/>
+			<xs:element name="INSZ" type="generiek:INSZType"/>
+			<xs:element name="KindVoordeelFonds" type="KindVoordeelFondsType"/>
+			<xs:element name="Dossiernummer" type="generiek:TekstType" minOccurs="0"/>
+			<xs:element name="Rechthebbende" type="generiek:INSZType" minOccurs="0"/>
+			<xs:element name="Begunstigden" type="KindVoordeelBegunstigdeLijstType" minOccurs="0"/>
+			<xs:element name="Kinderen" type="KindVoordeelKindLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelFondsType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Ondernemingsnummer" type="generiek:OndernemingsnummerType"/>
+				<xs:element name="Code" type="KindVoordeelFondsCodeType"/>
+			</xs:choice>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="KindVoordeelFondsCodeType">
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+			<xs:pattern value="[0-9]{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="KindVoordeelBegunstigdeLijstType">
+		<xs:sequence>
+			<xs:element name="Begunstigde" type="KindVoordeelBegunstigdeType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelBegunstigdeType">
+		<xs:sequence>
+			<xs:element name="INSZ" type="generiek:INSZType"/>
+			<xs:element name="Bonussen" type="KindVoordeelBonusLijstType" minOccurs="0"/>
+			<xs:element name="Betalingsperiodes" type="KindVoordeelBetalingsperiodeLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelKindLijstType">
+		<xs:sequence>
+			<xs:element name="Kind" type="KindVoordeelKindType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelKindType">
+		<xs:sequence>
+			<xs:element name="INSZ" type="generiek:INSZType"/>
+			<xs:element name="Bonussen" type="KindVoordeelKindBonusLijstType" minOccurs="0"/>
+			<xs:element name="Betalingsperiodes" type="KindVoordeelKindBetalingsperiodeLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelBonusLijstType">
+		<xs:sequence>
+			<xs:element name="Bonus" type="KindVoordeelBonusType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelBonusType">
+		<xs:sequence>
+			<xs:element name="Betalingsdatum" type="generiek:DatumType"/>
+			<xs:element name="Categorie" type="KindVoordeelBonusCategorieType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KindVoordeelBonusCategorieType">
+		<xs:complexContent>
+			<xs:restriction base="generiek:AbstractCodeOmschrijvingType">
+				<xs:sequence>
+					<xs:element name="Code" type="KindVoordeelBonusCategorieCodeType"/>
+					<xs:element name="Omschrijving" type="generiek:OmschrijvingType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="KindVoordeelBonusCategorieCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+			<xs:pattern value="[A-Z_]{1,50}"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="KindVoordeelBetalingsperiodeLijstType">
+		<xs:sequence>
+			<xs:element name="Betalingsperiode" type="KindVoordeelBetalingsperiodeType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KindVoordeelBetalingsperiodeType">
+		<xs:sequence>
+			<xs:element name="Periode" type="generiek:PeriodeJaarMaandBeginVerplichtType" minOccurs="1"/>
+			<xs:element name="Categorie" type="KindVoordeelBetalingsperiodeCategorieDetailType" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelKindBonusLijstType">
+		<xs:sequence>
+			<xs:element name="Bonus" type="KindVoordeelKindBonusType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelKindBonusType">
+		<xs:complexContent>
+			<xs:extension base="KindVoordeelBonusType">
+				<xs:sequence>
+					<xs:element name="Begunstigden" type="KindVoordeelKindBegunstigdeLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelKindBegunstigdeLijstType">
+		<xs:sequence>
+			<xs:element name="Begunstigde" type="generiek:INSZType" minOccurs="1" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelBetalingsperiodeCategorieDetailType">
+		<xs:choice>
+			<xs:element name="KindVoordeelCategorieCode" type="KindVoordeelBetalingsperiodeCategorieType"/>
+			<xs:element name="KindVoordeelBetalingsperiodeCategorieSociaal" type="KindVoordeelBetalingsperiodeCategorieSociaalType"/>
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelBetalingsperiodeCategorieType">
+		<xs:sequence>
+			<xs:element name="Code" type="KindVoordeelBetalingsperiodeCategorieCodeType"/>
+				<xs:element name="Omschrijving" type="generiek:OmschrijvingType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="KindVoordeelBetalingsperiodeCategorieCodeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BASIS"/>
+			<xs:enumeration value="KINDERBIJSLAG"/>
+			<xs:enumeration value="KINDEROPVANG"/>
+			<xs:enumeration value="KLEUTER"/>
+			<xs:enumeration value="ONDERSTEUNINGSTOESLAG"/>
+			<xs:enumeration value="PARTICIPATIE_SELECTIEF"/>
+			<xs:enumeration value="PARTICIPATIE_UNIVERSEEL"/>
+			<xs:enumeration value="ZORG_PLEEG"/>
+			<xs:enumeration value="ZORG_SPECIALE_NODEN"/>
+			<xs:enumeration value="ZORG_WEES"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="KindVoordeelBetalingsperiodeCategorieSociaalType">
+		<xs:sequence>
+			<xs:element name="typeSocialeToeslag" type="generiek:TekstType" minOccurs="0"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelKindBetalingsperiodeLijstType">
+		<xs:sequence>
+			<xs:element name="Betalingsperiode" type="KindVoordeelKindBetalingsperiodeType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KindVoordeelKindBetalingsperiodeType">
+		<xs:complexContent>
+			<xs:extension base="KindVoordeelBetalingsperiodeType">
+				<xs:sequence>
+					<xs:element name="Begunstigden" type="KindVoordeelKindBegunstigdeLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,159 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:V_WONEN_KAMER_MEER_001:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:V_WONEN_KAMER_MEER_001:001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+<xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+	<xs:complexType name="SituatieDatablok">
+		<xs:complexContent>
+			<xs:extension base="dossier:SituatieDatablok">
+			<xs:sequence>
+	<xs:element name="NuttigeOppervlakte">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="KamerAantal">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="VerwarmingType">
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AARDGAS"/>
+			<xs:enumeration value="STOOKOLIE"/>
+			<xs:enumeration value="ELEKTRICITEIT"/>
+			<xs:enumeration value="ZON"/>
+			<xs:enumeration value="STEENKOOL"/>
+			<xs:enumeration value="HOUT"/>
+			<xs:enumeration value="BUTAAN_PROPAANGAS"/>
+			<xs:enumeration value="WARMTEPOMP"/>
+			<xs:enumeration value="ANDER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="Gemeenschappelijk" minOccurs="0" maxOccurs="1">
+	<xs:complexType>
+			<xs:sequence>
+	<xs:element name="IsBadkamer" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="BadkamerAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="BadkamerOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Gemeenschappelijk.BadkamerOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsKeuken" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="KeukenAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="KeukenOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Gemeenschappelijk.KeukenOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+	<xs:element name="IsToilet" minOccurs="0">
+	<xs:simpleType>
+		<xs:list>
+	<xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="J"/>
+		</xs:restriction>
+	</xs:simpleType>
+		</xs:list>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="ToiletAantal" minOccurs="0">
+	<xs:simpleType>
+		<xs:restriction base="xs:integer">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	</xs:element>
+	<xs:element name="ToiletOppervlakte" minOccurs="0">
+	<xs:complexType>
+		<xs:simpleContent>
+			<xs:extension base="type.Gemeenschappelijk.ToiletOppervlakte">
+		<xs:attribute name="eenheid" fixed="m²">
+	<xs:simpleType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+		</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+	</xs:complexType>
+	</xs:element>
+			</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="type.Gemeenschappelijk.BadkamerOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Gemeenschappelijk.KeukenOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="type.Gemeenschappelijk.ToiletOppervlakte">
+		<xs:restriction base="xs:decimal">
+			<xs:pattern value=".+"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

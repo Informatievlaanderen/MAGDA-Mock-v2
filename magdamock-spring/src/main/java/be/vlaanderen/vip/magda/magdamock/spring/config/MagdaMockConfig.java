@@ -15,9 +15,10 @@ import java.io.IOException;
 public class MagdaMockConfig {
     String magdaMockTestPath;
     String soapTestPath;
+    String magdaXsdPath;
 
     @Bean
     public MagdaConnection magdaMockConnection() throws IOException {
-        return MagdaMockConnection.create(magdaMockTestPath, soapTestPath);
+        return MagdaMockConnection.create(magdaMockTestPath, soapTestPath, magdaXsdPath);
     }
 }

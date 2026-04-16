@@ -1,0 +1,32 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <!-- DossierStuk datablokken -->
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_ACTENAME_MELDING_001:001" schemaLocation="../Datablok/DossierStuk/DST_ACTENAME_MELDING_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_BEROEP_EA_001:001" schemaLocation="../Datablok/DossierStuk/DST_BEROEP_EA_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_BESLISSINGMOTIVERING_001:001" schemaLocation="../Datablok/DossierStuk/DST_BESLISSINGMOTIVERING_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_BEZWAARSCHRIFT_001:001" schemaLocation="../Datablok/DossierStuk/DST_BEZWAARSCHRIFT_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_GENERIEK_INHOUD_001:001" schemaLocation="../Datablok/DossierStuk/DST_GENERIEK_INHOUD_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_GEVRAAGDE_EXTRA_INFO_001:001" schemaLocation="../Datablok/DossierStuk/DST_GEVRAAGDE_EXTRA_INFO_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_INTREKKING_DOSSIER_001:001" schemaLocation="../Datablok/DossierStuk/DST_INTREKKING_DOSSIER_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_MELDING_EINDE_UITVOERING_001:001" schemaLocation="../Datablok/DossierStuk/DST_MELDING_EINDE_UITVOERING_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_MELDING_START_UITVOERING_001:001" schemaLocation="../Datablok/DossierStuk/DST_MELDING_START_UITVOERING_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_MOTIVERING_001:001" schemaLocation="../Datablok/DossierStuk/DST_MOTIVERING_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_NOTA_ARCHITECT_001:001" schemaLocation="../Datablok/DossierStuk/DST_NOTA_ARCHITECT_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_ONONTVANKELIJK_001:001" schemaLocation="../Datablok/DossierStuk/DST_ONONTVANKELIJK_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_ONVOLLEDIG_001:001" schemaLocation="../Datablok/DossierStuk/DST_ONVOLLEDIG_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_VRAAG_INTREKKING_VERGUNNING_001:001" schemaLocation="../Datablok/DossierStuk/DST_VRAAG_INTREKKING_VERGUNNING_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_VRAGEN_EXTRA_INFORMATIE_001:001" schemaLocation="../Datablok/DossierStuk/DST_VRAGEN_EXTRA_INFORMATIE_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_WERKEN_EPB_PLICHT_001:001" schemaLocation="../Datablok/DossierStuk/DST_WERKEN_EPB_PLICHT_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_WERKEN_REEDS_GESTART_001:001" schemaLocation="../Datablok/DossierStuk/DST_WERKEN_REEDS_GESTART_001.xsd"/>
+
+    <!-- Nieuwe DossierStukDatablokken -->
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_ADVIES_TOEGANKELIJKHEID_001:001" schemaLocation="../Datablok/DossierStuk-1.1/DST_ADVIES_TOEGANKELIJKHEID_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_MELDING_AANPLAK_001:001" schemaLocation="../Datablok/DossierStuk-1.1/DST_MELDING_AANPLAK_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_MER_001:001" schemaLocation="../Datablok/DossierStuk-1.1/DST_MER_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_MOBILITEIT_001:001" schemaLocation="../Datablok/DossierStuk-1.1/DST_MOBILITEIT_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_OMV_EFFECT_OMGEVING_001:001" schemaLocation="../Datablok/DossierStuk-1.1/DST_OMV_EFFECT_OMGEVING_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_VISUM_OVA_001:001" schemaLocation="../Datablok/DossierStuk-1.1/DST_VISUM_OVA_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_VOOROVERLEG_VLAAMSE_BOUWMEESTER_001:001" schemaLocation="../Datablok/DossierStuk-1.1/DST_VOOROVERLEG_VLAAMSE_BOUWMEESTER_001.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:datablok:dossierstuk:DST_WERKEN_GESTART_EN_TIJDELIJKHEID_001:001" schemaLocation="../Datablok/DossierStuk-1.1/DST_WERKEN_GESTART_EN_TIJDELIJKHEID_001.xsd"/>
+
+</xsd:schema>

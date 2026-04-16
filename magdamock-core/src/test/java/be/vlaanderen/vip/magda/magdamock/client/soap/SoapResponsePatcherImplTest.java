@@ -8,6 +8,9 @@ import org.w3c.dom.Document;
 import java.util.HashMap;
 import java.util.Map;
 
+import static be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar.VERSION_01_00;
+import static be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar.VERSION_02_00;
+import static be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar.VERSION_03_00;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -23,10 +26,10 @@ class SoapResponsePatcherImplTest {
         SoapResponsePatcher basePatcher = mock(SoapResponsePatcher.class);
 
         MagdaServiceIdentification serviceIdentification =
-                new MagdaServiceIdentification("GeefSociaalStatuut", "03.00.0000");
+                new MagdaServiceIdentification("GeefSociaalStatuut", VERSION_03_00);
 
         MagdaServiceIdentification serviceIdentification2 =
-                new MagdaServiceIdentification("GeefAanslagbiljetPersonenbelasting", "02.00.0000");
+                new MagdaServiceIdentification("GeefAanslagbiljetPersonenbelasting", VERSION_02_00);
 
         Map<MagdaServiceIdentification, SoapResponsePatcher> patcherMap = new HashMap<>();
         patcherMap.put(serviceIdentification, geefSociaalStatuutPatcher);
@@ -56,10 +59,10 @@ class SoapResponsePatcherImplTest {
         SoapResponsePatcher basePatcher = mock(SoapResponsePatcher.class);
 
         MagdaServiceIdentification serviceIdentification =
-                new MagdaServiceIdentification("GeefAanslagbiljetPersonenbelasting", "02.00.0000");
+                new MagdaServiceIdentification("GeefAanslagbiljetPersonenbelasting", VERSION_02_00);
 
         MagdaServiceIdentification serviceIdentification2 =
-                new MagdaServiceIdentification("GeefSociaalStatuut", "03.00.0000");
+                new MagdaServiceIdentification("GeefSociaalStatuut", VERSION_03_00);
 
         Map<MagdaServiceIdentification, SoapResponsePatcher> patcherMap = new HashMap<>();
         patcherMap.put(serviceIdentification, geefAanslagbiljetPersonenbelastingPatcher);
@@ -86,10 +89,10 @@ class SoapResponsePatcherImplTest {
     void shouldDelegateToBasePatcherWhenNoSpecificPatcherIsFound() {
 
         MagdaServiceIdentification serviceIdentification =
-                new MagdaServiceIdentification("GeefAanslagbiljetPersonenbelasting", "02.00.0000");
+                new MagdaServiceIdentification("GeefAanslagbiljetPersonenbelasting", VERSION_02_00);
 
         MagdaServiceIdentification serviceIdentification2 =
-                new MagdaServiceIdentification("GeefSociaalStatuut", "03.00.0000");
+                new MagdaServiceIdentification("GeefSociaalStatuut", VERSION_03_00);
 
         SoapResponsePatcher geefAanslagbiljetPersonenbelastingPatcher = mock(SoapResponsePatcher.class);
         SoapResponsePatcher geefSociaalStatuutPatcher = mock(SoapResponsePatcher.class);
@@ -108,7 +111,7 @@ class SoapResponsePatcherImplTest {
         MagdaDocument expected = mock(MagdaDocument.class);
 
         when(request.getServiceIdentification())
-                .thenReturn(new MagdaServiceIdentification("UnknownService", "01.00.0000"));
+                .thenReturn(new MagdaServiceIdentification("UnknownService", VERSION_01_00));
         when(basePatcher.patchResponse(request, response)).thenReturn(expected);
 
         MagdaDocument result = soapResponsePatcher.patchResponse(request, response);

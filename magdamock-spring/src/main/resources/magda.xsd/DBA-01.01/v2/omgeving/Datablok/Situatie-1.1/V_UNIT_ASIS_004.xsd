@@ -1,0 +1,68 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:V_UNIT_ASIS_004:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:V_UNIT_ASIS_004:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+    <xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+    <xs:complexType name="SituatieDatablok">
+        <xs:complexContent>
+            <xs:extension base="dossier:SituatieDatablok">
+                <xs:sequence>
+                    <xs:element name="EenOfMeerUnit" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="EEN"/>
+                                <xs:enumeration value="MEER"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Unitnummer_asis" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="WerkenAardEen" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value=".+"/>
+                                <xs:enumeration value="ZELFDE_UNIT"/>
+                                <xs:enumeration value="VERGROOT_UNIT"/>
+                                <xs:enumeration value="VERKLEIN_UNIT"/>
+                                <xs:enumeration value="SPLITS_UNIT"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="WerkenAardMeer" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value=".+"/>
+                                <xs:enumeration value="VOEGSAMEN_UNIT"/>
+                                <xs:enumeration value="HERVERDEEL_UNIT"/>
+                                <xs:enumeration value="NIEUWE_UNIT"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Unitnummers_asis" minOccurs="0" maxOccurs="unbounded">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="Unitnummer_asis">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string"/>
+                                    </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="Hoofdfunctie_asis">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:enumeration value="WONEN"/>
+                                            <xs:enumeration value="HANDEL"/>
+                                            <xs:enumeration value="RECR_VERBLIJF"/>
+                                            <xs:enumeration value="INDUS_AMBACHT"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

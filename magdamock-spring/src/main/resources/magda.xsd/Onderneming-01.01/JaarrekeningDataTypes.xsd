@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://onderneming.vip.vlaanderen.be" 
+           xmlns="http://onderneming.vip.vlaanderen.be" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:generiek="http://generiek.vip.vlaanderen.be" 
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.01">
+           
+	<xs:import namespace="http://generiek.vip.vlaanderen.be" schemaLocation="../Generiek-01.01/Generiek.xsd"/>
+	<xs:include schemaLocation="OndernemingExtensie.xsd"/>
+	<xs:include schemaLocation="JaarrekeningDataCodes.xsd"/>
+	<xs:include schemaLocation="JaarrekeningDataKern.xsd"/>
+	
+	<xs:complexType name="SchemaCodeType">
+        <xs:simpleContent>
+			<xs:extension base="SchemaEnumType">
+        		<xs:attribute name="Beschrijving" type="xs:string" />
+			</xs:extension>
+		</xs:simpleContent>
+    </xs:complexType>
+	<xs:complexType name="KwaliteitVlagCodeType">
+        <xs:simpleContent>
+			<xs:extension base="KwaliteitVlagEnumType">
+		        <xs:attribute name="Beschrijving" type="xs:string" />
+			</xs:extension>
+		</xs:simpleContent>
+    </xs:complexType>
+	<xs:complexType name="LeverancierCodeType">
+        <xs:simpleContent>
+			<xs:extension base="LeverancierEnumType">
+		        <xs:attribute name="Beschrijving" type="xs:string" />
+			</xs:extension>
+		</xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="Jaarrekening1_1Type">
+    	<xs:sequence>
+			<xs:element name="OndernemingsNummer" type="OndernemingsNummerType"/>
+			<xs:element name="JaarrekeningHoofding" type="JaarrekeningHoofdingType"/>
+			<xs:element name="JaarrekeningElementen" type="JaarrekeningElementenType" minOccurs="0"/>
+    	</xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="JaarrekeningType">
+    	<xs:sequence>
+			<xs:element name="JaarrekeningHoofding" type="JaarrekeningHoofdingType"/>
+			<xs:element name="JaarrekeningElementen" type="JaarrekeningElementenType" minOccurs="0"/>
+    	</xs:sequence>
+    </xs:complexType>
+	<xs:complexType name="JaarrekeningHoofdingType">
+		<xs:sequence>
+			<xs:element name="Boekjaar" type="generiek:JaarType"/>
+			<xs:element name="BeginDatum" type="generiek:VolledigDatumType"/>
+			<xs:element name="AfsluitingDatum" type="generiek:VolledigDatumType"/>
+			<xs:element name="AantalMaanden" type="AantalMaandenType"/>
+			<xs:element name="SchemaCode" type="SchemaCodeType"/>
+			<xs:element name="KwaliteitVlag" type="KwaliteitVlagCodeType"/>
+			<xs:element name="NaceNBB" type="NaceNBBType" minOccurs="0"/>
+			<xs:element name="ParitaireComiteCodes" type="ParitairComiteCodesType" minOccurs="0"/>
+			<xs:element name="RefNBB" type="RefNBBType" minOccurs="0"/>
+			<xs:element name="Leverancier" type="LeverancierCodeType"/>
+			<xs:element name="TaxonomieVersieDatum" type="generiek:VolledigDatumType"/>
+			<xs:element name="MuntCode" type="MuntCodeType"/>
+			<xs:element name="NeerleggingDatum" type="generiek:VolledigDatumType" minOccurs="0"/>
+			<xs:element name="GoedkeuringDatum" type="generiek:VolledigDatumType" minOccurs="0"/>
+			<xs:element name="AkteOfStatuutDatum" type="generiek:VolledigDatumType" minOccurs="0"/>
+			<xs:element name="CreatieWijzigingDatum" type="generiek:VolledigDatumType"/>
+			<xs:element name="AanmaakBestandNBBDatum" type="generiek:VolledigDatumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NaceNBBType">
+		<xs:sequence>
+			<xs:element name="Code" type="NaceCodeType"/>
+			<xs:element name="Versie" type="generiek:JaarType"/>
+			<xs:element name="Omschrijving" type="NaceOmschrijvingType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParitairComiteCodesType">
+		<xs:sequence>
+			<xs:element name="ParitairComiteCode" type="ParitairComiteCodeType" maxOccurs="5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RefNBBType">
+		<xs:sequence>
+			<xs:element name="RefNBBDeel1" type="RefNBBDeel1Type"/>
+			<xs:element name="RefNBBDeel2" type="RefNBBDeel2Type"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="JaarrekeningElementenType">
+		<xs:sequence>
+			<xs:element name="JaarrekeningElement" type="JaarrekeningElementType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="JaarrekeningElementType">
+		<xs:sequence>
+			<xs:element name="ElementNaam" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="Volume" type="VolumeType"/>
+			<xs:element name="AantalBedrag" type="AantalBedragType" minOccurs="0"/>
+			<xs:element name="RubrieksCode" type="RubrieksCodeType" minOccurs="0"/>
+			<xs:element name="Benaming" type="BenamingType" minOccurs="0"/>
+			<xs:element name="Titel" type="generiek:VlagCodeType"/>
+			<xs:element name="Kerngegeven" type="generiek:VlagCodeType"/>
+			<xs:element name="EconomischGewicht" type="generiek:VlagCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VolumeType">
+		<xs:sequence>
+			<xs:element name="Deel" type="DeelType"/>
+			<xs:element name="Sectie" type="SectieType" minOccurs="0"/>
+			<xs:element name="SubSectie" type="SubSectieType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AantalBedragType">
+		<xs:sequence>
+			<xs:element name="Waarde" type="GeldBedragType"/>
+			<xs:element name="BedragType" type="CijferType"/>
+			<xs:element name="Eenheid" type="EenheidType" minOccurs="0"/>
+			<xs:element name="DecimalenBetekenisvol" type="CijferType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BenamingType">
+		<xs:sequence>
+			<xs:element name="Waarde" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="Taal" type="generiek:TaalCodeType"/>
+			<xs:element name="Stijl" type="generiek:NaamLangType"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://personeel-02_00.vip.vlaanderen.be" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" 
+	xmlns:organisatie="http://organisatie-02_00.vip.vlaanderen.be" 
+	xmlns:persoon="http://persoon-02_00.vip.vlaanderen.be" 
+	targetNamespace="http://personeel-02_00.vip.vlaanderen.be" 
+	elementFormDefault="unqualified" 
+	attributeFormDefault="unqualified" 
+	version="2.00">
+
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://organisatie-02_00.vip.vlaanderen.be" schemaLocation="../Organisatie-02.00/Organisatie.xsd"/>
+	<xs:import namespace="http://persoon-02_00.vip.vlaanderen.be" schemaLocation="../Persoon-02.00/Persoon.xsd"/>
+	<xs:include schemaLocation="PersoneelEnum.xsd"/>
+	<xs:include schemaLocation="PersoneelSimple.xsd"/>
+
+	<xs:complexType name="DownloadType">
+		<xs:sequence>
+			<xs:element name="DossierIdentificatie" type="DossierIdentificatieType"/>
+			<xs:element name="Afwezigheid" type="AfwezigheidType" minOccurs="0"/>
+			<xs:element name="Diploma" type="DiplomaType" minOccurs="0"/>
+			<xs:element name="Entiteit" type="organisatie:EntiteitType" minOccurs="0"/>
+			<xs:element name="Locatie" type="organisatie:LocatieType" minOccurs="0"/>
+			<xs:element name="Graad" type="GraadType" minOccurs="0"/>
+			<xs:element name="OrganisatieStructuur" type="organisatie:OrganisatieStructuurType" minOccurs="0"/>
+			<xs:element name="Orafin" type="OrafinType" minOccurs="0"/>
+			<xs:element name="FunctieWerknemer" type="FunctieWerknemerType" minOccurs="0"/>
+			<xs:element name="JobWerknemer" type="JobWerknemerType" minOccurs="0"/>
+			<xs:element name="PayrollWerknemer" type="PayRollWerknemerType" minOccurs="0"/>
+			<xs:element name="Gezondheidsinspectie" type="GezondheidsinspectieType" minOccurs="0"/>
+			<xs:element name="DiplomaWerknemer" type="DiplomaWerknemerType" minOccurs="0"/>
+			<xs:element name="Domicilie" type="DomicilieType" minOccurs="0"/>
+			<xs:element name="Werknemer" type="WerknemerType" minOccurs="0"/>
+			<xs:element name="VOGegevens" type="VOGegevensType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DossierIdentificatieType">
+		<xs:sequence>
+			<xs:element name="TypeDossier" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="BusinessUnit" type="organisatie:OrganisatieIdentificatieType" minOccurs="0"/>
+			<xs:element name="CompanyCode" type="CodeTripleType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AfwezigheidType">
+		<xs:sequence>
+			<xs:element name="Afwezigheidscode" type="AfwezigheidscodeType"/>
+			<xs:element name="Nummer" type="AfwezigheidNummerType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AfwezigheidscodeType">
+		<xs:sequence>
+			<xs:element name="Code" type="AfwezigheidscodeCodeType" minOccurs="0"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AfwezigheidscodeCodeType">
+		<xs:simpleContent>
+			<xs:extension base="AfwezigheidscodeKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="FunctieWerknemerType">
+		<xs:sequence>
+			<xs:element name="WerknemerIdentificatie" type="IdentificatieWerknemerType"/>
+			<xs:element name="EntiteitIdentificatie" type="organisatie:EntiteitIDType" minOccurs="0"/>
+			<xs:element name="Ingang" type="IngangType"/>
+			<xs:element name="ArbeidsRelatieVolgnummer" type="ArbeidsRelatieVolgnummerType" />
+			<xs:element name="FunctieCode" type="FunctieCodeType"/>
+			<xs:element name="DatumBegin" type="generiek:Datum2_0Type"/>
+			<xs:element name="DatumInDienst" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="DatumLaatstInDienst" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="Actie" type="ActieType"/>
+			<xs:element name="StatusSalaris" type="StatusSalarisType"/>
+			<xs:element name="StatusHR" type="StatusType"/>
+			<xs:element name="LocatieCode" type="organisatie:LocatieCodeType"/>
+			<xs:element name="RelatieOrganisatie" type="CodeTripleType"/>
+			<xs:element name="RapporteertAan" type="RapporteertAanType" minOccurs="0"/>
+			<xs:element name="Leidinggevende" type="IdentificatieWerknemerType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IngangType">
+		<xs:sequence>
+			<xs:element name="Datum" type="generiek:Datum2_0Type"/>
+			<xs:element name="Volgnummer" type="VolgnummerType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FunctieCodeType">
+		<xs:sequence>
+			<xs:element name="Code" type="FunctieCodeCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FunctieCodeCodeType">
+		<xs:simpleContent>
+			<xs:extension base="FunctieKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="IdentificatieWerknemerType">
+		<xs:sequence>
+			<xs:element name="VlimpersID" type="IdentificatieType"/>
+			<xs:element name="INSZ" type="generiek:INSZType" minOccurs="0"/>
+			<xs:element name="MedexAansluitingsNummer" type="IdentificatieType" minOccurs="0"/>
+			<xs:element name="PayrollNummer" type="PayrollNummerType" minOccurs="0"/>
+			<xs:element name="PersoneelsregistratieNummer" type="IdentificatieType" minOccurs="0"/>
+			<xs:element name="Naam" type="persoon:NaamPersoonType" minOccurs="0"/>
+			<xs:element name="StamNummer" type="IdentificatieLangType" minOccurs="0"/>
+			<xs:element name="Gebruiker" type="GebruikerType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PayrollNummerType">
+		<xs:sequence>
+			<xs:element name="Huidig" type="IdentificatieLangType"/>
+			<xs:element name="Vorig" type="IdentificatieLangType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GebruikerType">
+		<xs:sequence>
+			<xs:element name="GebruikerID" type="GebruikerIDType" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:NaamLangType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActieType">
+		<xs:sequence>
+			<xs:element name="ActieCode" type="ActieCodeType"/>
+			<xs:element name="Reden" type="CodeTripleType" minOccurs="0"/>
+			<xs:element name="Datum" type="generiek:Datum2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActieCodeType">
+		<xs:sequence>
+			<xs:element name="Code" type="ActieCodeCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActieCodeCodeType">
+		<xs:simpleContent>
+			<xs:extension base="ActieKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RapporteertAanType">
+		<xs:sequence>
+			<xs:element name="ArbeidsplaatsIdentificatie" type="ArbeidsplaatsIdentificatieType" />
+			<xs:element name="Benaming" type="generiek:NaamLangType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GezondheidsinspectieType">
+		<xs:sequence>
+			<xs:element name="MedexCentrum" type="MedexCentrumType"/>
+			<xs:element name="WerknemerIdentificatie" type="IdentificatieWerknemerType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MedexCentrumType">
+		<xs:sequence>
+			<xs:element name="Code" type="MedexCentrumCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MedexCentrumCodeType">
+		<xs:simpleContent>
+			<xs:extension base="MedexCentrumKernType">
+				<xs:attribute name="Beschrijving" type="generiek:TekstKort2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PayRollWerknemerType">
+		<xs:sequence>
+			<xs:element name="WerknemerIdentificatie" type="IdentificatieWerknemerType"/>
+			<xs:element name="ArbeidsRelatieVolgnummer" type="VolgnummerType" />
+			<xs:element name="PayrollSysteem" type="PayrollSysteemType" />
+			<xs:element name="Verzending" type="VerzendingType"/>
+			<xs:element name="Periode" type="generiek:PeriodeVerplichtType"/>
+			<xs:element name="DatumIngang" type="generiek:Datum2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VerzendingType">
+		<xs:sequence>
+			<xs:element name="Bestemming" type="CodeType"/>
+			<xs:element name="DatumFout" type="generiek:Datum2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DiplomaType">
+		<xs:sequence>
+			<xs:element name="DiplomaCode" type="DiplomaCodeType" minOccurs="0"/>
+			<xs:element name="NiveauOpleiding" type="NiveauOpleidingType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DiplomaCodeType">
+		<xs:sequence>
+			<xs:element name="Code" type="DiplomaCodeCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DiplomaCodeCodeType">
+		<xs:simpleContent>
+			<xs:extension base="DiplomaKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="NiveauOpleidingType">
+		<xs:sequence>
+			<xs:element name="Code" type="NiveauOpleidingCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NiveauOpleidingCodeType">
+		<xs:simpleContent>
+			<xs:extension base="NiveauOpleidingKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="DiplomaWerknemerType">
+		<xs:sequence>
+			<xs:element name="WerknemerIdentificatie" type="IdentificatieWerknemerType"/>
+			<xs:element name="Diploma" type="DiplomaType"/>
+			<xs:element name="DatumBehaald" type="generiek:Datum2_0Type"/>
+			<xs:element name="Specialisatie" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Eindwerk" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="School" type="SchoolType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SchoolType">
+		<xs:sequence>
+			<xs:element name="Code" type="SchoolCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SchoolCodeType">
+		<xs:simpleContent>
+			<xs:extension base="SchoolKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ContactType">
+		<xs:sequence>
+			<xs:element name="Landnummer" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Telefoonnummer" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Faxnummer" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="GSM" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Email" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Website" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GraadType">
+		<xs:sequence>
+			<xs:element name="GraadCode" type="GraadCodeType"/>
+			<xs:element name="Categorie" type="GraadCategorieType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GraadCodeType">
+		<xs:sequence>
+			<xs:element name="Code" type="GraadCodeCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GraadCodeCodeType">
+		<xs:simpleContent>
+			<xs:extension base="GraadKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ManagerType">
+		<xs:sequence>
+			<xs:element name="Type" type="ManagerEnumType"/>
+			<xs:element name="Identificatie" type="IdentificatieWerknemerType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="JobWerknemerType">
+		<xs:sequence>
+			<xs:element name="WerknemerIdentificatie" type="IdentificatieWerknemerType"/>
+			<xs:element name="OrganisatieJobWerknemer" type="OrganisatieJobWerknemerType"/>
+			<xs:element name="Volgnummer" type="VolgnummerType"/>
+			<xs:element name="VolgnummerIngang" type="VolgnummerIngangType" />
+			<xs:element name="ArbeidsRelatieVolgnummer" type="ArbeidsRelatieVolgnummerType" />
+			<xs:element name="FunctieCode" type="FunctieCodeType"/>
+			<xs:element name="DatumIngang" type="generiek:Datum2_0Type"/>
+			<xs:element name="DatumEinde" type="generiek:Datum2_0Type"/>
+			<xs:element name="Actie" type="ActieType"/>
+			<xs:element name="Status" type="StatusType"/>
+			<xs:element name="Betaalgroep" type="CodeTripleType"/>
+			<xs:element name="CodeAanrekening" type="CodeAanrekeningType"/>
+			<xs:element name="Leidinggevende" type="IdentificatieWerknemerType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganisatieJobWerknemerType">
+		<xs:sequence>
+			<xs:element name="BeleidsDomein" type="organisatie:OrganisatieIdentificatieType" minOccurs="0"/>
+			<xs:element name="BusinessUnit" type="organisatie:OrganisatieIdentificatieType" minOccurs="0"/>
+			<xs:element name="EntiteitIdentificatie" type="organisatie:EntiteitIDType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LDAPGegevensType">
+		<xs:sequence>
+			<xs:element name="WerknemerIdentificatie" type="IdentificatieWerknemerType"/>
+			<xs:element name="Contact" type="ContactType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DomicilieType">
+		<xs:sequence>
+			<xs:element name="WerknemerIdentificatie" type="IdentificatieWerknemerType"/>
+			<xs:element name="Adres" type="DomicilieAdresType"/>
+			<xs:element name="DatumModificatie" type="generiek:Datum2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DomicilieAdresType">
+		<xs:complexContent>
+			<xs:extension base="PersoneelAdresType">
+				<xs:sequence>
+					<xs:element name="LandPostcode" type="LandPostCodeType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VOGegevensType">
+		<xs:sequence>
+			<xs:element name="WerknemerIdentificatie" type="IdentificatieWerknemerType"/>
+			<xs:element name="DatumEedaflegging" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="MedexCentrum" type="MedexCentrumType" minOccurs="0"/>
+			<xs:element name="BrutoNetto" type="CodeType"/>
+			<xs:element name="Gezinslast" type="CodeType"/>
+			<xs:element name="VerzendMOD" type="generiek:VlagEnumType" minOccurs="0"/>
+			<xs:element name="VakorganisatieGegevens" type="generiek:VlagEnumType" minOccurs="0"/>
+			<xs:element name="Controlegegevens" type="generiek:VlagEnumType"/>
+			<xs:element name="Loonstrook" type="generiek:VlagEnumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrafinType">
+		<xs:sequence>
+			<xs:element name="EntiteitIdentificatie" type="organisatie:EntiteitIDType"/>
+			<xs:element name="InVlimpers" type="generiek:VlagEnumType"/>
+			<xs:element name="EntiteitVlimpersIdentificatie" type="organisatie:OrganisatieIdentificatieKernType" minOccurs="0"/>
+			<xs:element name="EntiteitOrafinIdentificatie" type="organisatie:OrganisatieIdentificatieKernType" minOccurs="0"/>
+			<xs:element name="EntiteitBegrotingIdentificatie" type="organisatie:OrganisatieIdentificatieKernType" minOccurs="0"/>
+			<xs:element name="DabFonds" type="generiek:VlagEnumType"/>
+			<xs:element name="Opmerking" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="DatumStatus" type="generiek:Datum2_0Type"/>
+			<xs:element name="DatumModificatie" type="generiek:Datum2_0Type"/>
+			<xs:element name="Sortering" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WerknemerType">
+		<xs:sequence>
+			<xs:element name="WerknemerIdentificatie" type="IdentificatieWerknemerType"/>
+			<xs:element name="OrganisatieWerknemer" type="OrganisatieWerknemerType" minOccurs="0"/>
+			<xs:element name="DatumInDienst" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="DatumUitDienst" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="Afwezigheid" type="WerknemerAfwezigheidType" minOccurs="0"/>
+			<xs:element name="CodeAanrekening" type="CodeAanrekeningType" minOccurs="0"/>
+			<xs:element name="Functie" type="FunctieType" minOccurs="0"/>
+			<xs:element name="Graad" type="GraadType" minOccurs="0"/>
+			<xs:element name="Rang" type="RangType" minOccurs="0"/>
+			<xs:element name="Niveau" type="CodeType" minOccurs="0"/>
+			<xs:element name="NiveauOpleiding" type="NiveauOpleidingType" minOccurs="0"/>
+			<xs:element name="WerkRooster" type="RoosterType" minOccurs="0"/>
+			<xs:element name="SalarisSchaal" type="SalarisSchaalType" minOccurs="0"/>
+			<xs:element name="Statuut" type="StatuutType" minOccurs="0"/>
+			<xs:element name="LaatsteStatuut" type="LaatsteStatuutType" minOccurs="0"/>
+			<xs:element name="Rekenplichtig" type="CodeTripleType" minOccurs="0"/>
+			<xs:element name="ThuisAdres" type="PersoneelAdresType" minOccurs="0"/>
+			<xs:element name="PostAdres" type="PersoneelAdresType" minOccurs="0"/>
+			<xs:element name="Contact" type="ContactType" minOccurs="0"/>
+			<xs:element name="Titel" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="BurgerlijkeStaat" type="BurgerlijkeStaatType" minOccurs="0"/>
+			<xs:element name="Geboorte" type="GeboorteType" minOccurs="0"/>
+			<xs:element name="Geslacht" type="CodeType" minOccurs="0"/>
+			<xs:element name="TenLaste" type="TenLasteType" minOccurs="0"/>
+			<xs:element name="InwonersStatus" type="InwonersStatusType" minOccurs="0"/>
+			<xs:element name="Bankrekening" type="BankrekeningType" minOccurs="0"/>
+			<xs:element name="Rijbewijs" type="generiek:VlagEnumType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganisatieWerknemerType">
+		<xs:sequence>
+			<xs:element name="BeleidsDomein" type="organisatie:OrganisatieIdentificatieType" minOccurs="0"/>
+			<xs:element name="BusinessUnit" type="organisatie:OrganisatieIdentificatieType" minOccurs="0"/>
+			<xs:element name="Afdeling" type="organisatie:OrganisatieIdentificatieType" minOccurs="0"/>
+			<xs:element name="Agentschap" type="organisatie:OrganisatieIdentificatieType" minOccurs="0"/>
+			<xs:element name="EntiteitIdentificatie" type="organisatie:EntiteitIDType" minOccurs="0"/>
+			<xs:element name="EntiteitMVGIdentificatie" type="organisatie:OrganisatieIdentificatieKernType" minOccurs="0"/>
+			<xs:element name="EntiteitOrafinIdentificatie" type="organisatie:OrganisatieIdentificatieKernType" minOccurs="0"/>
+			<xs:element name="Arbeidsplaats" type="organisatie:ArbeidsplaatsIdentificatieType" minOccurs="0"/>
+			<xs:element name="LocatieCode" type="organisatie:LocatieCodeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WerknemerAfwezigheidType">
+		<xs:sequence>
+			<xs:element name="Afwezigheidscode" type="AfwezigheidscodeType"/>
+			<xs:element name="Nummer" minOccurs="0" type="AfwezigheidNummerType" />
+			<xs:element name="DatumBegin" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="DatumEinde" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="TypeAfwezigheid" type="TypeAfwezigheidType"/>
+			<xs:element name="Rooster" type="RoosterType"/>
+			<xs:element name="Percentage" type="generiek:PercentageDecimaalType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TypeAfwezigheidType">
+		<xs:sequence>
+			<xs:element name="Code" type="TypeAfwezigheidCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TypeAfwezigheidCodeType">
+		<xs:simpleContent>
+			<xs:extension base="TypeAfwezigheidKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RoosterType">
+		<xs:sequence>
+			<xs:element name="Code" type="RoosterCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RoosterCodeType">
+		<xs:simpleContent>
+			<xs:extension base="RoosterKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="FunctieType">
+		<xs:sequence>
+			<xs:element name="FunctieCode" type="FunctieCodeType" minOccurs="0"/>
+			<xs:element name="ArbeidsRelatieVolgnummer" type="VolgnummerType" minOccurs="0" />
+			<xs:element name="Contact" type="ContactType" minOccurs="0"/>
+			<xs:element name="DatumBegin" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="DatumIngang" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="Lokaal" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="FunctieRoepnaam" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="PrimairOfSecundair" type="CodeType" minOccurs="0"/>
+			<xs:element name="Schaal" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="StatusSalaris" type="StatusSalarisType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StatusSalarisType">
+		<xs:sequence>
+			<xs:element name="StatusSalarisCode" type="StatusSalarisCodeType"/>
+			<xs:element name="Datum" type="generiek:Datum2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StatusSalarisCodeType">
+		<xs:sequence>
+			<xs:element name="Code" type="StatusSalarisCodeCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StatusSalarisCodeCodeType">
+		<xs:simpleContent>
+			<xs:extension base="StatusType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="LaatsteStatuutType">
+		<xs:sequence>
+			<xs:element name="LaatsteStatuutCode" type="LaatsteStatuutCodeType"/>
+			<xs:element name="Percentage" type="generiek:PercentageDecimaalType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LaatsteStatuutCodeType">
+		<xs:sequence>
+			<xs:element name="Code" type="LaatsteStatuutCodeCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LaatsteStatuutCodeCodeType">
+		<xs:simpleContent>
+			<xs:extension base="LaatsteStatuutKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BurgerlijkeStaatType">
+		<xs:sequence>
+			<xs:element name="BurgerlijkeStaatCode" type="BurgerlijkeStaatCodeType" minOccurs="0"/>
+			<xs:element name="Datum" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="DatumEedaflegging" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="Attest" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Partner" type="PartnerNaamType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PartnerNaamType">
+		<xs:sequence>
+			<xs:element name="Naam" type="persoon:NaamPersoonType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BurgerlijkeStaatCodeType">
+		<xs:sequence>
+			<xs:element name="Code" type="BurgerlijkeStaatCodeCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BurgerlijkeStaatCodeCodeType">
+		<xs:simpleContent>
+			<xs:extension base="BurgerlijkeStaatKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="GeboorteType">
+		<xs:sequence>
+			<xs:element name="GeboorteDatum" type="generiek:Datum2_0Type"/>
+			<xs:element name="Land" type="generiek:LandType" minOccurs="0" />
+			<xs:element name="Gemeente" type="generiek:GemeenteType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BankrekeningType">
+		<xs:sequence>
+			<xs:element name="RekeningNummer" type="generiek:TekstKort2_0Type"/>
+			<xs:element name="SWIFTCode" type="SWIFTCodeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TenLasteType">
+		<xs:sequence>
+			<xs:element name="AantalKinderen" type="AantalKinderenType" /> 
+			<xs:element name="AantalDochters" type="AantalKinderenType" minOccurs="0" />
+			<xs:element name="AantalZonen" type="AantalKinderenType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InwonersStatusType">
+		<xs:sequence>
+			<xs:element name="Code" type="InwonersStatusCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InwonersStatusCodeType">
+		<xs:simpleContent>
+			<xs:extension base="InwonersStatusKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PersoneelAdresType">
+		<xs:sequence>
+			<xs:element name="Straat" type="generiek:TekstKort2_0Type" minOccurs="0" />
+			<xs:element name="HuisNummer" type="HuisnummerType" minOccurs="0" />
+			<xs:element name="BusNummer" type="BusnummerType" minOccurs="0" />
+			<xs:element name="Gemeente" type="GemeenteType" minOccurs="0" />
+			<xs:element name="Land" type="generiek:LandType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GemeenteType">
+		<xs:sequence>
+			<xs:element name="NISCode" type="generiek:GemeenteNISCodeType" minOccurs="0" />
+			<xs:element name="PostCode" type="generiek:TekstKort2_0Type" minOccurs="0" />
+			<xs:element name="Naam" type="generiek:TekstKort2_0Type" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,65 +1,220 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
+import be.vlaanderen.vip.magda.client.MagdaServiceIdentification;
 import com.github.tomakehurst.wiremock.WireMockServer;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SoapStubRegistrar {
 
-    private final SoapStubHandler inszSoapStubHandler;
-    private final SoapStubHandler notFoundStubHandler;
-    private final SoapStubHandler ondernemingStubHandler;
-    private final Map<String, SoapStubHandler> soapStubHandlerMap = new HashMap<>();
+    public static final String VERSION_01_00 = "01.00.0000";
+    public static final String VERSION_02_00 = "02.00.0000";
+    public static final String VERSION_02_01 = "02.01.0000";
+    public static final String VERSION_02_02 = "02.02.0000";
+    public static final String VERSION_03_00 = "03.00.0000";
+
+    public static final String KEY_INSZ = "//INSZ";
+    public static final String KEY_ONDERNEMINGSNUMMER = "//Ondernemingsnummer";
+    public static final String KEY_BOEKJAAR = "//Boekjaar";
+    public static final String KEY_RRNR = "//rrnr";
+    public static final String KEY_SSIN = "//ssin";
+    public static final String KEY_EIGENDOMID = "//EigendomId";
+    public static final String KEY_EIGENDOMSTOESTANDID = "//EigendomstoestandId";
+    public static final String KEY_DOSSIERNUMMER = "//Dossiernummer";
+    public static final String KEY_KADASTRALE_AFDELING = "//KadastraleAfdeling";
+    public static final String KEY_SECTIE = "//Sectie";
+    public static final String KEY_GRONDNUMMER = "//Grondnummer";
+
+    private final Map<MagdaServiceIdentification, SoapStubHandler> soapStubHandlerMap;
+
+    public SoapStubRegistrar(Map<MagdaServiceIdentification, SoapStubHandler> soapStubHandlerMap) {
+        this.soapStubHandlerMap = soapStubHandlerMap;
+    }
 
     public SoapStubRegistrar(WireMockServer wireMockServer, String soapTestPath) {
-        this.inszSoapStubHandler = new InszSoapStubHandler(wireMockServer, soapTestPath);
-        this.notFoundStubHandler = new NotFoundStubHandler(wireMockServer, soapTestPath);
-        this.ondernemingStubHandler = new OndernemingsStubHandler(wireMockServer, soapTestPath);
-        soapStubHandlerMap.put("GeefPasfoto", new GeefPasfotoStubHandler(wireMockServer, soapTestPath));
+        this.soapStubHandlerMap = createHandlers(wireMockServer, soapTestPath);
     }
 
     public void registerDomain(Domain domain) {
         domain.services().forEach(service ->
                 service.versions().forEach(version ->
-                        version.files().forEach(file -> {
-                            try {
-                                SoapStubHandler soapStubHandler = determeSoapStubHandler(service.name(), file);
-                                if (soapStubHandler != null) {
-                                    soapStubHandler.register(
-                                            domain.name(),
-                                            service.name(),
-                                            version.name(),
-                                            file
-                                    );
-                                }
-                            } catch (IOException e) {
-                                throw new IllegalStateException("SOAP file can not be registered", e);
-                            }
-                        })
+                        version.files().forEach(file -> registerFile(domain, service, version, file))
                 )
         );
     }
 
-    private SoapStubHandler determeSoapStubHandler(String service, String file) {
-        String fileName = file.replace(".xml", "");
-        if (isInsz(fileName)) {
-            return inszSoapStubHandler;
-        } else if (isOndernemingsNummer(fileName)) {
-            return ondernemingStubHandler;
-        } else if ("notfound".equals(fileName)) {
-            return notFoundStubHandler;
+    private void registerFile(Domain domain, Service service, Version version, String file) {
+        try {
+            SoapStubHandler soapStubHandler = determineSoapStubHandler(service.name(), version.name());
+            if (soapStubHandler != null) {
+                soapStubHandler.register(
+                        domain.name(),
+                        service.name(),
+                        version.name(),
+                        file
+                );
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException("SOAP file can not be registered", e);
         }
-        return soapStubHandlerMap.get(service);
     }
 
-    private boolean isInsz(String input) {
-        return input != null && input.matches("\\d{11}");
+    private SoapStubHandler determineSoapStubHandler(String service, String version) {
+        return soapStubHandlerMap.get(new MagdaServiceIdentification(service, version));
     }
 
-    private boolean isOndernemingsNummer(String input) {
-        return input != null && input.matches("\\d{10}");
+    private static Map<MagdaServiceIdentification, SoapStubHandler> createHandlers(
+            WireMockServer wireMockServer,
+            String soapTestPath
+    ) {
+        return SoapStubDefinitions.allDefinitions().stream()
+                .collect(Collectors.toMap(
+                        definition -> new MagdaServiceIdentification(definition.service(), definition.version()),
+                        definition -> definition.createHandler(wireMockServer, soapTestPath)
+                ));
+    }
+
+    static class SoapStubDefinitions {
+
+        private SoapStubDefinitions() {
+        }
+
+        static List<SoapStubDefinition> allDefinitions() {
+            return List.of(
+                    // Dossier
+                    subDir("GeefDossiers", VERSION_02_00, KEY_INSZ),
+
+                    // Gezin
+                    subDir("GeefKindVoordelen", VERSION_02_00, KEY_INSZ),
+
+                    // Inkomen
+                    subDir("GeefAanslagbiljetPersonenbelasting", VERSION_02_00, KEY_INSZ),
+
+                    // Kadaster
+                    subDir("GeefCadNetTransacties", VERSION_01_00, KEY_INSZ),
+                    subDir("GeefEigendomstoestanden", VERSION_02_00, KEY_EIGENDOMID),
+                    subDir("GeefHistoriekEigendomstoestand", VERSION_03_00, KEY_EIGENDOMSTOESTANDID),
+                    subDir("GeefHistoriekMutatiedossier", VERSION_03_00, KEY_DOSSIERNUMMER),
+                    subDir("GeefKadastraleAfdelingenOpKBO", VERSION_01_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefTransacties", VERSION_03_00, KEY_INSZ),
+                    subDir("ZoekEigendomstoestanden", VERSION_02_00, KEY_INSZ),
+                    subDir("ZoekPerceel", VERSION_02_00, KEY_KADASTRALE_AFDELING, KEY_SECTIE, KEY_GRONDNUMMER),
+                    subDir("ZoekVerkoopprijzen", VERSION_03_00,
+                            "//Criteria/Provincie",
+                            "//Criteria/AdministratieveGemeentes/AdministratieveGemeente",
+                            "//Criteria/TypesInschrijving/TypeInschrijving",
+                            "//Criteria/CodesKadastraleAardVolgensAkte/CodeKadastraleAardVolgensAkte"),
+
+                    // LED
+                    subDir("AnnuleerBewijs", VERSION_02_00, KEY_INSZ),
+                    subDir("GeefBewijs", VERSION_02_00, KEY_INSZ),
+                    subDir("RegistreerBewijs", VERSION_02_00, KEY_INSZ),
+                    subDir("RegistreerMutatieBewijs", VERSION_02_00, KEY_INSZ),
+
+                    // Onderneming
+                    subDir("GeefAdressenLocaties", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefBeschikbareJaarrekeningen", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefDeelnemingen", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefFiscaleInhoudingsplicht", VERSION_02_01, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefFiscaleSchuld", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefFuncties", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefJaarrekeningen", VERSION_02_00, KEY_ONDERNEMINGSNUMMER, KEY_BOEKJAAR),
+                    subDir("GeefOnderneming", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefOndernemingSignalen", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefOndernemingVKBO", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefPCenTW", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefSocialeSchuld", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefTewerkstelling", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("ZoekOnderneming", VERSION_02_00, "//Criteria/Basisgegevens", "//Criteria/Resultaten"),
+
+                    // Onderwijs
+                    subDir("GeefHistoriekInschrijving", VERSION_02_01, KEY_INSZ),
+
+                    // Persoon
+                    subDir("GeefAttest", VERSION_02_00, KEY_INSZ),
+                    subDir("GeefGezinssamenstelling", VERSION_02_00, KEY_INSZ),
+                    subDir("GeefGezinssamenstelling", VERSION_02_02, KEY_INSZ),
+                    subDir("GeefHistoriekGezinssamenstelling", VERSION_02_02, KEY_INSZ),
+                    subDir("GeefHistoriekPersoon", VERSION_02_00, KEY_INSZ),
+                    subDir("GeefHistoriekPersoon", VERSION_02_02, KEY_INSZ),
+                    pasfoto("GeefPasfoto", VERSION_02_00),
+                    subDir("GeefPersoon", VERSION_02_02, KEY_INSZ),
+                    subDir("GeefPersoonMutatiesNotificaties", VERSION_02_00, "//Inhoud/Ontvangstreferte"),
+                    subDir("RaadpleegLeerkredietsaldo", VERSION_01_00, "//Inhoud/Ontvangstreferte"),
+                    subDir("ZoekPersoonOpAdres", VERSION_02_02,
+                            "//Inhoud/Bron",
+                            "//Criteria/Adres/Postcode",
+                            "//Criteria/Adres/Straatcode",
+                            "//Criteria/Adres/Huisnummer",
+                            "//Criteria/EnkelReferentiepersoon"),
+                    subDir("ZoekPersoonOpNaam", VERSION_02_02,
+                            "//Inhoud/Bron",
+                            "//Criteria/Naam/Achternaam",
+                            "//Criteria/Geboorte/Datum"),
+
+                    // Repertorium
+                    subDir("RegistreerInschrijving", VERSION_02_00, KEY_INSZ),
+                    subDir("RegistreerInschrijving", VERSION_02_01, "//Subject/Type", "//Subject/Sleutel"),
+                    subDir("RegistreerUitschrijving", VERSION_02_00, KEY_INSZ),
+
+                    // SocEcon
+                    subDir("GeefStatusRechtOndersteuningen", VERSION_02_00, KEY_INSZ),
+
+                    // SocSec
+                    subDir("GeefBetalingenHandicap", VERSION_03_00, KEY_SSIN),
+                    subDir("GeefDossierHandicap", VERSION_03_00, KEY_SSIN),
+                    subDir("GeefLeefloonbedragen", VERSION_02_00, KEY_INSZ),
+                    subDir("GeefSociaalStatuut", VERSION_03_00, KEY_INSZ),
+                    subDir("GeefVolledigDossierHandicap", VERSION_03_00, KEY_RRNR),
+
+                    // Vastgoed
+                    subDir("GeefEpc", VERSION_02_01,
+                            "//Criteria/Adres/Postcode",
+                            "//Criteria/Adres/Straat",
+                            "//Criteria/Adres/Huisnummer"),
+
+                    // Werk
+                    subDir("GeefLoopbaanARZA", VERSION_02_01, KEY_INSZ),
+                    subDir("GeefLoopbaanonderbrekingen", VERSION_02_00, KEY_INSZ),
+                    subDir("GeefWerkrelaties", VERSION_02_00, KEY_INSZ),
+                    subDir("GeefDmfaVoorWerknemer", VERSION_03_00, KEY_INSZ)
+            );
+        }
+
+        private static SoapStubDefinition subDir(String service, String version, String... keys) {
+            return new SoapStubDefinition(
+                    service,
+                    version,
+                    (wireMockServer, soapTestPath) ->
+                            new SubDirSOAPStubHandler(wireMockServer, soapTestPath, List.of(keys))
+            );
+        }
+
+        private static SoapStubDefinition pasfoto(String service, String version) {
+            return new SoapStubDefinition(
+                    service,
+                    version,
+                    GeefPasfotoStubHandler::new
+            );
+        }
+    }
+
+    record SoapStubDefinition(
+            String service,
+            String version,
+            SoapStubHandlerFactory factory
+    ) {
+        SoapStubHandler createHandler(WireMockServer wireMockServer, String soapTestPath) {
+            return factory.create(wireMockServer, soapTestPath);
+        }
+    }
+
+    @FunctionalInterface
+    interface SoapStubHandlerFactory {
+        SoapStubHandler create(WireMockServer wireMockServer, String soapTestPath);
     }
 
 }

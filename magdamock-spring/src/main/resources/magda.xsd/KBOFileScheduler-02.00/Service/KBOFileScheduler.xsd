@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xsd:schema 
+	xmlns="http://kbofilescheduler.vip.vlaanderen.be" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://kbofilescheduler.vip.vlaanderen.be" 
+	elementFormDefault="unqualified" 
+	attributeFormDefault="unqualified">
+
+	<xsd:element name="KBOFileScheduler">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Stroom" type="StroomType" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="StroomType">
+		<xsd:sequence>
+			<xsd:element name="Naam" type="xsd:string" />
+			<xsd:element name="Opdracht" type="OpdrachtType" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="OpdrachtType">
+		<xsd:sequence>
+			<xsd:element name="Naam" type="xsd:string" />
+			<xsd:element name="CronExpressie" type="xsd:string" />
+			<xsd:element name="PubMutEventNaam" type="xsd:string" minOccurs="0" />
+			<xsd:element name="CrabEventNaam" type="xsd:string" minOccurs="0" />
+			<xsd:element name="GrarEventNaam" type="xsd:string" minOccurs="0" />
+			<xsd:element name="FileOpdracht" type="FileOpdrachtType" minOccurs="0" />
+			<xsd:element name="ProcedureOpdrachten" type="ProcedureOpdrachtenType" minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="FileOpdrachtType">
+		<xsd:sequence>
+			<xsd:element name="Type" type="FileTypeEnumType"/>
+			<xsd:element name="FileLocatie" type="FoldersType"/>
+			<xsd:element name="FilePattern" type="xsd:string"/>
+			<xsd:element name="DataXSD" type="xsd:string"/>
+			<xsd:element name="CodeXSD" type="xsd:string"/>
+			<xsd:element name="Validatie" type="xsd:boolean"/>
+			<xsd:element name="HerstartAudit" type="xsd:boolean" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ProcedureOpdrachtenType">
+		<xsd:sequence>
+			<xsd:element name="ProcedureOpdracht" type="ProcedureOpdrachtType" minOccurs="1" maxOccurs="3" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ProcedureOpdrachtType">
+		<xsd:sequence>
+			<xsd:element name="Type" type="ProcedureTypeType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="FoldersType">
+		<xsd:sequence>
+			<xsd:element name="InputFolder" type="xsd:string"/>
+			<xsd:element name="ArchiveFolder" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="FileTypeEnumType">
+		<xsd:annotation>
+			<xsd:documentation> MUT | FULL </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MUT"/>
+			<xsd:enumeration value="FULL"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ProcedureTypeType">
+		<xsd:annotation>
+			<xsd:documentation> ACTUEEL_VLAG | KBO_VIEW | KBO_ADRES</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ACTUEEL_VLAG"/>
+			<xsd:enumeration value="KBO_VIEW"/>
+			<xsd:enumeration value="KBO_ADRES"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>

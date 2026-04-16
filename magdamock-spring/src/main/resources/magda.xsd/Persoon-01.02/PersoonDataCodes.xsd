@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://persoon-01_02.vip.vlaanderen.be"
+		   xmlns="http://persoon-01_02.vip.vlaanderen.be"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.02">
+           
+    <xs:simpleType name="GeslachtEnumType">
+        <xs:annotation>
+            <xs:documentation>| 1( Mannelijk ) | 2( Vrouwelijk ) | 0( Onbekend ) |</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="CategoryEnumType">
+        <xs:annotation>
+            <xs:documentation>| 0 ( Origineel ) | 1 ( Verbetering ) | 3 ( Annulering ) |</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+            <xs:enumeration value="0"/>
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="3"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="AttestatieStatusgEnumType">
+        <xs:annotation>
+            <xs:documentation>| 7 ( Leefloon ) | 8 ( Equivalent leefloon ) | 9 ( Sociale hulp ) |</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="1"/>
+            <xs:enumeration value="7"/>
+            <xs:enumeration value="8"/>
+            <xs:enumeration value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

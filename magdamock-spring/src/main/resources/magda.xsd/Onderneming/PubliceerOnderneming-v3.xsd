@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2017 rel. 3 (http://www.altova.com) by Bert Van Kets (Facilipunt - Agentschap Facilitair Bedrijf) -->
+<xs:schema xmlns="http://magda.vlaanderen.be/onderneming-v3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bericht="http://generiek-02_00.vip.vlaanderen.be" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" targetNamespace="http://magda.vlaanderen.be/onderneming-v3" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../Generiek/GeneriekDomein-v3.xsd"/>
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<!--=> ENKELVOUDIGE TYPE DEFINITES-->
+	<!--=> SAMENGESTELDE TYPE DEFINITES-->
+	<!-- ======================== PUBLICATIE TYPES ======================= -->
+	<xs:complexType name="OndernemingsnummerHistoriekType">
+		<xs:sequence>
+			<xs:element name="TechnischeSleutel" type="sleutel:OndernemingsnummerType"/>
+			<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType"/>
+			<xs:element name="DatumBegin" type="generiek:DatumType"/>
+			<xs:element name="DatumEinde" type="generiek:DatumType"/>
+			<xs:element name="Actief" type="generiek:VlagCodeType"/>
+		</xs:sequence>
+		<xs:attribute name="DatumModificatie" type="generiek:DatumType"/>
+	</xs:complexType>
+</xs:schema>

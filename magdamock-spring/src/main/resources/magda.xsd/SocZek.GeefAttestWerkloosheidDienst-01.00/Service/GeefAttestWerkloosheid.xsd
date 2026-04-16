@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2017 rel. 3 (http://www.altova.com) by Altova XMLSpy 2017 Professional XML Editor - Release 3, Installed for 10 users (Facilipunt - Agentschap Facilitair Bedrijf) -->
+<xsd:schema xmlns="http://magda.vlaanderen.be/soczek/file/geefattestwerkloosheid/v01_00" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" xmlns:bron="http://kszbcss.fgov.be/types" targetNamespace="http://magda.vlaanderen.be/soczek/file/geefattestwerkloosheid/v01_00" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../../Generiek/Generiek-v3.xsd"/>
+	<!--	<xsd:import namespace="http://www.ksz-bcss.fgov.be/XmlSchema" schemaLocation="../Bron/A011v001.xsd"/>       -->
+	<xsd:import namespace="http://kszbcss.fgov.be/types" schemaLocation="../../Bronnen/KSZ/KSZAddon.xsd"/>
+	<!--Request bericht-->
+	<xsd:element name="GeefAttestWerkloosheid">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Verzoek" type="VerzoekType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<!--Request types-->
+	<xsd:complexType name="VerzoekType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="generiek:ContextType"/>
+			<xsd:element name="Vragen" type="VraagLijstType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VraagLijstType">
+		<xsd:sequence>
+			<xsd:element name="Vraag" type="VraagType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VraagType">
+		<xsd:sequence>
+			<xsd:element name="Referte" type="generiek:ReferteType"/>
+			<xsd:element name="Criteria" type="bron:ConsultA011SourcesMagdaType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

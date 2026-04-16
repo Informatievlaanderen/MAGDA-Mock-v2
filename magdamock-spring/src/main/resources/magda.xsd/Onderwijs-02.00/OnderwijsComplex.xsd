@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+<xs:schema xmlns="http://onderwijs-02_00.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" targetNamespace="http://onderwijs-02_00.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:include schemaLocation="OnderwijsEnum.xsd"/>
+	<xs:include schemaLocation="OnderwijsSimple.xsd"/>
+	<!--****************************************-->
+	<!--* Segmenten - Niveau 1 (Hoofd)         *-->
+	<!--****************************************-->
+	<xs:complexType name="InschrijvingType">
+		<xs:annotation>
+			<xs:documentation>Vertegenwoordigt het antwoord met inschrijvingen van het leerplichtonderwijs of volwassenenonderwijs of hoger onderwijs
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Oorsprong" type="generiek:TekstType"/>
+			<xs:element name="Instelling" type="InstellingType"/>
+			<xs:element name="OnderwijsLocatie" type="OnderwijsLocatieType" minOccurs="0"/>
+			<xs:element name="LeerplichtOnderwijs" type="LeerplichtOnderwijsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InschrijvingAttestType">
+		<xs:annotation>
+			<xs:documentation>MAGDA 02.00-versie van het AttestInschrijving element uit BALD</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Attest" type="AttestType"/>
+			<xs:element name="School" type="SchoolType"/>
+			<xs:element name="SecundairOnderwijs" type="SecundairOnderwijsType" minOccurs="0"/>
+			<xs:element name="HogerOnderwijs" type="HogerOnderwijsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--****************************************-->
+	<!--* Segmenten - Niveau 2 (Sub)           *-->
+	<!--****************************************-->
+	<xs:complexType name="InstellingType">
+		<xs:annotation>
+			<xs:documentation>Vertegenwoordigt een Instelling
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Instellingsnummer" type="InstellingsNummerType"/>
+			<xs:element name="OfficieleNaam" type="generiek:TekstLangType" minOccurs="1"/>
+			<xs:element name="Instantie" type="InstantieType" minOccurs="0"/>
+			<xs:element name="Adres" type="generiek:AdresType" minOccurs="0"/>
+			<xs:element name="Contactgegevens" type="ContactType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderwijsLocatieType">
+		<xs:annotation>
+			<xs:documentation>Vertegenwoordigt een generieke leslocatie
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Nummer" type="xs:nonNegativeInteger"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+			<xs:element name="Adres" type="generiek:AdresType" minOccurs="0"/>
+			<xs:element name="Contactgegevens" type="ContactType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LeerplichtOnderwijsType">
+		<xs:annotation>
+			<xs:documentation>Vertegenwoordigt de specifieke onderdelen van een inschrijving uit het leerplichtonderwijs
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SoortProgramma" type="SoortProgrammaType"/>
+			<xs:element name="Referte" type="DiscimusReferteType" minOccurs="0"/>
+			<xs:element name="Inschrijvingsdatum" type="generiek:DatumType" minOccurs="0"/>
+			<xs:element name="DatumEersteLes" type="generiek:DatumType" minOccurs="0"/>
+			<xs:element name="Schooljaar" type="generiek:JaarType"/>
+			<xs:element name="InschrijvingAdministratieveGroep" type="InschrijvingAdmgrType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AttestType">
+		<xs:sequence>
+			<xs:element name="DatumCreatie" type="generiek:Datum2_0Type"/>
+			<xs:element name="Identificatienummer" type="AttestIdentificatienummerType"/>
+			<xs:element name="INSZ" type="sleutel:INSZType"/>
+			<xs:element name="Status" type="StatusAttestType"/>
+			<xs:element name="TypeAttest" type="TypeAttestType"/>
+			<xs:element name="Schooljaar" type="generiek:JaarType"/>
+			<xs:element name="SchooljaarDatumBegin" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="SchooljaarDatumEinde" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="Volgnummer" type="generiek:CijferSextupleVariabelType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SchoolType">
+		<xs:sequence>
+			<xs:element name="NummerInstelling" type="generiek:CijferSextupleVariabelType"/>
+			<xs:element name="Hoofdstructuur" type="HoofdstructuurType"/>
+			<xs:element name="VolgnummerVestigingsplaats" type="generiek:CijferTripleVariabelType"/>
+			<xs:element name="NummerAdministratieveGroep" type="generiek:CijferSextupleVariabelType" minOccurs="0"/>
+			<xs:element name="Ondernemingsnummer" type="sleutel:OndernemingsnummerType" minOccurs="0"/>
+			<xs:element name="Vestigingsnummer" type="sleutel:OndernemingsnummerType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HoofdstructuurType">
+		<xs:complexContent>
+			<xs:restriction base="generiek:AbstractCodeOmschrijvingType">
+				<xs:sequence>
+					<xs:element name="Code" type="generiek:CijferTripleVariabelType"/>
+					<xs:element name="Omschrijving" type="generiek:OmschrijvingType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SecundairOnderwijsType">
+		<xs:sequence>
+			<xs:element name="DatumGeldigheid" type="generiek:Datum2_0Type"/>
+			<xs:element name="SoortOnderwijs" type="AdmgrSoortOnderwijsType"/>
+			<xs:element name="Onderwijsvorm" type="OnderwijsvormType" minOccurs="0"/>
+			<xs:element name="Voltijds" type="generiek:VlagCodeType"/>
+			<xs:element name="TypeBuitengewoon" type="TypeBuitengewoonType" minOccurs="0"/>
+			<xs:element name="Graad" type="GraadSecundairOnderwijsType" minOccurs="0"/>
+			<xs:element name="Jaar" type="generiek:CijferType" minOccurs="0"/>
+			<xs:element name="Studiepunten" type="StudiepuntenType" minOccurs="0"/>
+			<xs:element name="DiplomaHaalbaarInSchooljaar" type="generiek:VlagEnumType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StudiepuntenType">
+		<xs:sequence>
+			<xs:element name="Opgenomen" type="generiek:NumeriekLangType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:complexType name="HogerOnderwijsType">
+		<xs:sequence>
+			<xs:element name="DatumGeldigheid" type="generiek:Datum2_0Type"/>
+			<xs:element name="DatumInschrijving" type="generiek:Datum2_0Type"/>
+			<xs:element name="DatumUitschrijving" type="generiek:Datum2_0Type" minOccurs="0"/>
+			<xs:element name="AantalStudiepunten" type="generiek:CijferTripleVariabelType"/>
+			<xs:element name="KanDiplomaBehalen" type="generiek:VlagCodeType"/>
+			<xs:element name="TypeInschrijving" type="TypeInschrijvingHogerOnderwijsType"/>
+			<xs:element name="TypeContract" type="TypeContractHogerOnderwijsType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--************************************************-->
+	<!--* Segmenten - Niveau 3 (Samengesteld|Complex)  *-->
+	<!--************************************************-->
+	<xs:complexType name="InschrijvingenType">
+		<xs:sequence>
+			<xs:element name="Inschrijving" type="InschrijvingType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InschrijvingAdmgrType">
+		<xs:annotation>
+			<xs:documentation>
+				Vertegenwoordigt een Inschrijving in administratieve groep uit Discimus
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Referte" type="DiscimusReferteType" minOccurs="0"/>
+			<xs:element name="periode" type="generiek:PeriodeVerplichtType"/>
+			<xs:element name="AdministratieveGroep" type="AdmgrType"/>
+			<xs:element name="TypeBuitengewoon" type="TypeBuitengewoonType" minOccurs="0"/>
+			<xs:element name="Uitschrijving" type="UitschrijvingType" minOccurs="0"/>
+			<xs:element name="AnderstaligeNieuwkomer" type="generiek:VlagEnumType" minOccurs="0"/>
+			<xs:element name="GewezenAnderstaligeNieuwkomer" type="generiek:VlagEnumType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmgrType">
+		<xs:annotation>
+			<xs:documentation>Vertegenwoordigt een administratieve groep uit Discimus</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Nummer" type="AdmgrNummerType" minOccurs="1"/>
+			<xs:element name="Naam" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="Niveau" type="AdmgrNiveauType" minOccurs="1"/>
+			<xs:element name="SoortOnderwijs" type="AdmgrSoortOnderwijsType" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UitschrijvingType">
+		<xs:sequence>
+			<xs:element name="Aanleiding" type="AanleidingUitschrijvingType"/>
+			<xs:element name="SituatieNa" type="SituatieNaUitschrijvingType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StatusAttestType">
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:CijferType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TypeAttestType">
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:CijferType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderwijsvormType">
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:CijferType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TypeInschrijvingHogerOnderwijsType">
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:CijferType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TypeContractHogerOnderwijsType">
+		<xs:sequence>
+			<xs:element name="Code" type="generiek:CijferDubbelType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--***********************************************-->
+	<!--* Segmenten - Niveau 4 (Enkelvoudig|Simple)   *-->
+	<!--***********************************************-->
+	<xs:complexType name="ContactType">
+		<xs:annotation>
+			<xs:documentation>Vertegenwoordigt alle contactgegevens
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Telefoonnummer" type="generiek:TekstType" minOccurs="0"/>
+			<xs:element name="Email" type="generiek:TekstLangType" minOccurs="0"/>
+			<xs:element name="Website" type="generiek:TekstLangType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--****************************************-->
+	<!--* Segmenten - Niveau 5 (Simple Extend) *-->
+	<!--****************************************-->
+	<xs:complexType name="SoortProgrammaType">
+		<xs:annotation>
+			<xs:documentation>Soort Programma 1 = voltijds onderwijs 2 = Deeltijdsberoeps onderwijs 5 = Leertijd
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="SoortProgrammaCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:TekstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmgrNiveauType">
+		<xs:annotation>
+			<xs:documentation>Onderwijsniveau 1=kleuter 2=lager 3=secundair</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="AdmgrNiveauCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:TekstLangType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdmgrSoortOnderwijsType">
+		<xs:annotation>
+			<xs:documentation>Soort Onderwijs 1 = gewoon 2 = buitengewoon</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="AdmgrSoortOnderwijsCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:TekstLangType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TypeBuitengewoonType">
+		<xs:sequence>
+			<xs:element name="Code" type="TypeBuitengewoonCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:TekstLangType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AanleidingUitschrijvingType">
+		<xs:sequence>
+			<xs:element name="Code" type="AanleidingUitschrijvingCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:TekstLangType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SituatieNaUitschrijvingType">
+		<xs:sequence>
+			<xs:element name="Code" type="SituatieNaUitschrijvingCodeType"/>
+			<xs:element name="Omschrijving" type="generiek:TekstLangType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

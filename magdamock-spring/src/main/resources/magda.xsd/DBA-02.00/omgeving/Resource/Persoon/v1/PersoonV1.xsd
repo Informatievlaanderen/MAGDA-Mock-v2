@@ -1,0 +1,98 @@
+<xsd:schema targetNamespace="urn:be:vlaanderen:omgeving:persoon:v1" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:algemeen="urn:be:vlaanderen:omgeving:algemeen" xmlns:persoon="urn:be:vlaanderen:omgeving:persoon" xmlns:persoonv1="urn:be:vlaanderen:omgeving:persoon:v1">
+
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:persoon" schemaLocation="../AbstractPersoon.xsd"/>
+    <xsd:import namespace="urn:be:vlaanderen:omgeving:algemeen" schemaLocation="../../Algemeen/Algemeen.xsd"/>
+
+    <xsd:complexType name="Persoon" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="persoon:AbstractPersoon">
+                <xsd:sequence>
+                    <xsd:element name="persoonId" type="algemeen:ExternId">
+                        <xsd:annotation>
+                            <xsd:documentation>De identificatie waarmee deze persoon in externe systemen gekend is.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="PrivaatPersoon">
+    <xsd:complexContent>
+        <xsd:extension base="persoonv1:Persoon">
+            <xsd:sequence>
+                <xsd:element name="naam" type="algemeen:Naam">
+                    <xsd:annotation>
+                        <xsd:documentation>De naam van deze persoon.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="voornaam" type="algemeen:Naam">
+                    <xsd:annotation>
+                        <xsd:documentation>De voornaam van deze persoon.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="identificatienummer" type="algemeen:ExternId" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:annotation>
+                        <xsd:documentation>Extra identificatie nummers. Bv. erkenningsnummer van de milieu coördinator</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="aanspreking" type="algemeen:Titel" minOccurs="0"/>
+                <xsd:element name="geboorte" type="persoonv1:Geboorte" minOccurs="0">
+                    <xsd:annotation>
+                        <xsd:documentation>Dit object beschrijft de geboortegegevens van een persoon.</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:extension>
+    </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="RechtsPersoon">
+        <xsd:complexContent>
+            <xsd:extension base="persoonv1:Persoon">
+                <xsd:sequence>
+                    <xsd:element name="maatschappelijkeNaam" type="algemeen:Naam">
+                        <xsd:annotation>
+                            <xsd:documentation>De naam van deze rechtspersoon.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="commercieleNaam" type="algemeen:Naam" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>De commerciële naam van deze rechtspersoon.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="afgekorteNaam" type="algemeen:Naam" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>De afkorting van de naam van deze rechtspersoon.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="rechtsvorm" type="algemeen:Rechtsvorm" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>De rechtsvorm waar deze rechtspersoon aan voldoet.</xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="Geboorte">
+        <xsd:sequence>
+            <xsd:element name="datum" type="xsd:date">
+                <xsd:annotation>
+                    <xsd:documentation>De geboortedatum van deze persoon.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="plaats" type="algemeen:Naam">
+                <xsd:annotation>
+                    <xsd:documentation>De geboorteplaats van deze persoon.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="land" type="algemeen:Naam" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>Het geboorteland van deze persoon.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,923 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://onderneming.vip.vlaanderen.be" 
+           xmlns="http://onderneming.vip.vlaanderen.be" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:generiek="http://generiek.vip.vlaanderen.be" 
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.01">
+           
+	<xs:import namespace="http://generiek.vip.vlaanderen.be" schemaLocation="../Generiek-01.01/Generiek.xsd"/>
+	<xs:include schemaLocation="OndernemingDataCodes.xsd"/>
+	<xs:include schemaLocation="OndernemingDataKern.xsd"/>
+	
+	<xs:complexType name="StatusKBOCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'StatusKBOEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StatusKBOEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="OndernemingOfVestigingCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'OndernemingOfVestigingEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="OndernemingOfVestigingEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SoortOndernemingCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'SoortOndernemingEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="SoortOndernemingEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RechtsToestandCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'RechtsToestandEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="RechtsToestandEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RechtsToestandCode1_3Type">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'RechtsToestandEnumType' + beschrijving + datum modificatie</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="RechtsToestandEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+				<xs:attribute name="DatumModificatie" type="generiek:DatumType"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RechtsVormCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'RechtsVormEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="RechtsVormEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RechtsVormCode1_3Type">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'RechtsVormEnumType' + beschrijving + datum modificatie</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="RechtsVormEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+				<xs:attribute name="DatumModificatie" type="generiek:DatumType"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RedenStopzettingCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'RedenStopzettingEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="RedenStopzettingEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PersoneelsklasseCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'PersoneelsklasseEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="PersoneelsklasseEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="HoedanigheidCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'HoedanigheidEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="HoedanigheidEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="HoedanigheidFaseCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'HoedanigheidFaseEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="HoedanigheidFaseEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="RedenCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'RedenEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="RedenEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="VergrendelCodeType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'VergrendelCodeEnumType' + beschrijving</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="VergrendelCodeEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="NaamExtraLangTaalType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'NaamExtraLangType'</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="NaamExtraLangType">
+				<xs:attribute name="TaalCode" type="generiek:TaalEnumType">
+					<xs:annotation>
+						<xs:documentation>TaalCode</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="StopzettingType">
+		<xs:annotation>
+			<xs:documentation>StopzettingType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RedenStopzettingCode" type="RedenStopzettingCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Als een onderneming wordt stopgezet, geeft deze code de reden van stopzetting aan</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatumStopzetting" type="generiek:DatumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Datum waarop de onderneming is stopgezet. Een onderneming die stopgezet is, kan nog opnieuw geactiveerd worden indien nodig. Zolang de onderneming niet is gestopt, blijft de datum leeg.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdresAanvullingsType">
+		<xs:annotation>
+			<xs:documentation>AdresAanvullingType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Staat" type="StaatType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Voor sommige buitenlandse adressen dient een staat opgegeven te worden (o.a. voor Amerika).  De staat onder gecodificeerde vorm kan hier opgegeven worden.  Dit is niet van toepassing op Belgische adressen.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Tekst" type="generiek:TekstType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Voor adressen kan een supplementaire beschrijving gegeven te worden ter identificatie van het adres, voornamelijk voor correspondentie redenen.  Bijvoorbeeld, namen van gebouwen of namen van industrieterreinen.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TaalCode" type="generiek:TaalCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>keuze van de taal</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OndernemingsAdresType">
+		<xs:annotation>
+			<xs:documentation>Extension op AdresType</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AdresType">
+				<xs:sequence>
+					<xs:element name="Aanvulling" type="AdresAanvullingsType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Aanvulling</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OndernemingenType">
+		<xs:annotation>
+			<xs:documentation>OndernemingenType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Onderneming" type="OndernemingType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Onderneming</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OndernemingType">
+		<xs:annotation>
+			<xs:documentation>De generische elementen van de onderneming zijn opgedeeld in 5 blokken : kern-, naam-, levenscyclus-, adres- en contactgegevens. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OndernemingsNummer" type="OndernemingsNummerType">
+				<xs:annotation>
+					<xs:documentation>Dit identificatienummer is een uniek nummer dat toegekend wordt aan een onderneming of vestigingseenheid. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RSZNummer" type="RSZNummerType" minOccurs="0" maxOccurs="20">
+				<xs:annotation>
+					<xs:documentation>Het RSZ nummer van de onderneming, heeft unbounded occurency.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AuthentiekeBronCode" type="generiek:AuthentiekeBronCodeType">
+				<xs:annotation>
+					<xs:documentation>AuthentiekeBronCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StatusKBOCode" type="StatusKBOCodeType">
+				<xs:annotation>
+					<xs:documentation>Code die de status van de onderneming aanduidt.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OndernemingOfVestigingCode" type="OndernemingOfVestigingCodeType">
+				<xs:annotation>
+					<xs:documentation>Deze code geeft de indicatie of het gaat over een onderneming of een vestigingseenheid.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SoortOndernemingCode" type="SoortOndernemingCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code die natuurlijk persoon of rechtspersoon aanduidt.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MZOndNummer" type="OndernemingsNummerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>In geval van een vestigingseenheid bevat dit veld het ondernemingsnummer van de maatschappelijke zetel</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaatschappelijkeNaam" type="NaamExtraLangTaalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>De maatschappelijke benaming van een onderneming of vestigingseenheid, en dit in de opgegeven taal. Voor onderneming van natuurlijke personen : maatschappelijke naam = naam + eerste voornaam natuurlijke persoon (verplicht).  Voor rechtspersonen : maatschappelijke naam (verplicht).   Voor vestigingseenheid : geen maatschappelijke naam.  NaamLangTaalType is een extension op NaamExtraLangType.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CommercieleNaam" type="NaamExtraLangTaalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>De commerciele benaming van een onderneming of vestigingseenheid en dit in de opgegeven taal. Voor onderneming van natuurlijke personen is er geen specifieke regel.  Voor rechtspersonen is dit de handelsnaam (optioneel).  Voor vestigingseenheid is dit de handelsnaam (optioneel).  NaamLangTaalType is een extension op NaamExtraLangType.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AfgekorteNaam" type="NaamExtraLangTaalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>De afgekorte benaming van een onderneming of vestigingseenheid en dit in de opgegeven taal.  Voor onderneming van natuurlijke personen is er geen afkorting.  Voor rechtspersonen is de afkorting optioneel. Voor vestigingseenheid is er geen afkorting. NaamLangTaalType is een extension op NaamExtraLangType.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Adres" type="OndernemingsAdresType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>VestigingsAdres</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Contact" type="ContactType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Contact</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatumInschrijving" type="generiek:DatumType">
+				<xs:annotation>
+					<xs:documentation>Datum van inschrijving van de onderneming in de kruispuntbank ondernemingen. Dit gebeurt bij aanvraag tot oprichting van de onderneming.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatumStart" type="generiek:DatumType">
+				<xs:annotation>
+					<xs:documentation>De datum waarop de onderneming is opgericht. Voor rechtspersonen die opgericht worden met een authentieke akte, is dit de datum waarop de akte gedagtekend wordt.  Voor rechtspersonen zonder authentieke akte (onderhands, bepaald bij wet of KB's, ...) is dit de datum waarop de rechtspersonen erkend worden ten opzichte van derden. Voor ondernemingen van natuurlijke personen is dit de datum waarop de natuurlijke persoon met de onderneming zal starten.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RechtsToestandCode" type="RechtsToestandCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>De code die de rechtstoestand van de onderneming weerspiegelt.  Bvb : in oprichting, opgericht, gerechtelijk akkoord aangevraagd, ...</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RechtsVormCode" type="RechtsVormCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Geeft de code van de rechtsvorm aan die van toepassing is op de rechtspersoon of organisatie zonder rechtspersoonlijkheid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Stopzetting" type="StopzettingType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Stopzetting</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatumAfsluiting" type="generiek:DatumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>DatumAfsluiting</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="DatumModificatie" type="generiek:DatumType" use="required">
+			<xs:annotation>
+				<xs:documentation>De datum waarop dit record het laatst gewijzigd werd in KBO kopie.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="VestigingenType">
+		<xs:annotation>
+			<xs:documentation>VestigingenType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Vestiging" type="VestigingType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Vestiging</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VestigingType">
+		<xs:annotation>
+			<xs:documentation>VestigingType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VestigingsNummer" type="OndernemingsNummerType">
+				<xs:annotation>
+					<xs:documentation>Dit identificatienummer is een uniek nummer dat toegekend wordt aan een onderneming of vestigingseenheid, unbounded occurency.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StatusKBOCode" type="StatusKBOCodeType">
+				<xs:annotation>
+					<xs:documentation>Code die de status van de onderneming aanduidt. Optional vanwege filtering 1.1 interfaces</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MZOndNummer" type="OndernemingsNummerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>In geval van een vestigingseenheid bevat dit veld het ondernemingsnummer van de maatschappelijke zetel</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaatschappelijkeNaam" type="NaamExtraLangTaalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>De maatschappelijke benaming van een onderneming of vestigingseenheid, en dit in de opgegeven taal. Voor onderneming van natuurlijke personen : maatschappelijke naam = naam + eerste voornaam natuurlijke persoon (verplicht).  Voor rechtspersonen : maatschappelijke naam (verplicht).   Voor vestigingseenheid : geen maatschappelijke naam.  NaamLangTaalType is een extension op NaamExtraLangType.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CommercieleNaam" type="NaamExtraLangTaalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>De commerciele benaming van een onderneming of vestigingseenheid en dit in de opgegeven taal. Voor onderneming van natuurlijke personen is er geen specifieke regel.  Voor rechtspersonen is dit de handelsnaam (optioneel).  Voor vestigingseenheid is dit de handelsnaam (optioneel).  NaamLangTaalType is een extension op NaamExtraLangType.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AfgekorteNaam" type="NaamExtraLangTaalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>De afgekorte benaming van een onderneming of vestigingseenheid en dit in de opgegeven taal.  Voor onderneming van natuurlijke personen is er geen afkorting.  Voor rechtspersonen is de afkorting optioneel. Voor vestigingseenheid is er geen afkorting. NaamLangTaalType is een extension op NaamExtraLangType.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Adres" type="OndernemingsAdresType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>VestigingsAdres</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Contact" type="ContactType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Contact</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="DatumModificatie" type="generiek:DatumType" use="required">
+			<xs:annotation>
+				<xs:documentation>De datum waarop dit record het laatst gewijzigd werd in KBO kopie.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="BasisEntiteitType">
+		<xs:annotation>
+			<xs:documentation>BasisEntiteitType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MZOndNummer" type="OndernemingsNummerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>In geval van een vestigingseenheid bevat dit veld het ondernemingsnummer van de maatschappelijke zetel</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaatschappelijkeNaam" type="NaamExtraLangTaalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>De maatschappelijke benaming van een onderneming of vestigingseenheid, en dit in de opgegeven taal. Voor onderneming van natuurlijke personen : maatschappelijke naam = naam + eerste voornaam natuurlijke persoon (verplicht).  Voor rechtspersonen : maatschappelijke naam (verplicht).   Voor vestigingseenheid : geen maatschappelijke naam.  NaamLangTaalType is een extension op NaamExtraLangType.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CommercieleNaam" type="NaamExtraLangTaalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>De commerciele benaming van een onderneming of vestigingseenheid en dit in de opgegeven taal. Voor onderneming van natuurlijke personen is er geen specifieke regel.  Voor rechtspersonen is dit de handelsnaam (optioneel).  Voor vestigingseenheid is dit de handelsnaam (optioneel).  NaamLangTaalType is een extension op NaamExtraLangType.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AfgekorteNaam" type="NaamExtraLangTaalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>De afgekorte benaming van een onderneming of vestigingseenheid en dit in de opgegeven taal.  Voor onderneming van natuurlijke personen is er geen afkorting.  Voor rechtspersonen is de afkorting optioneel. Voor vestigingseenheid is er geen afkorting. NaamLangTaalType is een extension op NaamExtraLangType.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Adres" type="OndernemingsAdresType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>VestigingsAdres</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Contact" type="ContactType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Contact</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersoneelType">
+		<xs:annotation>
+			<xs:documentation>PersoneelType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OndernemingsNummer" type="OndernemingsNummerType">
+				<xs:annotation>
+					<xs:documentation>Dit identificatienummer is een uniek nummer dat toegekend wordt aan een onderneming of vestigingseenheid. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AantalWerknemers" type="AantalWerknemersType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Geeft het aantal werknemers van de onderneming.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PersoneelsklasseCode" type="PersoneelsklasseCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Geeft de personeelsklassen van de onderneming.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActiviteitNiveauBeschrijvingType">
+		<xs:annotation>
+			<xs:documentation>Niveau Activiteit</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ActiviteitNiveauType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ActiviteitTypeBeschrijvingType">
+		<xs:annotation>
+			<xs:documentation>Type Activiteit</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ActiviteitTypeType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="NaceOmschrijvingTaalType">
+		<xs:annotation>
+			<xs:documentation>is een extension van simpel Type 'NaceOmschrijvingType'</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="NaceOmschrijvingType">
+				<xs:attribute name="TaalCode" type="generiek:TaalEnumType">
+					<xs:annotation>
+						<xs:documentation>TaalCode</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="NaceType">
+		<xs:annotation>
+			<xs:documentation>Nace</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="NaceCodeType">
+				<xs:annotation>
+					<xs:documentation>NACE-code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Omschrijving" type="NaceOmschrijvingTaalType">
+				<xs:annotation>
+					<xs:documentation>Omschrijving NACE-code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Nace1_2Type">
+		<xs:annotation>
+			<xs:documentation>Nace</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="NaceCodeType">
+				<xs:annotation>
+					<xs:documentation>NACE-code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Omschrijving" type="NaceOmschrijvingTaalType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Omschrijving NACE-code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Versie" type="generiek:JaarType">
+				<xs:annotation>
+					<xs:documentation>Voor verdere beschrijving, zie VKBO beschrijvende woordenlijst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActiviteitenType">
+		<xs:annotation>
+			<xs:documentation>ActiviteitenType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Activiteit" type="ActiviteitType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Activiteit van een onderneming of vestigingseenheid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActiviteitType">
+		<xs:annotation>
+			<xs:documentation>ActiviteitType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AuthentiekeBronCode" type="generiek:AuthentiekeBronCodeType">
+				<xs:annotation>
+					<xs:documentation>AuthentiekeBronCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Niveau" type="ActiviteitNiveauBeschrijvingType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Activiteit van een onderneming of vestigingseenheid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Administratie" type="generiek:NaamKortType">
+				<xs:annotation>
+					<xs:documentation>Instrumenterende Administratie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Type" type="ActiviteitTypeBeschrijvingType">
+				<xs:annotation>
+					<xs:documentation>Hoofd- of nevenactiviteit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Nace" type="NaceType">
+				<xs:annotation>
+					<xs:documentation>NACE-code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VestigingsNummer" type="OndernemingsNummerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dit identificatienummer is een uniek nummer dat toegekend wordt aan een onderneming of vestigingseenheid, unbounded occurency.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Activiteiten1_2Type">
+		<xs:annotation>
+			<xs:documentation>ActiviteitenType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Activiteit" type="Activiteit1_2Type" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Voor verdere beschrijving, zie VKBO beschrijvende woordenlijst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Activiteit1_2Type">
+		<xs:annotation>
+			<xs:documentation>ActiviteitType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AuthentiekeBronCode" type="generiek:AuthentiekeBronCodeType">
+				<xs:annotation>
+					<xs:documentation>Voor verdere beschrijving, zie VKBO beschrijvende woordenlijst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OndernemingsNummer" type="OndernemingsNummerType">
+				<xs:annotation>
+					<xs:documentation>Voor verdere beschrijving, zie VKBO beschrijvende woordenlijst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VestigingseenheidNummer" type="OndernemingsNummerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Voor verdere beschrijving, zie VKBO beschrijvende woordenlijst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Periode" type="generiek:PeriodeDatumType">
+				<xs:annotation>
+					<xs:documentation>Voor verdere beschrijving, zie VKBO beschrijvende woordenlijst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Administratie" type="generiek:NaamKortType">
+				<xs:annotation>
+					<xs:documentation>Voor verdere beschrijving, zie VKBO beschrijvende woordenlijst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Nace" type="Nace1_2Type">
+				<xs:annotation>
+					<xs:documentation>Voor verdere beschrijving, zie VKBO beschrijvende woordenlijst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Annulatie" type="generiek:VlagEnumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Voor verdere beschrijving, zie VKBO beschrijvende woordenlijst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Niveau" type="ActiviteitNiveauBeschrijvingType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Voor verdere beschrijving, zie VKBO beschrijvende woordenlijst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ActiviteitType" type="ActiviteitTypeBeschrijvingType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Voor verdere beschrijving, zie VKBO beschrijvende woordenlijst</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdresType">
+		<xs:annotation>
+			<xs:documentation>AdresType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AuthentiekeBronCode" type="generiek:AuthentiekeBronCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>AuthentiekeBronCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Straat" type="StraatType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Straat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HuisNummer" type="HuisNummerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Huisnummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BusNummer" type="generiek:BusNummerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Bus van het huisnummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Gemeente" type="GemeenteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Gemeente</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Land" type="generiek:LandType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Land</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GemeenteType">
+		<xs:annotation>
+			<xs:documentation>GemeenteType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NISCode" type="GemeenteNISCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code van de locatie, altijd NIS-codes. Het formaat van gemeentecodes heeft 5 cijfers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostCode" type="PostCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Postcode van de gemeente</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Naam" type="generiek:NaamLangType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Naam van de gemeente</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StraatType">
+		<xs:annotation>
+			<xs:documentation>StraatType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NISCode" type="StraatNISCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>NIS Code.  Voor straat kan deze bestaan uit 3 of 4 cijfers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Naam" type="generiek:NaamLangType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>straatnaam volgens NIS per taal</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactType">
+		<xs:annotation>
+			<xs:documentation>ContactType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TelefoonNummer" type="generiek:TelFaxType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Telefoon nummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FaxNummer" type="generiek:TelFaxType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Telefax nummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Email" type="EmailType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Email adres</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VestigingsNummersType">
+		<xs:annotation>
+			<xs:documentation>VestigingsNummersType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VestigingsNummer" type="OndernemingsNummerType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>OndernemingsNummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DossierOndernemingType">
+		<xs:annotation>
+			<xs:documentation>DossierOndernemingType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OndernemingsNummer" type="OndernemingsNummerType">
+				<xs:annotation>
+					<xs:documentation>Dit identificatienummer is een uniek nummer dat toegekend wordt aan een onderneming of vestigingseenheid. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VestigingsNummers" type="VestigingsNummersType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>VestigingsNummers</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HoedanighedenType">
+		<xs:annotation>
+			<xs:documentation>HoedanighedenType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Hoedanigheid" type="HoedanigheidType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Activiteit van een onderneming of vestigingseenheid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HoedanigheidType">
+		<xs:annotation>
+			<xs:documentation>HoedanigheidType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AuthentiekeBronCode" type="generiek:AuthentiekeBronCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>AuthentiekeBronCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Administratie" type="generiek:NaamKortType">
+				<xs:annotation>
+					<xs:documentation>UitrAdministratie</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HoedanigheidCode" type="HoedanigheidCodeType">
+				<xs:annotation>
+					<xs:documentation>HoedanigheidCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HoedanigheidFaseCode" type="HoedanigheidFaseCodeType">
+				<xs:annotation>
+					<xs:documentation>HoedanigheidFaseCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InschrijvingKBO" type="generiek:DatumType">
+				<xs:annotation>
+					<xs:documentation>InschrijvingKBO</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Duurtijd" type="DuurtijdType">
+				<xs:annotation>
+					<xs:documentation>Duurtijd</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Periode" type="generiek:PeriodeDatumType">
+				<xs:annotation>
+					<xs:documentation>Periode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RedenBeeindigenCode" type="RedenCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>RedenBeeindigenCode</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PostCodeCriteriaType">
+		<xs:annotation>
+			<xs:documentation>PostCodeCriteriaType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PostCode" type="PostCodeType">
+				<xs:annotation>
+					<xs:documentation>Postcode van de gemeente</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FusieVlag" type="generiek:VlagCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Postcode van de gemeente</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GemeenteCriteriaType">
+		<xs:annotation>
+			<xs:documentation>GemeenteCriteriaType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NISCode" type="GemeenteNISCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code van de locatie, altijd NIS-codes. Het formaat van gemeentecodes heeft 5 cijfers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostCodeCriteria" type="PostCodeCriteriaType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>PostCodeCriteria</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StraatCriteriaType">
+		<xs:annotation>
+			<xs:documentation>StraatCriteriaType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NISCode" type="StraatNISCodeType">
+				<xs:annotation>
+					<xs:documentation>NIS Code.  Voor straat kan deze bestaan uit 3 of 4 cijfers.   </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdresCriteriaType">
+		<xs:annotation>
+			<xs:documentation>AdresCriteriaType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Gemeente" type="GemeenteCriteriaType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Gemeente</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Straat" type="StraatCriteriaType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Straat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HuisNummer" type="HuisNummerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Huisnummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KwartaalPeriodeType">
+		<xs:sequence>
+			<xs:element name="Jaar" type="generiek:JaarType"/>
+			<xs:element name="Kwartaal" type="KwartaalType"/>
+			<xs:element name="BeginDatum" type="generiek:DatumType"/>
+			<xs:element name="EindDatum" type="generiek:DatumType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://inburgering.be/types/RegistreerToeleidingService/V01" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:kbi-domein="http://inburgering.be/types/V01" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" targetNamespace="http://inburgering.be/types/RegistreerToeleidingService/V01" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="01.00">
+	<xsd:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xsd:import namespace="http://inburgering.be/types/V01" schemaLocation="../../KBI-01.00/KBI.xsd"/>
+	<xsd:element name="RegistreerToeleiding">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Verzoek" type="VerzoekType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="VerzoekType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="generiek:ContextType"/>
+			<xsd:element name="Vragen" type="VragenType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VragenType">
+		<xsd:sequence>
+			<xsd:element name="Vraag" type="VraagType" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VraagType">
+		<xsd:sequence>
+			<xsd:element name="Referte" type="generiek:ReferteType"/>
+			<xsd:element name="Inhoud" type="VraagInhoudType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="test" type="VraagInhoudType"/>
+	<xsd:complexType name="VraagInhoudType">
+		<xsd:sequence>
+			<xsd:element name="Personalia" type="PersonaliaType"/>
+			<xsd:element name="Toeleiding" type="ToeleidingType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PersonaliaType">
+		<xsd:sequence>
+			<xsd:element name="INSZ" type="generiek:INSZType"/>
+			<xsd:element name="Naam" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Voornaam" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Geboortedatum" type="generiek:DatumType" minOccurs="0"/>
+			<xsd:element name="Geslacht" type="GeslachtType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="GeslachtType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="M"/>
+			<xsd:enumeration value="V"/>
+			<xsd:enumeration value="O"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="ToeleidingPartijType">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="KboNummer" type="kbi-domein:KboNummerType"/>
+				<xsd:element name="IdentificatieNr" type="xsd:string"/>
+			</xsd:choice>
+			<xsd:element name="TypePartner">
+				<xsd:annotation>
+					<xsd:documentation>Dit gegeven kan niet worden afgeleid uit KboNr/IdentificatieNr.
+								Mogelijke waarden zijn : KBI, VDAB, VMSW, OCMW (zelfde waarden als in GeefMutatiesNotificatie. </xsd:documentation>
+				</xsd:annotation>
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="KBI"/>
+						<xsd:enumeration value="VDAB"/>
+						<xsd:enumeration value="VMSW"/>
+						<xsd:enumeration value="OCMW"/>
+						<xsd:enumeration value="OPENBAAR_VERVOER"/>
+						<xsd:enumeration value="DIPLOMAGELIJKSCHAKELING"/>
+						<xsd:enumeration value="PRIVE_VERVOER"/>
+						<xsd:enumeration value="WELZIJN"/>
+						<xsd:enumeration value="JURIDISCH"/>
+						<xsd:enumeration value="GEMEENTE"/>
+						<xsd:enumeration value="SPORT"/>
+						<xsd:enumeration value="MUZIEK"/>
+						<xsd:enumeration value="JEUGD"/>
+						<xsd:enumeration value="HOBBYCLUB"/>
+						<xsd:enumeration value="VRIJWILLIGERSORGANISATIE"/>
+						<xsd:enumeration value="CONVERSATIEGROEP"/>
+						<xsd:enumeration value="VRIJETIJD"/>
+						<xsd:enumeration value="ONDERWIJS_VOLWASSENEN_NIET_NT2"/>
+						<xsd:enumeration value="ONDERWIJS_VOLWASSENEN_NT2"/>
+						<xsd:enumeration value="KINDEROPVANG"/>
+						<xsd:enumeration value="ONDERWIJS_MINDERJARIGEN"/>
+						<xsd:enumeration value="OPLEIDING"/>
+						<xsd:enumeration value="DAVINCI_TAX"/>
+						<xsd:enumeration value="ADVOCATUUR"/>
+						<xsd:enumeration value="VERTAALBUREAU"/>
+						<xsd:enumeration value="UNIVERSITAIR_TALEN_CENTRUM"/>
+						<xsd:enumeration value="VWF"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="Naam" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Adres" type="kbi-domein:NISAdresType" minOccurs="0"/>
+			<xsd:element name="ContactPersoon" type="ToeleidingPartijContactPersoonType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ToeleidingPartijContactPersoonType">
+		<xsd:sequence>
+			<xsd:element name="Naam" type="xsd:string"/>
+			<xsd:element name="Voornaam" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Telefoon" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Email" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ToeleidingType">
+		<xsd:sequence>
+			<xsd:element name="Id" type="kbi-domein:UUIDType"/>
+			<xsd:element name="Van" type="ToeleidingPartijType"/>
+			<xsd:element name="Naar" type="ToeleidingPartijType"/>
+			<xsd:element name="RedenToeleiding" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Dit element geeft aan om welke reden de persoon wordt toegeleid</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="RedenOmschrijving" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Dit element geeft aan om welke reden de persoon wordt toegeleid, maar het laat toe om een vrije tekst door te sturen.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AfspraakMoment" minOccurs="0">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="StartTijd" type="kbi-domein:DatumTijdType"/>
+						<xsd:element name="EindTijd" type="kbi-domein:DatumTijdType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="Commentaar" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

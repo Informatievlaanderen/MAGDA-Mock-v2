@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 rel. 2 sp1 (http://www.altova.com) by Stefan Vleugels (AGENTSCHAP FACILITAIR BEDRIJF) -->
+<xsd:schema xmlns="http://magda.vlaanderen.be/persoon/file/publiceermutatiegezinssamenstelling/v02_02" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bericht="http://generiek-02_00.vip.vlaanderen.be" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" xmlns:persoon="http://magda.vlaanderen.be/persoon-v3" targetNamespace="http://magda.vlaanderen.be/persoon/file/publiceermutatiegezinssamenstelling/v02_02" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xsd:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../../Generiek/GeneriekDomein-v3.xsd"/>
+	<xsd:import namespace="http://magda.vlaanderen.be/persoon-v3" schemaLocation="../../Persoon/PersoonDomein-v3.xsd"/>
+	<xsd:element name="PubliceerMutatieGezinssamenstelling">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Publicatie" type="PublicatieType" minOccurs="0"/>
+				<xsd:element name="Uitzonderingen" type="bericht:UitzonderingenType" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="PublicatieType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="bericht:ContextType"/>
+			<xsd:element name="Onderwerpen" type="OnderwerpLijstType" minOccurs="0"/>
+			<xsd:element name="Uitzonderingen" type="bericht:UitzonderingenType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fouten die voorkomen na de verwerking van de Context maar voor de verwerking van Vraag, Antwoord of Onderwerp bv: XSD Validatie fouten</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OnderwerpLijstType">
+		<xsd:sequence>
+			<xsd:element name="Onderwerp" type="OnderwerpType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OnderwerpType">
+		<xsd:sequence>
+			<xsd:element name="Referte" type="bericht:ReferteType"/>
+			<xsd:element name="Inhoud" type="OnderwerpInhoudType" minOccurs="0"/>
+			<xsd:element name="Uitzonderingen" type="bericht:UitzonderingenType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fouten die voorkomen na de verwerking van Vraag, Antwoord of Onderwerp bv: warnings rond ontbrekende data en fouten gelinked aan 1 antwoord</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OnderwerpInhoudType">
+		<xsd:sequence>
+			<xsd:element name="Metadata" type="bericht:MetadataType" minOccurs="0"/>
+			<xsd:element name="MutatieGezinssamenstelling" type="persoon:MutatieGezinssamenstellingType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

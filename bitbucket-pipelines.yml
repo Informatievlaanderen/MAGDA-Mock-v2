@@ -1,5 +1,5 @@
 image:
-  name: vlaamseoverheid-magda-docker-public.jfrog.io/magda/magda-base-pipeline:jdk21-latest
+  name: vlaamseoverheid-magda-docker-public.jfrog.io/magda/vdip-java:25-builder
   username: $ARTIFACTORY_USER
   password: $ARTIFACTORY_PASSWORD
 
@@ -43,7 +43,7 @@ definitions:
           - git checkout $VERSION
           - mvn -B package io.fabric8:docker-maven-plugin:0.31.0:push -s .m2/settings.xml -Pfat-jar -Pdocker-release
     - step: &dockerBuildDemo
-        name: Build Docker image
+        name: Build Demo Docker image
         caches:
           - docker
         script:
@@ -53,6 +53,17 @@ definitions:
           - docker build --build-arg MAGDAMOCK_VERSION=$version -t vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo:$version .
           - docker build --build-arg MAGDAMOCK_VERSION=$version -t vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo:latest .
           - docker push -a vlaamseoverheid-magda-docker-releases.jfrog.io/magda/magda.magdamock-demo
+    - step: &dockerBuildDemoDev
+        name: Build Demo Docker image for the dev environment with the SNAPSHOT version
+        caches:
+          - docker
+        script:
+          - docker_url="vlaamseoverheid-magda-docker-snapshots.jfrog.io"
+          - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASSWORD vlaamseoverheid-magda-docker-snapshots.jfrog.io
+          - version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          - cd magdamock-demo
+          - docker build --build-arg MAGDAMOCK_VERSION=$version --build-arg DOCKER_URL=$docker_url -t vlaamseoverheid-magda-docker-snapshots.jfrog.io/magda/magda.magdamock-demo:$version .
+          - docker push -a vlaamseoverheid-magda-docker-snapshots.jfrog.io/magda/magda.magdamock-demo
     - step: &sigridPublish
         image: softwareimprovementgroup/sigridci
         name: Publish to Sigrid
@@ -120,6 +131,8 @@ pipelines:
             - maven.tree
       - step:
           <<: *sigridPublish
+      - step:
+          <<: *dockerBuildDemoDev
       - step:
           <<: *deploy
           name: Deploy to BETA

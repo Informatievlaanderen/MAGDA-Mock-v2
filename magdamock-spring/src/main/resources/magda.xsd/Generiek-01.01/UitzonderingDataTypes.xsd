@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://generiek.vip.vlaanderen.be" 
+           xmlns="http://generiek.vip.vlaanderen.be" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.01">
+           
+	<xs:include schemaLocation="GeneriekeDataTypes.xsd"/>
+	<xs:complexType name="UitzonderingenType">
+		<xs:annotation>
+			<xs:documentation>Verzamelnaam van de Uitzonderingen die zijn ontdekt tijdens
+- Het ontleden van het oorspronkelijke verzoek (request)  (Niveau 1)
+- Het valideren van het bericht en zijn context (Niveau 2)
+- Het valideren en transformeren van elk van de gestelde vragen of  tijdens het ontleden, valideren en transformeren van het antwoord zoals door de brom geleverd (Niveau 3)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Uitzondering" type="UitzonderingType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UitzonderingType">
+		<xs:annotation>
+			<xs:documentation>Segment waarin alle details omtrent het optreden van een enekel uitzondering zijn beschreven</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identificatie" type="UitzonderingIdentificatieType">
+				<xs:annotation>
+					<xs:documentation>Code die een uitzondering op unieke wijze identificeert.	Deze code is toegekend door MAGDA.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Type" type="UitzonderingTypeType">
+				<xs:annotation>
+					<xs:documentation>Code die aangeeft hoe ernstig de uitzondering is.   Deze graad van ernst is door MAGDA toegekend aan de uitzondering.
+FOUT betekent dat het verzoek of een deel ervan niet is kunnen ingewilligd worden
+WAARSCHUWING betekent dat de respons op het verzoek is kunnen samengesteld worden maar dat de inhoud ervan door de doeltpoepassing wellicht anders moet worden geïnterpreteerd.
+INFO  betekent dat de uitzondering puur informatief is en dat de doeltoepassing geen alternatief gedrag moet aanwenden.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Tijdstip" type="TijdstipType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tijdstip dat aangeeft waneer de uitzondering heeft opgetreden</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Diagnose" type="UitzonderingDiagnoseType">
+				<xs:annotation>
+					<xs:documentation>Code die aangeeft hoe ernstig de uitzondering is. Deze graad van ernst is door MAGDA toegekend aan de uitzondering.(FOUT | INFO)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Omstandigheid" type="UitzonderingOmstandigheidType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Beschrijving van het deel van het verzoek waar de uitzondering is opgetreden.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="UitzonderingIdentificatieType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[\p{N}]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UitzonderingTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FOUT"/>
+			<xs:enumeration value="WAARSCHUWING"/>
+			<xs:enumeration value="INFORMATIE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UitzonderingDiagnoseType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="UitzonderingOmstandigheidType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+</xs:schema>

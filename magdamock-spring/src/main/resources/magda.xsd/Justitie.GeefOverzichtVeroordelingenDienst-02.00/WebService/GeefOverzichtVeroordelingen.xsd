@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema xmlns="http://webservice.geefoverzichtveroordelingendienst-02_00.justitie-02_00.vip.vlaanderen.be" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:justitie="http://justitie-02_00.vip.vlaanderen.be" 
+	xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" 
+	xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" 
+	targetNamespace="http://webservice.geefoverzichtveroordelingendienst-02_00.justitie-02_00.vip.vlaanderen.be"
+	elementFormDefault="unqualified" 
+	attributeFormDefault="unqualified"
+	version="2.00">
+
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://justitie-02_00.vip.vlaanderen.be" schemaLocation="../../Justitie-02.00/Justitie.xsd"/>
+
+	<xs:element name="GeefOverzichtVeroordelingen">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Verzoek" type="VerzoekType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="VerzoekType">
+		<xs:sequence>
+			<xs:element name="Context" type="generiek:ContextType"/>
+			<xs:element name="Vragen" type="VragenType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VragenType">
+		<xs:sequence>
+			<xs:element name="Vraag" type="VraagType" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VraagType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType"/>
+			<xs:element name="Inhoud" type="VraagInhoudType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VraagInhoudType">
+		<xs:sequence>
+			<xs:element name="Gemeente" type="justitie:GemeenteType"/>
+			<xs:element name="Criteria" type="justitie:CriteriaGeefOverzichtVeroordelingenType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,68 @@
+<xsd:schema xmlns:planbestand="urn:be:vlaanderen:omgeving:plan:bestand:v2" 
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="urn:be:vlaanderen:omgeving:plan:bestand:v2" 
+        elementFormDefault="unqualified" attributeFormDefault="unqualified" version="01.00">
+  <!--  <xsd:simpleType name="PlanElementTypeEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="GV">
+                <xsd:annotation>
+                    <xsd:documentation>Grondvlak</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="OV">
+                <xsd:annotation>
+                    <xsd:documentation>Overdruk</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="OVIA">
+                <xsd:annotation>
+                    <xsd:documentation>Overdruk - indicatieve aanduiding</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="LN">
+                <xsd:annotation>
+                    <xsd:documentation>Lijn</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="LNIA">
+                <xsd:annotation>
+                    <xsd:documentation>Lijn - indicatieve aanduiding</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PT">
+                <xsd:annotation>
+                    <xsd:documentation>Punt</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PTIA">
+                <xsd:annotation>
+                    <xsd:documentation>Punt - indicatieve aanduiding</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PlanAfgeleideTypeEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="PBT">
+                <xsd:annotation>
+                    <xsd:documentation>Planbaten</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="PSC">
+                <xsd:annotation>
+                    <xsd:documentation>Planschade</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="KGS">
+                <xsd:annotation>
+                    <xsd:documentation>Kapitaalschade / gebruikersschade</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="RVV">
+                <xsd:annotation>
+                    <xsd:documentation>Recht van voorkoop</xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>-->
+</xsd:schema>

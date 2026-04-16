@@ -1,0 +1,208 @@
+<!-- edited with XMLSpy v2012 rel. 2 sp1 (http://www.altova.com) by Marc (Hewlett-Package Co) --><xs:schema targetNamespace="urn:be:vlaanderen:omgeving:dossiervraag:v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2" xmlns:vraag="urn:be:vlaanderen:omgeving:dossiervraag:v1">
+    <xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../v2/omgeving/Dossier-02.00/Dossier.xsd"/>
+    <xs:include schemaLocation="a2a-DossierEnum.xsd"/>
+    <xs:include schemaLocation="a2a-DossierSimple.xsd"/>
+    <xs:complexType name="GeefDossierVraag">
+        <xs:annotation>
+            <xs:documentation>Bevat de parameters van een GeefDossier Vraag.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="dossierId" type="dossier:DossierId" minOccurs="1"/>
+            <xs:element name="inclusiefDossierstukken" type="xs:boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indien true, moet de terug gekeerde dossier de dossier stukken bevatten.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="inclusiefDuimspijkers" type="xs:boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indien true, moet de terug gekeerde dossier de duimspijkers bevatten.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="inclusiefDossierverloop" type="xs:boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Indien true, moet de terug gekeerde dossier de verloop bevatten.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dossierfase" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het gevraagde dossier moet in deze dossierFase bestaand. Raadpleeg via code.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- wordt gebruikt door het externe a2a MAGDA contract -->
+    <xs:complexType name="ZoekDossierVraag">
+        <xs:annotation>
+            <xs:documentation>Bevat de parameters van een ZoekDossier Vraag.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="filter" type="vraag:ZoekDossierFiltering"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ZoekDossierFiltering">
+        <xs:annotation>
+            <xs:documentation>Bevat de criteria filter op zoekDossier om de aantal terug gegeven dossiers abstract te
+                bepalen.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="dossierType" type="vraag:DossierType" minOccurs="0"/>
+            <xs:element name="dossierRoepnaam" type="vraag:DossierRoepnaamType" minOccurs="0"/>
+            <xs:element name="zoekInterval" type="vraag:ZoekIntervalType" minOccurs="0"/>
+            <xs:element name="dossierFase" type="vraag:DossierfaseType" minOccurs="0"/>
+            <xs:element name="gebeurtenisAard" type="vraag:GebeurtenisAardType" minOccurs="0"/>
+            <!--
+            <xs:element name="Status" type="vraag:GebeurtenisStatusType" minOccurs="0"/>
+            -->
+            <xs:element name="status" type="vraag:DossierStatusType" minOccurs="0"/>
+            <xs:element name="persoonId" type="vraag:PersoonIdType" minOccurs="0"/>
+            <xs:element name="persoonNaam" type="vraag:PersoonNaamType" minOccurs="0"/>
+            <xs:element name="persoonVoornaam" type="vraag:PersoonVoornaamType" minOccurs="0"/>
+            <xs:element name="capakey" type="vraag:CapakeyType" minOccurs="0"/>
+            <xs:element name="adresId" type="vraag:AdresIdType" minOccurs="0"/>
+            <xs:element name="straatId" type="vraag:StraatIdType" minOccurs="0"/>
+            <xs:element name="locatie" type="vraag:LocatieType" minOccurs="0"/>
+            <xs:element name="uitspraakAard" type="vraag:UitspraakAardEnum" minOccurs="0"/>
+            <xs:element name="gemeente" type="vraag:NISCodeType" minOccurs="0"/>
+            <xs:element name="alternatiefDossiernummer" type="vraag:AlternatiefDossiernummerType" minOccurs="0"/>
+            <xs:element name="dbaDatabron" type="vraag:DBAdatabronEnum" minOccurs="0"/>
+            <xs:element name="returnSort" type="vraag:ReturnSortType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- Voor A2A Geef Gebeurtenis Dienst -->
+    <xs:complexType name="GeefGebeurtenisVraag">
+        <xs:annotation>
+            <xs:documentation>Geef een gebeurtenis Referte.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="gebeurtenisReferte" type="dossier:ExternId"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Voor A2A Bewaar Gebeurtenis Dienst -->
+    <xs:complexType name="BewaarGebeurtenisVraag">
+        <xs:annotation>
+            <xs:documentation>Bewaar een gebeurtenis.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="dossierId" type="dossier:DossierId"/>
+            <xs:element name="gebeurtenis" type="dossier:Gebeurtenis"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Voor A2A Zoek Gebeurtenis Dienst -->
+    <xs:complexType name="ZoekGebeurtenisVraag">
+        <xs:annotation>
+            <xs:documentation>Argumenten waarmee de gebeurtenissen gezocht kunnen worden...</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="gebeurtenisAard" type="dossier:Code" minOccurs="0"/>
+            <xs:element name="intervalBegin" type="xs:date" minOccurs="0"/>
+            <xs:element name="intervalEinde" type="xs:date" minOccurs="0"/>
+            <xs:element name="dossierType" type="dossier:Code" minOccurs="0"/>
+            <xs:element name="dossierId" type="dossier:DossierId" minOccurs="0"/>
+            <xs:element name="dossierFase" type="dossier:Code" minOccurs="0"/>
+            <xs:element name="bronActor" type="dossier:ExternId" minOccurs="0"/>
+            <xs:element name="bestemmeling" type="dossier:ExternId" minOccurs="0"/>
+            <xs:element name="alle" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PersoonIdType">
+        <xs:annotation>
+            <xs:documentation>
+                De Id van een persoon. bvb RRnummer, VKBO-nummer, zowel binnenlandse als (op termijn) buitendlandse zijn
+                mogelijk.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="vraag:ExternId"/>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="PersoonNaamType">
+        <xs:annotation>
+            <xs:documentation>
+                (deel van) de naam van een persoon met hoedanigheid 'aanvrager', zowel zoeken in privaatpersoon als
+                rechtspersoon
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="vraag:string254">
+                <xs:attribute name="zoekMethode" type="vraag:ZoekMethodeEnum"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="AdresIdType">
+        <xs:annotation>
+            <xs:documentation>
+                De ID van het Adres, met de datrabron van de AdresId. MogelijkWaarde voor databron: CRAB.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="vraag:ExternId"/>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="StraatIdType">
+        <xs:annotation>
+            <xs:documentation>
+                De ID van de Straat, met de databron van de StraatId. MogelijkWaarde voor databron: CRAB.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="vraag:ExternId"/>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="ZoekIntervalType">
+        <xs:annotation>
+            <xs:documentation>
+                Bepaal van zoek IntervalType met begin datum, eind datum, dossierFase en Gebeurtenis
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="intervalType" type="vraag:IntervalEnum" minOccurs="1"/>
+            <xs:element name="intervalBegin" type="xs:dateTime" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Begin van het zoekinterval.
+                        Gekoppeld met IntervalType dat bepaalt over welke tijdsinterval het gaat.
+                        Wanneer bepaald, zal de filter gt or eq IntervalBegin zoeken
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="intervalEinde" type="xs:dateTime" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+                        Einde van het zoekinterval.
+                        Gekoppeld met IntervalType dat bepaalt over welke tijdsinterval het gaat.
+                        Wanneer bepaald, zal de filter lt or eq IntervalEinde zoeken
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AlternatiefDossiernummerType">
+        <xs:annotation>
+            <xs:documentation>
+                Alternatief Dossier nummer en bron.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="vraag:ExternId"/>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="ExternId">
+        <xs:annotation>
+            <xs:documentation>Type voor referentie naar een id op een externe databron.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="vraag:ExternIdValueType">
+                <xs:attribute name="databron" type="vraag:ExternIdDatabronType" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <!-- Voor A2A Bewaar Gebeurtenis Dienst -->
+</xs:schema>

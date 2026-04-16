@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://vop-02_00.vip.vlaanderen.be"
+		   xmlns="http://vop-02_00.vip.vlaanderen.be"
+	 	   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be"
+           xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be"
+	 	   elementFormDefault="unqualified"
+	 	   attributeFormDefault="unqualified"
+	 	   version="2.00">
+
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:include schemaLocation="VopSimple.xsd"/>
+	<xs:include schemaLocation="VopEnum.xsd"/>
+
+	<xs:complexType name="CriteriaGeefVopEntiteitType">
+		<xs:sequence>
+			<xs:element name="VOPEntiteitNummer" type="sleutel:VopEntiteitNummerType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CriteriaCreeerVopEntiteitType">
+		<xs:sequence>
+			<xs:element name="VOPEntiteit" type="CreeerVopEntiteit2_0Type"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CriteriaZoekVopEntiteitType">
+		<xs:sequence>
+			<xs:element name="Type" type="CodeVopEntiteitTypeKernType" minOccurs="0" /> 
+			<xs:element name="AuthentiekeBron" type="CodeVopEntiteitAuthentiekeBronKernType" minOccurs="0" /> 
+			<xs:element name="OfficieleNaam" type="generiek:Tekst2_0Type" minOccurs="0" /> 
+			<xs:element name="Adres" type="VopEntiteitAdresRequestType" minOccurs="0" /> 
+			<xs:element name="Vorm" type="CodeVopEntiteitVormKernType" minOccurs="0"/> 
+			<xs:element name="Status" type="CreeerVopEntiteitStatusRequestType" minOccurs="0"/> 
+			<xs:element name="ParentSleutel" type="SleutelRequestType" minOccurs="0" /> 
+			<xs:element name="RootSleutel" type="SleutelRequestType" minOccurs="0" /> 
+			<xs:element name="VAT" type="VopEntiteitVATRequestType" minOccurs="0" /> 
+			<xs:element name="DUNSNummer" type="DUNSNummerType" minOccurs="0" /> 
+			<xs:element name="VerwijderdIndicator" type="VerwijderdIndicatorType" minOccurs="0" /> 
+		</xs:sequence>
+	</xs:complexType>	
+
+	<xs:complexType name="VopEntiteit2_0Type">
+		<xs:sequence>
+			<xs:element name="MetadataLijst" type="VopEntiteitMetadataLijstType" />
+			<xs:element name="Nummer" type="sleutel:VopEntiteitNummerType"/>
+			<xs:element name="Type" type="VopEntiteitTypeType" minOccurs="0" /> 
+			<xs:element name="AuthentiekeBron" type="VopEntiteitAuthentiekeBronType"/>
+			<xs:element name="Naam" type="VopEntiteitNaamType"/> 
+			<xs:element name="Adres" type="VopEntiteitAdresType" minOccurs="0"/> 
+			<xs:element name="Contact" type="VopEntiteitContactType" minOccurs="0" /> 
+			<xs:element name="Vorm" type="VopEntiteitVormType"/> 
+			<xs:element name="Status" type="VopEntiteitStatusType"/> 
+			<xs:element name="Sleutels" type="VopEntiteitSleutelsType" minOccurs="0" /> 
+			<xs:element name="VAT" type="VopEntiteitVATType" minOccurs="0" /> 
+			<xs:element name="DUNS" type="VopEntiteitDUNSType" minOccurs="0" /> 
+			<xs:element name="Opmerking" type="VopEntiteitOpmerkingType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CreeerVopEntiteit2_0Type">
+		<xs:sequence>
+			<xs:element name="MetadataLijst" type="VopEntiteitMetadataLijstType" />
+			<xs:element name="Type" type="CreeerVopEntiteitTypeType" minOccurs="0" /> 
+			<xs:element name="AuthentiekeBron" type="CreeerVopEntiteitAuthentiekeBronType"/>
+			<xs:element name="Naam" type="VopEntiteitNaamType"/> 
+			<xs:element name="Adres" type="CreeerVopEntiteitAdresType" minOccurs="0"/> 
+			<xs:element name="Contact" type="VopEntiteitContactType" minOccurs="0" /> 
+			<xs:element name="Vorm" type="CreeerVopEntiteitVormType"/> 
+			<xs:element name="Status" type="VopEntiteitStatusType"/> 
+			<xs:element name="Sleutels" type="VopEntiteitSleutelsType" minOccurs="0" /> 
+			<xs:element name="VAT" type="VopEntiteitVATType" minOccurs="0" /> 
+			<xs:element name="DUNS" type="VopEntiteitDUNSType" minOccurs="0" /> 
+			<xs:element name="Opmerking" type="VopEntiteitOpmerkingType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="VopEntiteitMetadataType">
+		<xs:sequence>
+			<xs:element name="Type" type="MetadataTypeType"/>
+			<xs:element name="Datum" type="generiek:Datum2_0Type"/>
+			<xs:element name="Gebruiker" type="MetadataGebruikerType" minOccurs="0" />
+			<xs:element name="Reden" type="MetadataRedenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MetadataGebruikerType">
+		<xs:sequence>
+			<xs:element name="INSZ" type="sleutel:INSZType" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VopEntiteitNaamType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Officiele" type="generiek:Tekst2_0Type"/>
+			<xs:element name="Korte" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VopEntiteitAdresType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Taal" type="AdresTaalType" minOccurs="0"/>
+			<xs:element name="AdresLijnen" type="AdresLijnenType" minOccurs="0"/>
+			<xs:element name="Straat" type="StraatType" minOccurs="0"/>
+			<xs:element name="Huisnummer" type="HuisnummerType" minOccurs="0"/>
+			<xs:element name="Subnummer" type="SubnummerType" minOccurs="0"/>
+			<xs:element name="Gemeente" type="GemeenteType" minOccurs="0"/>
+			<xs:element name="Regio" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Land" type="generiek:Land2_0Type" minOccurs="0"/>
+			<xs:element name="CRABStratenlijstId" type="CRABStratenlijstIdType" minOccurs="0"/>
+			<xs:element name="KopieVanSleutel" type="SleutelType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CreeerVopEntiteitAdresType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Taal" type="CreeerAdresTaalType" minOccurs="0"/>
+			<xs:element name="AdresLijnen" type="AdresLijnenType" minOccurs="0"/>
+			<xs:element name="Straat" type="StraatType" minOccurs="0"/>
+			<xs:element name="Huisnummer" type="HuisnummerType" minOccurs="0"/>
+			<xs:element name="Subnummer" type="CreeerSubnummerType" minOccurs="0"/>
+			<xs:element name="Gemeente" type="GemeenteType" minOccurs="0"/>
+			<xs:element name="Regio" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Land" type="generiek:Land2_0Type" minOccurs="0"/>
+			<xs:element name="CRABStratenlijstId" type="CRABStratenlijstIdType" minOccurs="0"/>
+			<xs:element name="KopieVanSleutel" type="SleutelType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+
+	<xs:complexType name="StraatType">
+		<xs:sequence>
+			<xs:element name="Code" type="StraatCodeType" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SubnummerType">
+		<xs:sequence>
+			<xs:element name="Waarde" type="SubnummerWaardeType" minOccurs="0"/>
+			<xs:element name="Aard" type="AardType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CreeerSubnummerType">
+		<xs:sequence>
+			<xs:element name="Waarde" type="SubnummerWaardeType" minOccurs="0"/>
+			<xs:element name="Aard" type="CreeerAardType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="GemeenteType">
+		<xs:sequence>
+			<xs:element name="NIScode" type="GemeenteNIScodeType" minOccurs="0"/>
+			<xs:element name="PostCode" type="GemeentePostcodeType" minOccurs="0"/>
+			<xs:element name="Naam" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="LandType">
+		<xs:sequence>
+			<xs:element name="NIScode" type="LandNIScodeType" minOccurs="0"/>
+			<xs:element name="ISOCode" type="LandISOcodeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VopEntiteitContactType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Telefoon" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Fax" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Email" type="generiek:Tekst2_0Type" minOccurs="0"/>
+			<xs:element name="Website" type="generiek:Tekst2_0Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VopEntiteitStatusType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Code" type="CodeVopEntiteitStatusType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+			<xs:element name="Periode" type="generiek:PeriodeVerplichtBeginType" minOccurs="0"/>
+			<xs:element name="RedenStopzetting" type="RedenStopzettingType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CodeVopEntiteitStatusType">
+		<xs:simpleContent>
+			<xs:extension base="CodeVopEntiteitStatusKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="SleutelType">
+		<xs:sequence>
+			<xs:element name="Type" type="SleutelTypeType" minOccurs="0"/>
+			<xs:element name="Waarde" type="SleutelWaardeType" />
+			<xs:element name="AuthentiekeBron" type="VopEntiteitAuthentiekeBronType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VopEntiteitVATType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Nummer" type="VATNummerType" />
+			<xs:element name="Geldig" type="VatGeldigType" />
+			<xs:element name="DatumValidatie" type="generiek:Tijdstip2_0Type" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VopEntiteitDUNSType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Nummer" type="DUNSNummerType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VopEntiteitOpmerkingType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Waarde" type="generiek:Tekst2_0Type" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VopEntiteitAdresRequestType">
+		<xs:sequence>
+			<xs:element name="Straat" type="StraatType" minOccurs="0"/>
+			<xs:element name="Huisnummer" type="HuisnummerType" minOccurs="0"/>
+			<xs:element name="Gemeente" type="GemeenteType" minOccurs="0"/>
+			<xs:element name="Regio" type="generiek:TekstKort2_0Type" minOccurs="0"/>
+			<xs:element name="Land" type="LandType" minOccurs="0"/>
+			<xs:element name="CRABStratenlijstId" type="CRABStratenlijstIdType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>	
+
+	<xs:complexType name="VopEntiteitStatusRequestType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeVopEntiteitStatusType" minOccurs="0"/>
+			<xs:element name="Periode" type="generiek:PeriodeVerplichtBeginType" minOccurs="0"/>
+			<xs:element name="RedenStopzetting" type="CodeRedenStopzettingKernType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreeerVopEntiteitStatusRequestType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeVopEntiteitStatusKernType" minOccurs="0"/>
+			<xs:element name="Periode" type="generiek:PeriodeVerplichtBeginType" minOccurs="0"/>
+			<xs:element name="RedenStopzetting" type="CodeRedenStopzettingKernType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VopEntiteitVATRequestType">
+		<xs:sequence>
+			<xs:element name="Nummer" type="VATNummerType" minOccurs="0" />
+			<xs:element name="CodeGeldig" type="CodeVatGeldigKernType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>	
+
+	<xs:complexType name="SleutelRequestType">
+		<xs:sequence>
+			<xs:element name="Waarde" type="SleutelWaardeType" />
+			<xs:element name="AuthentiekeBron" type="CodeAuthentiekeBronKernType" />
+		</xs:sequence>
+	</xs:complexType>	
+
+	<!--========================================-->
+	<xs:complexType name="VopEntiteitMetadataLijstType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" maxOccurs="3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AdresLijnenType">
+		<xs:sequence>
+			<xs:element name="AdresLijn" type="generiek:TekstKort2_0Type" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VopEntiteitSleutelsType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Sleutel" type="SleutelType" maxOccurs="2" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="VopEntiteit2_0LijstType">
+		<xs:sequence>
+			<xs:element name="VopEntiteit" type="VopEntiteit2_0Type" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>	
+	
+	<!--========================================-->
+	<xs:complexType name="MetadataTypeType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeMetadataTypeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeMetadataTypeType">
+		<xs:simpleContent>
+			<xs:extension base="CodeMetadataTypeKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="MetadataRedenType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeMetadataRedenType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeMetadataRedenType">
+		<xs:simpleContent>
+			<xs:extension base="CodeMetadataRedenKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="VopEntiteitTypeType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeVopEntiteitTypeType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeVopEntiteitTypeType">
+		<xs:simpleContent>
+			<xs:extension base="CodeVopEntiteitTypeKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="CreeerVopEntiteitTypeType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeVopEntiteitTypeKernType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="VopEntiteitAuthentiekeBronType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Code" type="CodeVopEntiteitAuthentiekeBronType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeVopEntiteitAuthentiekeBronType">
+		<xs:simpleContent>
+			<xs:extension base="CodeVopEntiteitAuthentiekeBronKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	
+	<xs:complexType name="CreeerVopEntiteitAuthentiekeBronType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Code" type="CodeVopEntiteitAuthentiekeBronKernType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="AdresTaalType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeAdresTaalType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeAdresTaalType">
+		<xs:simpleContent>
+			<xs:extension base="CodeAdresTaalKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CreeerAdresTaalType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeAdresTaalKernType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="AardType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeAardType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeAardType">
+		<xs:simpleContent>
+			<xs:extension base="CodeAardKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CreeerAardType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeAardKernType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="AuthentiekeBronType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeAuthentiekeBronType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeAuthentiekeBronType">
+		<xs:simpleContent>
+			<xs:extension base="CodeAuthentiekeBronKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="VopEntiteitVormType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Code" type="CodeVopEntiteitVormType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeVopEntiteitVormType">
+		<xs:simpleContent>
+			<xs:extension base="CodeVopEntiteitVormKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CreeerVopEntiteitVormType">
+		<xs:sequence>
+			<xs:element name="Metadata" type="VopEntiteitMetadataType" minOccurs="0"/>
+			<xs:element name="Code" type="CodeVopEntiteitVormKernType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="RedenStopzettingType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeRedenStopzettingType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeRedenStopzettingType">
+		<xs:simpleContent>
+			<xs:extension base="CodeRedenStopzettingKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!--========================================-->
+	<xs:complexType name="VatGeldigType">
+		<xs:sequence>
+			<xs:element name="Code" type="CodeVatGeldigType"/>
+			<xs:element name="Omschrijving" type="generiek:OmschrijvingAlgemeenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CodeVatGeldigType">
+		<xs:simpleContent>
+			<xs:extension base="CodeVatGeldigKernType">
+				<xs:attribute name="Beschrijving" type="generiek:Tekst2_0Type"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

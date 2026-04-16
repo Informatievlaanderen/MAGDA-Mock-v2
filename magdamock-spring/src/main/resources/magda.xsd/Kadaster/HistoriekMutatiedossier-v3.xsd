@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2017 rel. 3 (http://www.altova.com) by Dagmar (Facilipunt - Agentschap Facilitair Bedrijf) -->
+<xs:schema xmlns="http://magda.vlaanderen.be/kadaster-v3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" targetNamespace="http://magda.vlaanderen.be/kadaster-v3" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../Generiek/GeneriekDomein-v3.xsd"/>
+	<xs:include schemaLocation="KadasterGemeenschappelijk-v3.xsd"/>
+	<!--=> ENKELVOUDIGE TYPE DEFINITES-->
+	<!--=> COMPLEX TYPE DEFINITES-->
+	<xs:complexType name="MutatiedossierMetHistoriekEigendomstoestandenType">
+		<xs:complexContent>
+			<xs:extension base="MutatiedossierType">
+				<xs:sequence>
+					<xs:element name="ToestandenVoorMutatie" type="ToestandVoorMutatieLijstType" minOccurs="0"/>
+					<xs:element name="ToestandenNaMutatie" type="ToestandNaMutatieLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ToestandVoorMutatieLijstType">
+		<xs:sequence>
+			<xs:element name="ToestandVoorMutatie" type="HistoriekEigendomstoestandType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ToestandNaMutatieLijstType">
+		<xs:sequence>
+			<xs:element name="ToestandNaMutatie" type="HistoriekEigendomstoestandType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>	
+	<!-- ======================== REQUEST TYPES ======================= -->
+	<xs:complexType name="CriteriaGeefHistoriekMutatiedossierType">
+		<xs:sequence>
+			<xs:element name="Dossiernummer" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ======================== RESPONSE TYPES ======================= -->
+	<xs:complexType name="MutatiedossierMetHistoriekEigendomstoestandenLijstType">
+		<xs:sequence>
+			<xs:element name="Mutatiedossier" type="MutatiedossierMetHistoriekEigendomstoestandenType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

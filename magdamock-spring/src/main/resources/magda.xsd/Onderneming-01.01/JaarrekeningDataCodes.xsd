@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://onderneming.vip.vlaanderen.be" 
+           xmlns="http://onderneming.vip.vlaanderen.be" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.01">
+           
+	<xs:simpleType name="SchemaEnumType">
+		<xs:annotation>
+			<xs:documentation> | 00( Schema Onbekend ) | 01( Verkort Schema Onderneming ) | 02( Volledig Schema Onderneming ) | 04( Verkort Schema VZW / Vereniging ) | 05( Volledig Schema VZW / Vereniging )</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>	
+			<xs:enumeration value="00"/>	<!-- Niet gevraagd maar uit ervaring gebleken soms nodig te zijn -->
+			<xs:enumeration value="01"/>	
+			<xs:enumeration value="02"/>	
+			<xs:enumeration value="04"/>	
+			<xs:enumeration value="05"/>	
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KwaliteitVlagEnumType">
+		<xs:annotation>
+			<xs:documentation> | 0( Kwaliteit Onbekend ) | P( Voldoet aan alle verplichte controles ) | C( Sommige rubrieken voldoen niet, not te verbeteren ) | I( Sommige rubrieken voldoen niet, kan niet verbeterd worden ) | N( Niet gecontroleerd ) | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>	
+			<xs:enumeration value="0"/>	<!-- Niet gevraagd maar uit ervaring gebleken soms nodig te zijn -->
+			<xs:enumeration value="P"/>	
+			<xs:enumeration value="C"/>	
+			<xs:enumeration value="I"/>	
+			<xs:enumeration value="N"/>	
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LeverancierEnumType">
+        <xs:annotation>
+			<xs:documentation> | 0( Leverancier Onbekend ) | G( Graydon NV ) | N( NBB ) | </xs:documentation>
+		</xs:annotation>
+        <xs:restriction base="xs:string">
+			<xs:length value="1" />
+    	    <xs:enumeration value="0" /><!-- Niet gevraagd maar uit ervaring gebleken soms nodig te zijn -->
+        	<xs:enumeration value="G" />
+	        <xs:enumeration value="N" />
+		</xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

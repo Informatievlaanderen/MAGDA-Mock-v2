@@ -1,0 +1,44 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:dienst:dossierstuk:v1" elementFormDefault="unqualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2" xmlns:dossierstuk="urn:be:vlaanderen:omgeving:dienst:dossierstuk:v1">
+
+    <xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../v2/omgeving/Dossier-02.00/Dossier.xsd"/>
+
+    <xs:simpleType name="Richting">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="vanDBA"/>
+            <xs:enumeration value="naarDBA"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="BestandsUitwisseling">
+    	<xs:sequence>
+    		<xs:element name="dbaBestandsReferte" type="dossier:UniekeReferte" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="virtualFilename" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="richting" type="dossierstuk:Richting"/>
+    </xs:complexType>
+
+
+    <xs:complexType name="DossierStukAntwoord">
+        <xs:sequence>
+            <xs:element name="dbaDossierId" type="dossier:DossierId" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="dossierStuk" type="dossier:DossierStuk" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="bestandsUitwisseling" type="dossierstuk:BestandsUitwisseling" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DossierStukVraag">
+        <xs:sequence>
+            <xs:element name="dbaDossierId" type="dossier:DossierId" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="dossierStuk" type="dossier:DossierStuk" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="DossierStukIdentificatie">
+        <xs:sequence>
+            <xs:element name="dbaDossierId" type="dossier:DossierId" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="dbaDossierStukReferte" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

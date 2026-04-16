@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://onderneming.vip.vlaanderen.be" 
+           xmlns="http://onderneming.vip.vlaanderen.be" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:generiek="http://generiek.vip.vlaanderen.be" 
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.01">
+           
+	<xs:import namespace="http://generiek.vip.vlaanderen.be" schemaLocation="../Generiek-01.01/Generiek.xsd"/>
+	<xs:include schemaLocation="OndernemingExtensie.xsd"/>
+	<xs:include schemaLocation="TewerkstellingDataCodes.xsd"/>
+	<xs:include schemaLocation="TewerkstellingDataKern.xsd"/>
+	
+	<xs:complexType name="TewerkstellingRSZType">
+		<xs:sequence>
+			<xs:element name="OndernemingsNummer" type="OndernemingsNummerType"/>
+			<xs:element name="MZOndNummer" type="OndernemingsNummerType" minOccurs="0"/>
+			<xs:element name="AuthentiekeBron" type="AuthentiekeBronRSZCodeType"/>
+			<xs:element name="RSZNummer" type="RSZNummerType" minOccurs="0"/>
+			<xs:element name="DatumAansluitingRSZ" type="generiek:DatumType" minOccurs="0"/>
+			<xs:element name="Periode" type="KwartaalPeriodeType"/>
+			<xs:element name="PersoneelsklasseCode" type="PersoneelsklasseCodeType" minOccurs="0"/>
+			<xs:element name="TypeRegionalisatie" type="TypeRegionalisatieType" minOccurs="0"/>
+			<xs:element name="AantalVestigingen" type="NumeriekKortType" minOccurs="0"/>
+			<xs:element name="GemeenteNiscodeGrootsteTewerkstelling" type="generiek:GemeenteNISCodeType" minOccurs="0"/>
+			<xs:element name="Nace" type="NaceType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TewerkstellingGemeenteRSZType">
+		<xs:sequence>
+			<xs:element name="OndernemingsNummer" type="OndernemingsNummerType"/>
+			<xs:element name="AuthentiekeBron" type="AuthentiekeBronRSZCodeType"/>
+			<xs:element name="RSZNummer" type="RSZNummerType"/>
+			<xs:element name="Periode" type="KwartaalPeriodeType"/>
+			<xs:element name="DatumAansluiting" type="generiek:DatumType"/>
+			<xs:element name="NISCode" type="generiek:GemeenteNISCodeType"/>
+			<xs:element name="PersoneelsklasseCode" type="PersoneelsklasseCodeType"/>
+			<xs:element name="AuditLog" type="AuditLogType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TewerkstellingParComRSZType">
+		<xs:sequence>
+			<xs:element name="OndernemingsNummer" type="OndernemingsNummerType"/>
+			<xs:element name="AuthentiekeBron" type="AuthentiekeBronRSZCodeType"/>
+			<xs:element name="Periode" type="KwartaalPeriodeType"/>
+			<xs:element name="ParitairComitees" type="ParitairComiteesType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TewerkstellingParComsRSZ1_1Type">
+		<xs:sequence>
+			<xs:element name="TewerkstellingParCom" type="TewerkstellingParComRSZ1_1Type" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TewerkstellingParComRSZ1_1Type">
+		<xs:sequence>
+			<xs:element name="OndernemingsNummer" type="OndernemingsNummerType"/>
+			<xs:element name="AuthentiekeBron" type="AuthentiekeBronRSZCodeType"/>
+			<xs:element name="Periode" type="KwartaalPeriodeType"/>
+			<xs:element name="ParitairComiteCode" type="ParitairComiteCodeType"/>
+			<xs:element name="PersoneelsklasseCode" type="PersoneelsklasseCodeType" minOccurs="0"/>
+			<xs:element name="AuditLog" type="AuditLogType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AuthentiekeBronRSZCodeType">
+		<xs:simpleContent>
+			<xs:extension base="AuthentiekeBronRSZEnumType">
+				<xs:attribute name="Beschrijving" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ParitairComiteesType">
+		<xs:sequence>
+			<xs:element name="ParitairComite" type="ParitairComiteType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ParitairComiteType">
+		<xs:sequence>
+			<xs:element name="ParitairComiteCode" type="ParitairComiteCodeType"/>
+			<xs:element name="PersoneelsklasseCode" type="PersoneelsklasseCodeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

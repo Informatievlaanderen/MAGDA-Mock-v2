@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://onderneming.vip.vlaanderen.be" 
+           xmlns="http://onderneming.vip.vlaanderen.be" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.01">
+           
+	<xs:simpleType name="AantalMaandenType">
+		<xs:annotation>
+			<xs:documentation>AantalMaandenType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2"/>
+			<xs:pattern value="[0-9]{1,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RefNBBDeel1Type">
+		<xs:annotation>
+			<xs:documentation>RefNBBDeel1Type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RefNBBDeel2Type">
+		<xs:annotation>
+			<xs:documentation>RefNBBDeel2Type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="5"/>
+			<xs:pattern value="[0-9]{1,5}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MuntCodeType">
+		<xs:annotation>
+			<xs:documentation>MuntCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+		</xs:restriction>
+    </xs:simpleType>
+
+	<xs:simpleType name="DeelType">
+		<xs:annotation>
+			<xs:documentation>DeelType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="[1-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SectieType">
+		<xs:annotation>
+			<xs:documentation>SectieType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2"/>
+			<xs:pattern value="[0-9]{1,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SubSectieType">
+		<xs:annotation>
+			<xs:documentation>SubSectieType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="[1-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GeldBedragType">
+		<xs:annotation>
+			<xs:documentation>GeldBedragType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+				<xs:totalDigits value="16"/>
+				<xs:fractionDigits value="0"/>
+				<xs:minInclusive value="-9999999999999999"/>
+				<xs:maxInclusive value="9999999999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EenheidType">
+		<xs:annotation>
+			<xs:documentation>EenheidType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RubrieksCodeType">
+		<xs:annotation>
+			<xs:documentation>RubrieksCodeType</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+</xs:schema>

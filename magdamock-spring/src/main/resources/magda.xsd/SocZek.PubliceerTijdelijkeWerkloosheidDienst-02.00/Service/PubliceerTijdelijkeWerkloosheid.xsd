@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://magda.vlaanderen.be/soczek/file/publiceertijdelijkewerkloosheid/v02_00" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bericht="http://generiek-02_00.vip.vlaanderen.be" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" xmlns:soczek="http://magda.vlaanderen.be/soczek-v3" targetNamespace="http://magda.vlaanderen.be/soczek/file/publiceertijdelijkewerkloosheid/v02_00" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xs:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../../Generiek/GeneriekDomein-v3.xsd"/>
+	<xs:import namespace="http://magda.vlaanderen.be/soczek-v3" schemaLocation="../../SocZek/SocZekDomein-v3.xsd"/>
+	<xs:element name="PubliceerTijdelijkeWerkloosheid">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Publicatie" type="PublicatieType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="PublicatieType">
+		<xs:sequence>
+			<xs:element name="Context" type="bericht:ContextType"/>
+			<xs:element name="Onderwerpen" type="OnderwerpenType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="bericht:UitzonderingenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderwerpenType">
+		<xs:sequence>
+			<xs:element name="Onderwerp" type="OnderwerpType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderwerpType">
+		<xs:sequence>
+			<xs:element name="Referte" type="bericht:ReferteType"/>
+			<xs:element name="Inhoud" type="OnderwerpInhoudType" minOccurs="0"/>
+			<xs:element name="Uitzonderingen" type="bericht:UitzonderingenType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnderwerpInhoudType">
+		<xs:sequence>
+			<xs:element name="GegevensTijdelijkeWerkloosheid" type="soczek:GegevensTijdelijkeWerkloosheidType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

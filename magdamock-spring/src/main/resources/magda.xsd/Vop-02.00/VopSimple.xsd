@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://vop-02_00.vip.vlaanderen.be"
+		   xmlns="http://vop-02_00.vip.vlaanderen.be"
+	 	   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 	   elementFormDefault="unqualified"
+	 	   attributeFormDefault="unqualified"
+	 	   version="2.00">
+
+	<xs:simpleType name="CodeMetadataTypeKernType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CodeMetadataRedenKernType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CodeVopEntiteitTypeKernType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CodeVopEntiteitAuthentiekeBronKernType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="24"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CodeAdresTaalKernType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="StraatCodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="HuisnummerType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="11"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CodeAardKernType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="SubnummerWaardeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="GemeenteNIScodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="GemeentePostcodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="15"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="LandNIScodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="LandISOcodeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="3"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CRABStratenlijstIdType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="AuthentiekeBronSleutelType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CodeAuthentiekeBronKernType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="24"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CodeVopEntiteitVormKernType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CodeVopEntiteitStatusKernType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CodeRedenStopzettingKernType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>	
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="SleutelTypeType">
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="SleutelWaardeType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="VATNummerType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="CodeVatGeldigKernType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="DUNSNummerType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+</xs:schema>

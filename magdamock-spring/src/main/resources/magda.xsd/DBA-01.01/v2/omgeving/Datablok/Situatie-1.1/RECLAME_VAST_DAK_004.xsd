@@ -1,0 +1,91 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:RECLAME_VAST_DAK_004:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:RECLAME_VAST_DAK_004:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+    <xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+    <xs:complexType name="SituatieDatablok">
+        <xs:complexContent>
+            <xs:extension base="dossier:SituatieDatablok">
+                <xs:sequence>
+                    <xs:element name="Aard">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="NEON"/>
+                                <xs:enumeration value="BANIER"/>
+                                <xs:enumeration value="BAK"/>
+                                <xs:enumeration value="LICHTKRANT"/>
+                                <xs:enumeration value="LETTER"/>
+                                <xs:enumeration value="ANDERE"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="AndereAard" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Bevestiging">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="NIEUW"/>
+                                <xs:enumeration value="WIJZIG"/>
+                                <xs:enumeration value="BESTAAND"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="AfmetingLengte">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                    <xs:attribute name="eenheid" fixed="m">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="AfmetingHoogte">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                    <xs:attribute name="eenheid" fixed="m">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="PerceelsgrensLinksAfstand">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                    <xs:attribute name="eenheid" fixed="m">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="PerceelsgrensRechtsAfstand">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                    <xs:attribute name="eenheid" fixed="m">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

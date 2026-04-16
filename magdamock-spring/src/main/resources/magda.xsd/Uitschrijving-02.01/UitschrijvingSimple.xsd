@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://uitschrijving-02_01.onderwijs.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://uitschrijving-02_01.onderwijs.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.01">
+	<xs:simpleType name="dagVanDeMaandType">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="31"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

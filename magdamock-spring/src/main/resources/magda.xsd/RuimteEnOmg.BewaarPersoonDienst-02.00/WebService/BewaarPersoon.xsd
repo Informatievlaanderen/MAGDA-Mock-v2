@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+<xsd:schema targetNamespace="http://webservice.BewaarPersoonDienst-V1.vip.vlaanderen.be"
+            xmlns="http://webservice.BewaarPersoonDienst-V1.vip.vlaanderen.be"
+            elementFormDefault="unqualified"
+            attributeFormDefault="unqualified"
+            version="1.00"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:algemeen="urn:be:vlaanderen:omgeving:algemeen"
+            xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be"
+            xmlns:bericht="urn:be:milieuinfo:schemas:generiek:bericht:v5"
+            xmlns:uuid="urn:be:milieuinfo:schemas:uuid:v1"
+            xmlns:persoon="urn:be:vlaanderen:omgeving:persoon:v1">
+	<xsd:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xsd:import namespace="urn:be:vlaanderen:omgeving:persoon:v1" schemaLocation="../../DBA-02.00/omgeving/Resource/Persoon/v1/PersoonV1.xsd"/>
+	<xsd:import namespace="urn:be:vlaanderen:omgeving:algemeen" schemaLocation="../../DBA-02.00/omgeving/Resource/Algemeen/Algemeen.xsd"/>
+	<xsd:import namespace="urn:be:milieuinfo:schemas:uuid:v1" schemaLocation="../../DBA-02.00/acd/core/domain/uuid/Uuid.xsd"/>
+	<xsd:import namespace="urn:be:milieuinfo:schemas:generiek:bericht:v5" schemaLocation="../../DBA-02.00/acd/generiek/bericht/v5/Bericht.xsd"/>
+	<xsd:element name="BewaarPersoonRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Verzoek" type="VerzoekType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="Verzoek" type="VerzoekType"/>
+	<xsd:complexType name="VerzoekType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="generiek:ContextType"/>
+			<xsd:element name="Vragen" type="VragenType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VragenType">
+		<xsd:sequence>
+			<xsd:element name="Vraag" type="VraagType" minOccurs="1" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VraagType">
+		<xsd:sequence>
+			<xsd:element name="Referte" type="generiek:ReferteType"/>
+			<xsd:element name="Inhoud" type="InhoudType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InhoudType">
+		<xsd:sequence>
+			<xsd:element name="Taal" type="bericht:Lang"/>
+			<xsd:element name="AfzenderReferte" type="uuid:UUIDSimple"/>
+			<xsd:element name="TransactieUuid" type="xsd:anySimpleType"/>
+			<xsd:element name="HoedanigheidUuid" type="algemeen:UUID"/>
+			<xsd:element name="Persoon" type="persoon:Persoon"/>
+			<xsd:element name="Recht" type="algemeen:RechtenEnum"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,78 @@
+<xs:schema targetNamespace="urn:be:vlaanderen:omgeving:datablok:situatie:N_INFRA_VERHARDING_004:001" elementFormDefault="unqualified" xmlns="urn:be:vlaanderen:omgeving:datablok:situatie:N_INFRA_VERHARDING_004:001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dossier="urn:be:vlaanderen:omgeving:dossier:v2">
+    <xs:import namespace="urn:be:vlaanderen:omgeving:dossier:v2" schemaLocation="../../Dossier-02.00/Dossier.xsd"/>
+    <xs:complexType name="SituatieDatablok">
+        <xs:complexContent>
+            <xs:extension base="dossier:SituatieDatablok">
+                <xs:sequence>
+                    <xs:element name="VerhardingOppervlakte">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                    <xs:attribute name="eenheid" fixed="m²">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="IsParkeerplaatsAuto" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:list>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="J"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:list>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="ParkeerplaatsAutoAantal" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="IsParkeerplaatsAndersvalide" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:list>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="J"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:list>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="ParkeerplaatsAndersvalideAantal" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="IsParkeerplaatsFiets" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:list>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="J"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:list>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="ParkeerplaatsFietsAantal" minOccurs="0">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:pattern value=".+"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://filetofilescheduler.vip.vlaanderen.be" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" xmlns:generiekV3="http://magda.vlaanderen.be/generiek-v3" targetNamespace="http://filetofilescheduler.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../../Generiek-02.00/Generiek.xsd"/>
+	<xsd:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../../Generiek/Generiek-v3.xsd"/>
+	<xsd:element name="FileToFileScheduler">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Stromen" type="StromenType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="StromenType">
+		<xsd:sequence>
+			<xsd:element name="Stroom" type="StroomType" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StroomType">
+		<xsd:sequence>
+			<xsd:element name="Naam" type="xsd:string"/>
+			<xsd:element name="Identificatie" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Versie" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="CronExpressie" type="xsd:string"/>
+			<xsd:element name="WLCronExpressie" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Folders" type="FoldersType"/>
+			<xsd:element name="FilePattern" type="xsd:string"/>
+			<xsd:element name="FileCompression" type="FileCompression" minOccurs="0"/>
+			<xsd:element name="FileRenamingStrategyPattern" type="FileRenamingStrategyPatternType" minOccurs="0"/>
+			<xsd:element name="FileEncoding" type="xsd:string"/>
+			<xsd:element name="Transformatie" type="TransformatieType"/>
+			<xsd:element name="SleutelExtractie" type="SleutelExtractieType" minOccurs="0" maxOccurs="10"/>
+			<xsd:element name="IsFoutBlokkerend" type="BooleanType"/>
+			<xsd:element name="MailAdressen" type="MailAdressenType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FileRenamingStrategyPatternType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="Type" type="FileRenamingPatternEnumType"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:complexType name="FoldersType">
+		<xsd:sequence>
+			<xsd:element name="InputFolder" type="xsd:string"/>
+			<xsd:element name="OutputFolder" type="xsd:string"/>
+			<xsd:element name="ArchiveFolder" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="MailAdressenType">
+		<xsd:sequence>
+			<xsd:element name="MailAdres" type="xsd:string" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TransformatieType">
+		<xsd:sequence>
+			<xsd:element name="Type" type="TransformatieTypeEnumType"/>
+			<xsd:element name="Parameters" type="TransformatieParametersType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FileCompression">
+		<xsd:attribute name="unzipInput" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="zipOutput" type="xsd:boolean" default="false"/>
+	</xsd:complexType>
+	<xsd:complexType name="SleutelExtractieType">
+		<xsd:all>
+			<xsd:element name="sleutelType" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="extractieMethode">
+				<xsd:complexType>
+					<xsd:choice>
+						<xsd:element name="xpath-expression" type="xsd:string"/>
+						<xsd:element name="substring" type="SubstringParametersType"/>
+						<xsd:element name="delimited" type="DelimitedParametersType"/>
+					</xsd:choice>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="padding" type="SleutelPaddingType" minOccurs="0"/>
+		</xsd:all>
+	</xsd:complexType>
+	<xsd:complexType name="SubstringParametersType">
+		<xsd:attribute name="start" type="xsd:nonNegativeInteger"/>
+		<xsd:attribute name="length" type="xsd:positiveInteger"/>
+	</xsd:complexType>
+	<xsd:complexType name="DelimitedParametersType">
+		<xsd:attribute name="delimiterChar" type="SingleCharType" use="required"/>
+		<xsd:attribute name="quoteCharacter" type="SingleCharType"/>
+		<xsd:attribute name="selectedIndex" type="xsd:nonNegativeInteger"/>
+	</xsd:complexType>
+	<xsd:complexType name="SleutelPaddingType">
+		<xsd:attribute name="length" type="xsd:int" use="required"/>
+		<xsd:attribute name="character" type="SingleCharType" use="required"/>
+		<xsd:attribute name="left" type="xsd:boolean" default="true"/>
+	</xsd:complexType>
+	<xsd:simpleType name="SingleCharType">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="TransformatieParametersType">
+		<xsd:choice>
+			<xsd:element name="BestandStructuur" type="BestandStructuur"/>
+			<xsd:element name="RRAnonimisatieParameters" type="RRAnonimisatieParametersType"/>
+			<xsd:element name="A1SplitterParameters" type="A1SplitterParametersType"/>
+			<xsd:element name="A1TransformerParameters" type="A1SplitterParametersType"/>
+			<xsd:element name="VKBPParameters" type="GegevensStroomFormaatTransformatorParametersType"/>
+			<xsd:element name="VKBOParameters" type="GegevensStroomFormaatTransformatorParametersType"/>
+			<xsd:element name="LDMParameters" type="LDMParametersType"/>
+			<xsd:element name="CBNOTSParameters" type="CBNOTSParametersType"/>
+			<xsd:element name="RALBOParameters" type="RALBOParametersType"/>
+			<xsd:element name="FlitsParameters" type="FlitsParametersType"/>
+			<xsd:element name="LEZGegevensParameters" type="LEZGegevensParametersType"/>
+			<xsd:element name="CheckToegangXMLNaarCSVParameters" type="CheckToegangXMLNaarCSVParameters"/>
+			<xsd:element name="CheckToegangXMLNaarCSVPatchParameters" type="CheckToegangXMLNaarCSVPatchParameters"/>
+			<xsd:element name="DIVDumpAnonimisatieParameters" type="DIVDumpAnonimisatieParametersType"/>
+			<xsd:element name="ResultFlitsVerrijkingParameters" type="ResultFlitsVerrijkingParametersType"/>
+			<xsd:element name="SociaalStatuutLijstRequestParameters" type="SociaalStatuutLijstRequestParametersType"/>
+			<xsd:element name="SociaalStatuutLijstResponseParameters" type="SociaalStatuutLijstResponseParametersType"/>
+			<xsd:element name="RegistreerAanvraagZorgtoeslagParameters" type="RegistreerAanvraagZorgtoeslagParametersType"/>
+			<xsd:element name="SocialeSchuldParameters" type="SocialeSchuldParametersType"/>
+			<xsd:element name="LDMVSParameters" type="LDMVSParametersType"/>
+			<xsd:element name="VLOKPubMutNotParameters" type="VLOKPubMutNotParametersType"/>
+			<xsd:element name="PubliceerMutatieZorgtoeslagParameters" type="PubliceerMutatieZorgtoeslagParametersType"/>
+			<xsd:element name="PubliceerKindTenLasteParameters" type="PubliceerKindTenLasteParametersType"/>
+			<xsd:element name="PubliceerMutatieSocialeStatutenParameters" type="PubliceerMutatieSocialeStatutenParametersType"/>
+			<xsd:element name="PubliceerFeedbackSocialeStatutenParameters" type="PubliceerFeedbackSocialeStatutenParametersType"/>
+			<xsd:element name="PubliceerV3Parameters" type="PubliceerV3ParametersType"/>
+			<xsd:element name="PubliceerInwonersPerAdresParameters" type="PubliceerInwonersPerAdresParametersType"/>
+			<xsd:element name="XsltParameters" type="XsltParametersType"/>
+			<xsd:element name="PubliceerAttestKindTenLasteParameters" type="PubliceerAttestKindTenLasteParametersType"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="PubliceerAttestKindTenLasteParametersType">
+		<xsd:complexContent>
+			<xsd:extension base="LDMFileNameParametersType">
+				<xsd:sequence>
+					<xsd:element name="ExtractionContext" type="xsd:string"/>
+					<xsd:element name="ExtractedSituation" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="BestandStructuur">
+		<xsd:attribute name="eerste-lijn-is-header" type="xsd:boolean" default="false"/>
+	</xsd:complexType>
+	<xsd:complexType name="RRAnonimisatieParametersType">
+		<xsd:sequence>
+			<xsd:element name="EncryptieSleutel" type="xsd:string"/>
+			<xsd:element name="RRNPatroon" type="xsd:string"/>
+			<xsd:element name="RecordDelimiter" type="xsd:string"/>
+			<xsd:element name="RRNPositie" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="A1SplitterParametersType">
+		<xsd:sequence>
+			<xsd:element name="NameSpace" type="xsd:anyURI"/>
+			<xsd:element name="VersiePrefix" type="xsd:string"/>
+			<xsd:element name="SoortVraag" type="xsd:string"/>
+			<xsd:element name="NetwerkIdentificatie" type="IdentificatieType"/>
+			<xsd:element name="BestemmelingIdentificatie" type="IdentificatieType"/>
+			<xsd:element name="SoortVerwerking" type="xsd:string"/>
+			<xsd:element name="FormulierActies" type="FormulierActiesType"/>
+			<xsd:element name="Afnemers" type="AfnemersType"/>
+			<xsd:element name="BestandsInhoudStructuur" type="BestandsInhoudStructuurType"/>
+			<xsd:element name="BestandsNaamStructuur" type="BestandsNaamStructuurType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GegevensStroomFormaatTransformatorParametersType">
+		<xsd:sequence>
+			<xsd:element name="Configuratie" type="ConfiguratieType"/>
+			<xsd:element name="StroomAfnemers" type="GegevensStroomFormaatTransformatorStroomAfnemersType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LDMParametersType">
+		<xsd:sequence>
+			<xsd:element name="GebruikValidatie" type="BooleanType"/>
+			<xsd:element name="CreatieParameters" type="CreatieParametersType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CBNOTSParametersType">
+		<xsd:complexContent>
+			<xsd:extension base="LDMFileNameParametersType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PubliceerMutatieSocialeStatutenParametersType">
+		<xsd:complexContent>
+			<xsd:extension base="LDMFileNameParametersType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PubliceerFeedbackSocialeStatutenParametersType">
+		<xsd:complexContent>
+			<xsd:extension base="KszContextParameters"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="LDMFileNameParametersType">
+		<xsd:sequence>
+			<xsd:element name="TypeOrganisatie" type="TypeOrganisatieEnumType"/>
+			<xsd:element name="OntvangerOrganisatieIdentificatie" type="OrganisatieIdentificatieType"/>
+			<xsd:element name="AfzenderOrganisatieIdentificatie" type="OrganisatieIdentificatieType"/>
+			<xsd:element name="UniekeIdentificatiePrefix" type="xsd:string"/>
+			<xsd:element name="Omgeving" type="OmgevingEnumType"/>
+			<xsd:element name="LegalContext" type="xsd:string"/>
+			<xsd:element name="IdentierPrefferedLength" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RALBOParametersType">
+		<xsd:complexContent>
+			<xsd:extension base="KszContextParameters"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="KszContextParameters">
+		<xsd:complexContent>
+			<xsd:extension base="ContextParametersType">
+				<xsd:sequence>
+					<xsd:element name="BestandPrefix" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ContextParametersType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="ContextType"/>
+			<xsd:element name="Bericht" type="BerichtType"/>
+			<xsd:element name="Afzender" type="TransactorType"/>
+			<xsd:element name="Ontvanger" type="TransactorType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LEZGegevensParametersType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="ContextType"/>
+			<xsd:element name="Afzender" type="TransactorType"/>
+			<xsd:element name="Ontvanger" type="TransactorType"/>
+			<xsd:element name="Bericht" type="BerichtType"/>
+			<xsd:element name="BestandsPrefix" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FlitsParametersType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="ContextType"/>
+			<xsd:element name="Afzender" type="TransactorType"/>
+			<xsd:element name="Ontvanger" type="TransactorType"/>
+			<xsd:element name="AantalControlesPerVraag">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:int">
+						<xsd:minInclusive value="1"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ResultFlitsVerrijkingParametersType">
+		<xsd:sequence>
+			<xsd:element name="Bron" type="VerrijkingBronType"/>
+			<xsd:element name="RecordDelimiter" type="xsd:string"/>
+			<xsd:element name="LandIsoCodePositie" type="xsd:string"/>
+			<xsd:element name="NummerPlaatPositie" type="xsd:string"/>
+			<xsd:element name="ControleDatumPositie" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SocialeSchuldParametersType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="generiek:ContextType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LDMVSParametersType">
+		<xsd:sequence>
+			<xsd:element name="GebruikValidatie" type="BooleanType"/>
+			<xsd:element name="SplitElementXPath" type="xsd:string"/>
+			<xsd:element name="SplitValues" type="SplitValuesType"/>
+			<xsd:element name="NoLegalContextFolder" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SplitValuesType">
+		<xsd:sequence>
+			<xsd:element name="SplitValue" type="SplitValueType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SplitValueType">
+		<xsd:sequence>
+			<xsd:element name="Source" type="xsd:string"/>
+			<xsd:element name="TargetFolder" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CheckToegangXMLNaarCSVParameters">
+		<xsd:sequence>
+			<xsd:element name="ResultatenControles" type="ResultatenControlesType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CheckToegangXMLNaarCSVPatchParameters">
+		<xsd:sequence>
+			<xsd:element name="ResultatenControles" type="ResultatenControlesType"/>
+			<xsd:element name="ExtraControles" type="ExtraControlesType" minOccurs="0"/>
+			<xsd:element name="GeefVoertuigRequestParameters" type="GeefVoertuigRequestParametersType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ExtraControlesType">
+		<xsd:sequence>
+			<xsd:element name="ExtraControle" type="ExtraControleType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ExtraControleType">
+		<xsd:sequence>
+			<xsd:element name="Resultaatwaarde" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GeefVoertuigRequestParametersType">
+		<xsd:sequence>
+			<xsd:element name="Endpoint" type="xsd:string"/>
+			<xsd:element name="Afzender" type="xsd:string"/>
+			<xsd:element name="AfzenderHoedanigheid" type="xsd:string"/>
+			<xsd:element name="AfzenderReferte" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DIVDumpAnonimisatieParametersType">
+		<xsd:sequence>
+			<xsd:element name="RecordDelimiter" type="xsd:string"/>
+			<xsd:element name="LandIsoCodePositie" type="xsd:string"/>
+			<xsd:element name="NummerPlaatPositie" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ResultatenControlesType">
+		<xsd:sequence>
+			<xsd:element name="DefaultDoelbestand" type="xsd:string"/>
+			<xsd:element name="ResultatenControle" type="ResultatenControleType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ResultatenControleType">
+		<xsd:sequence>
+			<xsd:element name="Resultaatwaarde" type="xsd:string"/>
+			<xsd:element name="Doelbestand" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ContextType">
+		<xsd:sequence>
+			<xsd:element name="Naam" type="xsd:string"/>
+			<xsd:element name="Versie" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BerichtType">
+		<xsd:sequence>
+			<xsd:element name="Type" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TransactorType">
+		<xsd:sequence>
+			<xsd:element name="Identificatie" type="xsd:string"/>
+			<xsd:element name="Naam" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Hoedanigheid" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- SociaalStatuutVoorLijst -->
+	<xsd:complexType name="SociaalStatuutLijstRequestParametersType">
+		<xsd:complexContent>
+			<xsd:extension base="LDMFileNameParametersType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="SociaalStatuutLijstResponseParametersType">
+		<xsd:complexContent>
+			<xsd:extension base="KszContextParameters"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- RegistreerAanvraagHandicap -->
+	<xsd:complexType name="RegistreerAanvraagHandicapRequestParametersType">
+		<xsd:sequence>
+			<xsd:element name="LDMFileNameParameters" type="LDMFileNameParametersType"/>
+			<xsd:element name="A1Creatie" type="A1CreatieType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RegistreerAanvraagHandicapResponseParametersType">
+		<xsd:sequence>
+			<xsd:element name="ContextParameters" type="ContextParametersType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- VLOKPubMutNot -->
+	<xsd:complexType name="VLOKPubMutNotParametersType">
+		<xsd:sequence>
+			<xsd:element name="ContextParameters" type="ContextParametersType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- PubliceerMutatieZorgtoeslagParameters -->
+	<xsd:complexType name="PubliceerMutatieZorgtoeslagParametersType">
+		<xsd:sequence>
+			<xsd:element name="OutputFilenameParameters" type="PubliceerMutatieZorgtoeslagOutFileNameParametersType"/>
+			<xsd:element name="A1Header" type="A1HeaderType"/>
+			<xsd:element name="A1Creatie" type="A1CreatieType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PubliceerMutatieZorgtoeslagOutFileNameParametersType">
+		<xsd:sequence>
+			<xsd:element name="Omgeving" type="OmgevingEnumType" minOccurs="0"/>
+			<xsd:element name="TypeBestand" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Sector" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="TypeInstelling" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- RegistreerAanvraagZorgtoeslagParameters -->
+	<xsd:complexType name="RegistreerAanvraagZorgtoeslagParametersType">
+		<xsd:sequence>
+			<xsd:element name="OutputFilenameParameters" type="RegistreerAanvraagZorgtoeslagOutFileNameParametersType"/>
+			<xsd:element name="A1Header" type="A1HeaderType"/>
+			<xsd:element name="A1Creatie" type="A1CreatieType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RegistreerAanvraagZorgtoeslagOutFileNameParametersType">
+		<xsd:sequence>
+			<xsd:element name="Omgeving" type="OmgevingEnumType" minOccurs="0"/>
+			<xsd:element name="TypeBestand" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Sector" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="TypeInstelling" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- PubliceerKindTenLasteParameters -->
+	<xsd:complexType name="PubliceerKindTenLasteParametersType">
+		<xsd:sequence>
+			<xsd:element name="OutputFilenameParameters" type="PubliceerKindTenLasteOutFileNameParametersType"/>
+			<xsd:element name="A1Header" type="A1HeaderType"/>
+			<xsd:element name="A1Creatie" type="A1CreatieType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PubliceerKindTenLasteOutFileNameParametersType">
+		<xsd:sequence>
+			<xsd:element name="Omgeving" type="OmgevingEnumType" minOccurs="0"/>
+			<xsd:element name="TypeBestand" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Sector" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="TypeInstelling" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="A800Type">
+		<xsd:sequence>
+			<xsd:element name="ScheidingsTekenStart" type="HeaderLocationType"/>
+			<xsd:element name="RecordType" type="HeaderLocationType"/>
+			<xsd:element name="StructuurCode" type="HeaderLocationType"/>
+			<xsd:element name="IndicatorKindTenLaste" type="HeaderLocationType"/>
+			<xsd:element name="IndiatorKindMetAandoening" type="HeaderLocationType"/>
+			<xsd:element name="IndicatorVolwasseneMetAandoening" type="HeaderLocationType"/>
+			<xsd:element name="ScheidingsTekenEinde" type="HeaderLocationType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- LDM -->
+	<xsd:complexType name="CreatieParametersType">
+		<xsd:sequence>
+			<xsd:element name="TypeOrganisatie" type="TypeOrganisatieEnumType"/>
+			<xsd:element name="UniekeIdentificatiePrefix" type="xsd:string"/>
+			<xsd:element name="OntvangerOrganisatieIdentificatie" type="OrganisatieIdentificatieType"/>
+			<xsd:element name="AfzenderOrganisatieIdentificatie" type="OrganisatieIdentificatieType"/>
+			<xsd:element name="Omgeving" type="OmgevingEnumType"/>
+			<xsd:element name="ApplicatieCode" type="xsd:string"/>
+			<xsd:element name="OperatieCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="EmailAdres" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Encoding" type="xsd:string"/>
+			<xsd:element name="Integriteit" type="IntegriteitType"/>
+			<xsd:element name="ZippenActiveren" type="BooleanType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrganisatieIdentificatieType">
+		<xsd:sequence>
+			<xsd:choice>
+				<xsd:element name="SSO" type="SSOType"/>
+				<xsd:element name="OndernemingsNummer" type="OndernemingsNummerType"/>
+			</xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SSOType">
+		<xsd:sequence>
+			<xsd:element name="Sector" type="SectorType"/>
+			<xsd:element name="Instelling" type="InstellingType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IntegriteitType">
+		<xsd:sequence>
+			<xsd:element name="IntegrityMethod" type="IntegriteitsMethodeEnumType"/>
+			<xsd:element name="ReferenceFileName" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AfnemersType">
+		<xsd:sequence>
+			<xsd:element name="Afnemer" type="AfnemerType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BestandsInhoudStructuurType">
+		<xsd:sequence>
+			<xsd:element name="HeaderStructuur" type="HeaderStructuurType"/>
+			<xsd:element name="DataRecordStructuur" type="DataRecordStructuurType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="BestandsNaamStructuurType">
+		<xsd:sequence>
+			<xsd:element name="AfnemerCodeLocatie" type="LocatieType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DataRecordStructuurType">
+		<xsd:sequence>
+			<xsd:element name="LijnFormaat" type="xsd:integer"/>
+			<xsd:element name="StartOfData" type="xsd:integer"/>
+			<xsd:element name="PrefixStructuur" type="DataRecordPrefixStructuurType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IdentificatieLocatieType">
+		<xsd:sequence>
+			<xsd:element name="SectorLocatie" type="LocatieType"/>
+			<xsd:element name="TypeInstellingLocatie" type="LocatieType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="IdentificatieType">
+		<xsd:sequence>
+			<xsd:element name="Sector" type="xsd:string"/>
+			<xsd:element name="TypeInstelling" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HeaderStructuurType">
+		<xsd:sequence>
+			<xsd:element name="AantalLijnen" type="xsd:integer"/>
+			<xsd:element name="Lengte" type="xsd:integer"/>
+			<xsd:element name="PrefixStructuur" type="HeaderPrefixStructuurType"/>
+			<xsd:element name="DataStructuur" type="HeaderDataStructuurType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DataRecordPrefixStructuurType">
+		<xsd:sequence>
+			<xsd:element name="Netwerkreturncode" type="LocatieType"/>
+			<xsd:element name="VersiePrefix" type="LocatieType"/>
+			<xsd:element name="Sector" type="LocatieType"/>
+			<xsd:element name="TypeInstelling" type="LocatieType"/>
+			<xsd:element name="InterneReferentieSector" type="LocatieType"/>
+			<xsd:element name="UserId" type="LocatieType"/>
+			<xsd:element name="TypeAntwoord" type="LocatieType"/>
+			<xsd:element name="Insz" type="LocatieType"/>
+			<xsd:element name="ReturncodeKsz" type="LocatieType"/>
+			<xsd:element name="Formulier" type="LocatieType"/>
+			<xsd:element name="Variante" type="LocatieType"/>
+			<xsd:element name="Berichtgedeelte" type="LocatieType"/>
+			<xsd:element name="IdentificatieToepassing" type="LocatieType"/>
+			<xsd:element name="InterneReferentieAntwoorder" type="LocatieType"/>
+			<xsd:element name="DatumVersturenVraag" type="LocatieType"/>
+			<xsd:element name="DatumVersturenAntwoord" type="LocatieType"/>
+			<xsd:element name="SlagenStroom" type="LocatieType"/>
+			<xsd:element name="Hoedanigheidscode" type="LocatieType"/>
+			<xsd:element name="Fase" type="LocatieType"/>
+			<xsd:element name="BeginRepertorium" type="LocatieType"/>
+			<xsd:element name="EindeRepertorium" type="LocatieType"/>
+			<xsd:element name="BeginBericht" type="LocatieType"/>
+			<xsd:element name="EindeBericht" type="LocatieType"/>
+			<xsd:element name="SectorLeverancier" type="LocatieType"/>
+			<xsd:element name="InstellingLeverancier" type="LocatieType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HeaderDataStructuurType">
+		<xsd:sequence>
+			<xsd:element name="AantalRecordsLocatie" type="LocatieType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HeaderPrefixStructuurType">
+		<xsd:sequence>
+			<xsd:element name="VersieLocatie" type="LocatieType"/>
+			<xsd:element name="SoortVraagLocatie" type="LocatieType"/>
+			<xsd:element name="NetwerkIdentificatieLocaties" type="IdentificatieLocatieType"/>
+			<xsd:element name="BestemmelingIdentificatieLocaties" type="IdentificatieLocatieType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LocatieType">
+		<xsd:sequence>
+			<xsd:element name="StartPositie" type="xsd:integer"/>
+			<xsd:element name="EindPositie" type="xsd:integer"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AfnemerType">
+		<xsd:sequence>
+			<xsd:element name="Code" type="AfnemerCodeType"/>
+			<xsd:element name="Bestemmingsfolder" type="xsd:string"/>
+			<xsd:element name="FormulierActies" type="FormulierActiesType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FormulierActiesType">
+		<xsd:sequence>
+			<xsd:element name="FormulierActie" type="FormulierActieType" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="FormulierActieType">
+		<xsd:sequence>
+			<xsd:element name="Formulier" type="xsd:string"/>
+			<xsd:element name="Actie" type="FormulierActieEnumType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="VerrijkingBronType">
+		<xsd:annotation>
+			<xsd:documentation>DIV</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DIV"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TransformatieTypeEnumType">
+		<xsd:annotation>
+			<xsd:documentation>A1SPLITTER | A1TRANSFORMER | RRANON | CREATELOTDEMESSAGES | VALIDATELOTDEMESSAGES |
+				PMP0200 | PMP0102 | A820 | A014 | A820MUT | PSC0200 | MALBO2CBNOTS | CBNOTS2RALBO |
+				FLITS2TOEGANGCONTROLE | TOEGANGCONTROLE2CSV | LEZGEGEVENS2XML | LEZGEGEVENS2CSV |
+				DIVANON | RESULTFLASHENRICH | SOCIAALSTATUUTLIJSTREQUEST | SOCIAALSTATUUTLIJSTRESPONSE |
+				REGISTREERAANVRAAGZORGTOESLAG |
+				PUBLICEERSOCIALESCHULD | LOTDEMESSAGESVALIDATORSPLITTER | PUBLICEERMUTATIEZORGTOESLAG |
+				PUBLICEERKINDTENLASTE |
+				MUTATIESOCIALESTATUTEN | FEEDBACKSOCIALESTATUTEN | WERKNEMERBIJDRAGEVERMINDERING | PUBLICEERINWONERSPERADRES | XSLT |
+				RENAME2LDMDATAFILE | PUBLICEERATTESTKINDTENLASTE30 | PUBLICEERVLIMPERSDOWNLOAD
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="GEEN"/>
+			<xsd:enumeration value="A1SPLITTER"/>
+			<xsd:enumeration value="A1TRANSFORMER"/>
+			<xsd:enumeration value="RRANON"/>
+			<xsd:enumeration value="CREATELOTDEMESSAGES"/>
+			<xsd:enumeration value="VALIDATELOTDEMESSAGES"/>
+			<xsd:enumeration value="PMP0200"/>
+			<xsd:enumeration value="PMP0102"/>
+			<xsd:enumeration value="PSC0200"/>
+			<xsd:enumeration value="A820"/>
+			<xsd:enumeration value="A820MUT"/>
+			<xsd:enumeration value="A014"/>
+			<xsd:enumeration value="MALBO2CBNOTS"/>
+			<xsd:enumeration value="CBNOTS2RALBO"/>
+			<xsd:enumeration value="FLITS2TOEGANGCONTROLE"/>
+			<xsd:enumeration value="TOEGANGCONTROLE2CSV"/>
+			<xsd:enumeration value="LEZGEGEVENS2XML"/>
+			<xsd:enumeration value="LEZGEGEVENS2CSV"/>
+			<xsd:enumeration value="TOEGANGCONTROLE2CSVPATCH"/>
+			<xsd:enumeration value="DIVANON"/>
+			<xsd:enumeration value="RESULTFLASHENRICH"/>
+			<xsd:enumeration value="SOCIAALSTATUUTLIJSTREQUEST"/>
+			<xsd:enumeration value="SOCIAALSTATUUTLIJSTRESPONSE"/>
+			<xsd:enumeration value="REGISTREERAANVRAAGZORGTOESLAG"/>
+			<xsd:enumeration value="PUBLICEERSOCIALESCHULD"/>
+			<xsd:enumeration value="LOTDEMESSAGESVALIDATORSPLITTER"/>
+			<xsd:enumeration value="VLOKCSV2PUBMUTNOT0201"/>
+			<xsd:enumeration value="PUBLICEERMUTATIEZORGTOESLAG"/>
+			<xsd:enumeration value="REGISTREERMUTATIEZORGTOESLAG"/>
+			<xsd:enumeration value="PUBLICEERKINDTENLASTE"/>
+			<xsd:enumeration value="MUTATIESOCIALESTATUTEN"/>
+			<xsd:enumeration value="FEEDBACKSOCIALESTATUTEN"/>
+			<xsd:enumeration value="WERKNEMERBIJDRAGEVERMINDERING"/>
+			<xsd:enumeration value="PUBLICEERINWONERSPERADRES"/>
+			<xsd:enumeration value="XSLT"/>
+			<xsd:enumeration value="RENAME2LDMDATAFILE"/>
+            <xsd:enumeration value="PUBLICEERATTESTKINDTENLASTE30"/>
+            <xsd:enumeration value="PUBLICEERVLIMPERSDOWNLOAD"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TypeOrganisatieEnumType">
+		<xsd:annotation>
+			<xsd:documentation>S (op basis van sector/instelling) | E (ondernemingsnummer)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="S"/>
+			<xsd:enumeration value="E"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OmgevingEnumType">
+		<xsd:annotation>
+			<xsd:documentation>t (test)| a (acceptatie) | p (productie)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="T"/>
+			<xsd:enumeration value="A"/>
+			<xsd:enumeration value="P"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SyntaxEnumType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="XML"/>
+			<xsd:enumeration value="INHOUSE"/>
+			<xsd:enumeration value="FLAT"/>
+			<xsd:enumeration value="A1"/>
+			<xsd:enumeration value="CSV"/>
+			<xsd:enumeration value="UNKNOWN"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IntegriteitsMethodeEnumType">
+		<xsd:annotation>
+			<xsd:documentation>MD5| DSIG</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MD5"/>
+			<xsd:enumeration value="DSIG"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BooleanType">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="1"/>
+			<xsd:pattern value="(0|1)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AfnemerCodeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="13"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FormulierActieEnumType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="VERWERKEN"/>
+			<xsd:enumeration value="NEGEREN"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- VKBP2 -->
+	<xsd:complexType name="GegevensStroomFormaatTransformatorStroomAfnemersType">
+		<xsd:annotation>
+			<xsd:documentation>Gebruikt voor output, vb. elke afnemer kan een eigen encoding wensen.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="GegevensStroomFormaatTransformatorStroomAfnemer" type="GegevensStroomFormaatTransformatorStroomAfnemerType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="GegevensStroomFormaatTransformatorStroomAfnemerType">
+		<xsd:sequence>
+			<xsd:element name="Naam" type="xsd:string"/>
+			<xsd:choice>
+				<xsd:element name="PersoonAfnemerIdentificatie" type="PersoonAfnemerIdentificatieType"/>
+				<xsd:element name="OndernemingAfnemerIdentificatie" type="OndernemingAfnemerIdentificatieType"/>
+			</xsd:choice>
+			<xsd:element name="FileEncoding" type="xsd:string"/>
+			<xsd:element name="PrettyPrintedOutput" type="xsd:boolean"/>
+			<xsd:element name="OutputMaxOccurs" type="xsd:int" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PersoonAfnemerIdentificatieType">
+		<xsd:sequence>
+			<xsd:element name="Identificatie" type="xsd:string"/>
+			<xsd:element name="Hoedanigheid" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OndernemingAfnemerIdentificatieType">
+		<xsd:sequence>
+			<xsd:element name="Ondernemingsnummer" type="xsd:string"/>
+			<xsd:element name="Vestigingsnummer" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- LDM -->
+	<xsd:simpleType name="SectorType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{1,3}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="InstellingType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{1,3}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="OndernemingsNummerType">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-1][0-9]{0,9}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Generiek -->
+	<xsd:complexType name="ConfiguratieType">
+		<xsd:sequence>
+			<xsd:element name="SleutelwaardeExpressies" type="SleutelwaardeExpressieType"/>
+			<xsd:element name="SchemaFileName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Prefix" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="SleutelwaardeExpressieType">
+		<xsd:sequence>
+			<xsd:element name="SleutelwaardeExpressie" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="A1VoorleggingType">
+		<xsd:sequence>
+			<xsd:element name="Formuliergedeelte">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Formulier" type="HeaderLocationType"/>
+						<xsd:element name="Variante" type="HeaderLocationType"/>
+						<xsd:element name="GedeelteBericht" type="HeaderLocationType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Antwoordgedeelte">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="IdentificatieToepassing" type="HeaderLocationType"/>
+						<xsd:element name="ReferentieBeantwoorder" type="HeaderLocationType"/>
+						<xsd:element name="DatumVraag" type="HeaderLocationType"/>
+						<xsd:element name="TermijnAntwoord" type="HeaderLocationType"/>
+						<xsd:element name="TimeOutActie" type="HeaderLocationType"/>
+						<xsd:element name="SlagingStroom" type="HeaderLocationType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Repertoriumgedeelte">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Hoedanigheidscode" type="HeaderLocationType"/>
+						<xsd:element name="Fase" type="HeaderLocationType"/>
+						<xsd:element name="RepertoriumBegin" type="HeaderLocationType"/>
+						<xsd:element name="RepertoriumEinde" type="HeaderLocationType"/>
+						<xsd:element name="BerichtBegin" type="HeaderLocationType"/>
+						<xsd:element name="BerichtEinde" type="HeaderLocationType"/>
+						<xsd:element name="LeverancierSector" type="HeaderLocationType"/>
+						<xsd:element name="TypeInstelling" type="HeaderLocationType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Netwerkgedeelte">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Netwerk" type="HeaderLocationType"/>
+						<xsd:element name="Versie" type="HeaderLocationType"/>
+						<xsd:element name="Sector" type="HeaderLocationType"/>
+						<xsd:element name="TypeInstelling" type="HeaderLocationType"/>
+						<xsd:element name="InterneReferentieSector" type="HeaderLocationType"/>
+						<xsd:element name="GebruikersID" type="HeaderLocationType"/>
+						<xsd:element name="TypeAanvraag" type="HeaderLocationType"/>
+						<xsd:element name="INSZ" type="HeaderLocationType"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="A1CreatieInhoudType">
+		<xsd:choice>
+			<xsd:sequence>
+				<xsd:element name="Proces" type="xsd:string" minOccurs="0"/>
+				<xsd:element name="Versie" type="xsd:string" minOccurs="0"/>
+			</xsd:sequence>
+			<xsd:sequence>
+				<xsd:choice>
+					<xsd:element name="A800" type="A800Type"/>
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:complexType name="A1Type">
+		<xsd:sequence>
+			<xsd:element name="Voorlegging" type="A1VoorleggingType" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="A1CreatieType">
+		<xsd:complexContent>
+			<xsd:extension base="A1Type">
+				<xsd:sequence>
+					<xsd:element name="Inhoud" type="A1CreatieInhoudType" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="A1HeaderInhoudType">
+		<xsd:sequence>
+			<xsd:element name="MailboxNumber" type="HeaderLocationType"/>
+			<xsd:element name="NumberOfRecords" type="HeaderLocationType"/>
+			<xsd:element name="FileSize" type="HeaderLocationType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="A1HeaderType">
+		<xsd:complexContent>
+			<xsd:extension base="A1Type">
+				<xsd:sequence>
+					<xsd:element name="HeaderInhoud" type="A1HeaderInhoudType" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PubliceerV3ParametersType">
+		<xsd:sequence>
+			<xsd:element name="Context" type="generiekV3:ContextType"/>
+			<xsd:element name="BestandPrefix" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="HeaderLocationType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="Start" type="xsd:int"/>
+				<xsd:attribute name="Einde" type="xsd:int"/>
+				<xsd:attribute name="xpath" type="xsd:boolean"/>
+				<xsd:attribute name="KorteWaardeAanvullen" type="KorteWaardeAanvullenType" default="BLOKKEER"/>
+				<xsd:attribute name="bron" type="ConfiguratieWaardeBronType" default="DEFAULT"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="KorteWaardeAanvullenType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BLOKKEER"/>
+			<xsd:enumeration value="BLANKOLINKS"/>
+			<xsd:enumeration value="BLANKORECHTS"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ConfiguratieWaardeBronType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DEFAULT"/>
+			<xsd:enumeration value="CUSTOM"/>
+			<!--<xsd:enumeration value="CONTEXT"/>
+            <xsd:enumeration value="INHOUD"/>-->
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FileRenamingPatternEnumType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Deze enum wordt gebruikt in de optionele annotatie om aan te duiden werke methode moet gebruikt worden
+				bij het verwerken van de FileRenamingStrategyPattern
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="TIMESTAMP"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="PubliceerInwonersPerAdresParametersType">
+		<xsd:sequence>
+			<xsd:element name="OutputFilePrefix" type="xsd:string"/>
+			<xsd:element name="UnzipFolder" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="XsltParametersType">
+		<xsd:sequence>
+			<xsd:element name="TemplateFileName" type="xsd:string"/>
+			<xsd:element name="TemplateParameters" type="TemplateParametersType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TemplateParametersType">
+		<xsd:sequence>
+			<xsd:element name="Parameter" type="ParameterType" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ParameterType">
+		<xsd:attribute name="key" type="xsd:string"/>
+		<xsd:attribute name="value" type="xsd:string"/>
+	</xsd:complexType>
+</xsd:schema>

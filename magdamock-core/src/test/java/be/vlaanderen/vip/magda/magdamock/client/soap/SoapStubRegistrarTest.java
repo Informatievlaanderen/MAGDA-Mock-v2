@@ -1,274 +1,175 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
+import be.vlaanderen.vip.magda.client.MagdaServiceIdentification;
 import com.github.tomakehurst.wiremock.WireMockServer;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar.VERSION_01_00;
+import static be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar.VERSION_02_00;
+import static be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar.VERSION_02_01;
+import static be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar.VERSION_02_02;
+import static be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar.VERSION_03_00;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class SoapStubRegistrarTest {
 
-    private WireMockServer wireMockServer;
+    @Test
+    void all_shouldContainAllRegisteredServicesAndVersions() {
+        List<SoapStubRegistrar.SoapStubDefinition> definitions = SoapStubRegistrar.SoapStubDefinitions.allDefinitions();
 
-    @TempDir
-    Path tempDir;
+        Set<String> actual = definitions.stream()
+                .map(definition -> definition.service() + "|" + definition.version())
+                .collect(Collectors.toSet());
 
-    @AfterEach
-    void tearDown() {
-        if (wireMockServer != null) {
-            wireMockServer.stop();
-        }
+        // Dossier
+        assertContains(actual, "GeefDossiers", VERSION_02_00);
+
+        // Gezin
+        assertContains(actual, "GeefKindVoordelen", VERSION_02_00);
+
+        // Inkomen
+        assertContains(actual, "GeefAanslagbiljetPersonenbelasting", VERSION_02_00);
+
+        // Kadaster
+        assertContains(actual, "GeefCadNetTransacties", VERSION_01_00);
+        assertContains(actual, "GeefEigendomstoestanden", VERSION_02_00);
+        assertContains(actual, "GeefHistoriekEigendomstoestand", VERSION_03_00);
+        assertContains(actual, "GeefHistoriekMutatiedossier", VERSION_03_00);
+        assertContains(actual, "GeefKadastraleAfdelingenOpKBO", VERSION_01_00);
+        assertContains(actual, "GeefTransacties", VERSION_03_00);
+        assertContains(actual, "ZoekEigendomstoestanden", VERSION_02_00);
+        assertContains(actual, "ZoekPerceel", VERSION_02_00);
+        assertContains(actual, "ZoekVerkoopprijzen", VERSION_03_00);
+
+        // LED
+        assertContains(actual, "AnnuleerBewijs", VERSION_02_00);
+        assertContains(actual, "GeefBewijs", VERSION_02_00);
+        assertContains(actual, "RegistreerBewijs", VERSION_02_00);
+        assertContains(actual, "RegistreerMutatieBewijs", VERSION_02_00);
+
+        // Onderneming
+        assertContains(actual, "GeefAdressenLocaties", VERSION_02_00);
+        assertContains(actual, "GeefBeschikbareJaarrekeningen", VERSION_02_00);
+        assertContains(actual, "GeefDeelnemingen", VERSION_02_00);
+        assertContains(actual, "GeefFiscaleInhoudingsplicht", VERSION_02_01);
+        assertContains(actual, "GeefFiscaleSchuld", VERSION_02_00);
+        assertContains(actual, "GeefFuncties", VERSION_02_00);
+        assertContains(actual, "GeefJaarrekeningen", VERSION_02_00);
+        assertContains(actual, "GeefOnderneming", VERSION_02_00);
+        assertContains(actual, "GeefOndernemingSignalen", VERSION_02_00);
+        assertContains(actual, "GeefOndernemingVKBO", VERSION_02_00);
+        assertContains(actual, "GeefPCenTW", VERSION_02_00);
+        assertContains(actual, "GeefSocialeSchuld", VERSION_02_00);
+        assertContains(actual, "GeefTewerkstelling", VERSION_02_00);
+        assertContains(actual, "ZoekOnderneming", VERSION_02_00);
+
+        // Onderwijs
+        assertContains(actual, "GeefHistoriekInschrijving", VERSION_02_01);
+
+        // Persoon
+        assertContains(actual, "GeefAttest", VERSION_02_00);
+        assertContains(actual, "GeefGezinssamenstelling", VERSION_02_00);
+        assertContains(actual, "GeefGezinssamenstelling", VERSION_02_02);
+        assertContains(actual, "GeefHistoriekGezinssamenstelling", VERSION_02_02);
+        assertContains(actual, "GeefHistoriekPersoon", VERSION_02_00);
+        assertContains(actual, "GeefHistoriekPersoon", VERSION_02_02);
+        assertContains(actual, "GeefPasfoto", VERSION_02_00);
+        assertContains(actual, "GeefPersoon", VERSION_02_02);
+        assertContains(actual, "GeefPersoonMutatiesNotificaties", VERSION_02_00);
+        assertContains(actual, "RaadpleegLeerkredietsaldo", VERSION_01_00);
+        assertContains(actual, "ZoekPersoonOpAdres", VERSION_02_02);
+        assertContains(actual, "ZoekPersoonOpNaam", VERSION_02_02);
+
+        // Repertorium
+        assertContains(actual, "RegistreerInschrijving", VERSION_02_00);
+        assertContains(actual, "RegistreerInschrijving", VERSION_02_01);
+        assertContains(actual, "RegistreerUitschrijving", VERSION_02_00);
+
+        // SocEcon
+        assertContains(actual, "GeefStatusRechtOndersteuningen", VERSION_02_00);
+
+        // SocSec
+        assertContains(actual, "GeefBetalingenHandicap", VERSION_03_00);
+        assertContains(actual, "GeefDossierHandicap", VERSION_03_00);
+        assertContains(actual, "GeefLeefloonbedragen", VERSION_02_00);
+        assertContains(actual, "GeefSociaalStatuut", VERSION_03_00);
+        assertContains(actual, "GeefVolledigDossierHandicap", VERSION_03_00);
+
+        // Vastgoed
+        assertContains(actual, "GeefEpc", VERSION_02_01);
+
+        // Werk
+        assertContains(actual, "GeefLoopbaanARZA", VERSION_02_01);
+        assertContains(actual, "GeefLoopbaanonderbrekingen", VERSION_02_00);
+        assertContains(actual, "GeefWerkrelaties", VERSION_02_00);
+        assertContains(actual, "GeefDmfaVoorWerknemer", VERSION_03_00);
     }
 
     @Test
-    void registerDomain_shouldRegisterInszStub() throws Exception {
-        wireMockServer = new WireMockServer(options().dynamicPort());
-        wireMockServer.start();
+    void createHandler_shouldCreateSubDirHandler() {
+        var definition = SoapStubRegistrar.SoapStubDefinitions.allDefinitions().stream()
+                .filter(d -> d.service().equals("GeefPersoon") && d.version().equals(VERSION_02_02))
+                .findFirst()
+                .orElseThrow();
 
-        String soapTestPath = tempDir.resolve("soap").toString();
+        SoapStubHandler handler = definition.createHandler(mock(WireMockServer.class), "soap");
 
-        String domainName = "person";
-        String serviceName = "GeefPersoon";
-        String versionName = "02.00";
-        String insz = "12345678901";
+        assertInstanceOf(SubDirSOAPStubHandler.class, handler);
+    }
 
-        writeStubFile(
-                tempDir,
-                soapTestPath,
-                domainName,
-                serviceName,
-                versionName,
-                insz + ".xml",
-                "<response>persoon gevonden</response>"
+    @Test
+    void createHandler_shouldCreatePasfotoHandler() {
+        var definition = SoapStubRegistrar.SoapStubDefinitions.allDefinitions().stream()
+                .filter(d -> d.service().equals("GeefPasfoto") && d.version().equals(VERSION_02_00))
+                .findFirst()
+                .orElseThrow();
+
+        SoapStubHandler handler = definition.createHandler(mock(WireMockServer.class), "soap");
+
+        assertInstanceOf(GeefPasfotoStubHandler.class, handler);
+    }
+
+    @Test
+    void registerDomain_shouldRegisterAllFiles() throws IOException {
+        SoapStubHandler handler = mock(SoapStubHandler.class);
+
+        SoapStubRegistrar registrar = new SoapStubRegistrar(
+                Map.of(new MagdaServiceIdentification("GeefPersoon", VERSION_02_02), handler)
         );
 
-        Domain domain = new Domain(
-                domainName,
-                List.of(new Service(
-                        serviceName,
-                        List.of(new Version(
-                                versionName,
-                                List.of(insz + ".xml")
-                        ))
-                ))
-        );
+        Version version = mock(Version.class);
+        when(version.name()).thenReturn(VERSION_02_02);
+        when(version.files()).thenReturn(List.of("a.xml", "b.xml"));
 
-        SoapStubRegistrar registrar = new SoapStubRegistrar(wireMockServer, soapTestPath);
+        Service service = mock(Service.class);
+        when(service.name()).thenReturn("GeefPersoon");
+        when(service.versions()).thenReturn(List.of(version));
+
+        Domain domain = mock(Domain.class);
+        when(domain.name()).thenReturn("Persoon");
+        when(domain.services()).thenReturn(List.of(service));
 
         registrar.registerDomain(domain);
 
-        String requestBody = """
-                <Envelope>
-                  <Body>
-                    <Naam>%s</Naam>
-                    <Versie>%s</Versie>
-                    <INSZ>%s</INSZ>
-                  </Body>
-                </Envelope>
-                """.formatted(serviceName, versionName, insz);
-
-        var response = HttpClient.newHttpClient().send(
-                HttpRequest.newBuilder()
-                        .uri(URI.create("http://localhost:" + wireMockServer.port() + "/soap"))
-                        .header("Content-Type", "text/xml; charset=utf-8")
-                        .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                        .build(),
-                HttpResponse.BodyHandlers.ofString()
-        );
-
-        assertEquals(200, response.statusCode());
-        assertEquals("<response>persoon gevonden</response>", response.body());
-        assertTrue(response.headers()
-                .firstValue("Content-Type")
-                .orElse("")
-                .contains("text/xml"));
+        verify(handler).register("Persoon", "GeefPersoon", VERSION_02_02, "a.xml");
+        verify(handler).register("Persoon", "GeefPersoon", VERSION_02_02, "b.xml");
     }
 
-    @Test
-    void registerDomain_shouldRegisterNotFoundStub() throws Exception {
-        wireMockServer = new WireMockServer(options().dynamicPort());
-        wireMockServer.start();
-
-        String soapTestPath = tempDir.resolve("soap").toString();
-
-        String domainName = "person";
-        String serviceName = "GeefPersoon";
-        String versionName = "02.00";
-
-        writeStubFile(
-                tempDir,
-                soapTestPath,
-                domainName,
-                serviceName,
-                versionName,
-                "notfound.xml",
-                "<response>niet gevonden</response>"
+    private void assertContains(Set<String> actual, String service, String version) {
+        assertTrue(
+                actual.contains(service + "|" + version),
+                () -> "Missing registration for " + service + " / " + version
         );
-
-        Domain domain = new Domain(
-                domainName,
-                List.of(new Service(
-                        serviceName,
-                        List.of(new Version(
-                                versionName,
-                                List.of("notfound.xml")
-                        ))
-                ))
-        );
-
-        SoapStubRegistrar registrar = new SoapStubRegistrar(wireMockServer, soapTestPath);
-
-        registrar.registerDomain(domain);
-
-        String requestBody = """
-                <Envelope>
-                  <Body>
-                    <Naam>%s</Naam>
-                    <Versie>%s</Versie>
-                    <INSZ>00000000000</INSZ>
-                  </Body>
-                </Envelope>
-                """.formatted(serviceName, versionName);
-
-        var response = HttpClient.newHttpClient().send(
-                java.net.http.HttpRequest.newBuilder()
-                        .uri(URI.create("http://localhost:" + wireMockServer.port() + "/soap"))
-                        .header("Content-Type", "text/xml; charset=utf-8")
-                        .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                        .build(),
-                HttpResponse.BodyHandlers.ofString()
-        );
-
-        assertEquals(200, response.statusCode());
-        assertEquals("<response>niet gevonden</response>", response.body());
-    }
-
-    @Test
-    void registerDomain_shouldThrowIllegalStateExceptionWhenStubFileDoesNotExist() {
-        wireMockServer = new WireMockServer(options().dynamicPort());
-        wireMockServer.start();
-
-        String soapTestPath = tempDir.resolve("soap").toString();
-
-        String domainName = "person";
-        String serviceName = "GeefPersoon";
-        String versionName = "02.00";
-        String insz = "12345678901";
-
-        Domain domain = new Domain(
-                domainName,
-                List.of(new Service(
-                        serviceName,
-                        List.of(new Version(
-                                versionName,
-                                List.of(insz + ".xml")
-                        ))
-                ))
-        );
-
-        SoapStubRegistrar registrar = new SoapStubRegistrar(wireMockServer, soapTestPath);
-
-        IllegalStateException exception = assertThrows(
-                IllegalStateException.class,
-                () -> registrar.registerDomain(domain)
-        );
-
-        assertTrue(exception.getMessage().contains("SOAP file can not be registered"));
-        assertNotNull(exception.getCause());
-        assertInstanceOf(IOException.class, exception.getCause());
-    }
-
-    @Test
-    void registerDomain_shouldRegisterOndernemingStub() throws Exception {
-        wireMockServer = new WireMockServer(options().dynamicPort());
-        wireMockServer.start();
-
-        String soapTestPath = tempDir.resolve("soap").toString();
-
-        String domainName = "enterprise";
-        String serviceName = "GeefOnderneming";
-        String versionName = "02.00";
-        String ondernemingsNummer = "1234567890";
-
-        writeStubFile(
-                tempDir,
-                soapTestPath,
-                domainName,
-                serviceName,
-                versionName,
-                ondernemingsNummer + ".xml",
-                "<response>onderneming gevonden</response>"
-        );
-
-        Domain domain = new Domain(
-                domainName,
-                List.of(new Service(
-                        serviceName,
-                        List.of(new Version(
-                                versionName,
-                                List.of(ondernemingsNummer + ".xml")
-                        ))
-                ))
-        );
-
-        SoapStubRegistrar registrar = new SoapStubRegistrar(wireMockServer, soapTestPath);
-
-        registrar.registerDomain(domain);
-
-        String requestBody = """
-            <Envelope>
-              <Body>
-                <Naam>%s</Naam>
-                <Versie>%s</Versie>
-                <Ondernemingsnummer>%s</Ondernemingsnummer>
-              </Body>
-            </Envelope>
-            """.formatted(serviceName, versionName, ondernemingsNummer);
-
-        var response = HttpClient.newHttpClient().send(
-                HttpRequest.newBuilder()
-                        .uri(URI.create("http://localhost:" + wireMockServer.port() + "/soap"))
-                        .header("Content-Type", "text/xml; charset=utf-8")
-                        .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                        .build(),
-                HttpResponse.BodyHandlers.ofString()
-        );
-
-        assertEquals(200, response.statusCode());
-        assertEquals("<response>onderneming gevonden</response>", response.body());
-        assertTrue(response.headers()
-                .firstValue("Content-Type")
-                .orElse("")
-                .contains("text/xml"));
-    }
-
-    private static void writeStubFile(
-            Path root,
-            String soapTestPath,
-            String domain,
-            String service,
-            String version,
-            String fileName,
-            String content
-    ) throws IOException {
-        Path file = root.resolve(Path.of(soapTestPath, domain, service, version, fileName));
-        Files.createDirectories(file.getParent());
-        Files.writeString(file, content);
     }
 
 }

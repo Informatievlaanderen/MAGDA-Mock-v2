@@ -1,0 +1,1116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://persoon-01_02.vip.vlaanderen.be"
+		   xmlns="http://persoon-01_02.vip.vlaanderen.be"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:generiek="http://generiek-01_02.vip.vlaanderen.be"
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.02">
+           
+    <xs:import namespace="http://generiek-01_02.vip.vlaanderen.be" schemaLocation="../Generiek-01.02/Generiek.xsd"/>
+    <xs:include schemaLocation="PersoonDataCodes.xsd"/>
+    <xs:include schemaLocation="PersoonDataKern.xsd"/>
+      	
+    <xs:complexType name="GebeurtenisType">
+        <xs:annotation>
+            <xs:documentation>GebeurtenisType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Datum" type="generiek:DatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Datum van gebeurtenis</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Gemeente" type="generiek:GemeenteType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Gemeente</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Land" type="generiek:LandType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Land moet niet noodzakelijk ingevuld zijn. Indien niet ingevuld, kan dit evenuteel
+                        uit de gemeente afgeleid worden. Indien niet, is het land België.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GebeurtenisMetDatumType">
+        <xs:complexContent>
+            <xs:extension base="GebeurtenisType">
+                <xs:attribute name="DatumModificatie" type="generiek:DatumType">
+                    <xs:annotation>
+                        <xs:documentation>Geeft aan wanneer de laatste wijziging aan de naam van deze persoon is
+                            gebeurd, enkel gebruik bij Antwoord.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GebeurtenisCriteriaType">
+        <xs:annotation>
+            <xs:documentation>Algemeen segment dat kan gebruikt worden om gebeurtenis aan te geven op bepaalde plaats en
+                op bepaalde datum
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Periode" type="generiek:PeriodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Datum van gebeurtenis</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="StraatCriteriaType">
+        <xs:annotation>
+            <xs:documentation>StraatCriteriaType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="NISCode" type="generiek:StraatNISCodeType">
+                <xs:annotation>
+                    <xs:documentation>NIS Code. Voor straat kan deze bestaan uit 3 of 4 cijfers.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GemeenteCriteriaType">
+        <xs:annotation>
+            <xs:documentation>GemeenteCriteriaType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="PostCode" type="generiek:PostCodeType">
+                <xs:annotation>
+                    <xs:documentation>Postcode van de gemeente</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AdresSoortCodeType">
+        <xs:annotation>
+            <xs:documentation>is een extension van simpel Type 'string' + beschrijving</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="Beschrijving" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="AdresSoortType">
+        <xs:annotation>
+            <xs:documentation>AdresSoortType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="SoortCode" type="AdresSoortCodeType">
+                <xs:annotation>
+                    <xs:documentation>SoortCode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Adres" type="generiek:AdresType">
+                <xs:annotation>
+                    <xs:documentation>Adres</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TekstAdresType">
+        <xs:annotation>
+            <xs:documentation>TekstAdresType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Land" type="generiek:LandType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Land</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Tekst" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Tekst</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TekstAdresSoortType">
+        <xs:annotation>
+            <xs:documentation>TekstAdresSoortType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="SoortCode" type="AdresSoortCodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>SoortCode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TekstAdres" type="TekstAdresType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>TekstAdres</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DatumModificatie" type="generiek:DatumType">
+            <xs:annotation>
+                <xs:documentation>Geeft aan wanneer de laatste wijziging aan de naam van deze persoon is gebeurd, enkel
+                    gebruik bij Antwoord.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AuthentiekeBron" type="generiek:AuthentiekeBronEnumType">
+            <xs:annotation>
+                <xs:documentation>AuthentiekeBron</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="RelatieCodeType">
+        <xs:annotation>
+            <xs:documentation>is een extension van simpel Type relatiecode + beschrijving</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="Beschrijving" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="GeslachtCodeType">
+        <xs:annotation>
+            <xs:documentation>is een extension van simpel Type 'GeslachtEnumType' + beschrijving</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="GeslachtEnumType">
+                <xs:attribute name="Beschrijving" type="xs:string"/>
+                <xs:attribute name="DatumModificatie" type="generiek:DatumType">
+                    <xs:annotation>
+                        <xs:documentation>Geeft aan wanneer de laatste wijziging aan de naam van deze persoon is
+                            gebeurd, enkel gebruik bij Antwoord.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="RegisterCodeType">
+        <xs:annotation>
+            <xs:documentation>RegisterCodeType</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="Beschrijving" type="xs:string"/>
+                <xs:attribute name="DatumModificatie" type="generiek:DatumType"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="BurgerlijkeStaatCodeType">
+        <xs:annotation>
+            <xs:documentation>is een extension van Burgerlijke Staat' + beschrijving</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="Beschrijving" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="PersoonNaamType">
+        <xs:annotation>
+            <xs:documentation>PersoonNaamType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Achternaam" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Familienaam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Voornaam" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Eerste voornaam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TweedeVoornaam" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Tweede voornaam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="VoornaamVolledigVlag" type="generiek:VlagCodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Controlevlag of volledige voornamen zijn meegedeeld. Heeft waarde '0' bij 1
+                        voornaam of 2 waarvan één onvolledig is. Heeft waarde '1' bij 2 volledige voornamen, beide
+                        voornamen zijn gescheiden door een blanco.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DatumModificatie" type="generiek:DatumType">
+            <xs:annotation>
+                <xs:documentation>Geeft aan wanneer de laatste wijziging aan de naam van deze persoon is gebeurd, enkel
+                    gebruik bij Antwoord.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="PersoonNaamCriteriaType">
+        <xs:annotation>
+            <xs:documentation>PersoonNaamCriteriaType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Achternaam" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Familienaam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Voornaam" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Eerste voornaam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TweedeVoornaam" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Tweede voornaam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="NationaliteitsType">
+        <xs:annotation>
+            <xs:documentation>NationaliteitsType</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="generiek:LandType">
+                <xs:attribute name="DatumModificatie" type="generiek:DatumType">
+                    <xs:annotation>
+                        <xs:documentation>Dag waarop de nationaliteit werd verworven. Indien niet ingevuld is dit ofwel
+                            niet gekend ofwel de geboortedatum. Enkel gebruik bij Antwoord.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PersoonBeknoptType">
+        <xs:annotation>
+            <xs:documentation>PersoonBeknoptType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="INSZ" type="generiek:INSZType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het INSZ (Identificatienummer Sociale Zekerheid), RR of Bis nummer. De inhoud van
+                        dit veld moet precies 11 tekens lang zijn; voorloopnullen mogen niet worden weggelaten.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Naam" type="PersoonNaamType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Naam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Geslacht" type="GeslachtCodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Geslacht</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="GeboorteDatum" type="generiek:DatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Naam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AdellijkeTitelType">
+        <xs:annotation>
+            <xs:documentation>AdellijkeTitelType</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="Beschrijving" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Beschrijving</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="RedenVerworvenType">
+        <xs:annotation>
+            <xs:documentation>RedenVerworvenType</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="Beschrijving" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Beschrijving</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="PlaatsRegistratieType">
+        <xs:annotation>
+            <xs:documentation>PlaatsRegistratieType</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="generiek:GemeenteNISCodeType">
+                <xs:attribute name="Beschrijving" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Beschrijving</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="BurgerlijkeStaatType">
+        <xs:annotation>
+            <xs:documentation>BurgerlijkeStaatType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Code" type="BurgerlijkeStaatCodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>BurgerlijkeStaatCode van de persoon. Voor waardes zie codetabel</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Partner" type="PersoonBeknoptType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Gegevens over de partner van de persoon</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Gebeurtenis" type="GebeurtenisType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Gebeurtenis</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="DatumModificatie" type="generiek:DatumType">
+            <xs:annotation>
+                <xs:documentation>Geeft aan wanneer de laatste wijziging aan de naam van deze persoon is gebeurd, enkel
+                    gebruik bij Antwoord.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="StraatType">
+        <xs:annotation>
+            <xs:documentation>StraatType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Naam" type="generiek:StraatNaamType">
+                <xs:annotation>
+                    <xs:documentation>Naam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="NaamGroepType">
+        <xs:annotation>
+            <xs:documentation>NaamGroepType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Achternaam" type="generiek:NaamLangType">
+                <xs:annotation>
+                    <xs:documentation>Achternaam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Voornaam" type="VoornaamType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Voornaam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TweedeVoornaam" type="TweedeVoornaamType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>TweedeVoornaam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DatumModificatie" type="generiek:VolledigDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>DatumModificatie</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AdresGroepType">
+        <xs:annotation>
+            <xs:documentation>AdresGroepType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="StraatNaam" type="generiek:StraatNaamType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>StraatNaam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HuisNummer" type="generiek:HuisBusNummerType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>HuisNummer</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Bus" type="generiek:HuisBusNummerType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Bus</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Gemeente" type="generiek:GemeenteGroepType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Gemeente</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="LandNISCode" type="generiek:LandNISCodeGroepType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>LandNISCode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DatumModificatie" type="generiek:VolledigDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>DatumModificatie</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="OverlijdenGroepType">
+        <xs:annotation>
+            <xs:documentation>OverlijdenGroepType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Datum" type="generiek:VolledigDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>DatumModificatie</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DatumModificatie" type="generiek:VolledigDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>DatumModificatie</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GeboorteGeslachtGroepType">
+        <xs:annotation>
+            <xs:documentation>GeboorteGeslachtGroepType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="GeboorteDatum" type="generiek:DatumType">
+                <xs:annotation>
+                    <xs:documentation>GeboorteDatum</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Geslacht" type="GeslachtType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>GeboorteDatum</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DatumModificatie" type="generiek:VolledigDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>DatumModificatie</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GeboortePlaatsGroepType">
+        <xs:annotation>
+            <xs:documentation>GeboortePlaatsGroepType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Gemeente" type="generiek:GemeenteKortGroepType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Gemeente</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Land" type="generiek:LandGroepType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Land</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DatumModificatie" type="generiek:VolledigDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>DatumModificatie</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="BurgerlijkeStaatGroepType">
+        <xs:annotation>
+            <xs:documentation>BurgerlijkeStaatGroepType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Code" type="BurgerlijkeStaatCodeGroepType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>BurgerlijkeStaat Code</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DatumModificatie" type="generiek:VolledigDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>DatumModificatie</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="NationaliteitGroepType">
+        <xs:annotation>
+            <xs:documentation>NationaliteitGroepType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="NISCode" type="generiek:LandNISCodeGroepType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>BurgerlijkeStaat Code</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DatumModificatie" type="generiek:VolledigDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>DatumModificatie</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="WijzigKSZPersoonType">
+        <xs:annotation>
+            <xs:documentation>WijzigKSZPersoonType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="INSZ" type="generiek:INSZType">
+                <xs:annotation>
+                    <xs:documentation>INSZ</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ReferentiePersoon" type="PersoonAanmaakType">
+                <xs:annotation>
+                    <xs:documentation>ReferentiePersoon</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NieuwePersoon" type="PersoonAanmaakType">
+                <xs:annotation>
+                    <xs:documentation>NieuwePersoon</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PersoonAanmaakType">
+        <xs:annotation>
+            <xs:documentation>PersoonAanmaakType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Naam" type="NaamGroepType">
+                <xs:annotation>
+                    <xs:documentation>Naam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Adres" type="AdresGroepType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Adres</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Overlijden" type="OverlijdenGroepType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Overlijden</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="GeboorteGeslacht" type="GeboorteGeslachtGroepType">
+                <xs:annotation>
+                    <xs:documentation>GeboorteGeslacht</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="GeboortePlaats" type="GeboortePlaatsGroepType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>GeboortePlaats</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BurgerlijkeStaat" type="BurgerlijkeStaatGroepType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>BurgerlijkeStaat</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Nationaliteit" type="NationaliteitGroepType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Nationaliteit</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PersonenType">
+        <xs:sequence>
+            <xs:element name="Persoon" type="PersoonType" maxOccurs="100"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PersoonType">
+        <xs:annotation>
+            <xs:documentation>PersoonType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="INSZ" type="generiek:INSZType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Het INSZ (Identificatienummer Sociale Zekerheid), RR of Bis nummer. De inhoud van
+                        dit veld moet precies 11 tekens lang zijn; voorloopnullen mogen niet worden weggelaten.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="RegisterCode" type="RegisterCodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Registercode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Naam" type="PersoonNaamType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Is het INSZ-nummer van de persoon</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Geslacht" type="GeslachtCodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Beschrijving mannelijk of vrouwelijk</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Geboorte" type="GebeurtenisMetDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Geboorte</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BurgerlijkeStaat" type="BurgerlijkeStaatType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>BurgerlijkeStaat</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Overlijden" type="GebeurtenisMetDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Overlijden</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Adres" type="generiek:AdresType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Adres</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AnderAdres" type="TekstAdresSoortType" minOccurs="0" maxOccurs="10">
+                <xs:annotation>
+                    <xs:documentation>Elke afzonderlijke soort code mag slechts 1 keer voorkomen.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Nationaliteit" type="NationaliteitsType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Nationaliteit</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="AuthentiekeBron" type="generiek:AuthentiekeBronEnumType">
+            <xs:annotation>
+                <xs:documentation>AuthentiekeBron</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="HistoriekPersoonType">
+        <xs:sequence>
+            <xs:element name="INSZ" type="generiek:INSZType">
+                <xs:annotation>
+                    <xs:documentation>Het INSZ (Identificatienummer Sociale Zekerheid), RR of Bis nummer. De inhoud van
+                        dit veld moet precies 11 tekens lang zijn; voorloopnullen mogen niet worden weggelaten.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HistoriekNaam" type="HistoriekNaamType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>HistoriekNaam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HistoriekGeslacht" type="HistoriekGeslachtType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>HistoriekGeslacht</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HistoriekGeboorte" type="HistoriekGeboorteType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>HistoriekGeboorte</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HistoriekBurgerlijkeStaat" type="HistoriekBurgerlijkeStaatType" minOccurs="0"
+                        maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>"HistoriekBurgerlijkeStaat"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HistoriekOverlijden" type="HistoriekOverlijdenType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>HistoriekOverlijden</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HistoriekAdressen" type="HistoriekAdressenType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>HistoriekAdressen</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HistoriekNationaliteit" type="HistoriekNationaliteitType" minOccurs="0"
+                        maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>HistoriekNationaliteit</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HistoriekGezinsSamenstelling" type="HistoriekGezinsSamenstellingType" minOccurs="0"
+                        maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>HistoriekGezinsSamenstelling</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="HistoriekNaamType">
+        <xs:sequence>
+            <xs:element name="Periode" type="generiek:PeriodeOnvolledigType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Periode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Naam" type="PersoonNaamType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Naam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AdellijkeTitel" type="AdellijkeTitelType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>AdellijkeTitel</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NaamVlag" type="generiek:VlagCodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>NaamVlag</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="AuthentiekeBron" type="generiek:AuthentiekeBronEnumType">
+            <xs:annotation>
+                <xs:documentation>AuthentiekeBron</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="HistoriekGeslachtType">
+        <xs:sequence>
+            <xs:element name="Periode" type="generiek:PeriodeOnvolledigType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Periode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Geslacht" type="GeslachtCodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Geslacht</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="AuthentiekeBron" type="generiek:AuthentiekeBronEnumType">
+            <xs:annotation>
+                <xs:documentation>AuthentiekeBron</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="HistoriekGeboorteType">
+        <xs:sequence>
+            <xs:element name="Periode" type="generiek:PeriodeOnvolledigType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Periode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Geboorte" type="GebeurtenisMetDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Geboorte</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Akte" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>AkteType</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="AuthentiekeBron" type="generiek:AuthentiekeBronEnumType">
+            <xs:annotation>
+                <xs:documentation>AuthentiekeBron</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="HistoriekBurgerlijkeStaatType">
+        <xs:sequence>
+            <xs:element name="Periode" type="generiek:PeriodeOnvolledigType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Periode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BurgerlijkeStaat" type="BurgerlijkeStaatType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>BurgerlijkeStaat</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Akte" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>AkteType</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="AuthentiekeBron" type="generiek:AuthentiekeBronEnumType">
+            <xs:annotation>
+                <xs:documentation>AuthentiekeBron</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="HistoriekOverlijdenType">
+        <xs:sequence>
+            <xs:element name="Periode" type="generiek:PeriodeOnvolledigType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Periode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Overlijden" type="GebeurtenisMetDatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Overlijden</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Akte" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>AkteType</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="AuthentiekeBron" type="generiek:AuthentiekeBronEnumType">
+            <xs:annotation>
+                <xs:documentation>AuthentiekeBron</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="HistoriekAdressenType">
+        <xs:sequence>
+            <xs:element name="Periode" type="generiek:PeriodeOnvolledigType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Periode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Adres" type="generiek:AdresType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Adres</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AnderAdres" type="TekstAdresSoortType" minOccurs="0" maxOccurs="10">
+                <xs:annotation>
+                    <xs:documentation>Elke afzonderlijke soort code mag slechts 1 keer voorkomen.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="AuthentiekeBron" type="generiek:AuthentiekeBronEnumType">
+            <xs:annotation>
+                <xs:documentation>AuthentiekeBron</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="HistoriekNationaliteitType">
+        <xs:sequence>
+            <xs:element name="Periode" type="generiek:PeriodeOnvolledigType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Periode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Nationaliteit" type="NationaliteitsType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Nationaliteit</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="RedenVerworven" type="RedenVerworvenType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>RedenVerworven</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PlaatsRegistratie" type="PlaatsRegistratieType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>PlaatsRegistratie</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="AuthentiekeBron" type="generiek:AuthentiekeBronEnumType">
+            <xs:annotation>
+                <xs:documentation>AuthentiekeBron</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="HistoriekGezinsSamenstellingType">
+        <xs:sequence>
+            <xs:element name="Periode" type="generiek:PeriodeOnvolledigType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Periode</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Gezinsleden" type="GezinsLedenType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Gezinsleden</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="AuthentiekeBron" type="generiek:AuthentiekeBronEnumType">
+            <xs:annotation>
+                <xs:documentation>AuthentiekeBron</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="GezinsLedenType">
+        <xs:annotation>
+            <xs:documentation>GezinsledenType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Gezinslid" type="GezinsLidType" maxOccurs="100">
+                <xs:annotation>
+                    <xs:documentation>Gezinslid</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="AuthentiekeBron" type="generiek:AuthentiekeBronEnumType">
+            <xs:annotation>
+                <xs:documentation>AuthentiekeBron</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="GezinsLidType">
+        <xs:annotation>
+            <xs:documentation>GezinsLidType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="RelatieCode" type="RelatieCodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Stand in het gezin</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DatumToetreding" type="generiek:DatumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>De datum van toetreding</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Persoon" type="PersoonBeknoptType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Persoon</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="NaamCriteriaType">
+        <xs:annotation>
+            <xs:documentation>NaamCriteriaType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Naam" type="PersoonNaamCriteriaType">
+                <xs:annotation>
+                    <xs:documentation>Naam</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Geboorte" type="GebeurtenisCriteriaType">
+                <xs:annotation>
+                    <xs:documentation>Geboorte</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Geslacht" type="GeslachtEnumType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Geslacht</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AdresCriteriaType">
+        <xs:annotation>
+            <xs:documentation>AdresCriteriaType</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Straat" type="StraatCriteriaType">
+                <xs:annotation>
+                    <xs:documentation>StraatCriteria</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="HuisNummer" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Huisnummer</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="BusNummer" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Bus van het huisnummer</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Gemeente" type="GemeenteCriteriaType">
+                <xs:annotation>
+                    <xs:documentation>GemeenteCriteria</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MultifunctioneelAttestOCMWType">
+        <xs:sequence>
+            <xs:element name="INSZ" type="generiek:INSZType"/>
+            <xs:element name="AttestIdentification" type="AttestIdentificatieType"/>
+            <xs:element name="ValiditeitsPeriode" type="generiek:PeriodeType"/>
+            <xs:element name="CategorieCode" type="CategoryType"/>
+            <xs:element name="OndernemingsNummerOCMW" type="OndernemingsNummerType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CategoryType">
+        <xs:simpleContent>
+            <xs:extension base="CategoryEnumType">
+                <xs:attribute name="Beschrijving" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="AttestIdentificatieType">
+        <xs:sequence>
+            <xs:element name="AttestNummer" type="AttestationIDType" />
+            <xs:element name="AttestStatus" type="AttestatieStatusType"/>
+            <xs:element name="CreatieDatum" type="generiek:VolledigDatumType"/>
+            <xs:element name="VorigAttestNummer" type="AttestationIDType" minOccurs="0" />
+            <xs:element name="VerzendingsDatum" type="generiek:VolledigDatumType" />
+            <xs:element name="UpdatesBeschikbaar" type="UpdatesBeschikbaarType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="UpdatesBeschikbaarType">
+        <xs:simpleContent>
+            <xs:extension base="generiek:VlagEnumType"/>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="AttestatieStatusType">
+        <xs:simpleContent>
+            <xs:extension base="AttestatieStatusgEnumType">
+                <xs:attribute name="Beschrijving" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="PeriodeVolledigType">
+		<xs:annotation>
+			<xs:documentation>Periode waarbij begin en einddatum verplicht zijn</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BeginDatum" type="generiek:VolledigDatumType" >
+				<xs:annotation>
+					<xs:documentation>Begin datum</xs:documentation>
+				</xs:annotation>		
+			</xs:element>
+			<xs:element name="EindDatum" type="generiek:VolledigDatumType" >
+				<xs:annotation>
+					<xs:documentation>Eind datum</xs:documentation>
+				</xs:annotation>
+			</xs:element> 
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RvvBimOmnioStatusType" >
+		<xs:sequence>
+			<xs:element name="Status" type="generiek:TekstType" />
+			<xs:element name="Source" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Sector"  	type="generiek:TekstType" />
+						<xs:element name="Periode" 	type="PeriodeVolledigType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>	
+</xs:schema>

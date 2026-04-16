@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  #%L
+  VIPInterfaces-generiek
+  %%
+  Copyright (C) 2016 - 2018 Vlaamse Overheid
+  %%
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  #L%
+  -->
+
+<xs:schema targetNamespace="http://generiek.vip.vlaanderen.be" 
+           xmlns="http://generiek.vip.vlaanderen.be" 
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="unqualified" 
+           attributeFormDefault="unqualified" 
+           version="1.01">
+           
+	<xs:simpleType name="TaalEnumType">
+		<xs:annotation>
+			<xs:documentation> | NL( Nederlands ) | FR( Frans ) | DE( Duits ) | EN( Engels ) | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+			<xs:enumeration value="NL"/>
+			<xs:enumeration value="FR"/>
+			<xs:enumeration value="DE"/>
+			<xs:enumeration value="EN"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AuthentiekeBronEnumType">
+		<xs:annotation>
+			<xs:documentation> | 00( Onbekend ) | 01( RR ) | 02( KSZ ) | 03( KBO ) | 04( Graydon ) | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+			<xs:enumeration value="00"/>
+			<xs:enumeration value="01"/>
+			<xs:enumeration value="02"/>
+			<xs:enumeration value="03"/>
+			<xs:enumeration value="04"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ResultaatEnumType">
+		<xs:annotation>
+			<xs:documentation> | 0(Niet OK)) | 1(OK) | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VlagEnumType">
+		<xs:annotation>
+			<xs:documentation> | 0( false ) | 1( true ) | </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

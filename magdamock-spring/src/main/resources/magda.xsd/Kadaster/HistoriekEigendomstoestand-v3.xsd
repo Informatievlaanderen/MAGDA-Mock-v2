@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2017 rel. 3 (http://www.altova.com) by Dagmar (Facilipunt - Agentschap Facilitair Bedrijf) -->
+<xs:schema xmlns="http://magda.vlaanderen.be/kadaster-v3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" targetNamespace="http://magda.vlaanderen.be/kadaster-v3" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://sleutel-02_00.vip.vlaanderen.be" schemaLocation="../Sleutel-02.00/Sleutel.xsd"/>
+	<xs:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../Generiek/GeneriekDomein-v3.xsd"/>
+	<xs:include schemaLocation="KadasterGemeenschappelijk-v3.xsd"/>
+	<!--=> ENKELVOUDIGE TYPE DEFINITES-->
+	<xs:simpleType name="KadastraleAfdelingInvoerType">
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ArtikelnummerInvoerType">
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VolgnummerInvoerType">
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--=> COMPLEX TYPE DEFINITES-->
+	<xs:complexType name="KadastraleInschrijvingInvoerType">
+		<xs:annotation>
+			<xs:documentation>
+				Alternatieve Eigendomstoestand identificatie. Dateert van voor 2015. Na 2015 hebben Eigendomstoestanden deze identificatie niet meer.
+				De combinatie KadastraleAfdeling+Artikelnummer+Volgnummer was vóór 1995 echter niet uniek, dus een echte identificatie is dit niet.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="KadastraleAfdeling" type="KadastraleAfdelingInvoerType"/>
+			<xs:element name="Artikelnummer" type="ArtikelnummerInvoerType"/>
+			<xs:element name="Volgnummer" type="VolgnummerInvoerType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HistoriekEigendomstoestandResultaatType">
+		<xs:sequence>
+			<xs:element name="OpgevraagdeToestanden" type="OpgevraagdeToestandLijstType" minOccurs="0"/>
+			<xs:element name="VorigeToestanden" type="VorigeToestandLijstType" minOccurs="0"/>
+			<xs:element name="VolgendeToestanden" type="VolgendeToestandLijstType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpgevraagdeToestandLijstType">
+		<xs:sequence>
+			<xs:element name="OpgevraagdeToestand" type="HistoriekEigendomstoestandType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:complexType name="VorigeToestandLijstType">
+		<xs:sequence>
+			<xs:element name="VorigeToestand" type="HistoriekEigendomstoestandMetMutatiedossiersType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VolgendeToestandLijstType">
+		<xs:sequence>
+			<xs:element name="VolgendeToestand" type="HistoriekEigendomstoestandMetMutatiedossiersType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>	
+	<xs:complexType name="HistoriekEigendomstoestandMetMutatiedossiersType">
+		<xs:complexContent>
+			<xs:extension base="HistoriekEigendomstoestandType">
+				<xs:sequence>
+					<xs:element name="Mutatiedossiers" type="MutatiedossierLijstType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ======================== REQUEST TYPES ======================= -->
+	<xs:complexType name="CriteriaGeefHistoriekEigendomstoestandType">
+		<xs:choice>
+			<xs:element name="EigendomstoestandId" type="EigendomstoestandIdType">
+				<xs:annotation>
+					<xs:documentation>Tot 2015 werd een toestand geïdentificeerd door de combinatie ‘Kadastraal
+gemeentenummer + Artikelnummer + Volgnummer’ In de loop van 2015 werd deze identificatie vervangen door het
+eigendomstoestandsnummer. De toestanden in overgangsfase hebben beide identificaties. De nieuwere
+toestanden hebben enkel een eigendomstoestandsnummer als identificatie.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KadastraleInschrijving" type="KadastraleInschrijvingInvoerType">
+				<xs:annotation>
+					<xs:documentation>Tot 2015 werd een toestand geïdentificeerd door de combinatie ‘Kadastraal
+gemeentenummer + Artikelnummer + Volgnummer’. (Vanaf 1995 werd deze identificatie uniek). 
+In de loop van 2015 werd deze identificatie vervangen door het
+eigendomstoestandsnummer. Sommige oudere toestanden hebben enkel de oude
+identificatie. De toestanden in overgangsfase hebben beide identificaties.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<!-- ======================== RESPONSE TYPES ======================= -->
+	<xs:complexType name="HistoriekEigendomstoestandResultaatLijstType">
+		<xs:sequence>
+			<xs:element name="HistoriekEigendomstoestandResultaat" type="HistoriekEigendomstoestandResultaatType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
