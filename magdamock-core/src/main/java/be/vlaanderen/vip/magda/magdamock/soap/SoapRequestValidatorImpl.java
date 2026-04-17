@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-public class SoapRequestValidatorImpl implements SoapBodyValidator {
+public class SoapRequestValidatorImpl extends SoapBodyValidator {
     private final Map<String, String> XML_FOLDERS_AND_XSDS = data(
             "GeefDossiers/02.00.0000", "Dossier.GeefDossiersDienst-02.00/WebService/GeefDossiers.xsd",
 
@@ -118,42 +118,5 @@ public class SoapRequestValidatorImpl implements SoapBodyValidator {
             );
         }
         return Optional.empty();
-    }
-
-    private Document nodelistToDocument(NodeList nodeList) throws ParserConfigurationException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document newDocument = builder.newDocument();
-        Node node = nodeList.item(0);
-        Node importedNode = newDocument.importNode(node, true);
-        newDocument.appendChild(importedNode);
-        return newDocument;
-    }
-
-    private static Map<String, String> data(String... data) {
-        return IntStream.iterate(0, i -> i < data.length, i -> i + 2)
-                .collect(HashMap::new,
-                        (m, i) -> m.put(data[i], data[i+1]),
-                        HashMap::putAll);
-    }
-
-    public static class XsdErrorHandler implements ErrorHandler {
-
-        @Override
-        public void warning(SAXParseException exception) { }
-
-        @Override
-        public void error(SAXParseException exception) throws SAXException {
-            handleMessage(exception);
-        }
-
-        @Override
-        public void fatalError(SAXParseException exception) throws SAXException {
-            handleMessage(exception);
-        }
-
-        private void handleMessage(SAXParseException e) throws SAXException {
-            throw new SAXException("Error occurred on line %s: %s".formatted(e.getLineNumber(), e.getMessage()));
-        }
     }
 }

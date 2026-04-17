@@ -15,12 +15,12 @@ import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapRequestValidatorImpl;
+import be.vlaanderen.vip.magda.magdamock.soap.SoapResponseValidatorImpl;
 import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.common.Json;
 import com.github.tomakehurst.wiremock.common.Urls;
 import com.github.tomakehurst.wiremock.direct.DirectCallHttpServer;
 import com.github.tomakehurst.wiremock.http.ContentTypeHeader;
@@ -59,17 +59,19 @@ public class MagdaMockConnection implements MagdaConnection {
     private final DirectCallHttpServer internalWiremockHttpServer;
     private final SoapResponsePatcher soapResponsePatcher = new SoapResponsePatcherImpl();
     private final SoapBodyValidator soapRequestValidator;
+    private final SoapBodyValidator soapResponseValidator;
 
 
-    MagdaMockConnection(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator) {
+    MagdaMockConnection(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
         this.wireMockServer = wiremockServerData.wireMockServer();
         internalWiremockHttpServer = wiremockServerData.factory().getHttpServer();
         this.soapRequestValidator = soapRequestValidator;
+        this.soapResponseValidator = soapResponseValidator;
         mapper = new ObjectMapper();
     }
 
-    public static MagdaMockConnection create(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator) {
-        return new MagdaMockConnection(wiremockServerData, soapRequestValidator);
+    public static MagdaMockConnection create(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
+        return new MagdaMockConnection(wiremockServerData, soapRequestValidator, soapResponseValidator);
     }
 
     public static MagdaMockConnection create(String testDataPath, String soapTestPath, String xsdPath) throws IOException {
@@ -77,21 +79,22 @@ public class MagdaMockConnection implements MagdaConnection {
         WireMockData wireMockData = EmbeddedWireMockBuilder.wireMockServer(testDataPath, soapTestPath);
         SoapStubRegistrar soapStubRegistrar = new SoapStubRegistrar(wireMockData.wireMockServer(), soapTestPath);
         domains.forEach(soapStubRegistrar::registerDomain);
-        SoapBodyValidator soapRequestValidator;
+        SoapBodyValidator soapRequestValidator, soapResponseValidator;
         if (xsdPath == null || xsdPath.isBlank()) {
-            soapRequestValidator = new LenientSoapBodyValidator();
+            soapResponseValidator = soapRequestValidator = new LenientSoapBodyValidator();
         } else {
             soapRequestValidator = new SoapRequestValidatorImpl(xsdPath);
+            soapResponseValidator = new SoapResponseValidatorImpl(xsdPath);
         }
-        return create(wireMockData, soapRequestValidator);
+        return create(wireMockData, soapRequestValidator, soapResponseValidator);
     }
 
     @Override
     public Document sendDocument(Document xml) {
         MagdaDocument request = MagdaDocument.fromDocument(xml);
-        Optional<Document> validationError = soapRequestValidator.validateXml(request);
-        if (validationError.isPresent()) {
-            return validationError.get();
+        Optional<Document> requestValidationError = soapRequestValidator.validateXml(request);
+        if (requestValidationError.isPresent()) {
+            return requestValidationError.get();
         }
         String dateHeader = getDateHeaderFromSoapRequest(request);
         String soapUrl = wireMockServer.url("/soap");
@@ -101,7 +104,12 @@ public class MagdaMockConnection implements MagdaConnection {
             return null;
         }
         Document document = parseSoapResponse(response);
-        return patchResponse(request, document);
+        Document patchedResponse = patchResponse(request, document);
+        Optional<Document> responseValidationError = soapResponseValidator.validateXml(MagdaDocument.fromDocument(patchedResponse));
+        if (responseValidationError.isPresent()) {
+            return responseValidationError.get();
+        }
+        return patchedResponse;
     }
 
     private String getDateHeaderFromSoapRequest(MagdaDocument request) {
