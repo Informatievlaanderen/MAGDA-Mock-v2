@@ -28,7 +28,7 @@ class MagdaMockConnectionTest {
     @Test
     @SneakyThrows
     void whenTemplateReplacesOk_shouldReturnStatus200AndExpectedOutput() {
-        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator());
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendRestRequest("/template/ok", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT");
         assertEquals(200, response.getRight());
         assertEquals("\"2019-10-19\"", response.getLeft().get("test").toString());
@@ -38,7 +38,7 @@ class MagdaMockConnectionTest {
     @Test
     @SneakyThrows
     void whenTemplateReplacesNok_shouldReturnStatus500() {
-        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator());
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendRestRequest("/template/nok", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT");
         assertEquals(
                 "{\"test\":\"{formatDate (dateMath (dateMath (parseDate request.headers.Date) '-10d') '-5y')}}\"}",
@@ -49,7 +49,7 @@ class MagdaMockConnectionTest {
     @Test
     @SneakyThrows
     void whenDocumentFound_shouldReturnDocument() {
-        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator());
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendDocument(
                 MagdaDocument.fromString("""
                         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://magda.vlaanderen.be/persoon/soap/geefpersoon/v02_02">
@@ -91,7 +91,7 @@ class MagdaMockConnectionTest {
     @Test
     @SneakyThrows
     void whenTemplateDocumentFound_shouldReturnDocumentWithTemplateFilledIn() {
-        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator());
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendDocument(
                 MagdaDocument.fromString("""
                         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://magda.vlaanderen.be/persoon/soap/geefpersoon/v02_02">
@@ -138,7 +138,7 @@ class MagdaMockConnectionTest {
     @Test
     @SneakyThrows
     void whenDocumentNotFound_shouldReturnNull() {
-        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator());
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendDocument(
                 MagdaDocument.fromString("""
                         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://magda.vlaanderen.be/persoon/soap/geefpersoon/v02_02">
@@ -179,7 +179,7 @@ class MagdaMockConnectionTest {
 
     @Test
     void whenRequestIsInvalid_shouldReturn400(){
-        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator());
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendRestRequest("/invalidResponse", "", "GET", """
                 {"test": invalid json}
                 """, "Tue, 29 Oct 2024 16:56:32 GMT");
@@ -188,7 +188,7 @@ class MagdaMockConnectionTest {
 
     @Test
     void whenResponseIsInvalid_shouldReturn502(){
-        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator());
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendRestRequest("/invalidResponse", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT");
         assertEquals(502, response.getRight());
     }

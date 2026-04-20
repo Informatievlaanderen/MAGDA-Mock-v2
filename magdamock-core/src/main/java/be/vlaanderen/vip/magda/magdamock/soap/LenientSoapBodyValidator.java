@@ -6,7 +6,7 @@ import org.w3c.dom.Document;
 import java.util.Optional;
 
 // doesn't check any bodies, allows everything
-public class LenientSoapBodyValidator implements SoapBodyValidator {
+public class LenientSoapBodyValidator extends SoapBodyValidator {
     @Override
     public Optional<Document> validateXml(MagdaDocument magdaDocument) {
         return Optional.empty();
