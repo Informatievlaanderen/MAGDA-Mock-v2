@@ -6,7 +6,7 @@ magda:
   magdamock:
     magda-mock-test-path: "wiremock"
     soap-test-path:  # directory containing SOAP XML files (absolute path)
-    magda-xsd-path: "src/main/resources/magda.xsd"
+    magda-xsd-path: # directory containing SOAP XSD files "src/main/resources/magda.xsd"
 
 management:
   server:
