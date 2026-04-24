@@ -7,7 +7,7 @@
   attributeFormDefault="unqualified" version="20240304">
   <!--========= imports ===========-->
   <xs:import namespace="http://kszbcss.fgov.be/types/common/v3"
-    schemaLocation="../../common/CommonV3.xsd" />
+    schemaLocation="../../../../kszbcss/types/common/CommonV3.xsd" />
   <xs:import namespace="http://cinnic.fgov.be/types/allowance/commonTypes/v1"
     schemaLocation="../../../../cinnic/types/allowance/common/AllowanceAttestCommonTypes.xsd" />
   <!--========= Period ===========-->
