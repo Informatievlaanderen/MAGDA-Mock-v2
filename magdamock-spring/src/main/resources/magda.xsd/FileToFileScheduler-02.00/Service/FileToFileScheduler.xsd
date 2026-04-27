@@ -446,7 +446,9 @@
 			<xsd:element name="OperatieCode" type="xsd:string" minOccurs="0"/>
 			<xsd:element name="EmailAdres" type="xsd:string" minOccurs="0"/>
 			<xsd:element name="Encoding" type="xsd:string"/>
+			<xsd:element name="DataType" type="xsd:string" minOccurs="0"/>
 			<xsd:element name="Integriteit" type="IntegriteitType"/>
+			
 			<xsd:element name="ZippenActiveren" type="BooleanType"/>
 		</xsd:sequence>
 	</xsd:complexType>
@@ -597,7 +599,8 @@
 				PUBLICEERSOCIALESCHULD | LOTDEMESSAGESVALIDATORSPLITTER | PUBLICEERMUTATIEZORGTOESLAG |
 				PUBLICEERKINDTENLASTE |
 				MUTATIESOCIALESTATUTEN | FEEDBACKSOCIALESTATUTEN | WERKNEMERBIJDRAGEVERMINDERING | PUBLICEERINWONERSPERADRES | XSLT |
-				RENAME2LDMDATAFILE | PUBLICEERATTESTKINDTENLASTE30 | PUBLICEERVLIMPERSDOWNLOAD
+				RENAME2LDMDATAFILE | PUBLICEERATTESTKINDTENLASTE30 | PUBLICEERVLIMPERSDOWNLOAD |
+				NOTIFYPERSONDATA | NOTIFYPERSONSSIN
 			</xsd:documentation>
 		</xsd:annotation>
 		<xsd:restriction base="xsd:string">
@@ -637,9 +640,11 @@
 			<xsd:enumeration value="PUBLICEERINWONERSPERADRES"/>
 			<xsd:enumeration value="XSLT"/>
 			<xsd:enumeration value="RENAME2LDMDATAFILE"/>
-            <xsd:enumeration value="PUBLICEERATTESTKINDTENLASTE30"/>
-            <xsd:enumeration value="PUBLICEERVLIMPERSDOWNLOAD"/>
-		</xsd:restriction>
+			<xsd:enumeration value="PUBLICEERATTESTKINDTENLASTE30"/>
+			<xsd:enumeration value="PUBLICEERVLIMPERSDOWNLOAD"/>
+            <xsd:enumeration value="NOTIFYPERSONDATA"/>
+            <xsd:enumeration value="NOTIFYPERSONSSIN"/>
+        </xsd:restriction>
 	</xsd:simpleType>
 	<xsd:simpleType name="TypeOrganisatieEnumType">
 		<xsd:annotation>

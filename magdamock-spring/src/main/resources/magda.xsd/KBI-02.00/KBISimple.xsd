@@ -57,6 +57,11 @@
 					<xs:documentation xml:lang="NL">Bis register : Bisnummer</xs:documentation>
 				</xs:annotation>
 			</xs:pattern>
+			<xs:pattern value="[0-9][0-9](([6][0-9])|([7][0-2]))(([0-2][0-9])|([3][0-1]))[0-9]{3}(([0-8][0-9])|([9][0-7]))">
+				<xs:annotation>
+					<xs:documentation xml:lang="NL">Testnummer</xs:documentation>
+				</xs:annotation>
+			</xs:pattern>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="KboNummerType">

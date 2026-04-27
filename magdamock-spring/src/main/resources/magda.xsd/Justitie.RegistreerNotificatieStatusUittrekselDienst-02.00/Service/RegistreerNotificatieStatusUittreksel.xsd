@@ -23,10 +23,10 @@
   -->
 
 <!-- edited with XMLSpy v2017 (x64) (http://www.altova.com) by Jan Van Geert (Hewlett Packard Enterprise Com) -->
-<xs:schema xmlns="http://service.registreernotificatiestatusuittrekseldienst-02_00.justitie-02_00.vip.vlaanderen.be"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:justitie="http://justitie-02_00.vip.vlaanderen.be"
-	xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be"
+<xs:schema xmlns="http://service.registreernotificatiestatusuittrekseldienst-02_00.justitie-02_00.vip.vlaanderen.be" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:justitie="http://justitie-02_00.vip.vlaanderen.be" 
+	xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" 
 	xmlns:sleutel="http://sleutel-02_00.vip.vlaanderen.be" 
 	targetNamespace="http://service.registreernotificatiestatusuittrekseldienst-02_00.justitie-02_00.vip.vlaanderen.be"
 	elementFormDefault="unqualified" 

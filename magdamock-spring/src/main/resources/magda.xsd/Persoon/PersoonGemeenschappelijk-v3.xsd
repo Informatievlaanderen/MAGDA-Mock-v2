@@ -416,7 +416,7 @@
 	</xs:complexType>
 	<xs:complexType name="UitspraakRechtbankType">
 		<xs:sequence>
-			<xs:element name="Datum" type="generiek:DatumType"/>
+			<xs:element name="Datum" type="generiek:DatumType" minOccurs="0"/>
 			<xs:element name="Plaats" type="generiek:PlaatsType" minOccurs="0"/>
 			<xs:element name="Rechtbank" type="generiek:CodeOmschrijvingType" minOccurs="0"/>
 			<xs:element name="Hof" type="generiek:CodeOmschrijvingType" minOccurs="0"/>
@@ -532,7 +532,7 @@
 	<xs:complexType name="NietMededeelbaarAdresType">
 		<xs:sequence>
 			<xs:element name="Periode" type="generiek:PeriodeDatumBeginEnEindeVerplichtType" minOccurs="0"/>
-			<xs:element name="DatumBeslissingCollege" type="generiek:DatumType"/>
+			<xs:element name="DatumBeslissingCollege" type="generiek:DatumType" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="DatumBegin" type="generiek:OnvolledigeDatumType"/>
 		<xs:attribute name="DatumEinde" type="generiek:OnvolledigeDatumType"/>
@@ -1057,7 +1057,7 @@
 			<xs:element name="WijzeVanLijkbezorging" type="generiek:CodeOmschrijvingType"/>
 			<xs:element name="Ritueel" type="generiek:CodeOmschrijvingType" minOccurs="0"/>
 			<xs:element name="PlaatsRegistratie" type="generiek:GemeenteType"/>
-			<xs:element name="DatumDocument" type="generiek:DatumType"/>
+			<xs:element name="DatumDocument" type="generiek:DatumType" minOccurs="0"/>
 			<xs:element name="WettelijkeVertegenwoordiger" type="WettelijkeVertegenwoordigerType" minOccurs="0"/>
 			<xs:element name="Contract" type="LijkbezorgingContractType" minOccurs="0"/>
 			<xs:element name="Begraafplaats" type="PlaatsMetTekstType" minOccurs="0"/>

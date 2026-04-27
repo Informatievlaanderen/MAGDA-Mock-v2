@@ -152,6 +152,7 @@
 			<xs:element name="Titels" type="generiek:VlagEnumType" minOccurs="0"/>
 			<xs:element name="AlleRubrieken" type="generiek:VlagEnumType" minOccurs="0"/>
 			<xs:element name="Benamingen" type="BenamingenType" minOccurs="0"/>
+			<xs:element name="Paginatie" type="PaginatieVraagType" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!--========================================-->
@@ -724,6 +725,19 @@
 	<xs:complexType name="JaarrekeningenLijstType">
 		<xs:sequence>
 			<xs:element name="Jaarrekening" type="JaarrekeningType" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="Paginatie" type="PaginatieAntwoordType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaginatieVraagType">
+		<xs:sequence>
+			<xs:element name="Pagina" type="PaginaType" default="1"/>
+			<xs:element name="PaginaFormaat" type="PaginaFormaatType" default="10"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaginatieAntwoordType">
+		<xs:sequence>
+			<xs:element name="Huidig" type="PaginaType"/>
+			<xs:element name="Totaal" type="PaginaType"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ElementenLijstType">
