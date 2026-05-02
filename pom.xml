@@ -24,7 +24,7 @@
 		<lombok.version>1.18.46</lombok.version>
 		<mapstruct.version>1.6.3</mapstruct.version>
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
-		<spring-boot.version>3.5.13</spring-boot.version>
+		<spring-boot.version>3.5.14</spring-boot.version>
     </properties>
 
 	<profiles>
