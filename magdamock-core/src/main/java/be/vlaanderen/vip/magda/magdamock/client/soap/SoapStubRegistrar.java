@@ -120,7 +120,7 @@ public class SoapStubRegistrar {
                     subDir("GeefDeelnemingen", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
                     subDir("GeefFiscaleInhoudingsplicht", VERSION_02_01, KEY_ONDERNEMINGSNUMMER),
                     subDir("GeefFiscaleSchuld", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
-                    subDir("GeefFuncties", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
+                    subDir("GeefFuncties", VERSION_02_00, KEY_INSZ),
                     subDir("GeefJaarrekeningen", VERSION_02_00, KEY_ONDERNEMINGSNUMMER, KEY_BOEKJAAR),
                     subDir("GeefOnderneming", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
                     subDir("GeefOndernemingSignalen", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
