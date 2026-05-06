@@ -448,7 +448,7 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "Ondernemingsnummer",
+        "path": "INSZ",
         "value": "00600099734"
       }
     ],
@@ -460,7 +460,7 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "Ondernemingsnummer",
+        "path": "INSZ",
         "value": "10600099734"
       }
     ],
