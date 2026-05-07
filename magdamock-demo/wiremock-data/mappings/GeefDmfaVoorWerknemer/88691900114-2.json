@@ -1,0 +1,25 @@
+{
+  "priority": 4,
+  "request": {
+    "method": "POST",
+    "urlPath": "/soap",
+    "bodyPatterns": [
+      {
+        "matchesXPath": "//*[local-name()='INSZ' and normalize-space()='88691900114']"
+      },
+      {
+        "matchesXPath": "//*[local-name()='Naam' and normalize-space()='GeefDmfaVoorWerknemer']"
+      },
+      {
+        "matchesXPath": "//*[local-name()='Volgende' and normalize-space()='Attest-2']"
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/xml"
+    },
+    "bodyFileName": "GeefDmfaVoorWerknemer/88691900114-2.xml"
+  }
+}
