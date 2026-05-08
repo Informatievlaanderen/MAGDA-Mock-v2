@@ -3,7 +3,7 @@
   <parent>
 	  <artifactId>magda.magdamock</artifactId>
 	  <groupId>be.vlaanderen.vip</groupId>
-	  <version>0.6.0</version>
+	  <version>0.7.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>be.vlaanderen.vip.mock</groupId>
 			<artifactId>magdaconnector</artifactId>
-			<version>3.39.0</version>
+			<version>3.40.0</version>
 			<scope>test</scope>
 		</dependency>
 

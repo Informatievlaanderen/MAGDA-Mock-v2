@@ -94,7 +94,7 @@ public class MagdaMockConnection implements MagdaConnection {
         MagdaDocument request = MagdaDocument.fromDocument(xml);
         Optional<Document> requestValidationError = soapRequestValidator.validateXml(request);
         if (requestValidationError.isPresent()) {
-            return requestValidationError.get();
+            return wrapInEnvelope(requestValidationError.get());
         }
         String dateHeader = getDateHeaderFromSoapRequest(request);
         String soapUrl = wireMockServer.url("/soap");
@@ -107,9 +107,9 @@ public class MagdaMockConnection implements MagdaConnection {
         Document patchedResponse = patchResponse(request, document);
         Optional<Document> responseValidationError = soapResponseValidator.validateXml(MagdaDocument.fromDocument(patchedResponse));
         if (responseValidationError.isPresent()) {
-            return responseValidationError.get();
+            return wrapInEnvelope(responseValidationError.get());
         }
-        return patchedResponse;
+        return wrapInEnvelope(patchedResponse);
     }
 
     private String getDateHeaderFromSoapRequest(MagdaDocument request) {
@@ -123,6 +123,21 @@ public class MagdaMockConnection implements MagdaConnection {
         }
         return "";
     }
+
+
+    private Document wrapInEnvelope(Document bodyDocument) {
+        MagdaDocument magdaDocument = MagdaDocument.fromDocument(bodyDocument);
+        var soap = """
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" >
+                <soapenv:Header/>
+                    <soapenv:Body>
+                    %s
+                    </soapenv:Body>
+                </soapenv:Envelope>""".formatted(magdaDocument);
+
+        return MagdaDocument.fromString(soap).getXml();
+    }
+
 
     @Override
     public Pair<JsonNode, Integer> sendRestRequest(MagdaRestRequest request, MagdaRegistrationInfo registrationInfo) {
