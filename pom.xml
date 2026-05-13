@@ -15,7 +15,7 @@
 		<vdip-java.version>25-jre</vdip-java.version>
 		<docker.image>magda.magdamock</docker.image>
 		<mockito.version>5.3.1</mockito.version>
-		<slf4j.version>2.0.17</slf4j.version>
+		<slf4j.version>2.0.18</slf4j.version>
 		<mapstruct-lombok.version>0.2.0</mapstruct-lombok.version>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco-aggregated/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.language>java</sonar.language>
