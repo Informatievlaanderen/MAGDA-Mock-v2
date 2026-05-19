@@ -49,8 +49,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+// NOTE: the implementation of MagdaConnection is to remain backwards compatible with magdamock.service
 @Slf4j
 public class MagdaMockConnection implements MagdaConnection {
 
@@ -89,6 +91,7 @@ public class MagdaMockConnection implements MagdaConnection {
         return create(wireMockData, soapRequestValidator, soapResponseValidator);
     }
 
+    // NOTE: this function is to remain backwards compatible with magdamock.service
     @Override
     public Document sendDocument(Document xml) {
         MagdaDocument request = MagdaDocument.fromDocument(xml);
@@ -138,7 +141,7 @@ public class MagdaMockConnection implements MagdaConnection {
         return MagdaDocument.fromString(soap).getXml();
     }
 
-
+    // NOTE: this function is to remain backwards compatible with magdamock.service
     @Override
     public Pair<JsonNode, Integer> sendRestRequest(MagdaRestRequest request, MagdaRegistrationInfo registrationInfo) {
         String queryParams = request.getUrlQueryParams().entrySet().stream().map((kv) -> String.format("%s=%s", kv.getKey(), kv.getValue())).collect(Collectors.joining("&"));
@@ -151,27 +154,33 @@ public class MagdaMockConnection implements MagdaConnection {
             parts.removeFirst();
             String path = String.join(stubUrl, parts);
             String dateHeader = request.getHeaders().get("Date");
-            return sendRestRequest(path, queryParams, method, "", dateHeader);
+            MockRestResponse mockRestResponse = sendRestRequest(path, queryParams, method, "", dateHeader, "");
+            return Pair.of(mockRestResponse.body(), mockRestResponse.status());
         } catch (URISyntaxException e) {
             throw new MagdaMockRestException("Error simulating REST call", e.getCause());
         }
     }
 
+    // NOTE: this function is to remain backwards compatible with magdamock.service
     @Override
     public Pair<JsonNode, Integer> sendRestRequest(String path, String query, String method, String requestBody) {
-        return sendRestRequest(path, query, method, requestBody, "");
+        MockRestResponse mockRestResponse = sendRestRequest(path, query, method, requestBody, "", "");
+        return Pair.of(mockRestResponse.body(), mockRestResponse.status());
     }
 
-    public Pair<JsonNode, Integer> sendRestRequest(String path, String query, String method, String requestBody, String dateHeader) {
+    public MockRestResponse sendRestRequest(String path, String query, String method, String requestBody, String dateHeader, String correlationIdHeader) {
         List<String> parts = new ArrayList<>();
         parts.add(wireMockServer.url(path));
         if (query != null && !query.isEmpty()) {
             parts.add(query);
         }
 
+        String correlationId = Optional.ofNullable(correlationIdHeader).orElse(UUID.randomUUID().toString());
+
         Optional<Pair<JsonNode, Integer>> validationRequest = validateRestJson(requestBody, true);
         if (validationRequest.isPresent()) {
-            return validationRequest.get();
+            Pair<JsonNode, Integer> jsonNodeIntegerPair = validationRequest.get();
+            return new MockRestResponse(jsonNodeIntegerPair.getLeft(), jsonNodeIntegerPair.getRight(), Map.of("x-correlation-id", List.of(correlationId)));
         }
 
         String url = String.join("?", parts);
@@ -179,10 +188,11 @@ public class MagdaMockConnection implements MagdaConnection {
         Response response = routeRequest(mockRequest);
         Optional<Pair<JsonNode, Integer>> validationResponse = validateRestJson(response.getBodyAsString(), false);
         if (validationResponse.isPresent()) {
-            return validationResponse.get();
+            Pair<JsonNode, Integer> jsonNodeIntegerPair = validationResponse.get();
+            return new MockRestResponse(jsonNodeIntegerPair.getLeft(), jsonNodeIntegerPair.getRight(), Map.of("x-correlation-id", List.of(correlationId)));
         }
 
-        return parseRestResponse(response);
+        return parseRestResponse(response, correlationId);
     }
 
     public Optional<Pair<JsonNode, Integer>> validateRestJson(String requestBody, boolean request) {
@@ -199,13 +209,13 @@ public class MagdaMockConnection implements MagdaConnection {
         return Optional.empty();
     }
 
-    private Pair<JsonNode, Integer> parseRestResponse(Response response) {
+    private MockRestResponse parseRestResponse(Response response, String correlationId) {
         try {
             if (response.getStatus() == 404) {
                 log.info("Received status 404 while parsing rest response");
-                return Pair.of(null, 404);
+                return new MockRestResponse(null, 404, Map.of("x-correlation-id", List.of(correlationId)));
             }
-            return Pair.of(mapper.readTree(response.getBody()), response.getStatus());
+            return new MockRestResponse(mapper.readTree(response.getBody()), response.getStatus(), Map.of("x-correlation-id", List.of(correlationId)));
         } catch (IOException e) {
             throw new MagdaMockRestException("Error simulating REST call", e.getCause());
         }
@@ -365,4 +375,11 @@ public class MagdaMockConnection implements MagdaConnection {
             }
         };
     }
+
+
+    public record MockRestResponse(
+            JsonNode body,
+            Integer status,
+            Map<String, List<String>> headers
+    ){}
 }

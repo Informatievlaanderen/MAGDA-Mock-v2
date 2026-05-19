@@ -18,7 +18,7 @@ public class MagdaMockConfig {
     String magdaXsdPath;
 
     @Bean
-    public MagdaConnection magdaMockConnection() throws IOException {
+    public MagdaMockConnection magdaMockConnection() throws IOException {
         return MagdaMockConnection.create(magdaMockTestPath, soapTestPath, magdaXsdPath);
     }
 }
