@@ -17,7 +17,10 @@ import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapRequestValidatorImpl;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapResponseValidatorImpl;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
+import be.vlaanderen.vip.magda.magdamock.utils.NoopTimeoutUtil;
+import be.vlaanderen.vip.magda.magdamock.utils.RandomTimeoutUtil;
 import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
+import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -63,6 +66,7 @@ public class MagdaMockConnection implements MagdaConnection {
     private final SoapResponsePatcher soapResponsePatcher = new SoapResponsePatcherImpl();
     private final SoapBodyValidator soapRequestValidator;
     private final SoapBodyValidator soapResponseValidator;
+    private final TimeoutUtil timeoutUtil;
 
 
     MagdaMockConnection(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
@@ -71,13 +75,31 @@ public class MagdaMockConnection implements MagdaConnection {
         this.soapRequestValidator = soapRequestValidator;
         this.soapResponseValidator = soapResponseValidator;
         mapper = new ObjectMapper();
+        this.timeoutUtil = new NoopTimeoutUtil();
+    }
+
+    MagdaMockConnection(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator, TimeoutUtil timeoutUtil) {
+        this.wireMockServer = wiremockServerData.wireMockServer();
+        internalWiremockHttpServer = wiremockServerData.factory().getHttpServer();
+        this.soapRequestValidator = soapRequestValidator;
+        this.soapResponseValidator = soapResponseValidator;
+        mapper = new ObjectMapper();
+        this.timeoutUtil = timeoutUtil;
     }
 
     public static MagdaMockConnection create(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
         return new MagdaMockConnection(wiremockServerData, soapRequestValidator, soapResponseValidator);
     }
 
+    public static MagdaMockConnection create(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator, TimeoutUtil timeoutUtil) {
+        return new MagdaMockConnection(wiremockServerData, soapRequestValidator, soapResponseValidator, timeoutUtil);
+    }
+
     public static MagdaMockConnection create(String testDataPath, String soapTestPath, String xsdPath) throws IOException {
+        return create(testDataPath, soapTestPath, xsdPath, null, null);
+    }
+
+    public static MagdaMockConnection create(String testDataPath, String soapTestPath, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis) throws IOException {
         List<Domain> domains = SoapResourceUtil.loadDomainsFromPaths(SoapResourceUtil.resolvePaths(soapTestPath));
         WireMockData wireMockData = EmbeddedWireMockBuilder.wireMockServer(testDataPath, soapTestPath);
         SoapStubRegistrar soapStubRegistrar = new SoapStubRegistrar(wireMockData.wireMockServer(), soapTestPath);
@@ -89,12 +111,17 @@ public class MagdaMockConnection implements MagdaConnection {
             soapRequestValidator = new SoapRequestValidatorImpl(xsdPath);
             soapResponseValidator = new SoapResponseValidatorImpl(xsdPath);
         }
-        return create(wireMockData, soapRequestValidator, soapResponseValidator);
+        TimeoutUtil timeoutUtil = new NoopTimeoutUtil();
+        if (minimumTimeoutMillis != null && maximumTimeoutMillis != null) {
+            timeoutUtil = new RandomTimeoutUtil(minimumTimeoutMillis, maximumTimeoutMillis);
+        }
+        return create(wireMockData, soapRequestValidator, soapResponseValidator, timeoutUtil);
     }
 
     // NOTE: this function is to remain backwards compatible with magdamock.service
     @Override
     public Document sendDocument(Document xml) throws SoapValidationError {
+        timeoutUtil.timeout();
         MagdaDocument request = MagdaDocument.fromDocument(xml);
         soapRequestValidator.validateXml(request);
         String dateHeader = getDateHeaderFromSoapRequest(request);
@@ -164,6 +191,7 @@ public class MagdaMockConnection implements MagdaConnection {
     }
 
     public MockRestResponse sendRestRequest(String path, String query, String method, String requestBody, String dateHeader, String correlationIdHeader) {
+        timeoutUtil.timeout();
         List<String> parts = new ArrayList<>();
         parts.add(wireMockServer.url(path));
         if (query != null && !query.isEmpty()) {
