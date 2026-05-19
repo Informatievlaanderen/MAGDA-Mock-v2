@@ -67,7 +67,7 @@ public class SoapResponseValidatorImpl extends SoapBodyValidator {
             "GeefEpc/02.01.0000", "Energie.GeefEpcDienst-02.01/WebService/GeefEpcResponse.xsd",
 
             "GeefLoopbaanARZA/02.01.0000", "Werk.GeefLoopbaanARZADienst-02.01/WebService/GeefLoopbaanARZAResponse.xsd",
-            "GeefDmfaVoorWerknemer/03.00.0000", "Werk.GeefDmfaVoorWerknemer-03.00/WebService/GeefDmfaVoorWerknemerResponse.xsd",
+            "GeefDmfaVoorWerknemer/03.00.0000", "Werk.GeefDmfaVoorWerknemerDienst-03.00/WebService/GeefDmfaVoorWerknemerResponse.xsd",
             "GeefLoopbaanonderbrekingen/02.00.0000", "Werk.GeefLoopbaanonderbrekingenDienst-02.00/WebService/GeefLoopbaanonderbrekingenResponse.xsd",
             "GeefWerkrelaties/02.00.0000", "Werk.GeefWerkrelatiesDienst-02.00/WebService/GeefWerkrelatiesResponse.xsd");
     private final String xsdPath;
