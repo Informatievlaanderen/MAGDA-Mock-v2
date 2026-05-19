@@ -29,9 +29,10 @@ class MagdaMockConnectionTest {
     @SneakyThrows
     void whenTemplateReplacesOk_shouldReturnStatus200AndExpectedOutput() {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
-        var response = connection.sendRestRequest("/template/ok", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT");
-        assertEquals(200, response.getRight());
-        assertEquals("\"2019-10-19\"", response.getLeft().get("test").toString());
+        var response = connection.sendRestRequest("/template/ok", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT", "");
+        assertEquals(200, response.status());
+        assertEquals("\"2019-10-19\"", response.body().get("test").toString());
+        assertNotNull(response.headers().get("x-correlation-id"));
     }
 
 
@@ -39,11 +40,12 @@ class MagdaMockConnectionTest {
     @SneakyThrows
     void whenTemplateReplacesNok_shouldReturnStatus500() {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
-        var response = connection.sendRestRequest("/template/nok", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT");
+        var response = connection.sendRestRequest("/template/nok", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT", "");
         assertEquals(
                 "{\"test\":\"{formatDate (dateMath (dateMath (parseDate request.headers.Date) '-10d') '-5y')}}\"}",
-                response.getLeft().toString()
+                response.body().toString()
         );
+        assertNotNull(response.headers().get("x-correlation-id"));
     }
 
     @Test
@@ -182,15 +184,17 @@ class MagdaMockConnectionTest {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendRestRequest("/invalidResponse", "", "GET", """
                 {"test": invalid json}
-                """, "Tue, 29 Oct 2024 16:56:32 GMT");
-        assertEquals(400, response.getRight());
+                """, "Tue, 29 Oct 2024 16:56:32 GMT", "");
+        assertEquals(400, response.status());
+        assertNotNull(response.headers().get("x-correlation-id"));
     }
 
     @Test
     void whenResponseIsInvalid_shouldReturn502(){
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
-        var response = connection.sendRestRequest("/invalidResponse", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT");
-        assertEquals(502, response.getRight());
+        var response = connection.sendRestRequest("/invalidResponse", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT", "");
+        assertEquals(502, response.status());
+        assertNotNull(response.headers().get("x-correlation-id"));
     }
 
     private WireMockData createWireMockForTest() {

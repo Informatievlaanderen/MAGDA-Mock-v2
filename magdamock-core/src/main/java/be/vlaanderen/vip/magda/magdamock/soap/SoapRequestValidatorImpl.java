@@ -67,7 +67,7 @@ public class SoapRequestValidatorImpl extends SoapBodyValidator {
             "GeefEpc/02.01.0000", "Energie.GeefEpcDienst-02.01/WebService/GeefEpc.xsd",
 
             "GeefLoopbaanARZA/02.01.0000", "Werk.GeefLoopbaanARZADienst-02.01/WebService/GeefLoopbaanARZA.xsd",
-            "GeefDmfaVoorWerknemer/03.00.0000", "Werk.GeefDmfaVoorWerknemer-03.00/WebService/GeefDmfaVoorWerknemer.xsd",
+            "GeefDmfaVoorWerknemer/03.00.0000", "Werk.GeefDmfaVoorWerknemerDienst-03.00/WebService/GeefDmfaVoorWerknemer.xsd",
             "GeefLoopbaanonderbrekingen/02.00.0000", "Werk.GeefLoopbaanonderbrekingenDienst-02.00/WebService/GeefLoopbaanonderbrekingen.xsd",
             "GeefWerkrelaties/02.00.0000", "Werk.GeefWerkrelatiesDienst-02.00/WebService/GeefWerkrelaties.xsd");
     private final String xsdPath;
@@ -90,7 +90,7 @@ public class SoapRequestValidatorImpl extends SoapBodyValidator {
     }
 
     @SneakyThrows
-    public Optional<Document> validateXml(MagdaDocument magdaDocument) {
+    public void validateXml(MagdaDocument magdaDocument) throws SoapValidationError {
         String naam = magdaDocument.xpath("//Context/Naam").item(0).getTextContent();
         String versie = magdaDocument.xpath("//Context/Versie").item(0).getTextContent();
         try {
@@ -99,24 +99,26 @@ public class SoapRequestValidatorImpl extends SoapBodyValidator {
             Document xml = nodelistToDocument(xpath);
             validator.validate(new DOMSource(xml));
         } catch (Exception e) {
-            return Optional.of(
+            throw new SoapValidationError(
                     MagdaDocument.fromString(
-                            String.format(
-                            """
-                            <Error>
-                                <Type>
-                                    Invalid Request
-                                </Type>
-                                <ErrorMessage>
-                                    %s
-                                </ErrorMessage>
-                            </Error>
-                            """,
+                            String.format("""
+                                            <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+                                                <SOAP-ENV:Header/>
+                                                <SOAP-ENV:Body>
+                                                    <ns0:Fault xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/">
+                                                        <faultcode>Server</faultcode>
+                                                        <faultstring>10001 - Fout formaat in de vraag (XML validatie) ++ reden</faultstring>
+                                                        <detail>
+                                                            <message>%s</message>
+                                                        </detail>
+                                                    </ns0:Fault>
+                                                </SOAP-ENV:Body>
+                                            </SOAP-ENV:Envelope>
+                                            """,
                                     e.getMessage()
                             )
-                    ).getXml()
+                    )
             );
         }
-        return Optional.empty();
     }
 }

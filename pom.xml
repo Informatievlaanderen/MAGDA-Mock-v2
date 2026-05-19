@@ -4,7 +4,7 @@
 	<packaging>pom</packaging>
 	<groupId>be.vlaanderen.vip</groupId>
 	<artifactId>magda.magdamock</artifactId>
-	<version>0.7.0</version>
+	<version>0.8.0</version>
 	<name>magdamock</name>
 	<description>MAGDA diensten Mock voor afnemers</description>
 	<properties>
@@ -15,7 +15,7 @@
 		<vdip-java.version>25-jre</vdip-java.version>
 		<docker.image>magda.magdamock</docker.image>
 		<mockito.version>5.3.1</mockito.version>
-		<slf4j.version>2.0.17</slf4j.version>
+		<slf4j.version>2.0.18</slf4j.version>
 		<mapstruct-lombok.version>0.2.0</mapstruct-lombok.version>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco-aggregated/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.language>java</sonar.language>
@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>be.vlaanderen.vip.mock</groupId>
 			<artifactId>interfaces</artifactId>
-			<version>3.40.0</version>
+			<version>3.42.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

@@ -1,6 +1,5 @@
 package be.vlaanderen.vip.magda.magdamock.spring.config;
 
-import be.vlaanderen.vip.magda.client.connection.MagdaConnection;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -16,9 +15,23 @@ public class MagdaMockConfig {
     String magdaMockTestPath;
     String soapTestPath;
     String magdaXsdPath;
+    Integer minimumTimeoutMillis;
+    Integer maximumTimeoutMillis;
+    boolean enableTimeout;
 
     @Bean
-    public MagdaConnection magdaMockConnection() throws IOException {
-        return MagdaMockConnection.create(magdaMockTestPath, soapTestPath, magdaXsdPath);
+    public MagdaMockConnection magdaMockConnection() throws IOException {
+        if (enableTimeout) {
+            if (minimumTimeoutMillis == null) {
+                minimumTimeoutMillis = 0;
+            }
+            if (maximumTimeoutMillis == null) {
+                maximumTimeoutMillis = Math.max(minimumTimeoutMillis, 5000);
+            }
+        } else {
+            minimumTimeoutMillis = null;
+            maximumTimeoutMillis = null;
+        }
+        return MagdaMockConnection.create(magdaMockTestPath, soapTestPath, magdaXsdPath, minimumTimeoutMillis, maximumTimeoutMillis);
     }
 }

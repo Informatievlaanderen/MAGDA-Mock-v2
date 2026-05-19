@@ -2,15 +2,14 @@ package be.vlaanderen.vip.magda.magdamock.spring.controller;
 
 
 import be.vlaanderen.vip.magda.client.MagdaDocument;
-import be.vlaanderen.vip.magda.client.connection.MagdaConnection;
 import be.vlaanderen.vip.magda.exception.MagdaConnectionException;
-import com.fasterxml.jackson.databind.JsonNode;
+import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
+import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -36,9 +36,9 @@ public class MagdaMockController {
     // Gemeenschappelijk endpoint voor alle MAGDA REST webservices
     private static final String MAGDA_REST_V1 = "Magda-v1/rest";
 
-    private final MagdaConnection mockConnection;
+    private final MagdaMockConnection mockConnection;
 
-    public MagdaMockController(MagdaConnection mockConnection) {
+    public MagdaMockController(MagdaMockConnection mockConnection) {
         this.mockConnection = mockConnection;
     }
 
@@ -51,12 +51,16 @@ public class MagdaMockController {
         //TODO: handle request parsing errors and return Magda Uitzondering error
         var requestDocument = MagdaDocument.fromString(request);
 
-        var magdaResponse = mockConnection.sendDocument(requestDocument.getXml());
-        if (magdaResponse != null) {
-            return parseInputstream(MagdaDocument.fromDocument(magdaResponse));
+        try {
+            var magdaResponse = mockConnection.sendDocument(requestDocument.getXml());
+            if (magdaResponse != null) {
+                return parseInputstream(MagdaDocument.fromDocument(magdaResponse));
 
-        } else {
-            return ResponseEntity.notFound().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (SoapValidationError e) {
+            return ResponseEntity.internalServerError().contentType(TEXT_XML).body(e.getExceptionBody().toString());
         }
     }
 
@@ -84,7 +88,17 @@ public class MagdaMockController {
         String query = incomingRequest.getQueryString();
         splittedRequestUri.remove(0);
         String path = String.join(MAGDA_REST_V1, splittedRequestUri);
-        Pair<JsonNode, Integer> response = mockConnection.sendRestRequest(path, query, method, requestBody);
-        return new ResponseEntity<>(Optional.ofNullable(response.getLeft()).map(Object::toString).orElse(""), HttpStatusCode.valueOf(response.getRight()));
+        String dateHeaderName = "date", correlationIdHeaderName = "x-correlation-id";
+        for (Iterator<String> it = incomingRequest.getHeaderNames().asIterator(); it.hasNext(); ) {
+            String headerName = it.next();
+            if (headerName.equalsIgnoreCase(dateHeaderName)) {
+                dateHeaderName = headerName;
+            }
+            if (headerName.equalsIgnoreCase(correlationIdHeaderName)) {
+                correlationIdHeaderName = headerName;
+            }
+        }
+        MagdaMockConnection.MockRestResponse response = mockConnection.sendRestRequest(path, query, method, requestBody, incomingRequest.getHeader(dateHeaderName), incomingRequest.getHeader(correlationIdHeaderName));
+        return new ResponseEntity<>(Optional.ofNullable(response.body()).map(Object::toString).orElse(""), CollectionUtils.toMultiValueMap(response.headers()), HttpStatusCode.valueOf(response.status()));
     }
 }

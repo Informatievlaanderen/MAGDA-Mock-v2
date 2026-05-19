@@ -16,7 +16,11 @@ import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapRequestValidatorImpl;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapResponseValidatorImpl;
+import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
+import be.vlaanderen.vip.magda.magdamock.utils.NoopTimeoutUtil;
+import be.vlaanderen.vip.magda.magdamock.utils.RandomTimeoutUtil;
 import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
+import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -49,8 +53,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+// NOTE: the implementation of MagdaConnection is to remain backwards compatible with magdamock.service
 @Slf4j
 public class MagdaMockConnection implements MagdaConnection {
 
@@ -60,6 +66,7 @@ public class MagdaMockConnection implements MagdaConnection {
     private final SoapResponsePatcher soapResponsePatcher = new SoapResponsePatcherImpl();
     private final SoapBodyValidator soapRequestValidator;
     private final SoapBodyValidator soapResponseValidator;
+    private final TimeoutUtil timeoutUtil;
 
 
     MagdaMockConnection(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
@@ -68,13 +75,31 @@ public class MagdaMockConnection implements MagdaConnection {
         this.soapRequestValidator = soapRequestValidator;
         this.soapResponseValidator = soapResponseValidator;
         mapper = new ObjectMapper();
+        this.timeoutUtil = new NoopTimeoutUtil();
+    }
+
+    MagdaMockConnection(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator, TimeoutUtil timeoutUtil) {
+        this.wireMockServer = wiremockServerData.wireMockServer();
+        internalWiremockHttpServer = wiremockServerData.factory().getHttpServer();
+        this.soapRequestValidator = soapRequestValidator;
+        this.soapResponseValidator = soapResponseValidator;
+        mapper = new ObjectMapper();
+        this.timeoutUtil = timeoutUtil;
     }
 
     public static MagdaMockConnection create(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
         return new MagdaMockConnection(wiremockServerData, soapRequestValidator, soapResponseValidator);
     }
 
+    public static MagdaMockConnection create(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator, TimeoutUtil timeoutUtil) {
+        return new MagdaMockConnection(wiremockServerData, soapRequestValidator, soapResponseValidator, timeoutUtil);
+    }
+
     public static MagdaMockConnection create(String testDataPath, String soapTestPath, String xsdPath) throws IOException {
+        return create(testDataPath, soapTestPath, xsdPath, null, null);
+    }
+
+    public static MagdaMockConnection create(String testDataPath, String soapTestPath, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis) throws IOException {
         List<Domain> domains = SoapResourceUtil.loadDomainsFromPaths(SoapResourceUtil.resolvePaths(soapTestPath));
         WireMockData wireMockData = EmbeddedWireMockBuilder.wireMockServer(testDataPath, soapTestPath);
         SoapStubRegistrar soapStubRegistrar = new SoapStubRegistrar(wireMockData.wireMockServer(), soapTestPath);
@@ -86,16 +111,19 @@ public class MagdaMockConnection implements MagdaConnection {
             soapRequestValidator = new SoapRequestValidatorImpl(xsdPath);
             soapResponseValidator = new SoapResponseValidatorImpl(xsdPath);
         }
-        return create(wireMockData, soapRequestValidator, soapResponseValidator);
+        TimeoutUtil timeoutUtil = new NoopTimeoutUtil();
+        if (minimumTimeoutMillis != null && maximumTimeoutMillis != null) {
+            timeoutUtil = new RandomTimeoutUtil(minimumTimeoutMillis, maximumTimeoutMillis);
+        }
+        return create(wireMockData, soapRequestValidator, soapResponseValidator, timeoutUtil);
     }
 
+    // NOTE: this function is to remain backwards compatible with magdamock.service
     @Override
-    public Document sendDocument(Document xml) {
+    public Document sendDocument(Document xml) throws SoapValidationError {
+        timeoutUtil.timeout();
         MagdaDocument request = MagdaDocument.fromDocument(xml);
-        Optional<Document> requestValidationError = soapRequestValidator.validateXml(request);
-        if (requestValidationError.isPresent()) {
-            return wrapInEnvelope(requestValidationError.get());
-        }
+        soapRequestValidator.validateXml(request);
         String dateHeader = getDateHeaderFromSoapRequest(request);
         String soapUrl = wireMockServer.url("/soap");
         Request mockRequest = createInternalWiremockRequest(soapUrl, "POST", request.toString(), dateHeader, "text/xml");
@@ -105,10 +133,7 @@ public class MagdaMockConnection implements MagdaConnection {
         }
         Document document = parseSoapResponse(response);
         Document patchedResponse = patchResponse(request, document);
-        Optional<Document> responseValidationError = soapResponseValidator.validateXml(MagdaDocument.fromDocument(patchedResponse));
-        if (responseValidationError.isPresent()) {
-            return wrapInEnvelope(responseValidationError.get());
-        }
+        soapResponseValidator.validateXml(MagdaDocument.fromDocument(patchedResponse));
         return wrapInEnvelope(patchedResponse);
     }
 
@@ -138,7 +163,7 @@ public class MagdaMockConnection implements MagdaConnection {
         return MagdaDocument.fromString(soap).getXml();
     }
 
-
+    // NOTE: this function is to remain backwards compatible with magdamock.service
     @Override
     public Pair<JsonNode, Integer> sendRestRequest(MagdaRestRequest request, MagdaRegistrationInfo registrationInfo) {
         String queryParams = request.getUrlQueryParams().entrySet().stream().map((kv) -> String.format("%s=%s", kv.getKey(), kv.getValue())).collect(Collectors.joining("&"));
@@ -151,27 +176,34 @@ public class MagdaMockConnection implements MagdaConnection {
             parts.removeFirst();
             String path = String.join(stubUrl, parts);
             String dateHeader = request.getHeaders().get("Date");
-            return sendRestRequest(path, queryParams, method, "", dateHeader);
+            MockRestResponse mockRestResponse = sendRestRequest(path, queryParams, method, "", dateHeader, "");
+            return Pair.of(mockRestResponse.body(), mockRestResponse.status());
         } catch (URISyntaxException e) {
             throw new MagdaMockRestException("Error simulating REST call", e.getCause());
         }
     }
 
+    // NOTE: this function is to remain backwards compatible with magdamock.service
     @Override
     public Pair<JsonNode, Integer> sendRestRequest(String path, String query, String method, String requestBody) {
-        return sendRestRequest(path, query, method, requestBody, "");
+        MockRestResponse mockRestResponse = sendRestRequest(path, query, method, requestBody, "", "");
+        return Pair.of(mockRestResponse.body(), mockRestResponse.status());
     }
 
-    public Pair<JsonNode, Integer> sendRestRequest(String path, String query, String method, String requestBody, String dateHeader) {
+    public MockRestResponse sendRestRequest(String path, String query, String method, String requestBody, String dateHeader, String correlationIdHeader) {
+        timeoutUtil.timeout();
         List<String> parts = new ArrayList<>();
         parts.add(wireMockServer.url(path));
         if (query != null && !query.isEmpty()) {
             parts.add(query);
         }
 
+        String correlationId = Optional.ofNullable(correlationIdHeader).orElse(UUID.randomUUID().toString());
+
         Optional<Pair<JsonNode, Integer>> validationRequest = validateRestJson(requestBody, true);
         if (validationRequest.isPresent()) {
-            return validationRequest.get();
+            Pair<JsonNode, Integer> jsonNodeIntegerPair = validationRequest.get();
+            return new MockRestResponse(jsonNodeIntegerPair.getLeft(), jsonNodeIntegerPair.getRight(), Map.of("x-correlation-id", List.of(correlationId)));
         }
 
         String url = String.join("?", parts);
@@ -179,10 +211,11 @@ public class MagdaMockConnection implements MagdaConnection {
         Response response = routeRequest(mockRequest);
         Optional<Pair<JsonNode, Integer>> validationResponse = validateRestJson(response.getBodyAsString(), false);
         if (validationResponse.isPresent()) {
-            return validationResponse.get();
+            Pair<JsonNode, Integer> jsonNodeIntegerPair = validationResponse.get();
+            return new MockRestResponse(jsonNodeIntegerPair.getLeft(), jsonNodeIntegerPair.getRight(), Map.of("x-correlation-id", List.of(correlationId)));
         }
 
-        return parseRestResponse(response);
+        return parseRestResponse(response, correlationId);
     }
 
     public Optional<Pair<JsonNode, Integer>> validateRestJson(String requestBody, boolean request) {
@@ -199,13 +232,13 @@ public class MagdaMockConnection implements MagdaConnection {
         return Optional.empty();
     }
 
-    private Pair<JsonNode, Integer> parseRestResponse(Response response) {
+    private MockRestResponse parseRestResponse(Response response, String correlationId) {
         try {
             if (response.getStatus() == 404) {
                 log.info("Received status 404 while parsing rest response");
-                return Pair.of(null, 404);
+                return new MockRestResponse(null, 404, Map.of("x-correlation-id", List.of(correlationId)));
             }
-            return Pair.of(mapper.readTree(response.getBody()), response.getStatus());
+            return new MockRestResponse(mapper.readTree(response.getBody()), response.getStatus(), Map.of("x-correlation-id", List.of(correlationId)));
         } catch (IOException e) {
             throw new MagdaMockRestException("Error simulating REST call", e.getCause());
         }
@@ -365,4 +398,11 @@ public class MagdaMockConnection implements MagdaConnection {
             }
         };
     }
+
+
+    public record MockRestResponse(
+            JsonNode body,
+            Integer status,
+            Map<String, List<String>> headers
+    ){}
 }
