@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public abstract class SoapBodyValidator {
-    public abstract Optional<Document> validateXml(MagdaDocument magdaDocument);
+    public abstract void validateXml(MagdaDocument magdaDocument) throws SoapValidationError;
 
     protected Document nodelistToDocument(NodeList nodeList) throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

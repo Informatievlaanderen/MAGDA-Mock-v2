@@ -16,6 +16,7 @@ import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapRequestValidatorImpl;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapResponseValidatorImpl;
+import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
 import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -93,12 +94,9 @@ public class MagdaMockConnection implements MagdaConnection {
 
     // NOTE: this function is to remain backwards compatible with magdamock.service
     @Override
-    public Document sendDocument(Document xml) {
+    public Document sendDocument(Document xml) throws SoapValidationError {
         MagdaDocument request = MagdaDocument.fromDocument(xml);
-        Optional<Document> requestValidationError = soapRequestValidator.validateXml(request);
-        if (requestValidationError.isPresent()) {
-            return wrapInEnvelope(requestValidationError.get());
-        }
+        soapRequestValidator.validateXml(request);
         String dateHeader = getDateHeaderFromSoapRequest(request);
         String soapUrl = wireMockServer.url("/soap");
         Request mockRequest = createInternalWiremockRequest(soapUrl, "POST", request.toString(), dateHeader, "text/xml");
@@ -108,10 +106,7 @@ public class MagdaMockConnection implements MagdaConnection {
         }
         Document document = parseSoapResponse(response);
         Document patchedResponse = patchResponse(request, document);
-        Optional<Document> responseValidationError = soapResponseValidator.validateXml(MagdaDocument.fromDocument(patchedResponse));
-        if (responseValidationError.isPresent()) {
-            return wrapInEnvelope(responseValidationError.get());
-        }
+        soapResponseValidator.validateXml(MagdaDocument.fromDocument(patchedResponse));
         return wrapInEnvelope(patchedResponse);
     }
 

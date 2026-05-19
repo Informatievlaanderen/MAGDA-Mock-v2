@@ -2,14 +2,11 @@ package be.vlaanderen.vip.magda.magdamock.spring.controller;
 
 
 import be.vlaanderen.vip.magda.client.MagdaDocument;
-import be.vlaanderen.vip.magda.client.connection.MagdaConnection;
 import be.vlaanderen.vip.magda.exception.MagdaConnectionException;
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
-import com.fasterxml.jackson.databind.JsonNode;
+import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
@@ -54,12 +51,16 @@ public class MagdaMockController {
         //TODO: handle request parsing errors and return Magda Uitzondering error
         var requestDocument = MagdaDocument.fromString(request);
 
-        var magdaResponse = mockConnection.sendDocument(requestDocument.getXml());
-        if (magdaResponse != null) {
-            return parseInputstream(MagdaDocument.fromDocument(magdaResponse));
+        try {
+            var magdaResponse = mockConnection.sendDocument(requestDocument.getXml());
+            if (magdaResponse != null) {
+                return parseInputstream(MagdaDocument.fromDocument(magdaResponse));
 
-        } else {
-            return ResponseEntity.notFound().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (SoapValidationError e) {
+            return ResponseEntity.internalServerError().contentType(TEXT_XML).body(e.getExceptionBody().toString());
         }
     }
 
