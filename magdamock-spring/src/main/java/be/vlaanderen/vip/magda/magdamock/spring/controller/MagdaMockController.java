@@ -49,9 +49,8 @@ public class MagdaMockController {
 
     private ResponseEntity<String> processMagdaMockRequest(String request) throws MagdaConnectionException {
         //TODO: handle request parsing errors and return Magda Uitzondering error
-        var requestDocument = MagdaDocument.fromString(request);
-
         try {
+            MagdaDocument requestDocument = parseDocument(request);
             var magdaResponse = mockConnection.sendDocument(requestDocument.getXml());
             if (magdaResponse != null) {
                 return parseInputstream(MagdaDocument.fromDocument(magdaResponse));
@@ -61,6 +60,25 @@ public class MagdaMockController {
             }
         } catch (SoapValidationError e) {
             return ResponseEntity.internalServerError().contentType(TEXT_XML).body(e.getExceptionBody().toString());
+        }
+    }
+
+    private MagdaDocument parseDocument(String request) throws SoapValidationError {
+        try {
+            return MagdaDocument.fromString(request);
+        } catch (Exception e) {
+            throw new SoapValidationError(MagdaDocument.fromString("""
+                    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+                        <SOAP-ENV:Header/>
+                        <SOAP-ENV:Body>
+                            <ns0:Fault xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/">
+                                <faultcode>soap:Client</faultcode>
+                                <faultstring>Problems creating SAAJ object model</faultstring>
+                            </ns0:Fault>
+                        </SOAP-ENV:Body>
+                    </SOAP-ENV:Envelope>
+                    """
+            ));
         }
     }
 
