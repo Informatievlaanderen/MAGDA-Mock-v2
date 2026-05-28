@@ -89,6 +89,54 @@ class MagdaMockConnectionTest {
         );
         assertNotNull(response);
     }
+    @Test
+    @SneakyThrows
+    void whenSenderIdIsMissing_shouldReturnMagdaError13001() {
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
+        var response = connection.sendDocument(
+                MagdaDocument.fromString("""
+                    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://magda.vlaanderen.be/persoon/soap/geefpersoon/v02_02">
+                        <soapenv:Header/>
+                        <soapenv:Body>
+                            <web:GeefPersoon>
+                                <Verzoek>
+                                    <Context>
+                                        <Naam>GeefPersoon</Naam>
+                                        <Versie>02.02.0000</Versie>
+                                        <Bericht>
+                                            <Type>VRAAG</Type>
+                                            <Tijdstip>
+                                                <Datum>2022-02-02</Datum>
+                                            </Tijdstip>
+                                            <Afzender>
+                                                <Identificatie></Identificatie>
+                                                <Referte></Referte>
+                                                <Hoedanigheid></Hoedanigheid>
+                                            </Afzender>
+                                        </Bericht>
+                                    </Context>
+                                    <Vragen>
+                                        <Vraag>
+                                            <Referte>482d403a-22aa-11f1-a0f2-04cf4b22694c</Referte>
+                                            <Inhoud>
+                                                <Criteria>
+                                                    <INSZ>00631499723</INSZ>
+                                                </Criteria>
+                                                <Bron>RR</Bron>
+                                                <Taal>nl</Taal>
+                                            </Inhoud>
+                                        </Vraag>
+                                    </Vragen>
+                                </Verzoek>
+                            </web:GeefPersoon>
+                        </soapenv:Body>
+                    </soapenv:Envelope>
+                    """).getXml()
+        );
+        assertNotNull(response);
+        MagdaDocument magdaDocument = MagdaDocument.fromDocument(response);
+        assertEquals("13001", magdaDocument.getValue("//Uitzonderingen/Uitzondering/Identificatie"));
+    }
 
     @Test
     @SneakyThrows
