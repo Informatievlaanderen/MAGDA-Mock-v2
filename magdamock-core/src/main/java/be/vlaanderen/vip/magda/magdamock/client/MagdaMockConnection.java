@@ -39,11 +39,13 @@ import com.github.tomakehurst.wiremock.http.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -67,6 +69,8 @@ public class MagdaMockConnection implements MagdaConnection {
     private final SoapBodyValidator soapRequestValidator;
     private final SoapBodyValidator soapResponseValidator;
     private final TimeoutUtil timeoutUtil;
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
 
 
     MagdaMockConnection(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
@@ -133,8 +137,46 @@ public class MagdaMockConnection implements MagdaConnection {
         }
         Document document = parseSoapResponse(response);
         Document patchedResponse = patchResponse(request, document);
-        soapResponseValidator.validateXml(MagdaDocument.fromDocument(patchedResponse));
-        return wrapInEnvelope(patchedResponse);
+        Document checkedResponse = validateSoapResponse(request, patchedResponse);
+        return wrapInEnvelope(checkedResponse);
+    }
+
+    private Document validateSoapResponse(MagdaDocument request, Document response) throws SoapValidationError {
+        response = validateSoapSender(request, response);
+        soapResponseValidator.validateXml(MagdaDocument.fromDocument(response));
+        return response;
+    }
+
+    private Document validateSoapSender(MagdaDocument request, Document response) {
+        String identification = request.getValue("//Afzender/Identificatie");
+        LocalDateTime now = LocalDateTime.now();
+
+        if (identification == null || identification.isBlank()) {
+            Node uitzonderingenNode = MagdaDocument.fromString(String.format("""
+                                    <Uitzonderingen>
+                                        <Uitzondering>
+                                            <Identificatie>13001</Identificatie>
+                                            <Oorsprong>MAGDA</Oorsprong>
+                                            <Type>FOUT</Type>
+                                            <Tijdstip>
+                                                <Datum>%s</Datum>
+                                                <Tijd>%s</Tijd>
+                                            </Tijdstip>
+                                            <Diagnose>Geen machtiging van de afzender in deze hoedanigheid voor de gevraagde dienst</Diagnose>
+                                        </Uitzondering>
+                                    </Uitzonderingen>
+                    """, now.format(DATE_FORMAT), now.format(TIME_FORMAT))).getXml().getFirstChild();
+            Node repliek = response.getElementsByTagName("Repliek").item(0);
+            uitzonderingenNode = response.importNode(uitzonderingenNode, true);
+            for (int i = 0; i < repliek.getChildNodes().getLength(); i++) {
+                Node node = repliek.getChildNodes().item(i);
+                if ("Antwoorden".equals(node.getLocalName())) {
+                    node.getParentNode().removeChild(node);
+                }
+            }
+            repliek.appendChild(uitzonderingenNode);
+        }
+        return response;
     }
 
     private String getDateHeaderFromSoapRequest(MagdaDocument request) {
@@ -404,5 +446,6 @@ public class MagdaMockConnection implements MagdaConnection {
             JsonNode body,
             Integer status,
             Map<String, List<String>> headers
-    ){}
+    ) {
+    }
 }

@@ -132,6 +132,8 @@ class SOAPServicesTest {
                         appendPathValue(document, request, "Naam", naam);
                         appendPathValue(document, request, "Versie", versie);
 
+                        appendPathValue(document, request, "Bericht/Afzender/Identificatie", "soap-services-test-identificatie");
+
                         for (RequestField requestField : requestFields) {
                                 appendPathValue(document, request, requestField.path(), requestField.value());
                         }
