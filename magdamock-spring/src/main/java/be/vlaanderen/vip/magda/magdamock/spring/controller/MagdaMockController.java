@@ -116,7 +116,7 @@ public class MagdaMockController {
                 correlationIdHeaderName = headerName;
             }
         }
-        MagdaMockConnection.MockRestResponse response = mockConnection.sendRestRequest(path, query, method, requestBody, incomingRequest.getHeader(dateHeaderName), incomingRequest.getHeader(correlationIdHeaderName));
+        var response = mockConnection.sendRestRequest(path, query, method, requestBody, incomingRequest.getHeader(dateHeaderName), incomingRequest.getHeader(correlationIdHeaderName));
         return new ResponseEntity<>(Optional.ofNullable(response.body()).map(Object::toString).orElse(""), CollectionUtils.toMultiValueMap(response.headers()), HttpStatusCode.valueOf(response.status()));
     }
 }
