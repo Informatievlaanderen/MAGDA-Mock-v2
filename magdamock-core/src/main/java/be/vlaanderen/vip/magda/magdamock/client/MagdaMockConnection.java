@@ -5,6 +5,8 @@ import be.vlaanderen.vip.magda.client.domeinservice.MagdaRegistrationInfo;
 import be.vlaanderen.vip.magda.client.rest.MagdaRestRequest;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockRestHandler;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
+import be.vlaanderen.vip.magda.magdamock.client.rest.MockRestMapping;
+import be.vlaanderen.vip.magda.magdamock.client.rest.RestDirectoryHandler;
 import be.vlaanderen.vip.magda.magdamock.client.soap.Domain;
 import be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar;
 import be.vlaanderen.vip.magda.magdamock.config.EmbeddedWireMockBuilder;
@@ -25,9 +27,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 public class MagdaMockConnection implements MagdaConnection {
@@ -50,15 +55,27 @@ public class MagdaMockConnection implements MagdaConnection {
         return new MagdaMockConnection(restHandler, soapHandler);
     }
 
-    public static MagdaMockConnection create(String testDataPath, String soapTestPath, String xsdPath) throws IOException {
-        return create(testDataPath, soapTestPath, xsdPath, null, null);
+    public static MagdaMockConnection create(String restDataPath, String soapTestPath, String xsdPath) throws IOException {
+        return create(restDataPath, soapTestPath, xsdPath, null, null);
     }
 
-    public static MagdaMockConnection create(String testDataPath, String soapTestPath, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis) throws IOException {
+    public static MagdaMockConnection create(String restDataPath, String soapTestPath, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis) throws IOException {
+        List<MockRestMapping> mappings = MockRestMapping.MAPPINGS;
+        return create(restDataPath, soapTestPath, xsdPath, minimumTimeoutMillis, maximumTimeoutMillis, mappings);
+    }
+
+    public static MagdaMockConnection create(String restDataPath, String soapTestPath, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis, List<MockRestMapping> mappings) throws IOException {
         List<Domain> domains = SoapResourceUtil.loadDomainsFromPaths(SoapResourceUtil.resolvePaths(soapTestPath));
-        WireMockData wireMockData = EmbeddedWireMockBuilder.wireMockServer(testDataPath, soapTestPath);
+        WireMockData wireMockData = new EmbeddedWireMockBuilder().soapTestPath(soapTestPath).build();
         SoapStubRegistrar soapStubRegistrar = new SoapStubRegistrar(wireMockData.wireMockServer(), soapTestPath);
         domains.forEach(soapStubRegistrar::registerDomain);
+
+        if (restDataPath != null && !restDataPath.isEmpty()) {
+            Path restPath = Path.of(restDataPath);
+            List<RestDirectoryHandler> directoryHandlers = mappings.stream().map(mockRestMapping -> new RestDirectoryHandler(mockRestMapping, wireMockData.wireMockServer(), restPath)).toList();
+            directoryHandlers.forEach(RestDirectoryHandler::addAllStubs);
+        }
+
         SoapBodyValidator soapRequestValidator, soapResponseValidator;
         if (xsdPath == null || xsdPath.isBlank()) {
             soapResponseValidator = soapRequestValidator = new LenientSoapBodyValidator();
@@ -73,6 +90,7 @@ public class MagdaMockConnection implements MagdaConnection {
         return create(wireMockData, soapRequestValidator, soapResponseValidator, timeoutUtil);
     }
 
+    // NOTE: this function is to remain backwards compatible with magdamock.service
     @Override
     @Deprecated
     public Document sendDocument(Document xml) throws SoapValidationError {
@@ -98,8 +116,16 @@ public class MagdaMockConnection implements MagdaConnection {
 
     @Deprecated
     public MagdaMockRestHandler.MockRestResponse sendRestRequest(String path, String query, String method, String requestBody, String dateHeader, String correlationIdHeader) {
+        Map<String, String> headers = new HashMap<>();
+        if (dateHeader != null) {
+            headers.put("date", dateHeader);
+        }
+        if (correlationIdHeader == null) {
+            correlationIdHeader = UUID.randomUUID().toString();
+        }
+        headers.put("x-correlation-id", correlationIdHeader);
         return sendRestRequest(
-                new MagdaMockRestHandler.MockRestRequest(path, query, method, requestBody, Map.of("date", dateHeader, "x-correlation-id", correlationIdHeader))
+                new MagdaMockRestHandler.MockRestRequest(path, query, method, requestBody, headers)
         );
     }
 

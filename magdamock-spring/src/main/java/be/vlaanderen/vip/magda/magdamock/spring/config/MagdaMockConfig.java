@@ -12,8 +12,8 @@ import java.io.IOException;
 @Configuration
 @ConfigurationProperties("magda.magdamock")
 public class MagdaMockConfig {
-    String magdaMockTestPath;
     String soapTestPath;
+    String restTestPath;
     String magdaXsdPath;
     Integer minimumTimeoutMillis;
     Integer maximumTimeoutMillis;
@@ -32,6 +32,6 @@ public class MagdaMockConfig {
             minimumTimeoutMillis = null;
             maximumTimeoutMillis = null;
         }
-        return MagdaMockConnection.create(magdaMockTestPath, soapTestPath, magdaXsdPath, minimumTimeoutMillis, maximumTimeoutMillis);
+        return MagdaMockConnection.create(restTestPath, soapTestPath, magdaXsdPath, minimumTimeoutMillis, maximumTimeoutMillis);
     }
 }
