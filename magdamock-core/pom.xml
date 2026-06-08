@@ -3,7 +3,7 @@
   <parent>
 	  <artifactId>magda.magdamock</artifactId>
 	  <groupId>be.vlaanderen.vip</groupId>
-	  <version>0.9.0</version>
+	  <version>0.10.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -12,7 +12,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
-			<version>2.21.3</version>
+			<version>2.22.0</version>
 			<scope>test</scope>
 		</dependency>
 

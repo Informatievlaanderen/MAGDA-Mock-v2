@@ -1,0 +1,8 @@
+{
+  "response": {
+    "status": 418,
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
