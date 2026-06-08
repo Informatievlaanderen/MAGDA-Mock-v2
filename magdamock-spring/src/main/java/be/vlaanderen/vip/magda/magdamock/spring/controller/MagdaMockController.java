@@ -4,6 +4,8 @@ package be.vlaanderen.vip.magda.magdamock.spring.controller;
 import be.vlaanderen.vip.magda.client.MagdaDocument;
 import be.vlaanderen.vip.magda.exception.MagdaConnectionException;
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
+import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockRestHandler;
+import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -31,10 +35,10 @@ import static org.springframework.util.MimeTypeUtils.TEXT_XML_VALUE;
 @RestController
 @Slf4j
 public class MagdaMockController {
-    // Gemeenschappelijk endpoint voor alle MAGDA SOAP 2.0 webservices
-    private static final String MAGDA_SOAP_02_00 = "Magda-02.00/soap/WebService";
-    // Gemeenschappelijk endpoint voor alle MAGDA REST webservices
-    private static final String MAGDA_REST_V1 = "Magda-v1/rest";
+    // Gemeenschappelijk endpoint voor alle soap
+    private static final String SOAP_BASE_URL = "/soap";
+    // Gemeenschappelijk endpoint voor alle rest
+    private static final String REST_BASE_URL = "/rest";
 
     private final MagdaMockConnection mockConnection;
 
@@ -42,7 +46,7 @@ public class MagdaMockController {
         this.mockConnection = mockConnection;
     }
 
-    @PostMapping(value = {MAGDA_SOAP_02_00, "api/" + MAGDA_SOAP_02_00}, produces = {TEXT_XML_VALUE}, consumes = {APPLICATION_XML_VALUE, TEXT_XML_VALUE})
+    @PostMapping(value = {SOAP_BASE_URL}, produces = {TEXT_XML_VALUE}, consumes = {APPLICATION_XML_VALUE, TEXT_XML_VALUE})
     public ResponseEntity<String> magdaSoap0200WebService(@RequestBody String request) throws MagdaConnectionException {
         return processMagdaMockRequest(request);
     }
@@ -51,9 +55,9 @@ public class MagdaMockController {
         //TODO: handle request parsing errors and return Magda Uitzondering error
         try {
             MagdaDocument requestDocument = parseDocument(request);
-            var magdaResponse = mockConnection.sendDocument(requestDocument.getXml());
+            var magdaResponse = mockConnection.sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(requestDocument.getXml()));
             if (magdaResponse != null) {
-                return parseInputstream(MagdaDocument.fromDocument(magdaResponse));
+                return parseInputstream(MagdaDocument.fromDocument(magdaResponse.document()));
 
             } else {
                 return ResponseEntity.notFound().build();
@@ -95,28 +99,23 @@ public class MagdaMockController {
 
 
     @RequestMapping(
-            value = {MAGDA_REST_V1 + "/**", "api/" + MAGDA_REST_V1 + "/**"},
+            value = {REST_BASE_URL + "/**", "api/" + REST_BASE_URL + "/**"},
             produces = {APPLICATION_JSON_VALUE}, consumes = {APPLICATION_JSON_VALUE},
             method = {RequestMethod.DELETE, RequestMethod.GET, RequestMethod.PATCH, RequestMethod.POST, RequestMethod.PUT}
     )
     protected ResponseEntity<String> magdaRestEndpoint(@RequestBody(required = false) String requestBody, HttpServletRequest incomingRequest) throws MagdaConnectionException {
         requestBody = requestBody == null ? "" : requestBody;
         String method = incomingRequest.getMethod();
-        List<String> splittedRequestUri = new ArrayList<>(Arrays.stream(incomingRequest.getRequestURI().split(Pattern.quote(MAGDA_REST_V1))).toList());
+        List<String> splittedRequestUri = new ArrayList<>(Arrays.stream(incomingRequest.getRequestURI().split(Pattern.quote(REST_BASE_URL))).toList());
         String query = incomingRequest.getQueryString();
         splittedRequestUri.remove(0);
-        String path = String.join(MAGDA_REST_V1, splittedRequestUri);
-        String dateHeaderName = "date", correlationIdHeaderName = "x-correlation-id";
+        String path = String.join(REST_BASE_URL, splittedRequestUri);
+        Map<String, String> headers = new HashMap<>();
         for (Iterator<String> it = incomingRequest.getHeaderNames().asIterator(); it.hasNext(); ) {
             String headerName = it.next();
-            if (headerName.equalsIgnoreCase(dateHeaderName)) {
-                dateHeaderName = headerName;
-            }
-            if (headerName.equalsIgnoreCase(correlationIdHeaderName)) {
-                correlationIdHeaderName = headerName;
-            }
+            headers.put(headerName.toLowerCase(), incomingRequest.getHeader(headerName));
         }
-        var response = mockConnection.sendRestRequest(path, query, method, requestBody, incomingRequest.getHeader(dateHeaderName), incomingRequest.getHeader(correlationIdHeaderName));
+        var response = mockConnection.sendRestRequest(new MagdaMockRestHandler.MockRestRequest(path, query, method, requestBody, headers));
         return new ResponseEntity<>(Optional.ofNullable(response.body()).map(Object::toString).orElse(""), CollectionUtils.toMultiValueMap(response.headers()), HttpStatusCode.valueOf(response.status()));
     }
 }
