@@ -4,5 +4,5 @@ spring:
 
 magda:
   magdamock:
-    magda-mock-test-path: "/data/wiremock"
+    rest-test-path: "/data/rest"
     soap-test-path: "/data/soap"
