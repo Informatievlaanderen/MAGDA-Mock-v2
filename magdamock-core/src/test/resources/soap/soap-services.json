@@ -1478,5 +1478,29 @@
     ],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefWoningKwaliteit",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "GebouwId",
+        "value": "18934254"
+      }
+    ],
+    "xpathExpression": "//Straatnaam",
+    "expectedValue": "Karel Van Overmeirelaan"
+  },
+  {
+    "naam": "ZoekWoningKwaliteit",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "GebouwId",
+        "value": "16067094"
+      }
+    ],
+    "xpathExpression": "//Straatnaam",
+    "expectedValue": "Groenenborgerlaan"
   }
 ]

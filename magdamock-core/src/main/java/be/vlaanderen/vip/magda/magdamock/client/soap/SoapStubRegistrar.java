@@ -180,7 +180,11 @@ public class SoapStubRegistrar {
                     subDir("GeefLoopbaanARZA", VERSION_02_01, KEY_INSZ),
                     subDir("GeefLoopbaanonderbrekingen", VERSION_02_00, KEY_INSZ),
                     subDir("GeefWerkrelaties", VERSION_02_00, KEY_INSZ),
-                    subDir("GeefDmfaVoorWerknemer", VERSION_03_00, KEY_INSZ)
+                    subDir("GeefDmfaVoorWerknemer", VERSION_03_00, KEY_INSZ),
+
+                    //Vlok
+                    subDir("GeefWoningKwaliteit", VERSION_02_00, "//GebouwId"),
+                    subDir("ZoekWoningKwaliteit", VERSION_02_00, "//GebouwId")
             );
         }
 

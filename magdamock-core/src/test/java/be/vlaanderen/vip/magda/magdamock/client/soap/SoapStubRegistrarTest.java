@@ -113,6 +113,11 @@ class SoapStubRegistrarTest {
         assertContains(actual, "GeefLoopbaanonderbrekingen", VERSION_02_00);
         assertContains(actual, "GeefWerkrelaties", VERSION_02_00);
         assertContains(actual, "GeefDmfaVoorWerknemer", VERSION_03_00);
+
+        //Vlok
+        assertContains(actual, "GeefWoningKwaliteit", VERSION_02_00);
+        assertContains(actual, "ZoekWoningKwaliteit", VERSION_02_00);
+
     }
 
     @Test
