@@ -5,8 +5,8 @@ FROM ${DOCKER_URL}/magda/magda.magdamock:${MAGDAMOCK_VERSION}
 
 COPY ./application.yml application.yml
 
-COPY ./wiremock-data /data/wiremock
 COPY ./soap /data/soap
+COPY ./rest /data/rest
 
 EXPOSE 8080
 EXPOSE 8081

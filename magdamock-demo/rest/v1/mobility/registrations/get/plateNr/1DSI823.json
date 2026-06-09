@@ -1,4 +1,13 @@
 {
+  "request": {
+    "method": "GET",
+    "urlPath": "/v1/mobility/registrations",
+    "queryParameters": {
+      "plateNr": {
+        "equalTo": "1DSI823"
+      }
+    }
+  },
   "response": {
     "status": 200,
     "headers": {
@@ -6,19 +15,19 @@
     },
     "jsonBody": {
       "@context": "https://vlaamseoverheid.atlassian.net/wiki/download/attachments/1693680273/Mobility-context.jsonld",
-      "self": "/registrations?plateNr=MIJNAUTO",
+      "self": "/registrations?plateNr=1DSI823",
       "items": [
         {
           "license": {
-            "plateNr": "MIJNAUTO",
-            "plateUID": "5175298527",
+            "plateNr": "1DSI823",
+            "plateUID": "6148372095",
             "plateType": {
               "code": "NM",
               "description": "Normaal"
             },
             "languageCode": "NL",
-            "startSituationDate": "2022-06-25T00:00:00Z",
-            "lastRegistrationDate": "2022-06-25T00:00:00Z",
+            "startSituationDate": "2025-08-11T00:00:00Z",
+            "lastRegistrationDate": "2025-08-11T00:00:00Z",
             "status": {
               "code": "REG",
               "description": "Ingeschreven"
@@ -27,12 +36,12 @@
               "code": "NOR",
               "description": "Normaal"
             },
-            "lastUpdateDateTime": "2022-06-25T09:25:57.303Z"
+            "lastUpdateDateTime": "2025-08-11T09:22:11.123Z"
           },
           "certificates": [
             {
               "id": "571213987",
-              "beginDate": "2022-06-24T23:00:00Z",
+              "beginDate": "2025-08-10T20:10:00Z",
               "statusLegal": {
                 "code": "NOR",
                 "description": "Normaal"
@@ -48,13 +57,13 @@
               "@id": "_:100",
               "@type": "http://www.w3.org/ns/person#Person",
               "nationalNr": {
-                "identificator": "01700462685"
+                "identificator": "01690129514"
               },
               "lastName": [
-                "Baeckeland"
+                "Tahiri"
               ],
               "firstName": [
-                "Annemie"
+                "Yoessef"
               ],
               "birthYear": "2001"
             },
@@ -63,11 +72,10 @@
               "registrationAddress": {
                 "@type": "http://www.w3.org/ns/locn#Address",
                 "streetName": {
-                  "string": "Varendrieskouter"
+                  "string": "Brusselsesteenweg"
                 },
-                "houseNumber": "31",
-                "box": "",
-                "postalCode": "9031",
+                "houseNumber": "292",
+                "postalCode": "9050",
                 "cityNisCode": "44021",
                 "cityName": {
                   "string": "Gent"
@@ -76,11 +84,10 @@
               "address": {
                 "@type": "http://www.w3.org/ns/locn#Address",
                 "streetName": {
-                  "string": "Varendrieskouter"
+                  "string": "Brusselsesteenweg"
                 },
-                "houseNumber": "31",
-                "box": "",
-                "postalCode": "9031",
+                "houseNumber": "292",
+                "postalCode": "9050",
                 "cityNisCode": "44021",
                 "cityName": {
                   "string": "Gent"
@@ -94,28 +101,28 @@
               "code": "REGNM",
               "description": "Normale inschrijving"
             },
-            "dateTime": "2022-06-25T09:25:57.303Z",
+            "dateTime": "2025-08-10T05:12:30.000Z",
             "info": {
               "plateNumberPriorTitular": "",
               "importedVehicle": false
             }
           },
           "vehicle": {
-            "vin": "1GNDM3A57KYF482L9",
+            "vin": "SALLMAMU2KA7B8C9D",
             "unifier": "01",
             "category": {
               "code": "M1",
               "description": "Voertuigen bestemd voor personenvervoer, ten hoogste 8 zitplaatsen (zonder bestuurder)"
             },
-            "makeName": "Emmett Brown Motor Vehicle Corporation",
-            "commercialName": "DELORIAN",
-            "firstRegistrationDate": "2022-06-25",
-            "firstKnownUseDate": "2022-06-25",
-            "type": "AUV",
-            "wvta": "e3*2014/45*9876*12",
-            "variant": "VACPRNCR01",
-            "version": "V8K9Z3F1Q7R6T2M5B4N0L8S9D3P1X",
-            "dateCOC": "2020-01-29",
+            "makeName": "OPEL",
+            "commercialName": "Corsa",
+            "firstRegistrationDate": "2019-03-12",
+            "firstKnownUseDate": "2019-03-12",
+            "type": "VP",
+            "wvta": "e2*2007/46*0345*01",
+            "variant": "CORSA-1.2-75",
+            "version": "CORSA-1.2-75-HATCH",
+            "dateCOC": "2019-02-20",
             "status": {
               "code": "NOR",
               "description": "normaal"
@@ -130,31 +137,31 @@
             },
             "customsStickerCode": "3",
             "distanceType": "K",
-            "techControlValidityDate": "2028-02-20",
-            "techControlEntryDatetime": "2024-02-25T16:13:11Z",
+            "techControlValidityDate": "2027-08-10",
+            "techControlEntryDatetime": "2025-08-10T13:40:00Z",
             "codeForBodyWork": [
               {
-                "code": "VC",
-                "description": "KAMPEERAUTO"
+                "code": "AA",
+                "description": "BERLINE"
               }
             ],
             "kind": {
-              "code": "VC",
-              "description": "KAMPEERAUTO"
+              "code": "AA",
+              "description": "BERLINE"
             },
             "colour": [
               {
-                "code": "6",
-                "description": "Blauw"
+                "code": "1",
+                "description": "Wit"
               }
             ],
-            "technicPermissibleMaxMass": 2450,
-            "massOfTheVehicleInRunningOrder": 1860,
-            "referenceMass": 2450,
-            "actualMassOfTheVehicle": 1990,
+            "technicPermissibleMaxMass": 1650,
+            "massOfTheVehicleInRunningOrder": 1065,
+            "referenceMass": 1065,
+            "actualMassOfTheVehicle": 1200,
             "numberOfAxles": 2,
-            "wheelBase": 2946,
-            "maximumSpeed": 170,
+            "wheelBase": 2518,
+            "maximumSpeed": 175,
             "limiterIndicator": false,
             "handicapIndicator": false,
             "tachoIndicator": false,
@@ -167,16 +174,17 @@
             "exhaustDirectiveRefCode": "715/2007*2018/1832DG",
             "engine": [
               {
-                "engineCapacity": 999.0,
+                "engineCapacity": 1199.0,
                 "fuel": [
                   {
-                    "code": "50",
-                    "description": "Waterstof",
-                    "maximumNetPower": 85.0,
-                    "euroNormCode": "6ei",
-                    "combinedFuelConsumption": 4.9,
-                    "combinedCO2": 5,
-                    "WLTPCombinedCO2": 23
+                    "code": "21",
+                    "description": "Biodiesel",
+                    "maximumNetPower": 75.0,
+                    "euroNormCode": "5",
+                    "euroNormDescription": "Euro 5",
+                    "combinedFuelConsumption": 5.0,
+                    "combinedCO2": 120,
+                    "WLTPCombinedCO2": 130
                   }
                 ]
               }
