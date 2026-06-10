@@ -1502,5 +1502,29 @@
     ],
     "xpathExpression": "//Straatnaam",
     "expectedValue": "Groenenborgerlaan"
+  },
+  {
+    "naam": "GeefWoningKwaliteitBijlage",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Bijlagen/Bijlagen/Referte",
+        "value": "FOT26-00000039"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Er werd geen bijlage voor type Document gevonden met ID DOC19-002888."
+  },
+  {
+    "naam": "GeefWoningKwaliteitBijlage",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Bijlagen/Bijlage/Referte",
+        "value": "FOT26-00000039"
+      }
+    ],
+    "xpathExpression": "//Document/Naam",
+    "expectedValue": "EN24-002560_DT034 beslissing burg_251_101"
   }
 ]

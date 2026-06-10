@@ -1,0 +1,54 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+    <s:Header/>
+    <s:Body>
+        <web:GeefWoningKwaliteitBijlageResponse xmlns:web="http://webservice.geefwoningkwaliteitbijlagedienst-02_00.vlok-02_00.vip.vlaanderen.be">
+            <Repliek>
+                <Context xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+                    <Naam>GeefWoningKwaliteitBijlage</Naam>
+                    <Versie>02.00.0000</Versie>
+                    <Bericht>
+                        <Type>ANTWOORD</Type>
+                        <Tijdstip>
+                            <Datum>2026-06-09</Datum>
+                            <Tijd>14:10:50.932</Tijd>
+                        </Tijdstip>
+                        <Afzender>
+                            <Identificatie>vip.vlaanderen.be</Identificatie>
+                            <Naam>MagdaGateway</Naam>
+                            <Referte>cf648484-0c00-4b2e-9395-a65ba5b3f646</Referte>
+                        </Afzender>
+                    </Bericht>
+                </Context>
+                <Antwoorden>
+                    <Antwoord>
+                        <Referte xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">358b52b1-143d-44d0-8cd6-5eb14a17e9c1</Referte>
+                        <Inhoud>
+                            <Bijlagen>
+                                <Bijlage>
+                                    <Foto>
+                                        <TijdstipLaatstGewijzigd xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">2019-03-04T12:12:26.577</TijdstipLaatstGewijzigd>
+                                        <Naam xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">FOT19-000564.jpg</Naam>
+                                        <Referte xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">FOT19-000564</Referte>
+                                        <Bestand>
+                                            <Type xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">image/jpeg</Type>
+                                            <Data xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">**base64-data</Data>
+                                        </Bestand>
+                                        <GekoppeldOnderzoek xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">ON19-000228</GekoppeldOnderzoek>
+                                    </Foto>
+                                </Bijlage>
+                            </Bijlagen>
+                        </Inhoud>
+                        <Uitzonderingen xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+                            <Uitzondering>
+                                <Identificatie>60004</Identificatie>
+                                <Oorsprong>VLOK</Oorsprong>
+                                <Type>FOUT</Type>
+                                <Diagnose>Er werd geen bijlage voor type Document gevonden met ID DOC19-002888.</Diagnose>
+                            </Uitzondering>
+                        </Uitzonderingen>
+                    </Antwoord>
+                </Antwoorden>
+            </Repliek>
+        </web:GeefWoningKwaliteitBijlageResponse>
+    </s:Body>
+</s:Envelope>

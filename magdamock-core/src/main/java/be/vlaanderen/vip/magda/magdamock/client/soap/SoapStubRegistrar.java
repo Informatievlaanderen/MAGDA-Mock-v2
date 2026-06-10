@@ -27,6 +27,7 @@ public class SoapStubRegistrar {
     public static final String KEY_KADASTRALE_AFDELING = "//KadastraleAfdeling";
     public static final String KEY_SECTIE = "//Sectie";
     public static final String KEY_GRONDNUMMER = "//Grondnummer";
+    public static final String KEY_GEBOUWID = "//GebouwId";
 
     private final Map<MagdaServiceIdentification, SoapStubHandler> soapStubHandlerMap;
 
@@ -183,8 +184,9 @@ public class SoapStubRegistrar {
                     subDir("GeefDmfaVoorWerknemer", VERSION_03_00, KEY_INSZ),
 
                     //Vlok
-                    subDir("GeefWoningKwaliteit", VERSION_02_00, "//GebouwId"),
-                    subDir("ZoekWoningKwaliteit", VERSION_02_00, "//GebouwId")
+                    subDir("GeefWoningKwaliteit", VERSION_02_00, KEY_GEBOUWID),
+                    subDir("ZoekWoningKwaliteit", VERSION_02_00, KEY_GEBOUWID),
+                    subDir("GeefWoningKwaliteitBijlage", VERSION_02_00, "//Bijlage/Referte")
             );
         }
 

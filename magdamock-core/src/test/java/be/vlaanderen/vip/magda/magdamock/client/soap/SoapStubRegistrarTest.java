@@ -117,6 +117,7 @@ class SoapStubRegistrarTest {
         //Vlok
         assertContains(actual, "GeefWoningKwaliteit", VERSION_02_00);
         assertContains(actual, "ZoekWoningKwaliteit", VERSION_02_00);
+        assertContains(actual, "GeefWoningKwaliteitBijlage", VERSION_02_00);
 
     }
 
