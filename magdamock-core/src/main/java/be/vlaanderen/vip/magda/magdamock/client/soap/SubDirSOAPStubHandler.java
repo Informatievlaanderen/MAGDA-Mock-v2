@@ -15,10 +15,16 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
 
     private final List<String> keys;
+    private final String separator;
 
     public SubDirSOAPStubHandler(WireMockServer wireMockServer, String soapTestPath, List<String> keys) {
+        this(wireMockServer, soapTestPath, keys, "/");
+    }
+
+    public SubDirSOAPStubHandler(WireMockServer wireMockServer, String soapTestPath, List<String> keys, String separator) {
         super(wireMockServer, soapTestPath);
         this.keys = keys;
+        this.separator = separator;
     }
 
     @Override
@@ -78,13 +84,13 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
     }
 
     private List<String> getValues(String fileName) {
-        String[] parts = fileName.replaceFirst("\\.xml$", "").split("/");
+        String[] parts = fileName.replaceFirst("\\.xml$", "").split(separator);
 
         return Arrays.stream(parts)
                 .toList();
     }
 
     private boolean isFileOnly(String fileName) {
-        return !fileName.contains("/");
+        return !fileName.contains(separator);
     }
 }

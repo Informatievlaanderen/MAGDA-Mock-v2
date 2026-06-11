@@ -1484,8 +1484,16 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "GebouwId",
-        "value": "18934254"
+        "path": "NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "Type",
+        "value": "Pand"
+      },
+      {
+        "path": "Referte",
+        "value": "PA19-000873"
       }
     ],
     "xpathExpression": "//Straatnaam",
@@ -1496,19 +1504,31 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "GebouwId",
-        "value": "16067094"
+        "path": "//NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "//Zoekterm",
+        "value": "dit is mijn zoekterm"
       }
     ],
     "xpathExpression": "//Straatnaam",
-    "expectedValue": "Groenenborgerlaan"
+    "expectedValue": "Dorpsstraat"
   },
   {
     "naam": "GeefWoningKwaliteitBijlage",
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "//Bijlagen/Bijlagen/Referte",
+        "path": "//NISCode",
+        "value": "11002"
+      },
+      {
+        "path": "//Type",
+        "value": "Not found"
+      },
+      {
+        "path": "//Referte",
         "value": "FOT26-00000039"
       }
     ],
@@ -1520,8 +1540,16 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "//Bijlagen/Bijlage/Referte",
+        "path": "//Type",
+        "value": "Foto"
+      },
+      {
+        "path": "//Referte",
         "value": "FOT26-00000039"
+      },
+      {
+        "path": "//NISCode",
+        "value": "11002"
       }
     ],
     "xpathExpression": "//Document/Naam",

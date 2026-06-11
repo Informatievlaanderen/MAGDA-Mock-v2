@@ -184,9 +184,9 @@ public class SoapStubRegistrar {
                     subDir("GeefDmfaVoorWerknemer", VERSION_03_00, KEY_INSZ),
 
                     //Vlok
-                    subDir("GeefWoningKwaliteit", VERSION_02_00, KEY_GEBOUWID),
-                    subDir("ZoekWoningKwaliteit", VERSION_02_00, KEY_GEBOUWID),
-                    subDir("GeefWoningKwaliteitBijlage", VERSION_02_00, "//Bijlage/Referte")
+                    flatFile("GeefWoningKwaliteit", VERSION_02_00, "//NISCode", "//Type", "//Referte"),
+                    flatFile("ZoekWoningKwaliteit", VERSION_02_00, "//NISCode", "//Zoekterm"),
+                    flatFile("GeefWoningKwaliteitBijlage", VERSION_02_00, "//NISCode", "//Type", "//Referte")
             );
         }
 
@@ -196,6 +196,15 @@ public class SoapStubRegistrar {
                     version,
                     (wireMockServer, soapTestPath) ->
                             new SubDirSOAPStubHandler(wireMockServer, soapTestPath, List.of(keys))
+            );
+        }
+
+        private static SoapStubDefinition flatFile(String service, String version, String... keys) {
+            return new SoapStubDefinition(
+                    service,
+                    version,
+                    (wireMockServer, soapTestPath) ->
+                            new SubDirSOAPStubHandler(wireMockServer, soapTestPath, List.of(keys), "_")
             );
         }
 
