@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>be.vlaanderen.vip.mock</groupId>
 			<artifactId>magdaconnector</artifactId>
-			<version>3.42.0</version>
+			<version>3.45.0</version>
 			<scope>test</scope>
 		</dependency>
 
