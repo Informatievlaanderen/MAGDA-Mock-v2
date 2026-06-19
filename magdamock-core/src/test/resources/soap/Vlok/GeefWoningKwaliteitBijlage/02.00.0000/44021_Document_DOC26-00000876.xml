@@ -1,0 +1,46 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+    <s:Header/>
+    <s:Body>
+        <web:GeefWoningKwaliteitBijlageResponse xmlns:web="http://webservice.geefwoningkwaliteitbijlagedienst-02_00.vlok-02_00.vip.vlaanderen.be">
+            <Repliek>
+                <Context xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+                    <Naam>GeefWoningKwaliteitBijlage</Naam>
+                    <Versie>02.00.0000</Versie>
+                    <Bericht>
+                        <Type>ANTWOORD</Type>
+                        <Tijdstip>
+                            <Datum>2026-06-12</Datum>
+                            <Tijd>12:40:21.492</Tijd>
+                        </Tijdstip>
+                        <Afzender>
+                            <Identificatie>vip.vlaanderen.be</Identificatie>
+                            <Naam>MagdaGateway</Naam>
+                            <Referte>5dd07869-6ce5-4a17-a946-bf37d2d2d65c</Referte>
+                        </Afzender>
+                    </Bericht>
+                </Context>
+                <Antwoorden>
+                    <Antwoord>
+                        <Referte xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">9013a5c6-b58f-4633-878f-88b15ecffb0c</Referte>
+                        <Inhoud>
+                            <Bijlagen>
+                                <Bijlage>
+                                    <Foto>
+                                        <TijdstipLaatstGewijzigd xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">2019-03-04T12:12:26.577</TijdstipLaatstGewijzigd>
+                                        <Naam xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">FOT25-123564.jpg</Naam>
+                                        <Referte xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">FOT25-123564</Referte>
+                                        <Bestand>
+                                            <Type xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">image/gif</Type>
+                                            <Data xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==</Data>
+                                        </Bestand>
+                                        <GekoppeldOnderzoek xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">ON12-345678</GekoppeldOnderzoek>
+                                    </Foto>
+                                </Bijlage>
+                            </Bijlagen>
+                        </Inhoud>
+                    </Antwoord>
+                </Antwoorden>
+            </Repliek>
+        </web:GeefWoningKwaliteitBijlageResponse>
+    </s:Body>
+</s:Envelope>

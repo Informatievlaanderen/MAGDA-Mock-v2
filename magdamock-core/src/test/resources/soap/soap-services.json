@@ -1484,8 +1484,16 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "GebouwId",
-        "value": "18934254"
+        "path": "NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "Type",
+        "value": "Pand"
+      },
+      {
+        "path": "Referte",
+        "value": "PA19-000873"
       }
     ],
     "xpathExpression": "//Straatnaam",
@@ -1496,19 +1504,31 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "GebouwId",
-        "value": "16067094"
+        "path": "//NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "//Zoekterm",
+        "value": "dit is mijn zoekterm"
       }
     ],
     "xpathExpression": "//Straatnaam",
-    "expectedValue": "Groenenborgerlaan"
+    "expectedValue": "Dorpsstraat"
   },
   {
     "naam": "GeefWoningKwaliteitBijlage",
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "//Bijlagen/Bijlagen/Referte",
+        "path": "//NISCode",
+        "value": "11002"
+      },
+      {
+        "path": "//Type",
+        "value": "Not found"
+      },
+      {
+        "path": "//Referte",
         "value": "FOT26-00000039"
       }
     ],
@@ -1520,11 +1540,51 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "//Bijlagen/Bijlage/Referte",
-        "value": "FOT26-00000039"
+        "path": "//NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "//Type",
+        "value": "Document"
+      },
+      {
+        "path": "//Referte",
+        "value": "DOC26-00000876"
       }
     ],
-    "xpathExpression": "//Document/Naam",
-    "expectedValue": "EN24-002560_DT034 beslissing burg_251_101"
+    "xpathExpression": "//Foto/Naam",
+    "expectedValue": "FOT25-123564.jpg"
+  },
+  {
+    "naam": "BewaarWoningKwaliteit",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/NISCode",
+        "value": "11002"
+      },
+      {
+        "path": "//Criteria/ZetEntiteitGesloopt",
+        "value": ""
+      }
+    ],
+    "xpathExpression": "//ReferteEntiteit",
+    "expectedValue": "EN19-002025"
+  },
+  {
+    "naam": "BewaarWoningKwaliteitBijlage",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/NISCode",
+        "value": "11002"
+      },
+      {
+        "path": "//Criteria/VraagAdviesAanWvl",
+        "value": ""
+      }
+    ],
+    "xpathExpression": "//Bijlage/Referte",
+    "expectedValue": "DOC26-00000876"
   }
 ]
