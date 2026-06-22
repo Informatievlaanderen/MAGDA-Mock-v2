@@ -106,7 +106,9 @@ public class RestDirectoryHandler {
         String urlField = hasUrlPattern
                 ? String.format("\"urlPathPattern\": \"%s\"", urlPattern)
                 : String.format("\"urlPath\": \"%s\"", urlPath);
-        int priority = mockRestMapping.priority() != null ? mockRestMapping.priority() : fallbackPriority;
+        int priority = mockRestMapping.priority() != null
+                ? mockRestMapping.priority() + (fallbackPriority - defaultPriority)
+                : fallbackPriority;
         String wireMockStubbing = String.format("""
                 {
                 "priority": %s,
