@@ -2,6 +2,7 @@ package be.vlaanderen.vip.magda.magdamock.client.rest;
 
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockRestHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 // NOTE: this test only contains test endpoints to ensure we have a controlled environment that is not influenced by the MockRestMapping configurations
+@Slf4j
 class RestServicesTest {
 
     MagdaMockConnection magdaMockConnection;
@@ -477,6 +479,7 @@ class RestServicesTest {
             String expectedMessage,
             String expectedMappingType
     ) {
+        log.info("Request :" + mockRestRequest);
         var response = magdaMockConnection.sendRestRequest(mockRestRequest);
         Assertions.assertNotNull(response);
         Assertions.assertEquals(expectedMessage, response.body().get("message").textValue());
