@@ -208,7 +208,7 @@ public class SoapStubRegistrar {
                     service,
                     version,
                     (wireMockServer, soapTestPath) ->
-                            new SubDirSOAPStubHandler(wireMockServer, soapTestPath, List.of(keys), "_")
+                            new SubDirSOAPStubHandler(wireMockServer, soapTestPath, List.of(keys), "&")
             );
         }
 
