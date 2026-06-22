@@ -480,6 +480,7 @@ class RestServicesTest {
             String expectedMappingType
     ) {
         log.info("Request :" + mockRestRequest);
+        System.out.println("Request :" + mockRestRequest);
         var response = magdaMockConnection.sendRestRequest(mockRestRequest);
         Assertions.assertNotNull(response);
         Assertions.assertEquals(expectedMessage, response.body().get("message").textValue());
