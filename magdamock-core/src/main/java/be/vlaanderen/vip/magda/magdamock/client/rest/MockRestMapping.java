@@ -41,11 +41,11 @@ public record MockRestMapping(List<String> folderPath, List<String> queryParamet
 
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "wijkenVoorGemeente", "get"), List.of(), 1, List.of(), "/v1/socZek/socialeHuisvesting/wijkenVoorGemeente/%s", "GET"),
 
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "wijkenVoorGemeente", "put"), List.of(), 1, List.of(), "/v1/socZek/socialeHuisvesting/wijkenVoorGemeente/%s", "PUT")
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "wijkenVoorGemeente", "put"), List.of(), 1, List.of(), "/v1/socZek/socialeHuisvesting/wijkenVoorGemeente/%s", "PUT"),
 
+            new MockRestMapping(List.of("v1", "organisaties", "verenigingen", "verenigingen", "zoeken", "get"), List.of("q"), 0, List.of(), "/v1/organisaties/verenigingen/verenigingen/zoeken", "GET", 40),
 
-
-
+            new MockRestMapping(List.of("v1", "organisaties", "verenigingen", "verenigingen", "get"), List.of(), 1, List.of(), "/v1/organisaties/verenigingen/verenigingen/%s", "GET", 50)
 
     );
 }

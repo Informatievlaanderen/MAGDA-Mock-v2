@@ -1,0 +1,6 @@
+{
+  "response": {
+    "status": 200,
+    "jsonBody": {"message": "verenigingen/verenigingen get", "mappingType": "default"}
+  }
+}

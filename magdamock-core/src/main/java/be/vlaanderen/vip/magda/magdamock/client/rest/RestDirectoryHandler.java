@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,7 +80,7 @@ public class RestDirectoryHandler {
         Map<String, String> queryParameters = new HashMap<>();
         for (int i = 0; i < mockRestMapping.queryParameters().size(); i++) {
             if (!filenameSplitParts.isEmpty()) {
-                String value = filenameSplitParts.removeFirst();
+                String value = URLDecoder.decode(filenameSplitParts.removeFirst(), StandardCharsets.UTF_8);
                 if (!value.isBlank())
                     queryParameters.put(mockRestMapping.queryParameters().get(i), value);
             }
@@ -104,6 +106,7 @@ public class RestDirectoryHandler {
         String urlField = hasUrlPattern
                 ? String.format("\"urlPathPattern\": \"%s\"", urlPattern)
                 : String.format("\"urlPath\": \"%s\"", urlPath);
+        int priority = mockRestMapping.priority() != null ? mockRestMapping.priority() : fallbackPriority;
         String wireMockStubbing = String.format("""
                 {
                 "priority": %s,
@@ -113,7 +116,7 @@ public class RestDirectoryHandler {
                     },
                     "response": %s
                 }
-                """, fallbackPriority, method, urlField, responseContent);
+                """, priority, method, urlField, responseContent);
         log.debug(wireMockStubbing);
         StubMapping stubMapping = StubMapping.buildFrom(wireMockStubbing);
         wireMockServer.addStubMapping(stubMapping);

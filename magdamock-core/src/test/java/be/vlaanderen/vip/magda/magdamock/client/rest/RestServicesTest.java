@@ -416,6 +416,46 @@ class RestServicesTest {
                         ),
                         "zwarteLijstMeldingenVoor post rijkregisternummer",
                         "default"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/zoeken",
+                                "q=doelgroep.maximumleeftijd:100",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "verenigingen zoeken get param q",
+                        "specific"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/zoeken",
+                                "q=doelgroep.maximumleeftijd:notfound",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "verenigingen zoeken get param q",
+                        "default"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0001017",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "verenigingen/verenigingen get",
+                        "specific"
+                ),Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/notfound",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "verenigingen/verenigingen get",
+                        "default"
                 )
         );
     }
