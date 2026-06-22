@@ -31,7 +31,8 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
     public void register(String domain, String service, String version, String fileName) throws IOException {
 
         int priority = 10;
-        if (fileName.contains("notfound") || fileName.contains("success")) {
+        boolean isDefaultFile = fileName.contains("default");
+        if (isDefaultFile) {
             priority = 20;
         }
 
@@ -56,7 +57,7 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
             String value = values.get(i);
-            if (!value.contains("notfound") && !value.contains("success")) {
+            if (!isDefaultFile) {
                 String xpathExpression;
                 if (key.endsWith("/name()")) {
                     String nodeKey = key.substring(0, key.length() - "/name()".length());
