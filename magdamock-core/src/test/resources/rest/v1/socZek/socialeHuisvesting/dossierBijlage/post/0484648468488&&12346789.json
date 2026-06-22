@@ -1,0 +1,6 @@
+{
+  "response": {
+    "status": 200,
+    "jsonBody": {"message": "dossierBijlage post partijCode en bijlageIdentification", "mappingType": "specific"}
+  }
+}

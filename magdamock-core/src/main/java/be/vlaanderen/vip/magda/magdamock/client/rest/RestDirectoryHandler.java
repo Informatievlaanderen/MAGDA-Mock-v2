@@ -6,7 +6,6 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.stubbing.StubMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class RestDirectoryHandler {
-    private static String FILENAME_ARG_SEPARATOR = "_";
+    private static String FILENAME_ARG_SEPARATOR = "&";
     private static String FILENAME_DEFAULT = "default";
     private MockRestMapping mockRestMapping;
     private WireMockServer wireMockServer;
@@ -79,13 +78,17 @@ public class RestDirectoryHandler {
         Map<String, String> queryParameters = new HashMap<>();
         for (int i = 0; i < mockRestMapping.queryParameters().size(); i++) {
             if (!filenameSplitParts.isEmpty()) {
-                queryParameters.put(mockRestMapping.queryParameters().get(i), filenameSplitParts.removeFirst());
+                String value = filenameSplitParts.removeFirst();
+                if (!value.isBlank())
+                    queryParameters.put(mockRestMapping.queryParameters().get(i), value);
             }
         }
         Map<String, String> bodyParameters = new HashMap<>();
         for (int i = 0; i < mockRestMapping.requestBodyParameters().size(); i++) {
             if (!filenameSplitParts.isEmpty()) {
-                bodyParameters.put(mockRestMapping.requestBodyParameters().get(i), filenameSplitParts.removeFirst());
+                String value = filenameSplitParts.removeFirst();
+                if (!value.isBlank())
+                    bodyParameters.put(mockRestMapping.requestBodyParameters().get(i), value);
             }
         }
         urlPath = urlPath.formatted(urlParameters);
@@ -96,17 +99,21 @@ public class RestDirectoryHandler {
         filename = filename.replaceFirst("^" + FILENAME_DEFAULT, "");
         String urlPath = getUrlAndQueryParameters(filename).url();
         String method = mockRestMapping.method();
+        boolean hasUrlPattern = urlPath.contains("%s") || mockRestMapping.urlParametersSize() > 0;
+        String urlPattern = mockRestMapping.url().replaceAll("%s", "[^/]+");
+        String urlField = hasUrlPattern
+                ? String.format("\"urlPathPattern\": \"%s\"", urlPattern)
+                : String.format("\"urlPath\": \"%s\"", urlPath);
         String wireMockStubbing = String.format("""
                 {
                 "priority": %s,
                 "request":{
                     "method": "%s",
-                    "urlPath": "%s"
+                    %s
                     },
                     "response": %s
                 }
-                }
-                """, fallbackPriority, method, urlPath, responseContent);
+                """, fallbackPriority, method, urlField, responseContent);
         log.debug(wireMockStubbing);
         StubMapping stubMapping = StubMapping.buildFrom(wireMockStubbing);
         wireMockServer.addStubMapping(stubMapping);
@@ -130,6 +137,9 @@ public class RestDirectoryHandler {
             bodyPatterns = bodyParameters.entrySet().stream().map(entry -> String.format("{\"matchesJsonPath\": \"$[?(@.%s == '%s')]\"}", entry.getKey(), entry.getValue())).collect(Collectors.joining(","));
             bodyPatterns = String.format(",\"bodyPatterns\": [%s]", bodyPatterns);
         }
+        int priority = mockRestMapping.priority() != null
+                ? mockRestMapping.priority()- queryParameters.size() - bodyParameters.size()
+                : defaultPriority - queryParameters.size() - bodyParameters.size();
         String wireMockStubbing = String.format("""
                 {
                 "priority": %s,
@@ -141,7 +151,7 @@ public class RestDirectoryHandler {
                     },
                     "response": %s
                 }
-                """, defaultPriority-queryParameters.size()-bodyParameters.size(), method, urlPath, queryParametersString, bodyPatterns, responseContent);
+                """, priority, method, urlPath, queryParametersString, bodyPatterns, responseContent);
         log.debug(wireMockStubbing);
         StubMapping stubMapping = StubMapping.buildFrom(wireMockStubbing);
         wireMockServer.addStubMapping(stubMapping);
