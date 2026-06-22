@@ -1,0 +1,6 @@
+{
+  "response": {
+    "status": 200,
+    "jsonBody": {"message": "gemeentes get", "mappingType": "default"}
+  }
+}

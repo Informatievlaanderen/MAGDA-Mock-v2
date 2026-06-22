@@ -1478,5 +1478,113 @@
     ],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefWoningKwaliteit",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "Type",
+        "value": "Pand"
+      },
+      {
+        "path": "Referte",
+        "value": "PA19-000873"
+      }
+    ],
+    "xpathExpression": "//Straatnaam",
+    "expectedValue": "Karel Van Overmeirelaan"
+  },
+  {
+    "naam": "ZoekWoningKwaliteit",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "//Zoekterm",
+        "value": "dit is mijn zoekterm"
+      }
+    ],
+    "xpathExpression": "//Straatnaam",
+    "expectedValue": "Dorpsstraat"
+  },
+  {
+    "naam": "GeefWoningKwaliteitBijlage",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//NISCode",
+        "value": "11002"
+      },
+      {
+        "path": "//Type",
+        "value": "Not found"
+      },
+      {
+        "path": "//Referte",
+        "value": "FOT26-00000039"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Er werd geen bijlage voor type Document gevonden met ID DOC19-002888."
+  },
+  {
+    "naam": "GeefWoningKwaliteitBijlage",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "//Type",
+        "value": "Document"
+      },
+      {
+        "path": "//Referte",
+        "value": "DOC26-00000876"
+      }
+    ],
+    "xpathExpression": "//Foto/Naam",
+    "expectedValue": "FOT25-123564.jpg"
+  },
+  {
+    "naam": "BewaarWoningKwaliteit",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/NISCode",
+        "value": "11002"
+      },
+      {
+        "path": "//Criteria/ZetEntiteitGesloopt",
+        "value": ""
+      }
+    ],
+    "xpathExpression": "//ReferteEntiteit",
+    "expectedValue": "EN19-002025"
+  },
+  {
+    "naam": "BewaarWoningKwaliteitBijlage",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/NISCode",
+        "value": "11002"
+      },
+      {
+        "path": "//Criteria/VraagAdviesAanWvl",
+        "value": ""
+      }
+    ],
+    "xpathExpression": "//Bijlage/Referte",
+    "expectedValue": "DOC26-00000876"
   }
 ]

@@ -1,0 +1,6 @@
+{
+  "response": {
+    "status": 200,
+    "jsonBody": {"message": "verwerkDossierActie post partijCode, dossierNummer en actie", "mappingType": "specific"}
+  }
+}

@@ -15,17 +15,24 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
 
     private final List<String> keys;
+    private final String separator;
 
     public SubDirSOAPStubHandler(WireMockServer wireMockServer, String soapTestPath, List<String> keys) {
+        this(wireMockServer, soapTestPath, keys, "/");
+    }
+
+    public SubDirSOAPStubHandler(WireMockServer wireMockServer, String soapTestPath, List<String> keys, String separator) {
         super(wireMockServer, soapTestPath);
         this.keys = keys;
+        this.separator = separator;
     }
 
     @Override
     public void register(String domain, String service, String version, String fileName) throws IOException {
 
         int priority = 10;
-        if (fileName.contains("notfound") || fileName.contains("success")) {
+        boolean isDefaultFile = fileName.contains("default");
+        if (isDefaultFile) {
             priority = 20;
         }
 
@@ -50,10 +57,15 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
             String value = values.get(i);
-            if (!value.contains("notfound") && !value.contains("success")) {
-                mappingBuilder = mappingBuilder.withRequestBody(
-                        matchingXPath(key + "[normalize-space()='" + value + "']")
-                );
+            if (!isDefaultFile) {
+                String xpathExpression;
+                if (key.endsWith("/name()")) {
+                    String nodeKey = key.substring(0, key.length() - "/name()".length());
+                    xpathExpression = nodeKey + "[local-name()='" + value + "']";
+                } else {
+                    xpathExpression = key + "[normalize-space()='" + value + "']";
+                }
+                mappingBuilder = mappingBuilder.withRequestBody(matchingXPath(xpathExpression));
             } else {
                 break;
             }
@@ -78,13 +90,13 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
     }
 
     private List<String> getValues(String fileName) {
-        String[] parts = fileName.replaceFirst("\\.xml$", "").split("/");
+        String[] parts = fileName.replaceFirst("\\.xml$", "").split(separator);
 
         return Arrays.stream(parts)
                 .toList();
     }
 
     private boolean isFileOnly(String fileName) {
-        return !fileName.contains("/");
+        return !fileName.contains(separator);
     }
 }

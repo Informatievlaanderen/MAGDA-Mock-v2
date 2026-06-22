@@ -27,6 +27,7 @@ public class SoapStubRegistrar {
     public static final String KEY_KADASTRALE_AFDELING = "//KadastraleAfdeling";
     public static final String KEY_SECTIE = "//Sectie";
     public static final String KEY_GRONDNUMMER = "//Grondnummer";
+    public static final String KEY_GEBOUWID = "//GebouwId";
 
     private final Map<MagdaServiceIdentification, SoapStubHandler> soapStubHandlerMap;
 
@@ -180,7 +181,16 @@ public class SoapStubRegistrar {
                     subDir("GeefLoopbaanARZA", VERSION_02_01, KEY_INSZ),
                     subDir("GeefLoopbaanonderbrekingen", VERSION_02_00, KEY_INSZ),
                     subDir("GeefWerkrelaties", VERSION_02_00, KEY_INSZ),
-                    subDir("GeefDmfaVoorWerknemer", VERSION_03_00, KEY_INSZ)
+                    subDir("GeefDmfaVoorWerknemer", VERSION_03_00, KEY_INSZ),
+
+                    //Vlok
+                    flatFile("GeefWoningKwaliteit", VERSION_02_00, "//NISCode", "//Type", "//Referte"),
+                    flatFile("ZoekWoningKwaliteit", VERSION_02_00, "//NISCode", "//Zoekterm"),
+                    flatFile("GeefWoningKwaliteitBijlage", VERSION_02_00, "//NISCode", "//Type", "//Referte"),
+                    flatFile("BewaarWoningKwaliteit", VERSION_02_00, "//Criteria/NISCode", "//Criteria/NISCode/following-sibling::*[1]/name()"),
+                    // following-sibling::*[1]/name() -> tag name of the element after NISCode
+                    flatFile("BewaarWoningKwaliteitBijlage", VERSION_02_00, "//Criteria/NISCode", "//Criteria/NISCode/following-sibling::*[1]/name()")
+
             );
         }
 
@@ -190,6 +200,15 @@ public class SoapStubRegistrar {
                     version,
                     (wireMockServer, soapTestPath) ->
                             new SubDirSOAPStubHandler(wireMockServer, soapTestPath, List.of(keys))
+            );
+        }
+
+        private static SoapStubDefinition flatFile(String service, String version, String... keys) {
+            return new SoapStubDefinition(
+                    service,
+                    version,
+                    (wireMockServer, soapTestPath) ->
+                            new SubDirSOAPStubHandler(wireMockServer, soapTestPath, List.of(keys), "_")
             );
         }
 

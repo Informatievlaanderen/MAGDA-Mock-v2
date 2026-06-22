@@ -4,6 +4,8 @@ import be.vlaanderen.vip.magda.client.MagdaDocument;
 import be.vlaanderen.vip.magda.magdamock.client.soap.SoapResponsePatcher;
 import be.vlaanderen.vip.magda.magdamock.client.soap.SoapResponsePatcherImpl;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
+import be.vlaanderen.vip.magda.magdamock.filters.EmptyElementsFilter;
+import be.vlaanderen.vip.magda.magdamock.filters.MagdaMockFilter;
 import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
@@ -18,6 +20,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class MagdaMockSoapHandler extends AbstractMockHandler {
@@ -26,17 +30,21 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
     private final SoapBodyValidator soapRequestValidator;
     private final SoapBodyValidator soapResponseValidator;
     private final SoapResponsePatcher soapResponsePatcher = new SoapResponsePatcherImpl();
+    private final List<MagdaMockFilter> filters;
 
     public MagdaMockSoapHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil) {
         super(wireMockData, timeoutUtil);
         this.soapRequestValidator = new LenientSoapBodyValidator();
         this.soapResponseValidator = new LenientSoapBodyValidator();
+        this.filters = new ArrayList<>();
     }
 
     public MagdaMockSoapHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
         super(wireMockData, timeoutUtil);
         this.soapRequestValidator = soapRequestValidator;
         this.soapResponseValidator = soapResponseValidator;
+        this.filters = new ArrayList<>();
+        this.filters.add(new EmptyElementsFilter());
     }
 
     public MockSoapResponse sendSoapRequest(MockSoapRequest mockSoapRequest) {
@@ -53,11 +61,19 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         }
         Document document = parseSoapResponse(response);
         Document patchedResponse = patchResponse(request, document);
-        Document checkedResponse = validateSoapResponse(request, patchedResponse);
+        Document filteredResponse = filterResponse(request, patchedResponse);
+        Document checkedResponse = validateSoapResponse(request, filteredResponse);
         Document wrappedResponse = wrapInEnvelope(checkedResponse);
         return new MockSoapResponse(wrappedResponse, 200);
     }
 
+    private Document filterResponse(MagdaDocument request, Document checkedResponse) {
+        Document document = checkedResponse;
+        for (MagdaMockFilter filter : filters) {
+            document = filter.filter(request, document);
+        }
+        return document;
+    }
 
     private Document validateSoapResponse(MagdaDocument request, Document response) throws SoapValidationError {
         response = validateSoapSender(request, response);

@@ -1,0 +1,63 @@
+<BewaarWoningKwaliteitResponse>
+    <Repliek>
+        <Context>
+            <Naam>BewaarWoningKwaliteitDienst</Naam>
+            <Versie>02.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>2019-11-14</Datum>
+                    <Tijd>14:00:00.000</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>vip.vlaanderen.be</Identificatie>
+                    <Naam>MagdaGateway</Naam>
+                    <Referte>c0df397f-58e4-444a-8bb2-34d1fde77a6a</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>omg.vlaanderen.be/wovla/vlok-pers-aip</Identificatie>
+                    <Naam>Wonen Vlaanderen Vlok</Naam>
+                    <Referte>be328818-dd03-4194-9d0f-2c212b19fd8b</Referte>
+                    <Hoedanigheid>2033</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <Cas>
+                        <RefertePand>PA19-000801</RefertePand>
+                        <GebouwId>15948139</GebouwId>
+                        <Cas>
+                            <Ca>
+                                <TijdstipLaatstGewijzigd>2020-06-06T10:59:10.54+02:00</TijdstipLaatstGewijzigd>
+                                <Referte>CA20-000011</Referte>
+                                <Type>
+                                    <Code>4</Code>
+                                    <Omschrijving>Kamerwoning voor studenten</Omschrijving>
+                                </Type>
+                                <DatumAttest>2019-12-01</DatumAttest>
+                                <Oorsprong>
+                                    <Code>2</Code>
+                                    <Omschrijving>Gemeente</Omschrijving>
+                                </Oorsprong>
+                                <DatumAttestGeldigTot>2020-12-01</DatumAttestGeldigTot>
+                                <DatumAfgifteAttest>2019-12-01</DatumAfgifteAttest>
+                                <Verval>
+                                    <Datum>2019-12-12</Datum>
+                                    <Reden>
+                                        <Code>1</Code>
+                                        <Omschrijving>Besluit OO</Omschrijving>
+                                    </Reden>
+                                </Verval>
+                                <ReferteEntiteit>EN19-002025</ReferteEntiteit>
+                                <GebouwEenheidId>16509997</GebouwEenheidId>
+                            </Ca>
+                        </Cas>
+                    </Cas>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</BewaarWoningKwaliteitResponse>

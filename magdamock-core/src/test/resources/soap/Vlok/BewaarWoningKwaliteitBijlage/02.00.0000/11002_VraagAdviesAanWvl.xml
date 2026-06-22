@@ -1,0 +1,44 @@
+<BewaarWoningKwaliteitBijlageResponse>
+    <Repliek>
+        <Context>
+            <Naam>BewaarWoningKwaliteitBijlageDienst</Naam>
+            <Versie>02.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>2019-11-19</Datum>
+                    <Tijd>14:56:52.000</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>vip.vlaanderen.be</Identificatie>
+                    <Naam>MagdaGateway</Naam>
+                    <Referte>90fc69c9-331a-45c7-8d37-df38593da1f7</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>omg.vlaanderen.be/wovla/vlok-pers-aip</Identificatie>
+                    <Referte>6ef3d803-e5e6-4662-b4e2-fff659efcb2e</Referte>
+                    <Hoedanigheid>2033</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <Bijlagen>
+                        <Bijlage>
+                            <ExterneReferte>Dit is externe referte document</ExterneReferte>
+                            <Referte>DOC26-00000876</Referte>
+                            <Type>Document</Type>
+                        </Bijlage>
+                        <Bijlage>
+                            <ExterneReferte>Dit is externe referte foto</ExterneReferte>
+                            <Referte>FOT26-00000039</Referte>
+                            <Type>Foto</Type>
+                        </Bijlage>
+                    </Bijlagen>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</BewaarWoningKwaliteitBijlageResponse>

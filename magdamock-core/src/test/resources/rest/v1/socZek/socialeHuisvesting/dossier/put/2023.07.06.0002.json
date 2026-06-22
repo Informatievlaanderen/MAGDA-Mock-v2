@@ -1,0 +1,6 @@
+{
+  "response": {
+    "status": 200,
+    "jsonBody": {"message": "dossierzoeken put dossiernummer", "mappingType": "specific"}
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "response": {
+    "status": 200,
+    "jsonBody": {"message": "wijzigDossierRangschikkingen post partijCode en actie", "mappingType": "specific"}
+  }
+}
