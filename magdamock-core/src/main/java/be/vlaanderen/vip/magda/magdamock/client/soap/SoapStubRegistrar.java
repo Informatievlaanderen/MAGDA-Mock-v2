@@ -189,7 +189,7 @@ public class SoapStubRegistrar {
                     flatFile("GeefWoningKwaliteitBijlage", VERSION_02_00, "//NISCode", "//Type", "//Referte"),
                     flatFile("BewaarWoningKwaliteit", VERSION_02_00, "//Criteria/NISCode", "//Criteria/NISCode/following-sibling::*[1]/name()"),
                     // following-sibling::*[1]/name() -> tag name of the element after NISCode
-                    flatFile("BewaarWoningKwaliteitBijlage", VERSION_02_00, "//Criteria/NISCode", "//Criteria/NISCode/following-sibling::*[1]/name()")
+                    flatFile("BewaarWoningKwaliteitBijlage", VERSION_02_00, "//Criteria/NISCode")
 
             );
         }
