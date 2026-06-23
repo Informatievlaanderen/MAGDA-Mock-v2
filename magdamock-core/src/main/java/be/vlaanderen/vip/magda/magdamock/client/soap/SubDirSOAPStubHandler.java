@@ -4,6 +4,8 @@ import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import com.github.tomakehurst.wiremock.WireMockServer;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -93,6 +95,7 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
         String[] parts = fileName.replaceFirst("\\.xml$", "").split(separator);
 
         return Arrays.stream(parts)
+                .map(part -> URLDecoder.decode(part, StandardCharsets.UTF_8))
                 .toList();
     }
 

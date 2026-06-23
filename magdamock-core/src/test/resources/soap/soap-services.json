@@ -1516,6 +1516,22 @@
     "expectedValue": "Dorpsstraat"
   },
   {
+    "naam": "ZoekWoningKwaliteit",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "//Zoekterm",
+        "value": "5809589 EN19-002373 9052 Dorp 44082B0200/00M000"
+      }
+    ],
+    "xpathExpression": "//Straatnaam/String",
+    "expectedValue": "Varendrieskouter"
+  },
+  {
     "naam": "GeefWoningKwaliteitBijlage",
     "versie": "02.00.0000",
     "requestFields": [
