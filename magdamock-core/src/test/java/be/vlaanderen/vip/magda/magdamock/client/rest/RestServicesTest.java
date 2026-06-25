@@ -383,7 +383,7 @@ class RestServicesTest {
                         , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/wijkenVoorGemeente/31005",
+                                "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/31005",
                                 "",
                                 "GET",
                                 "",
@@ -394,7 +394,7 @@ class RestServicesTest {
                         , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/wijkenVoorGemeente/not_found",
+                                "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/not_found",
                                 "",
                                 "GET",
                                 "",
@@ -405,7 +405,7 @@ class RestServicesTest {
                         , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/wijkenVoorGemeente/31005",
+                                "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/31005",
                                 "",
                                 "PUT",
                                 "",
@@ -416,7 +416,7 @@ class RestServicesTest {
                         , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/wijkenVoorGemeente/not_found",
+                                "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/not_found",
                                 "",
                                 "PUT",
                                 "",
