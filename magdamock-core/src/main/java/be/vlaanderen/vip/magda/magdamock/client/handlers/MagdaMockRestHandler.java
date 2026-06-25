@@ -40,25 +40,19 @@ public class MagdaMockRestHandler extends AbstractMockHandler {
 
         String correlationId = Optional.ofNullable(correlationIdHeader).orElse(UUID.randomUUID().toString());
 
-        Optional<Pair<JsonNode, Integer>> validationRequest = validateRestJson(requestBody, true);
+        Optional<Pair<String, Integer>> validationRequest = validateRestJson(requestBody, true);
         if (validationRequest.isPresent()) {
-            Pair<JsonNode, Integer> jsonNodeIntegerPair = validationRequest.get();
-            return new MagdaMockRestHandler.MockRestResponse(jsonNodeIntegerPair.getLeft(), jsonNodeIntegerPair.getRight(), Map.of("x-correlation-id", List.of(correlationId)));
+            Pair<String, Integer> jsonNodeIntegerPair = validationRequest.get();
+            return new MagdaMockRestHandler.MockRestResponse(jsonNodeIntegerPair.getLeft().getBytes(), jsonNodeIntegerPair.getRight(), Map.of("x-correlation-id", List.of(correlationId)));
         }
 
         String url = String.join("?", parts);
         Request mockRequest = createInternalWiremockRequest(url, method, requestBody, dateHeader, "application/json");
         Response response = routeRequest(mockRequest);
-        Optional<Pair<JsonNode, Integer>> validationResponse = validateRestJson(response.getBodyAsString(), false);
-        if (validationResponse.isPresent()) {
-            Pair<JsonNode, Integer> jsonNodeIntegerPair = validationResponse.get();
-            return new MagdaMockRestHandler.MockRestResponse(jsonNodeIntegerPair.getLeft(), jsonNodeIntegerPair.getRight(), Map.of("x-correlation-id", List.of(correlationId)));
-        }
-
         return parseRestResponse(response, correlationId);
     }
 
-    public Optional<Pair<JsonNode, Integer>> validateRestJson(String requestBody, boolean request) {
+    public Optional<Pair<String, Integer>> validateRestJson(String requestBody, boolean request) {
         // Not a valid json request -> 400, response -> 502
         int statusCode = request ? 400 : 502;
         try {
@@ -67,33 +61,29 @@ public class MagdaMockRestHandler extends AbstractMockHandler {
             ObjectNode node = mapper.createObjectNode();
             node.put("errorMessage", e.getMessage());
             node.put("exceptionClass", e.getClass().getName());
-            return Optional.of(Pair.of(node, statusCode));
+            return Optional.of(Pair.of(node.toPrettyString(), statusCode));
         }
         return Optional.empty();
     }
 
     private MagdaMockRestHandler.MockRestResponse parseRestResponse(Response response, String correlationId) {
-        try {
-            if (response.getStatus() == 404) {
-                log.info("Received status 404 while parsing rest response");
-                return new MagdaMockRestHandler.MockRestResponse(null, 404, Map.of("x-correlation-id", List.of(correlationId)));
-            }
-            Map<String, List<String>> headers = new HashMap<>();
-            for (String headerName : response.getHeaders().keys()) {
-                headers.put(headerName, response.getHeaders().getHeader(headerName).values());
-            }
-            if (!headers.containsKey("Content-Type")) {
-                headers.put("Content-Type", List.of("application/json"));
-            }
-            headers.put("x-correlation-id", List.of(correlationId));
-            return new MagdaMockRestHandler.MockRestResponse(mapper.readTree(response.getBody()), response.getStatus(), headers);
-        } catch (IOException e) {
-            throw new MagdaMockRestException("Error simulating REST call", e.getCause());
+        if (response.getStatus() == 404) {
+            log.info("Received status 404 while parsing rest response");
+            return new MockRestResponse(null, 404, Map.of("x-correlation-id", List.of(correlationId), "Content-Type", List.of("application/json")));
         }
+        Map<String, List<String>> headers = new HashMap<>();
+        for (String headerName : response.getHeaders().keys()) {
+            headers.put(headerName, response.getHeaders().getHeader(headerName).values());
+        }
+        if (!headers.containsKey("Content-Type")) {
+            headers.put("Content-Type", List.of("application/json"));
+        }
+        headers.put("x-correlation-id", List.of(correlationId));
+        return new MockRestResponse(response.getBody(), response.getStatus(), headers);
     }
 
     public record MockRestResponse(
-            JsonNode body,
+            byte[] body,
             Integer status,
             Map<String, List<String>> headers
     ) {

@@ -21,6 +21,8 @@ import be.vlaanderen.vip.magda.magdamock.utils.RandomTimeoutUtil;
 import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.Pair;
@@ -38,10 +40,12 @@ import java.util.UUID;
 public class MagdaMockConnection implements MagdaConnection {
     private final MagdaMockRestHandler restHandler;
     private final MagdaMockSoapHandler soapHandler;
+    private final ObjectMapper mapper;
 
     MagdaMockConnection(MagdaMockRestHandler restHandler, MagdaMockSoapHandler soapHandler) {
         this.restHandler = restHandler;
         this.soapHandler = soapHandler;
+        mapper = new ObjectMapper();
     }
 
     public static MagdaMockConnection create(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
@@ -109,9 +113,11 @@ public class MagdaMockConnection implements MagdaConnection {
 
     @Override
     @Deprecated
+    @SneakyThrows
     public Pair<JsonNode, Integer> sendRestRequest(String path, String query, String method, String requestBody) {
         MagdaMockRestHandler.MockRestResponse mockRestResponse = sendRestRequest(path, query, method, requestBody, "", "");
-        return Pair.of(mockRestResponse.body(), mockRestResponse.status());
+        JsonNode jsonBody = mapper.readTree(mockRestResponse.body());
+        return Pair.of(jsonBody, mockRestResponse.status());
     }
 
     @Deprecated

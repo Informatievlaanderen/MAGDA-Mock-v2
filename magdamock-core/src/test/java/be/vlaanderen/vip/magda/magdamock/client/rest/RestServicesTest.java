@@ -2,6 +2,9 @@ package be.vlaanderen.vip.magda.magdamock.client.rest;
 
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockRestHandler;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -467,6 +470,7 @@ class RestServicesTest {
 
     @ParameterizedTest
     @MethodSource("testRestServices")
+    @SneakyThrows
     void testMobilityRegCountryCodeGet(
             MagdaMockRestHandler.MockRestRequest mockRestRequest,
             String expectedMessage,
@@ -475,8 +479,9 @@ class RestServicesTest {
     ) {
         var response = magdaMockConnection.sendRestRequest(mockRestRequest);
         Assertions.assertNotNull(response);
-        Assertions.assertEquals(expectedMessage, response.body().get("message").textValue());
-        Assertions.assertEquals(expectedMappingType, response.body().get("mappingType").textValue());
+        JsonNode jsonBody = new ObjectMapper().readTree(response.body());
+        Assertions.assertEquals(expectedMessage, jsonBody.get("message").textValue());
+        Assertions.assertEquals(expectedMappingType, jsonBody.get("mappingType").textValue());
         Assertions.assertTrue(response.headers().get("Content-Type").contains(expectedContentTypeHeader));
         Assertions.assertEquals(200, response.status());
     }
