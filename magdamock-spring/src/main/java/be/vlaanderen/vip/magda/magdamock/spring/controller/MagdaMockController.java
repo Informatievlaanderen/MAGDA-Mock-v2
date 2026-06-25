@@ -115,6 +115,6 @@ public class MagdaMockController {
             headers.put(headerName.toLowerCase(), incomingRequest.getHeader(headerName));
         }
         var response = mockConnection.sendRestRequest(new MagdaMockRestHandler.MockRestRequest(path, query, method, requestBody, headers));
-        return new ResponseEntity<>(Optional.ofNullable(response.body()).map(Object::toString).orElse(""), CollectionUtils.toMultiValueMap(response.headers()), HttpStatusCode.valueOf(response.status()));
+        return new ResponseEntity<>(Optional.ofNullable(response.body()).map(String::new).map(Object::toString).orElse(""), CollectionUtils.toMultiValueMap(response.headers()), HttpStatusCode.valueOf(response.status()));
     }
 }
