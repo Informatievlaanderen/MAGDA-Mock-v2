@@ -15,27 +15,27 @@ public record MockRestMapping(List<String> folderPath, List<String> queryParamet
             new MockRestMapping(List.of("v1", "mobility", "registrations", "get", "plateNr"), List.of("plateNr"), 0, List.of(), "/v1/mobility/registrations", "GET"),
 
             // SocZek
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossier", "get"), List.of(), 1, List.of(), "/v1/socZek/socialeHuisvesting/dossiers/dossier/%s", "GET"),
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "dossier", "get"), List.of(), 1, List.of(), "/v1/socZek/socialeHuisvesting/dossiers/dossier/%s", "GET"),
 
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossierZoeken", "post"), List.of(), 0, List.of("dossierType", "dossierStatus", "dossierNummer"), "/v1/socZek/socialeHuisvesting/dossiers/zoeken", "POST"),
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "zoeken", "post"), List.of(), 0, List.of("dossierType", "dossierStatus", "dossierNummer"), "/v1/socZek/socialeHuisvesting/dossiers/zoeken", "POST"),
 
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossier", "put"), List.of(), 1, List.of(), "/v1/socZek/socialeHuisvesting/dossiers/dossier/%s", "PUT"),
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "dossier", "put"), List.of(), 1, List.of(), "/v1/socZek/socialeHuisvesting/dossiers/dossier/%s", "PUT"),
 
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossierBijlage", "post"), List.of(), 0, List.of("partijCode", "dossierNummer", "bijlageIdentificatie"), "/v1/socZek/socialeHuisvesting/dossiers/bijlage", "POST"),
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "bijlage", "post"), List.of(), 0, List.of("partijCode", "dossierNummer", "bijlageIdentificatie"), "/v1/socZek/socialeHuisvesting/dossiers/bijlage", "POST"),
 
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "bevestigDossierVerwerking", "post"), List.of(), 0, List.of("partijCode", "dossierNummer", "versieNummer"), "/v1/socZek/socialeHuisvesting/dossiers/bevestigDossierVerwerking", "POST"),
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "bevestigDossierVerwerking", "post"), List.of(), 0, List.of("partijCode", "dossierNummer", "versieNummer"), "/v1/socZek/socialeHuisvesting/dossiers/bevestigDossierVerwerking", "POST"),
 
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "wijzigDossierRangschikkingen", "post"), List.of(), 0, List.of("partijCode"), "/v1/socZek/socialeHuisvesting/dossiers/wijzigDossierRangschikkingen", "POST"),
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "wijzigDossierRangschikkingen", "post"), List.of(), 0, List.of("partijCode"), "/v1/socZek/socialeHuisvesting/dossiers/wijzigDossierRangschikkingen", "POST"),
 
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "partijInformatieWijzigingen", "post"), List.of(), 0, List.of("partijCode"), "/v1/socZek/socialeHuisvesting/dossiers/partijInformatieWijzigingen", "POST"),
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "partijInformatieWijzigingen", "post"), List.of(), 0, List.of("partijCode"), "/v1/socZek/socialeHuisvesting/dossiers/partijInformatieWijzigingen", "POST"),
 
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "verwerkDossierActie", "post"), List.of(), 0, List.of("partijCode", "dossierNummer", "actie"), "/v1/socZek/socialeHuisvesting/dossiers/verwerkDossierActie", "POST"),
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "verwerkDossierActie", "post"), List.of(), 0, List.of("partijCode", "dossierNummer", "actie"), "/v1/socZek/socialeHuisvesting/dossiers/verwerkDossierActie", "POST"),
 
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "zwarteLijstMeldingen", "post"), List.of(), 0, List.of("partijCode"), "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingen", "POST"),
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "zwarteLijstMeldingen", "post"), List.of(), 0, List.of("partijCode"), "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingen", "POST"),
 
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossierMetBijlages", "get"), List.of(), 1, List.of(), "/v1/socZek/socialeHuisvesting/dossiers/dossierMetBijlages/%s", "GET"),
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "dossierMetBijlages", "get"), List.of(), 1, List.of(), "/v1/socZek/socialeHuisvesting/dossiers/dossierMetBijlages/%s", "GET"),
 
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "zwarteLijstMeldingVoor", "post"), List.of(), 0, List.of("rijksregisternummer"), "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingVoor", "POST"),
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "zwarteLijstMeldingVoor", "post"), List.of(), 0, List.of("rijksregisternummer"), "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingVoor", "POST"),
 
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "gemeentes", "get"), List.of(), 0, List.of(), "/v1/socZek/socialeHuisvesting/gemeentes", "GET"),
 
