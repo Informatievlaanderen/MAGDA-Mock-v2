@@ -1,6 +1,9 @@
 {
   "response": {
     "status": 200,
+    "headers": {
+      "Content-Type": "text/plain"
+    },
     "jsonBody": {"message": "rest mobility plate mapping", "mappingType": "specific"}
   }
 }

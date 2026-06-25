@@ -12,6 +12,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -77,7 +78,15 @@ public class MagdaMockRestHandler extends AbstractMockHandler {
                 log.info("Received status 404 while parsing rest response");
                 return new MagdaMockRestHandler.MockRestResponse(null, 404, Map.of("x-correlation-id", List.of(correlationId)));
             }
-            return new MagdaMockRestHandler.MockRestResponse(mapper.readTree(response.getBody()), response.getStatus(), Map.of("x-correlation-id", List.of(correlationId)));
+            Map<String, List<String>> headers = new HashMap<>();
+            for (String headerName : response.getHeaders().keys()) {
+                headers.put(headerName, response.getHeaders().getHeader(headerName).values());
+            }
+            if (!headers.containsKey("Content-Type")) {
+                headers.put("Content-Type", List.of("application/json"));
+            }
+            headers.put("x-correlation-id", List.of(correlationId));
+            return new MagdaMockRestHandler.MockRestResponse(mapper.readTree(response.getBody()), response.getStatus(), headers);
         } catch (IOException e) {
             throw new MagdaMockRestException("Error simulating REST call", e.getCause());
         }
