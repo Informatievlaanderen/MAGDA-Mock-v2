@@ -33,7 +33,11 @@ public class RestDirectoryHandler {
         this.mockRestMapping = mockRestMapping;
         this.wireMockServer = wireMockServer;
         this.rootPath = rootPath;
-        this.defaultPriority = 50;
+        if (mockRestMapping.priority() != null) {
+            this.defaultPriority = mockRestMapping.priority();
+        } else {
+            this.defaultPriority = 50;
+        }
         this.fallbackPriority = 100;
         objectMapper = new ObjectMapper();
     }
@@ -58,7 +62,7 @@ public class RestDirectoryHandler {
                 String response = jsonNode.get("response").toString();
                 if (name.startsWith(FILENAME_DEFAULT)) {
                     addDefaultMapping(response, name);
-                } else {
+                } else if (!mockRestMapping.defaultOnly()){
                     addMapping(response, name);
                 }
             } catch (Exception e) {
@@ -137,9 +141,7 @@ public class RestDirectoryHandler {
             bodyPatterns = bodyParameters.entrySet().stream().map(entry -> String.format("{\"matchesJsonPath\": \"$[?(@.%s == '%s')]\"}", entry.getKey(), entry.getValue())).collect(Collectors.joining(","));
             bodyPatterns = String.format(",\"bodyPatterns\": [%s]", bodyPatterns);
         }
-        int priority = mockRestMapping.priority() != null
-                ? mockRestMapping.priority()- queryParameters.size() - bodyParameters.size()
-                : defaultPriority - queryParameters.size() - bodyParameters.size();
+        int priority = defaultPriority - queryParameters.size() - bodyParameters.size();
         String wireMockStubbing = String.format("""
                 {
                 "priority": %s,

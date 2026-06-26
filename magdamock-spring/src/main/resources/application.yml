@@ -4,7 +4,7 @@ spring:
 
 magda:
   magdamock:
-    magda-mock-test-path: "wiremock"
+    rest-test-path:  # directory containing REST response files (absolute path)
     soap-test-path:  # directory containing SOAP XML files (absolute path)
     magda-xsd-path: # directory containing SOAP XSD files "src/main/resources/magda.xsd"
     minimum-timeout-millis:

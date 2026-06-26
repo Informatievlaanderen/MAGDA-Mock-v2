@@ -100,7 +100,6 @@ public class MagdaMockController {
 
     @RequestMapping(
             value = {REST_BASE_URL + "/**", "api/" + REST_BASE_URL + "/**"},
-            produces = {APPLICATION_JSON_VALUE}, consumes = {APPLICATION_JSON_VALUE},
             method = {RequestMethod.DELETE, RequestMethod.GET, RequestMethod.PATCH, RequestMethod.POST, RequestMethod.PUT}
     )
     protected ResponseEntity<String> magdaRestEndpoint(@RequestBody(required = false) String requestBody, HttpServletRequest incomingRequest) throws MagdaConnectionException {
@@ -116,6 +115,6 @@ public class MagdaMockController {
             headers.put(headerName.toLowerCase(), incomingRequest.getHeader(headerName));
         }
         var response = mockConnection.sendRestRequest(new MagdaMockRestHandler.MockRestRequest(path, query, method, requestBody, headers));
-        return new ResponseEntity<>(Optional.ofNullable(response.body()).map(Object::toString).orElse(""), CollectionUtils.toMultiValueMap(response.headers()), HttpStatusCode.valueOf(response.status()));
+        return new ResponseEntity<>(Optional.ofNullable(response.body()).map(String::new).map(Object::toString).orElse(""), CollectionUtils.toMultiValueMap(response.headers()), HttpStatusCode.valueOf(response.status()));
     }
 }

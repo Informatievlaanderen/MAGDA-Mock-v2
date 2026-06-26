@@ -2,6 +2,9 @@ package be.vlaanderen.vip.magda.magdamock.client.rest;
 
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockRestHandler;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,6 +35,7 @@ class RestServicesTest {
                         ),
                         "rest mobility plate mapping",
                         "specific"
+                        , "text/plain"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/mobility/registrations",
@@ -42,6 +46,95 @@ class RestServicesTest {
                         ),
                         "rest mobility vin mapping",
                         "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "vin=VIN&unifier=123",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility vin and unifier mapping",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "plateUID=2345678",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility plateUID mapping",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "plateUID=unknown",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility mapping",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "nationalNr=2345678",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility nationalNr mapping",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "nationalNr=unknown",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility mapping",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "companyNr=2345678",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility companyNr mapping",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "companyNr=unknown",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility mapping",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility mapping",
+                        "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/zoeken",
@@ -54,6 +147,7 @@ class RestServicesTest {
                         ),
                         "dossierzoeken post dossierNummer en dossierType",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/zoeken",
@@ -66,6 +160,7 @@ class RestServicesTest {
                         ),
                         "dossierzoeken post dossierNummer, dossierType en dossierStatus",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/zoeken",
@@ -78,6 +173,7 @@ class RestServicesTest {
                         ),
                         "dossierzoeken post dossierType en dossierStatus",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/zoeken",
@@ -90,6 +186,7 @@ class RestServicesTest {
                         ),
                         "dossierzoeken post",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/dossier/2017.03.17",
@@ -100,6 +197,7 @@ class RestServicesTest {
                         ),
                         "dossierzoeken post dossierstatus mapping get dossiernummer",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/dossier/not_found",
@@ -110,6 +208,7 @@ class RestServicesTest {
                         ),
                         "dossierzoeken get",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/bijlage",
@@ -122,6 +221,7 @@ class RestServicesTest {
                         ),
                         "dossierBijlage post partijCode, bijlageIdentification en dossierNummer",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/bijlage",
@@ -134,6 +234,7 @@ class RestServicesTest {
                         ),
                         "dossierBijlage post partijCode en bijlageIdentification",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/bijlage",
@@ -146,6 +247,7 @@ class RestServicesTest {
                         ),
                         "dossierBijlage post",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/verwerkDossierActie",
@@ -158,6 +260,7 @@ class RestServicesTest {
                         ),
                         "verwerkDossierActie post partijCode, dossierNummer en actie",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/verwerkDossierActie",
@@ -170,6 +273,7 @@ class RestServicesTest {
                         ),
                         "wijzigDossierRangschikkingen post partijCode en actie",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/verwerkDossierActie",
@@ -182,6 +286,7 @@ class RestServicesTest {
                         ),
                         "verwerkDossierActie post",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/dossier/2023.07.06.0002",
@@ -192,6 +297,7 @@ class RestServicesTest {
                         ),
                         "dossierzoeken put dossiernummer",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/dossier/not_found",
@@ -202,6 +308,7 @@ class RestServicesTest {
                         ),
                         "dossierzoeken put",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/bevestigDossierVerwerking",
@@ -214,6 +321,7 @@ class RestServicesTest {
                         ),
                         "bevestigDossierVerwerking post partijCode, dossiernummer en versieNummer",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/bevestigDossierVerwerking",
@@ -226,6 +334,7 @@ class RestServicesTest {
                         ),
                         "bevestigDossierVerwerking post dossiernummer en versieNummer",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/bevestigDossierVerwerking",
@@ -238,6 +347,7 @@ class RestServicesTest {
                         ),
                         "bevestigDossierVerwerking post",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/bevestigDossierVerwerking",
@@ -250,6 +360,7 @@ class RestServicesTest {
                         ),
                         "bevestigDossierVerwerking post",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/wijzigDossierRangschikkingen",
@@ -262,6 +373,7 @@ class RestServicesTest {
                         ),
                         "wijzigDossierRangschikkingen post partijCode",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/wijzigDossierRangschikkingen",
@@ -274,6 +386,7 @@ class RestServicesTest {
                         ),
                         "wijzigDossierRangschikkingen post",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/partijInformatieWijzigingen",
@@ -286,6 +399,7 @@ class RestServicesTest {
                         ),
                         "partijInformatieWijzigingen post partijCode",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/partijInformatieWijzigingen",
@@ -298,6 +412,7 @@ class RestServicesTest {
                         ),
                         "partijInformatieWijzigingen post",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingen",
@@ -310,6 +425,7 @@ class RestServicesTest {
                         ),
                         "zwarteLijstMeldingen post partijCode",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingen",
@@ -322,6 +438,7 @@ class RestServicesTest {
                         ),
                         "zwarteLijstMeldingen post",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/dossierMetBijlages/2023.07.06.0002",
@@ -332,6 +449,7 @@ class RestServicesTest {
                         ),
                         "dossierMetBijlages get dossierNummer",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/dossierMetBijlages/not_found",
@@ -342,6 +460,7 @@ class RestServicesTest {
                         ),
                         "dossierMetBijlages get",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/gemeentes",
@@ -352,9 +471,10 @@ class RestServicesTest {
                         ),
                         "gemeentes get",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/wijkenVoorGemeente/31005",
+                                "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/31005",
                                 "",
                                 "GET",
                                 "",
@@ -362,9 +482,10 @@ class RestServicesTest {
                         ),
                         "wijkenVoorGemeente get",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/wijkenVoorGemeente/not_found",
+                                "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/not_found",
                                 "",
                                 "GET",
                                 "",
@@ -372,9 +493,10 @@ class RestServicesTest {
                         ),
                         "wijkenVoorGemeente get",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/wijkenVoorGemeente/31005",
+                                "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/31005",
                                 "",
                                 "PUT",
                                 "",
@@ -382,9 +504,10 @@ class RestServicesTest {
                         ),
                         "wijkenVoorGemeente put",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/wijkenVoorGemeente/not_found",
+                                "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/not_found",
                                 "",
                                 "PUT",
                                 "",
@@ -392,6 +515,7 @@ class RestServicesTest {
                         ),
                         "wijkenVoorGemeente put",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingVoor",
@@ -404,6 +528,7 @@ class RestServicesTest {
                         ),
                         "zwarteLijstMeldingenVoor post rijkregisternummer",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingVoor",
@@ -416,6 +541,7 @@ class RestServicesTest {
                         ),
                         "zwarteLijstMeldingenVoor post rijkregisternummer",
                         "default"
+                        , "application/json"
                 )
         );
     }
@@ -432,15 +558,19 @@ class RestServicesTest {
 
     @ParameterizedTest
     @MethodSource("testRestServices")
+    @SneakyThrows
     void testMobilityRegCountryCodeGet(
             MagdaMockRestHandler.MockRestRequest mockRestRequest,
             String expectedMessage,
-            String expectedMappingType
+            String expectedMappingType,
+            String expectedContentTypeHeader
     ) {
         var response = magdaMockConnection.sendRestRequest(mockRestRequest);
         Assertions.assertNotNull(response);
-        Assertions.assertEquals(expectedMessage, response.body().get("message").textValue());
-        Assertions.assertEquals(expectedMappingType, response.body().get("mappingType").textValue());
+        JsonNode jsonBody = new ObjectMapper().readTree(response.body());
+        Assertions.assertEquals(expectedMessage, jsonBody.get("message").textValue());
+        Assertions.assertEquals(expectedMappingType, jsonBody.get("mappingType").textValue());
+        Assertions.assertTrue(response.headers().get("Content-Type").contains(expectedContentTypeHeader));
         Assertions.assertEquals(200, response.status());
     }
 }
