@@ -49,6 +49,86 @@ class RestServicesTest {
                         , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "vin=VIN&unifier=123",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility vin and unifier mapping",
+                        "specific"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "plateUID=2345678",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility plateUID mapping",
+                        "specific"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "plateUID=unknown",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility mapping",
+                        "default"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "nationalNr=2345678",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility nationalNr mapping",
+                        "specific"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "nationalNr=unknown",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility mapping",
+                        "default"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "companyNr=2345678",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility companyNr mapping",
+                        "specific"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "companyNr=unknown",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility mapping",
+                        "default"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/mobility/registrations",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "rest mobility mapping",
+                        "default"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/zoeken",
                                 "",
                                 "POST",
