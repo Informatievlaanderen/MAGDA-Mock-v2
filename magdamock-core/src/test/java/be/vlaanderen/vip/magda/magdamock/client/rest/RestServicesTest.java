@@ -57,6 +57,7 @@ class RestServicesTest {
                         ),
                         "rest mobility vin and unifier mapping",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/mobility/registrations",
@@ -67,6 +68,7 @@ class RestServicesTest {
                         ),
                         "rest mobility plateUID mapping",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/mobility/registrations",
@@ -77,6 +79,7 @@ class RestServicesTest {
                         ),
                         "rest mobility mapping",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/mobility/registrations",
@@ -87,6 +90,7 @@ class RestServicesTest {
                         ),
                         "rest mobility nationalNr mapping",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/mobility/registrations",
@@ -97,6 +101,7 @@ class RestServicesTest {
                         ),
                         "rest mobility mapping",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/mobility/registrations",
@@ -107,6 +112,7 @@ class RestServicesTest {
                         ),
                         "rest mobility companyNr mapping",
                         "specific"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/mobility/registrations",
@@ -117,6 +123,7 @@ class RestServicesTest {
                         ),
                         "rest mobility mapping",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/mobility/registrations",
@@ -127,6 +134,7 @@ class RestServicesTest {
                         ),
                         "rest mobility mapping",
                         "default"
+                        , "application/json"
                 ), Arguments.of(
                         new MagdaMockRestHandler.MockRestRequest(
                                 "/v1/socZek/socialeHuisvesting/dossiers/zoeken",
