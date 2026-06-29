@@ -91,9 +91,9 @@ magda:
 
 ## Using as a Java library
 
-Add the `magdaconnector-test` SDK module to your project to use the mock directly in tests - no running server required.
-This library module also allows you to set up mock scenarios in-flight using just a mock connection builder
-where you set up requests and responses, without needing any real files.
+Add the `magdaconnector-test` SDK module to use the mock directly in your tests — no running server required.
+It can serve fixtures from disk, or let you build mock scenarios in-flight with a connection builder
+(wiring up requests and responses in code, with no fixture files at all).
 
 **Maven dependency:**
 
@@ -144,12 +144,12 @@ The management / health endpoint runs on port **8081** by default (configurable 
 |---------|--------|--------------------------------|
 | `/soap` | POST   | `text/xml` / `application/xml` |
 
-Internally the request is routed using XPath matching on two envelope fields:
+Internally the request is routed by XPath matching on the envelope fields:
 
 - `//Naam` — the service name (e.g. `GeefPersoon`)
 - `//Versie` — the service version (e.g. `02.02.0000`)
+- one or more key fields (e.g. `//INSZ`) whose values drive the fixture file lookup
 
-Plus one or more key fields (e.g. `//INSZ`) whose values drive the file lookup.  
 Each service/version combination and its keys are registered in `SoapStubRegistrar.SoapStubDefinitions`.
 
 ### REST
@@ -182,14 +182,14 @@ GET http://localhost:8081/actuator/health
 
 ### Test numbers
 
-To avoid conflicts with real citizen identifiers, the MAGDA Mock uses **Test numbers** for test cases
-relating to personal information of citizens (i.e. wherever an INSZ number is required).
+Wherever an INSZ number is required, the MAGDA Mock uses **Test numbers** instead of real citizen
+identifiers. A Test number looks like a regular INSZ number — same 11-digit format (`^[0-9]{11}$`) and a
+valid [modulo-97 checksum](https://vlaamseoverheid.atlassian.net/wiki/spaces/MG/pages/6208324471/Validatiemethodes) — with one deliberate twist:
 
-Test numbers have the same 11-digit format as a regular INSZ number (`^[0-9]{11}$`) and pass the
-[modulo-97 checksum](https://vlaamseoverheid.atlassian.net/wiki/spaces/MG/pages/6208324471/Validatiemethodes).  
-The key difference: the third and fourth digits - which in a real national registry number encode the birth month
-(range `01`–`12`) - are deliberately placed in the range **`61`–`72`**.  
-This prevents any accidental extraction of a real date of birth and avoids collisions with genuine citizen identifiers.
+> The third and fourth digits, which in a real national registry number encode the birth month (`01`–`12`),
+> are instead placed in the range **`61`–`72`**.
+
+This makes it impossible to extract a real date of birth and avoids any collision with genuine citizen identifiers.
 
 ### SOAP fixture structure
 
@@ -288,10 +288,10 @@ For a **multi-key** service, nest subdirectories for all keys except the last on
 <soap-test-path>/{Domain}/{ServiceName}/{Version}/{key1-value}/{key2-value}.xml
 ```
 
-The XML must be a complete, well-formed MAGDA service response. This response should not include the
-SOAP envelope — only the inner body content as returned by the service.
-The following fields in the response are **automatically overwritten** at call time,
-so their values in the file do not matter:
+The XML must be a complete, well-formed MAGDA service response — the inner body content only, **without**
+the SOAP envelope.
+
+A few fields are **automatically overwritten** at call time, so whatever you put in the file does not matter:
 
 | Field (XPath in response)              | Value injected                              |
 |----------------------------------------|---------------------------------------------|
@@ -337,12 +337,13 @@ magda.magdamock/
 
 ### magdamock-core
 
-Contains the mock engine built on top of [WireMock](https://wiremock.org/).  
-Key class: `MagdaMockConnection` — implements `MagdaConnection` and can be used directly in integration tests
-without starting an HTTP server.  
-SOAP responses are loaded from a configurable directory of XML fixture files.  
-REST responses are loaded from standard WireMock `mappings/` + `__files/` directories.  
-Optional XSD validation can be enabled for both SOAP requests and responses.
+The mock engine, built on top of [WireMock](https://wiremock.org/). Key points:
+
+- Key class `MagdaMockConnection` implements `MagdaConnection` and can be used directly in integration
+  tests — no HTTP server required.
+- SOAP responses are loaded from a configurable directory of XML fixture files.
+- REST responses are loaded from standard WireMock `mappings/` + `__files/` directories.
+- Optional XSD validation can be enabled for both SOAP requests and responses.
 
 ### magdamock-spring
 
