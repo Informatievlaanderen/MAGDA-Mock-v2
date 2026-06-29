@@ -19,7 +19,8 @@ The MAGDA Mock is available as a Docker image and as a library.
 - [Configuration reference](#configuration-reference)
 - [Endpoints](#endpoints)
 - [Test data](#test-data)
-- [Adding test cases](#adding-test-cases)
+- [Adding SOAP mock data](#adding-soap-mock-data)
+- [Adding REST mock data](#adding-rest-mock-data)
 - [Repository structure](#repository-structure)
 - [Building from source](#building-from-source)
 - [Who do I talk to?](#who-do-i-talk-to)
@@ -62,28 +63,15 @@ docker run -p 8080:8080 -p 8081:8081 \
 
 ### Custom test data
 
-The `magdamock-demo` directory shows how to extend the base image with your own mock data:
+The `magdamock-demo` directory shows how to extend the base image with your own mock data.
+It contains a Dockerfile taking data from the `soap` and `rest` directories in the build context and copying them into the image at `/data/soap` and `/data/rest` respectively.
 
-```dockerfile
-ARG MAGDAMOCK_VERSION="latest"
-ARG DOCKER_URL="vlaamseoverheid-magda-docker-releases.jfrog.io"
-
-FROM ${DOCKER_URL}/magda/magda.magdamock:${MAGDAMOCK_VERSION}
-
-COPY ./application.yml application.yml
-COPY ./wiremock-data  /data/wiremock
-COPY ./soap           /data/soap
-
-EXPOSE 8080
-EXPOSE 8081
-```
-
-With the accompanying `application.yml`:
+The accompanying `application.yml` :
 
 ```yaml
 magda:
   magdamock:
-    magda-mock-test-path: "/data/wiremock"
+    rest-test-path: "/data/rest"
     soap-test-path: "/data/soap"
 ```
 
@@ -112,10 +100,11 @@ All properties live under the `magda.magdamock` prefix in `application.yml` or `
 
 The following properties are supported:
 
-| Property               | Default     | Description                                                            |
-|------------------------|-------------|------------------------------------------------------------------------|
-| `soap-test-path`       | _(none)_    | Path to the SOAP XML mock data root directory (absolutely recommended) |
-| `magda-xsd-path`       | _(none)_    | Path to the XSD directory; leave blank to disable schema validation    |
+| Property         | Default     | Description                                                         |
+|------------------|-------------|---------------------------------------------------------------------|
+| `rest-test-path` | _(none)_    | Path to the SOAP REST mock data root directory                      |
+| `soap-test-path` | _(none)_    | Path to the SOAP XML mock data root directory                       |
+| `magda-xsd-path` | _(none)_    | Path to the XSD directory; leave blank to disable schema validation |
 
 The management / health endpoint runs on port **8081** by default (configurable via `management.server.port`).
 
@@ -172,7 +161,7 @@ valid [modulo-97 checksum](https://vlaamseoverheid.atlassian.net/wiki/spaces/MG/
 > The third and fourth digits, which in a real national registry number encode the birth month (`01`–`12`),
 > are instead placed in the range **`61`–`72`**.
 
-This makes it impossible to extract a real date of birth and avoids any collision with genuine citizen identifiers.
+This prevents any accidental extraction of a real date of birth and avoids collisions with genuine citizen identifiers.
 
 ### SOAP test data structure
 
@@ -217,7 +206,7 @@ REST responses are stored as JSON files. The directory layout follows the patter
 ```
 <magda-mock-test-path>/
 ├── rest/
-│   └── {Version}/{Service}/{HttpMethod}/
+│   └── {Version}/{Service}/{HttpMethod}/{keyType}/
 │       └── {key}.json
 ```
 
@@ -255,7 +244,7 @@ This sample response was truncated for brevity.
 
 ---
 
-## Adding test cases
+## Adding SOAP mock data
 
 ### Step 1 - Create the XML test data files
 
@@ -307,6 +296,58 @@ MAGDA fallback response, place a file named `default.xml` in the version directo
 
 This file is registered at **lower priority** than key-specific files, so it only fires when nothing else matches.
 This behaviour is documented on Confluence at [MAGDA Mock - Documentatie](https://vlaamseoverheid.atlassian.net/wiki/spaces/MG/pages/8574697520/MAGDA+Mock+-+Documentatie).
+
+---
+
+## Adding REST mock data
+
+### Step 1 - Create the JSON mock files
+
+Place a [WireMock stub mapping](https://wiremock.org/docs/stubbing/) at:
+
+```
+<rest-test-path>/{Version}/{Service}/{HttpMethod}/{keyType}/{key}.json
+```
+
+The directory path encodes the version, service, HTTP method and key type; the **filename is the key value**.
+Each file contains the `response` to return, for example:
+
+```json
+{  
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": {
+      "self": "/registrations?plateNr=1ABC123",
+      "items": [ ]
+    }
+  }
+}
+```
+
+For a request matched on **multiple keys**, join the key values with `&` in the filename - for example
+`RFH&CHKO&2023.01.11.0016.json`.
+
+### Step 2 - Add a default fallback (optional but recommended)
+
+If no key-specific file matches, the mock returns a 404 to the caller. To return a fallback response instead,
+add a `default.json` in the method directory with a **lower priority** and a broader request matcher (no key):
+
+```json
+{
+  "priority": 100,
+  "request": {
+    "method": "GET",
+    "urlPath": "/v1/mobility/registrations"
+  },
+  "response": {
+    "status": 204,
+    "headers": { "Content-Type": "application/json" }
+  }
+}
+```
+
+Because of its lower priority, it only fires when no key-specific file matches.
 
 ---
 
