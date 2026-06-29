@@ -76,6 +76,14 @@ definitions:
         script:
           - git config --global --add safe.directory /opt/atlassian/pipelines/agent/build
           - timeout 10m sigridci.py --customer $SIGRID_CI_ACCOUNT --system $(echo $BITBUCKET_REPO_FULL_NAME | cut -d'/' -f 2 | cut -c 1-45| sed -e "s/\./-/g") --source .
+    - step: &githubMirror
+        name: Mirror to GitHub
+        script:
+          - git clone --bare git@bitbucket.org:vlaamseoverheid/magda.magdamock.git
+          - cd magda.magdamock.git
+          - echo "$GITHUB_PUSH_KEY" | base64 -d > /tmp/github_push_key
+          - chmod 600 /tmp/github_push_key
+          - GIT_SSH_COMMAND="ssh -i /tmp/github_push_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=no" git push --mirror git@github.com:Informatievlaanderen/MAGDA-Mock-v2.git
 clone:
   depth: full
 
@@ -157,6 +165,7 @@ pipelines:
   custom:
     maven-release:
       - step: *release
+      - step: *githubMirror
     docker-build-demo:
       - step: *dockerBuildDemo
     deploy-released-version:
