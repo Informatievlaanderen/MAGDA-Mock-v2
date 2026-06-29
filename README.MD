@@ -30,11 +30,11 @@ The MAGDA Mock is available as a Docker image and as a library.
 ## Introduction
 
 This repository is the **technical foundation to run a MAGDA Mock instance**. It bundles the mock engine,
-a runnable server, and the SOAP/REST endpoints needed to stand up a self-contained MAGDA Mock environment —
-either as a Docker image or embedded as a Java library in your tests.
+a runnable server, and the SOAP/REST endpoints needed to run a self-contained MAGDA Mock environment -
+either as a Docker image or embedded as a Java library in tests.
 
 It does **not** ship a complete catalogue of test cases by itself: it provides the runtime, while the
-service-specific test fixtures and querying behaviour are documented separately (see [Test data](#test-data)).
+service-specific mock files and querying behaviour are documented separately (see [Test data](#test-data)).
 
 ---
 
@@ -62,7 +62,7 @@ docker run -p 8080:8080 -p 8081:8081 \
 
 ### Custom test data
 
-The `magdamock-demo` directory shows how to extend the base image with your own fixture data:
+The `magdamock-demo` directory shows how to extend the base image with your own mock data:
 
 ```dockerfile
 ARG MAGDAMOCK_VERSION="latest"
@@ -91,9 +91,9 @@ magda:
 
 ## Using as a Java library
 
-Add the `magdaconnector-test` SDK module to use the mock directly in your tests — no running server required.
-It can serve fixtures from disk, or let you build mock scenarios in-flight with a connection builder
-(wiring up requests and responses in code, with no fixture files at all).
+Add the `magdaconnector-test` SDK module to use the mock directly in tests - no running server required.
+It can serve mock files from disk, or let you build mock scenarios in-flight with a connection builder
+(wiring up requests and responses in code, with no mock data files at all).
 
 **Maven dependency:**
 
@@ -106,31 +106,16 @@ It can serve fixtures from disk, or let you build mock scenarios in-flight with 
 </dependency>
 ```
 
-**Creating a `MagdaMockConnection`:**
-
-```java
-MagdaConnection connection = MagdaMockConnection.create(
-    "src/test/resources/wiremock",
-    "src/test/resources/soap",
-    "src/main/resources/magda.xsd"
-);
-```
-
-The `MagdaConnection` instance can then be injected wherever a real MAGDA connection would be used.
-
----
-
 ## Configuration reference
 
 All properties live under the `magda.magdamock` prefix in `application.yml` or `application.properties`.
 
 The following properties are supported:
 
-| Property               | Default     | Description                                                          |
-|------------------------|-------------|----------------------------------------------------------------------|
-| `magda-mock-test-path` | `wiremock`  | Path to the WireMock data root directory (relative or absolute)      |
-| `soap-test-path`       | _(none)_    | Path to the SOAP XML fixture root directory (absolutely recommended) |
-| `magda-xsd-path`       | _(none)_    | Path to the XSD directory; leave blank to disable schema validation  |
+| Property               | Default     | Description                                                            |
+|------------------------|-------------|------------------------------------------------------------------------|
+| `soap-test-path`       | _(none)_    | Path to the SOAP XML mock data root directory (absolutely recommended) |
+| `magda-xsd-path`       | _(none)_    | Path to the XSD directory; leave blank to disable schema validation    |
 
 The management / health endpoint runs on port **8081** by default (configurable via `management.server.port`).
 
@@ -144,11 +129,11 @@ The management / health endpoint runs on port **8081** by default (configurable 
 |---------|--------|--------------------------------|
 | `/soap` | POST   | `text/xml` / `application/xml` |
 
-Internally the request is routed by XPath matching on the envelope fields:
+Internally the request is routed using XPath matching on two envelope fields:
 
-- `//Naam` — the service name (e.g. `GeefPersoon`)
-- `//Versie` — the service version (e.g. `02.02.0000`)
-- one or more key fields (e.g. `//INSZ`) whose values drive the fixture file lookup
+- `//Naam` - the service name (e.g. `GeefPersoon`)
+- `//Versie` - the service version (e.g. `02.02.0000`)
+- one or more key fields (e.g. `//INSZ`) whose values drive the mock file lookup
 
 Each service/version combination and its keys are registered in `SoapStubRegistrar.SoapStubDefinitions`.
 
@@ -157,8 +142,6 @@ Each service/version combination and its keys are registered in `SoapStubRegistr
 | Path       | Methods                       | Content-Type       |
 |------------|-------------------------------|--------------------|
 | `/rest/**` | DELETE, GET, PATCH, POST, PUT | `application/json` |
-
-REST responses are served from WireMock `mappings/` + `__files/` files under the configured `magda-mock-test-path`.
 
 ### Health / Actuator
 
@@ -171,27 +154,27 @@ GET http://localhost:8081/actuator/health
 ## Test data
 
 > **Important**
-> The **supported querying mechanism for every service**, as well as the **path where its test fixtures
-> must be placed**, is documented per service on Confluence:
+> The supported querying mechanism for every service, as well as the path where its test data
+> must be placed, is documented per service on Confluence:
 > [MAGDA Mock - Documentatie](https://vlaamseoverheid.atlassian.net/wiki/spaces/MG/pages/8574697520/MAGDA+Mock+-+Documentatie).
 
 > **Tip**
 > The [MAGDA Mock Community](https://github.com/Informatievlaanderen/MAGDA-Mock-Community-v2) repository
 > provides a set of predefined test cases you can use as-is or layer on top of the Docker image
-> (see the **Custom test data** section under **Quick start with Docker**).
+> (see the [Custom test data](#custom-test-data) section under [Quick start with Docker](#quick-start-with-docker)).
 
 ### Test numbers
 
 Wherever an INSZ number is required, the MAGDA Mock uses **Test numbers** instead of real citizen
-identifiers. A Test number looks like a regular INSZ number — same 11-digit format (`^[0-9]{11}$`) and a
-valid [modulo-97 checksum](https://vlaamseoverheid.atlassian.net/wiki/spaces/MG/pages/6208324471/Validatiemethodes) — with one deliberate twist:
+identifiers. A Test number looks like a regular INSZ number - same 11-digit format (`^[0-9]{11}$`) and a
+valid [modulo-97 checksum](https://vlaamseoverheid.atlassian.net/wiki/spaces/MG/pages/6208324471/Validatiemethodes) - with one deliberate twist:
 
 > The third and fourth digits, which in a real national registry number encode the birth month (`01`–`12`),
 > are instead placed in the range **`61`–`72`**.
 
 This makes it impossible to extract a real date of birth and avoids any collision with genuine citizen identifiers.
 
-### SOAP fixture structure
+### SOAP test data structure
 
 SOAP responses are stored as plain XML files. The directory layout follows the pattern:
 
@@ -201,7 +184,7 @@ SOAP responses are stored as plain XML files. The directory layout follows the p
     └── {ServiceName}/
         └── {Version}/              # e.g. 02.02.0000
             ├── {key}.xml           # matched when the request key equals the filename (without .xml)
-            └── default.xml         # fallback — returned when no specific key file matches
+            └── default.xml         # fallback - returned when no specific key file matches
 ```
 
 Example (single-key service, keyed by INSZ):
@@ -227,7 +210,7 @@ soap/
                 └── 2018.xml      ← file for second key (boekjaar)
 ```
 
-### REST fixture structure
+### REST test data structure
 
 REST responses are stored as JSON files. The directory layout follows the pattern:
 
@@ -274,7 +257,7 @@ This sample response was truncated for brevity.
 
 ## Adding test cases
 
-#### Step 1 — Create the XML fixture files
+### Step 1 - Create the XML test data files
 
 Place a valid MAGDA response XML file at:
 
@@ -288,7 +271,7 @@ For a **multi-key** service, nest subdirectories for all keys except the last on
 <soap-test-path>/{Domain}/{ServiceName}/{Version}/{key1-value}/{key2-value}.xml
 ```
 
-The XML must be a complete, well-formed MAGDA service response — the inner body content only, **without**
+The XML must be a complete, well-formed MAGDA service response - the inner body content only, **without**
 the SOAP envelope.
 
 A few fields are **automatically overwritten** at call time, so whatever you put in the file does not matter:
@@ -310,10 +293,10 @@ A few fields are **automatically overwritten** at call time, so whatever you put
 > requested `Inkomensjaar` from the request).
 
 WireMock [Handlebars templating](https://wiremock.org/docs/response-templating/) is also supported in
-XML fixture files. The `Date` header (derived from the request timestamp) is available as `request.headers.Date`.
-See the demo fixture `GeefPersoon/02.02.0000/00600099734.xml` for an example using `dateMath`.
+XML test data files. The `Date` header (derived from the request timestamp) is available as `request.headers.Date`.
+See the demo test data file `GeefPersoon/02.02.0000/00600099734.xml` for an example using `dateMath`.
 
-#### Step 2 — Add a default fallback (optional but recommended)
+### Step 2 - Add a default fallback (optional but recommended)
 
 If no specific file matches, the mock returns a 404 to the caller. If instead you want to return a proper
 MAGDA fallback response, place a file named `default.xml` in the version directory:
@@ -323,6 +306,7 @@ MAGDA fallback response, place a file named `default.xml` in the version directo
 ```
 
 This file is registered at **lower priority** than key-specific files, so it only fires when nothing else matches.
+This behaviour is documented on Confluence at [MAGDA Mock - Documentatie](https://vlaamseoverheid.atlassian.net/wiki/spaces/MG/pages/8574697520/MAGDA+Mock+-+Documentatie).
 
 ---
 
@@ -331,7 +315,7 @@ This file is registered at **lower priority** than key-specific files, so it onl
 ```
 magda.magdamock/
 ├── magdamock-core/        # Framework-agnostic mock engine (WireMock-based, published as a library)
-├── magdamock-spring/      # Spring Boot wrapper — runnable standalone server and Docker image
+├── magdamock-spring/      # Spring Boot wrapper - runnable standalone server and Docker image
 └── magdamock-demo/        # Example showing how to extend the Docker image with custom test data
 ```
 
@@ -340,9 +324,7 @@ magda.magdamock/
 The mock engine, built on top of [WireMock](https://wiremock.org/). Key points:
 
 - Key class `MagdaMockConnection` implements `MagdaConnection` and can be used directly in integration
-  tests — no HTTP server required.
-- SOAP responses are loaded from a configurable directory of XML fixture files.
-- REST responses are loaded from standard WireMock `mappings/` + `__files/` directories.
+  tests - no HTTP server required.
 - Optional XSD validation can be enabled for both SOAP requests and responses.
 
 ### magdamock-spring
