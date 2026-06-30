@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
+import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +31,7 @@ public class GeefPasfotoStubHandler extends AbstractSoapStubHandler {
                                 "//*[local-name()='Versie' and normalize-space()='" + version + "']"
                         ))
                         .withRequestBody(matchingXPath(
-                                "//*[local-name()='INSZ']"
+                                "//*[local-name()='INSZ' and normalize-space()]"
                         ))
                         .willReturn(
                                 aResponse()
@@ -39,6 +40,31 @@ public class GeefPasfotoStubHandler extends AbstractSoapStubHandler {
                                         .withTransformerParameter("domain", domain)
                                         .withTransformerParameter("service", service)
                                         .withTransformerParameter("version", version)
+                        )
+        );
+
+        wireMockServer.stubFor(
+                post(urlEqualTo("/soap"))
+                        .atPriority(20)
+                        .withRequestBody(matchingXPath(
+                                "//*[local-name()='Naam' and normalize-space()='" + service + "']"
+                        ))
+                        .withRequestBody(matchingXPath(
+                                "//*[local-name()='Versie' and normalize-space()='" + version + "']"
+                        ))
+                        .willReturn(
+                                aResponse()
+                                        .withStatus(200)
+                                        .withHeader("Content-Type", "text/xml; charset=utf-8")
+                                        .withBody(
+                                                SoapResourceUtil.readStubBody(
+                                                        soapTestPath,
+                                                        domain,
+                                                        service,
+                                                        version,
+                                                        "default"
+                                                )
+                                        )
                         )
         );
     }
