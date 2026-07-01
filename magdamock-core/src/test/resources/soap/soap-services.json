@@ -868,6 +868,18 @@
     "expectedValue": "67621546751"
   },
   {
+    "naam": "GeefPasfoto",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": ""
+      }
+    ],
+    "xpathExpression": "//Pasfoto/INSZ",
+    "expectedValue": "98070654321"
+  },
+  {
     "naam": "GeefPersoon",
     "versie": "02.02.0000",
     "requestFields": [
