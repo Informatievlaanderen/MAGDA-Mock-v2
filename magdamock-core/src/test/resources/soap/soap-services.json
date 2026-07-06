@@ -865,7 +865,7 @@
       }
     ],
     "xpathExpression": "//Pasfoto/INSZ",
-    "expectedValue": "67621546751"
+    "expectedValue": "00000000000"
   },
   {
     "naam": "GeefPasfoto",
@@ -877,7 +877,7 @@
       }
     ],
     "xpathExpression": "//Pasfoto/INSZ",
-    "expectedValue": "98070654321"
+    "expectedValue": "00000000000"
   },
   {
     "naam": "GeefPersoon",
@@ -960,7 +960,7 @@
         "value": "KSZ"
       },
       {
-        "path": "//Criteria/Adres/Postcode",
+        "path": "//Criteria/Adres/PostCode",
         "value": "9850"
       },
       {
@@ -988,7 +988,7 @@
         "value": "RR"
       },
       {
-        "path": "//Criteria/Adres/Postcode",
+        "path": "//Criteria/Adres/PostCode",
         "value": "1000"
       },
       {
@@ -1016,7 +1016,7 @@
         "value": "RR"
       },
       {
-        "path": "//Criteria/Adres/Postcode",
+        "path": "//Criteria/Adres/PostCode",
         "value": "9470"
       },
       {

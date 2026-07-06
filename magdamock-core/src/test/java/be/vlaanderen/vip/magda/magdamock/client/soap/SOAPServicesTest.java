@@ -2,6 +2,7 @@ package be.vlaanderen.vip.magda.magdamock.client.soap;
 
 import be.vlaanderen.vip.magda.client.MagdaDocument;
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
+import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,7 +61,8 @@ class SOAPServicesTest {
 
                 String requestBody = buildSoapRequest(naam, versie, requestFields);
                 MagdaDocument magdaDocument = MagdaDocument.fromString(requestBody);
-                Document document = magdaMockConnection.sendDocument(magdaDocument.getXml());
+                MagdaMockSoapHandler.MockSoapResponse response = magdaMockConnection.sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(magdaDocument.getXml()));
+                Document document = response.document();
 
                 XPath xpath = XPathFactory.newInstance().newXPath();
                 String actualValue = xpath.evaluate(xpathExpression, document);
