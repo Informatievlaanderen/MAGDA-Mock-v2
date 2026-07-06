@@ -2,26 +2,16 @@ package be.vlaanderen.vip.magda.magdamock.soap;
 
 import be.vlaanderen.vip.magda.client.MagdaDocument;
 import lombok.SneakyThrows;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.IntStream;
 
+@Slf4j
 public class SoapResponseValidatorImpl extends SoapBodyValidator {
     private final Map<String, String> XML_FOLDERS_AND_XSDS = data(
             "GeefDossiers/02.00.0000", "Dossier.GeefDossiersDienst-02.00/WebService/GeefDossiersResponse.xsd",
@@ -51,6 +41,7 @@ public class SoapResponseValidatorImpl extends SoapBodyValidator {
             "GeefPasfoto/02.00.0000", "Persoon.GeefPasfotoDienst-02.00/WebService/GeefPasfotoResponse.xsd",
             "GeefPersoon/02.02.0000", "Persoon.GeefPersoonDienst-02.02/WebService/GeefPersoonResponse.xsd",
             "ZoekPersoonOpAdres/02.02.0000", "Persoon.ZoekPersoonOpAdresDienst-02.02/WebService/ZoekPersoonOpAdresResponse.xsd",
+            "ZoekPersoonOpNaam/02.02.0000", "Persoon.ZoekPersoonOpNaamDienst-02.02/WebService/ZoekPersoonOpNaamResponse.xsd",
 
             "RegistreerInschrijving/02.00.0000", "Repertorium.RegistreerInschrijvingDienst-02.00/WebService/RegistreerInschrijvingResponse.xsd",
             "RegistreerInschrijving/02.01.0000", "Repertorium.RegistreerInschrijvingDienst-02.01/WebService/RegistreerInschrijvingResponse.xsd",
@@ -91,6 +82,7 @@ public class SoapResponseValidatorImpl extends SoapBodyValidator {
             validator.setErrorHandler(new XsdErrorHandler());
             return validator;
         } catch (Exception e) {
+            log.error("Error while finding validator for {} {}", naam, versie, e);
             return null;
         }
     }

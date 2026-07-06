@@ -1,8 +1,8 @@
 package be.vlaanderen.vip.magda.magdamock.client.handlers;
 
 import be.vlaanderen.vip.magda.client.MagdaDocument;
-import be.vlaanderen.vip.magda.magdamock.client.soap.SoapResponsePatcher;
-import be.vlaanderen.vip.magda.magdamock.client.soap.SoapResponsePatcherImpl;
+import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcher;
+import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcherImpl;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.filters.EmptyElementsFilter;
 import be.vlaanderen.vip.magda.magdamock.filters.MagdaMockFilter;

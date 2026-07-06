@@ -142,7 +142,7 @@ class SoapStubRegistrarTest {
 
         SoapStubHandler handler = definition.createHandler(mock(WireMockServer.class), "soap");
 
-        assertInstanceOf(GeefPasfotoStubHandler.class, handler);
+        assertInstanceOf(SubDirSOAPStubHandler.class, handler);
     }
 
     @Test

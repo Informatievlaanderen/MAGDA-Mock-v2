@@ -1,4 +1,4 @@
-package be.vlaanderen.vip.magda.magdamock.client.soap;
+package be.vlaanderen.vip.magda.magdamock.client.patchers;
 
 import be.vlaanderen.vip.magda.client.MagdaDocument;
 import be.vlaanderen.vip.magda.client.MagdaServiceIdentification;
@@ -34,6 +34,10 @@ public class SoapResponsePatcherImpl implements SoapResponsePatcher {
         patcherMap.put(
                 new MagdaServiceIdentification("GeefSociaalStatuut", VERSION_03_00),
                 new GeefSociaalStatuutResponsePatcher()
+        );
+        patcherMap.put(
+                new MagdaServiceIdentification("GeefPasfoto", VERSION_02_00),
+                new SimpleXpathPatcher("//Inhoud/Pasfoto/INSZ", "//Criteria/INSZ")
         );
         return patcherMap;
     }

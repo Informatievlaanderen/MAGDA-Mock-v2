@@ -2,6 +2,7 @@ package be.vlaanderen.vip.magda.magdamock.soap;
 
 import be.vlaanderen.vip.magda.client.MagdaDocument;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+@Slf4j
 public class SoapRequestValidatorImpl extends SoapBodyValidator {
     private final Map<String, String> XML_FOLDERS_AND_XSDS = data(
             "GeefDossiers/02.00.0000", "Dossier.GeefDossiersDienst-02.00/WebService/GeefDossiers.xsd",
@@ -51,6 +53,7 @@ public class SoapRequestValidatorImpl extends SoapBodyValidator {
             "GeefPasfoto/02.00.0000", "Persoon.GeefPasfotoDienst-02.00/WebService/GeefPasfoto.xsd",
             "GeefPersoon/02.02.0000", "Persoon.GeefPersoonDienst-02.02/WebService/GeefPersoon.xsd",
             "ZoekPersoonOpAdres/02.02.0000", "Persoon.ZoekPersoonOpAdresDienst-02.02/WebService/ZoekPersoonOpAdres.xsd",
+            "ZoekPersoonOpNaam/02.02.0000", "Persoon.ZoekPersoonOpNaamDienst-02.02/WebService/ZoekPersoonOpNaam.xsd",
 
             "RegistreerInschrijving/02.00.0000", "Repertorium.RegistreerInschrijvingDienst-02.00/WebService/RegistreerInschrijving.xsd",
             "RegistreerInschrijving/02.01.0000", "Repertorium.RegistreerInschrijvingDienst-02.01/WebService/RegistreerInschrijving.xsd",
@@ -91,6 +94,7 @@ public class SoapRequestValidatorImpl extends SoapBodyValidator {
             validator.setErrorHandler(new XsdErrorHandler());
             return validator;
         } catch (Exception e) {
+            log.error("Error while finding validator for {} {}", naam, versie, e);
             return null;
         }
     }

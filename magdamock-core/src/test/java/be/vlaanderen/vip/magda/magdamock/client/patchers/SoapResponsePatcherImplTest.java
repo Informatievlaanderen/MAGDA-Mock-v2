@@ -1,4 +1,4 @@
-package be.vlaanderen.vip.magda.magdamock.client.soap;
+package be.vlaanderen.vip.magda.magdamock.client.patchers;
 
 import be.vlaanderen.vip.magda.client.MagdaDocument;
 import be.vlaanderen.vip.magda.client.MagdaServiceIdentification;

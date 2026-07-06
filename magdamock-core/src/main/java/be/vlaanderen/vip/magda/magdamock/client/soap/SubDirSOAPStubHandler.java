@@ -2,6 +2,7 @@ package be.vlaanderen.vip.magda.magdamock.client.soap;
 
 import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -14,6 +15,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.matchingXPath;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
+@Slf4j
 public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
 
     private final List<String> keys;
@@ -56,18 +58,25 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
             values = getValues(fileName);
         }
 
+        if (keys.size() > values.size() && !isDefaultFile) {
+            log.info("Unable to create SOAP wiremock stubbing for {} {} {} {}", domain, service, version, fileName);
+            return;
+        }
+
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
-            String value = values.get(i);
             if (!isDefaultFile) {
-                String xpathExpression;
-                if (key.endsWith("/name()")) {
-                    String nodeKey = key.substring(0, key.length() - "/name()".length());
-                    xpathExpression = nodeKey + "[local-name()='" + value + "']";
-                } else {
-                    xpathExpression = key + "[normalize-space()='" + value + "']";
+                String value = values.get(i);
+                if (!value.isEmpty()) {
+                    String xpathExpression;
+                    if (key.endsWith("/name()")) {
+                        String nodeKey = key.substring(0, key.length() - "/name()".length());
+                        xpathExpression = nodeKey + "[local-name()='" + value + "']";
+                    } else {
+                        xpathExpression = key + "[normalize-space()='" + value + "']";
+                    }
+                    mappingBuilder = mappingBuilder.withRequestBody(matchingXPath(xpathExpression));
                 }
-                mappingBuilder = mappingBuilder.withRequestBody(matchingXPath(xpathExpression));
             } else {
                 break;
             }
