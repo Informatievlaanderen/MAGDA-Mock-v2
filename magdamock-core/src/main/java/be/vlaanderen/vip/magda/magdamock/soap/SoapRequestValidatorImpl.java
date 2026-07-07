@@ -37,10 +37,20 @@ public class SoapRequestValidatorImpl extends SoapBodyValidator {
             "GeefBewijs/02.00.0000", "LED.GeefBewijsDienst-02.00/WebService/GeefBewijs.xsd",
             "RegistreerBewijs/02.00.0000", "LED.RegistreerBewijsDienst-02.00/WebService/RegistreerBewijs.xsd",
 
+            "GeefAdressenLocaties/02.00.0000", "OndGeo.GeefAdressenLocatiesDienst-02.00/WebService/GeefAdressenLocaties.xsd",
+            "GeefBeschikbareJaarrekeningen/02.00.0000", "Onderneming.GeefBeschikbareJaarrekeningenDienst-02.00/WebService/GeefBeschikbareJaarrekeningen.xsd",
+            "GeefDeelnemingen/02.00.0000", "Onderneming.GeefDeelnemingenDienst-02.00/WebService/GeefDeelnemingen.xsd",
+            "GeefFiscaleInhoudingsplicht/02.01.0000", "Onderneming.GeefFiscaleInhoudingsplichtDienst-02.01/WebService/GeefFiscaleInhoudingsplicht.xsd",
+            "GeefFiscaleSchuld/02.00.0000", "Onderneming.GeefFiscaleSchuldDienst-02.00/WebService/GeefFiscaleSchuld.xsd",
             "GeefFuncties/02.00.0000", "Onderneming.GeefFunctiesDienst-02.00/WebService/GeefFuncties.xsd",
             "GeefJaarrekeningen/02.00.0000", "Onderneming.GeefJaarrekeningenDienst-02.00/WebService/GeefJaarrekeningen.xsd",
             "GeefOnderneming/02.00.0000", "Onderneming.GeefOndernemingDienst-02.00/WebService/GeefOnderneming.xsd",
+            "GeefOndernemingSignalen/02.00.0000", "Onderneming.GeefOndernemingSignalenDienst-02.00/WebService/GeefOndernemingSignalen.xsd",
             "GeefOndernemingVKBO/02.00.0000", "Onderneming.GeefOndernemingVKBODienst-02.00/WebService/GeefOndernemingVKBO.xsd",
+            "GeefPCenTW/02.00.0000", "Onderneming.GeefPCenTWDienst-02.00/WebService/GeefPCenTW.xsd",
+            "GeefSocialeSchuld/02.00.0000", "Onderneming.GeefSocialeSchuldDienst-02.00/WebService/GeefSocialeSchuld.xsd",
+            "GeefTewerkstelling/02.00.0000", "Onderneming.GeefTewerkstellingDienst-02.00/WebService/GeefTewerkstelling.xsd",
+            "ZoekOnderneming/02.00.0000", "Onderneming.ZoekOndernemingDienst-02.00/WebService/ZoekOnderneming.xsd",
 
             "GeefHistoriekInschrijving/02.01.0000", "Onderwijs.GeefHistoriekInschrijvingDienst-02.01/WebService/GeefHistoriekInschrijving.xsd",
 

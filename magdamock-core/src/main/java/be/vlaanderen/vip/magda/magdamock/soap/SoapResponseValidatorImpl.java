@@ -25,10 +25,20 @@ public class SoapResponseValidatorImpl extends SoapBodyValidator {
             "GeefBewijs/02.00.0000", "LED.GeefBewijsDienst-02.00/WebService/GeefBewijsResponse.xsd",
             "RegistreerBewijs/02.00.0000", "LED.RegistreerBewijsDienst-02.00/WebService/RegistreerBewijsResponse.xsd",
 
+            "GeefAdressenLocaties/02.00.0000", "OndGeo.GeefAdressenLocatiesDienst-02.00/WebService/GeefAdressenLocatiesResponse.xsd",
+            "GeefBeschikbareJaarrekeningen/02.00.0000", "Onderneming.GeefBeschikbareJaarrekeningenDienst-02.00/WebService/GeefBeschikbareJaarrekeningenResponse.xsd",
+            "GeefDeelnemingen/02.00.0000", "Onderneming.GeefDeelnemingenDienst-02.00/WebService/GeefDeelnemingenResponse.xsd",
+            "GeefFiscaleInhoudingsplicht/02.01.0000", "Onderneming.GeefFiscaleInhoudingsplichtDienst-02.01/WebService/GeefFiscaleInhoudingsplichtResponse.xsd",
+            "GeefFiscaleSchuld/02.00.0000", "Onderneming.GeefFiscaleSchuldDienst-02.00/WebService/GeefFiscaleSchuldResponse.xsd",
             "GeefFuncties/02.00.0000", "Onderneming.GeefFunctiesDienst-02.00/WebService/GeefFunctiesResponse.xsd",
             "GeefJaarrekeningen/02.00.0000", "Onderneming.GeefJaarrekeningenDienst-02.00/WebService/GeefJaarrekeningenResponse.xsd",
             "GeefOnderneming/02.00.0000", "Onderneming.GeefOndernemingDienst-02.00/WebService/GeefOndernemingResponse.xsd",
+            "GeefOndernemingSignalen/02.00.0000", "Onderneming.GeefOndernemingSignalenDienst-02.00/WebService/GeefOndernemingSignalenResponse.xsd",
             "GeefOndernemingVKBO/02.00.0000", "Onderneming.GeefOndernemingVKBODienst-02.00/WebService/GeefOndernemingVKBOResponse.xsd",
+            "GeefPCenTW/02.00.0000", "Onderneming.GeefPCenTWDienst-02.00/WebService/GeefPCenTWResponse.xsd",
+            "GeefSocialeSchuld/02.00.0000", "Onderneming.GeefSocialeSchuldDienst-02.00/WebService/GeefSocialeSchuldResponse.xsd",
+            "GeefTewerkstelling/02.00.0000", "Onderneming.GeefTewerkstellingDienst-02.00/WebService/GeefTewerkstellingResponse.xsd",
+            "ZoekOnderneming/02.00.0000", "Onderneming.ZoekOndernemingDienst-02.00/WebService/ZoekOndernemingResponse.xsd",
 
             "GeefHistoriekInschrijving/02.01.0000", "Onderwijs.GeefHistoriekInschrijvingDienst-02.01/WebService/GeefHistoriekInschrijvingResponse.xsd",
 

@@ -129,7 +129,7 @@ public class SoapStubRegistrar {
                     subDir("GeefPCenTW", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
                     subDir("GeefSocialeSchuld", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
                     subDir("GeefTewerkstelling", VERSION_02_00, KEY_ONDERNEMINGSNUMMER),
-                    subDir("ZoekOnderneming", VERSION_02_00, "//Criteria/Basisgegevens", "//Criteria/Resultaten"),
+                    flatFile("ZoekOnderneming", VERSION_02_00, "//Criteria/Naam", "//Criteria/Adres/GemeenteNISCode"),
 
                     // Onderwijs
                     subDir("GeefHistoriekInschrijving", VERSION_02_01, KEY_INSZ),

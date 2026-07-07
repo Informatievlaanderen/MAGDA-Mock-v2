@@ -34,14 +34,13 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
     @Override
     public void register(String domain, String service, String version, String fileName) throws IOException {
 
-        int priority = 10;
+        int priority = 50;
         boolean isDefaultFile = fileName.contains("default");
         if (isDefaultFile) {
-            priority = 20;
+            priority = 100;
         }
 
         var mappingBuilder = post(urlEqualTo("/soap"))
-                .atPriority(priority)
                 .withRequestBody(matchingXPath(
                         "//*[local-name()='Naam' and normalize-space()='" + service + "']"
                 ))
@@ -53,19 +52,18 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
         List<String> values;
 
         if (isFileOnly(fileName)) {
-            values = List.of(fileName.replace(".xml", ""));
+            String strippedFilename = fileName.replace(".xml", "");
+            values = List.of(URLDecoder.decode(strippedFilename, StandardCharsets.UTF_8));
         } else {
             values = getValues(fileName);
-        }
-
-        if (keys.size() > values.size() && !isDefaultFile) {
-            log.info("Unable to create SOAP wiremock stubbing for {} {} {} {}", domain, service, version, fileName);
-            return;
         }
 
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
             if (!isDefaultFile) {
+                if (i >= values.size()) {
+                    continue;
+                }
                 String value = values.get(i);
                 if (!value.isEmpty()) {
                     String xpathExpression;
@@ -81,6 +79,8 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
                 break;
             }
         }
+
+        mappingBuilder = mappingBuilder.atPriority(priority - values.size());
 
         wireMockServer.stubFor(
                 mappingBuilder.willReturn(

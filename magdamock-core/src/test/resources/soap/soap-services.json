@@ -648,32 +648,28 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "//Criteria/Basisgegevens",
-        "value": "0"
+        "path": "//Criteria/Naam",
+        "value": "Stad Brugge"
       },
       {
-        "path": "//Criteria/Resultaten",
-        "value": "0"
+        "path": "//Criteria/Adres/GemeenteNISCode",
+        "value": "31005"
       }
     ],
-    "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Geen gegevens gevonden voor de vraag"
+    "xpathExpression": "//Ondernemingen/Onderneming/Ondernemingsnummer",
+    "expectedValue": "0207528035"
   },
   {
     "naam": "ZoekOnderneming",
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "//Criteria/Basisgegevens",
-        "value": "1"
-      },
-      {
-        "path": "//Criteria/Resultaten",
-        "value": "0"
+        "path": "//Criteria/Naam",
+        "value": "Stad Brugge"
       }
     ],
-    "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+    "xpathExpression": "//Ondernemingen/Onderneming/Ondernemingsnummer",
+    "expectedValue": "0206684927"
   },
   {
     "naam": "GeefHistoriekInschrijving",
