@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -828,63 +827,11 @@ class RestServicesTest {
                                 "",
                                 "POST",
                                 """
-                                        {"versieNummer":"24", "partijCode":"0643634986", "dossierNummer":"2024.02.22.005"}
+                                        {"dossierNummer":"2024.02.22.005"}
                                         """,
                                 Map.of()
                         ),
-                        "bevestigDossierVerwerking post partijCode, dossiernummer en versieNummer",
-                        "specific"
-                        , "application/json"
-                ), Arguments.of(
-                        new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/dossiers/bevestigDossierVerwerking",
-                                "",
-                                "POST",
-                                """
-                                        {"versieNummer":"24", "dossierNummer":"2024.02.22.005"}
-                                        """,
-                                Map.of()
-                        ),
-                        "bevestigDossierVerwerking post dossiernummer en versieNummer",
-                        "specific"
-                        , "application/json"
-                ), Arguments.of(
-                        new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/dossiers/bevestigDossierVerwerking",
-                                "",
-                                "POST",
-                                """
-                                        {"versieNummer":"24 not found", "partijCode":"0643634986", "dossierNummer":"2024.02.22.005"}
-                                        """,
-                                Map.of()
-                        ),
-                        "bevestigDossierVerwerking post",
-                        "default"
-                        , "application/json"
-                ), Arguments.of(
-                        new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/dossiers/bevestigDossierVerwerking",
-                                "",
-                                "POST",
-                                """
-                                        {"versieNummer":"24 not found", "partijCode":"0643634986 not found", "dossierNummer":"2024.02.22.005"}
-                                        """,
-                                Map.of()
-                        ),
-                        "bevestigDossierVerwerking post",
-                        "default"
-                        , "application/json"
-                ), Arguments.of(
-                        new MagdaMockRestHandler.MockRestRequest(
-                                "/v1/socZek/socialeHuisvesting/dossiers/wijzigDossierRangschikkingen",
-                                "",
-                                "POST",
-                                """
-                                        {"partijCode":"0643634986"}
-                                        """,
-                                Map.of()
-                        ),
-                        "wijzigDossierRangschikkingen post partijCode",
+                        "bevestigDossierVerwerking post dossiernummer",
                         "specific"
                         , "application/json"
                 ), Arguments.of(
@@ -893,7 +840,7 @@ class RestServicesTest {
                                 "",
                                 "POST",
                                 """
-                                        {"partijCode":"not found"}
+                                        {"dossierNummer":"not found"}
                                         """,
                                 Map.of()
                         ),
@@ -1055,6 +1002,379 @@ class RestServicesTest {
                         "zwarteLijstMeldingenVoor post rijkregisternummer",
                         "default"
                         , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningen get",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningen get",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningen patch",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningen patch",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen",
+                                "gemeenteNISCode=23027&gebouweenheidId=16230836",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningen get all",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningen get all",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen",
+                                "",
+                                "POST",
+                                """
+                                        {
+                                          "eigenaarOrganisatieId": "0400898624",
+                                          "gebouweenheidId": "16230836",
+                                          "woonmaatschappijWoningId": "775",
+                                          "woonmaatschappijWoningCode": "031030",
+                                          "woonmaatschappijWoningGroepCode": "HAL031",
+                                          "adres": {
+                                            "straatnaam": "Labbeekstraat",
+                                            "huisnummer": "100",
+                                            "postcode": "1500",
+                                            "gemeenteNISCode": "23027"
+                                          },
+                                          "bouwjaar": 1982,
+                                          "bebouwingsType": "OB"
+                                        }
+                                        """,
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningen post all",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningen post all",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/woningkenmerkscores",
+                                "woningKenmerkCategorie=ERP",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningkenmerkscores get",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown/woningkenmerkscores",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningkenmerkscores get",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/woningkenmerkscores",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningkenmerkscores patch",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown/woningkenmerkscores",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting woningkenmerkscores patch",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/markthuurwaarden",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting markthuurwaarden get",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown/markthuurwaarden",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting markthuurwaarden get",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/markthuurwaarden/simulatie",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting markthuurwaarden post",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/conditiescore",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting conditiescore get",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown/conditiescore",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting conditiescore get",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/conditiescore/simulatie",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting conditiescore post",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/energiecorrectie",
+                                "epcVersie=Huidig&datumVanaf=2020-06-01&datumTot=2026-06-30",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting energiecorrectie get",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown/energiecorrectie",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting energiecorrectie get",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting epcwaarden get",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting epcwaarden get",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden/brondata/970939B2-75B3-4F14-BDDE-2AB9ACFB6EEF",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting epcwaarden brondata get",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden/brondata/unknown",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting epcwaarden brondata get",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden/document/970939B2-75B3-4F14-BDDE-2AB9ACFB6EEF",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting epcwaarden document get",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden/document/unknown",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting epcwaarden document get",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden/certificaat",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting certificaat post",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden/certificaat",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting certificaat post",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden/markeerReferentieversie",
+                                "",
+                                "PATCH",
+                                """
+                                        {
+                                          "status": "Huidig",
+                                          "epcVersieId": "2058936"
+                                        }
+                                        """,
+                                Map.of()
+                        ),
+                        "sociale huisvesting epcwaarden markeerReferentieversie patch",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden/markeerReferentieversie",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting epcwaarden markeerReferentieversie patch",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden/2058936",
+                                "",
+                                "DELETE",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting epcwaarden markeerReferentieversie delete",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden/unknown",
+                                "",
+                                "DELETE",
+                                "",
+                                Map.of()
+                        ),
+                        "sociale huisvesting epcwaarden markeerReferentieversie delete",
+                        "default"
+                        , "application/json"
                 )
         );
     }
@@ -1072,7 +1392,7 @@ class RestServicesTest {
     @ParameterizedTest
     @MethodSource("testRestServices")
     @SneakyThrows
-    void testMobilityRegCountryCodeGet(
+    void testRestService(
             MagdaMockRestHandler.MockRestRequest mockRestRequest,
             String expectedMessage,
             String expectedMappingType,

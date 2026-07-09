@@ -1,0 +1,6 @@
+{
+    "response": {
+        "status": 200,
+        "jsonBody": {"message": "sociale huisvesting woningen get all", "mappingType": "specific"}
+    }
+}
