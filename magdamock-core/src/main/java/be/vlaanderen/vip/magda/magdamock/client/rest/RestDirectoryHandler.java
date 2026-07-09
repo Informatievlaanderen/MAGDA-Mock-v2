@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +40,7 @@ public class RestDirectoryHandler {
         } else {
             this.defaultPriority = 50;
         }
-        this.fallbackPriority = 100;
+        this.fallbackPriority = defaultPriority + 50;
         objectMapper = new ObjectMapper();
     }
 
@@ -73,7 +75,11 @@ public class RestDirectoryHandler {
 
     private RestMappingDTO getUrlAndQueryParameters(String filename) {
         String urlPath = mockRestMapping.url();
-        List<String> filenameSplitParts = new ArrayList<>(Arrays.stream(filename.split(FILENAME_ARG_SEPARATOR)).toList());
+        List<String> filenameSplitParts = new ArrayList<>(
+                Arrays.stream(filename.split(FILENAME_ARG_SEPARATOR))
+                        .map(s -> URLDecoder.decode(s, StandardCharsets.UTF_8))
+                        .toList()
+        );
         Object[] urlParameters = new String[mockRestMapping.urlParametersSize()];
         for (int i = 0; i < mockRestMapping.urlParametersSize(); i++) {
             String s = filenameSplitParts.isEmpty() ? "" : filenameSplitParts.removeFirst();

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -133,6 +134,518 @@ class RestServicesTest {
                                 Map.of()
                         ),
                         "rest mobility mapping",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/zoeken",
+                                "q=doelgroep.maximumleeftijd:100",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging zoeken get query",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/zoeken",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging zoeken get query",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0001031",
+                                "q=doelgroep.maximumleeftijd:100",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging zoeken get vcode",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/ongekend",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging zoeken get vcode",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0001031",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging zoeken patch vcode",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/ongekend",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging zoeken patch vcode",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0001031/stop",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging zoeken post vcode stop",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/ongekend/stop",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging zoeken post vcode stop",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0001031/historiek",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging historiek get vcode",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/ongekend/historiek",
+                                "",
+                                "GET",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging historiek get vcode",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/feitelijkeverenigingen",
+                                "",
+                                "POST",
+                                """
+                                        {"naam": "Vereniging zonder naam"}
+                                        """,
+                                Map.of()
+                        ),
+                        "vereniging feitelijkeverenigingen post",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/feitelijkeverenigingen",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging feitelijkeverenigingen post",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/kbo",
+                                "",
+                                "POST",
+                                """
+                                        {"kboNummer": "0123465798"}
+                                        """,
+                                Map.of()
+                        ),
+                        "vereniging kbo post",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/kbo",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging kbo post",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/vzer",
+                                "",
+                                "POST",
+                                """
+                                        {"naam": "Vereniging zonder naam"}
+                                        """,
+                                Map.of()
+                        ),
+                        "vereniging vzer post",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/vzer",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vzer post",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/contactgegevens/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging contactgegevens patch",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/contactgegevens/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging contactgegevens patch",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/contactgegevens/1",
+                                "",
+                                "DELETE",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging contactgegevens delete",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/contactgegevens/1",
+                                "",
+                                "DELETE",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging contactgegevens delete",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/kbo",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch kbo",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/kbo",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch kbo",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/kbo/contactgegevens/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch kbo contactgegevens",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/kbo/contactgegevens/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch kbo contactgegevens",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/kbo/locaties/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch kbo locaties",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/kbo/locaties/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch kbo locaties",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/lidmaatschappen",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode post lidmaatschappen",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/lidmaatschappen",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode post lidmaatschappen",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/lidmaatschappen/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch lidmaatschappen",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/lidmaatschappen/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch lidmaatschappen",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/lidmaatschappen/1",
+                                "",
+                                "DELETE",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode delete lidmaatschappen",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/lidmaatschappen/1",
+                                "",
+                                "DELETE",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode delete lidmaatschappen",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/locaties",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode post locaties",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/locaties",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode post locaties",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/locaties/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch locaties",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/locaties/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch locaties",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/locaties/1",
+                                "",
+                                "DELETE",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode delete locaties",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/locaties/1",
+                                "",
+                                "DELETE",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode delete locaties",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/subtype",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch subtype",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/subtype",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch subtype",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/vertegenwoordigers",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode post vertegenwoordigers",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/vertegenwoordigers",
+                                "",
+                                "POST",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode post vertegenwoordigers",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/vertegenwoordigers/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch vertegenwoordigers",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/vertegenwoordigers/1",
+                                "",
+                                "PATCH",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode patch vertegenwoordigers",
+                        "default"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/V0123456/vertegenwoordigers/1",
+                                "",
+                                "DELETE",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode delete vertegenwoordigers",
+                        "specific"
+                        , "application/json"
+                ), Arguments.of(
+                        new MagdaMockRestHandler.MockRestRequest(
+                                "/v1/organisaties/verenigingen/verenigingen/unknown/vertegenwoordigers/1",
+                                "",
+                                "DELETE",
+                                "",
+                                Map.of()
+                        ),
+                        "vereniging vcode delete vertegenwoordigers",
                         "default"
                         , "application/json"
                 ), Arguments.of(
