@@ -3,6 +3,9 @@
 # include the common functions
 source "commons.sh"
 
+# allow major, minor or release increments
+versionDigitToIncrement=${1:-1}
+
 # prepare git
 prepare_git
 
@@ -17,5 +20,5 @@ mvn -B com.amashchenko.maven.plugin:gitflow-maven-plugin:1.19.0:release \
   -DpreReleaseGoals="" \
   -DpostReleaseGoals="clean deploy -Pfat-jar -Pdocker,docker-release" \
   -DversionsForceUpdate="true" \
-  -DversionDigitToIncrement="1" \
+  -DversionDigitToIncrement=$versionDigitToIncrement \
   -DargLine="-B -U -s .m2/settings.xml"

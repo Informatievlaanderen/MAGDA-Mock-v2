@@ -50,6 +50,7 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
 
 
         List<String> values;
+        log.info("Stubbing for SOAP: {} {} {} {}", domain, service, version, fileName);
 
         if (isFileOnly(fileName)) {
             String strippedFilename = fileName.replace(".xml", "");
