@@ -30,6 +30,20 @@ definitions:
         script:
           - export TESTCONTAINERS_RYUK_DISABLED=true
           - /bin/bash ./release-application.sh
+    - step: &releasePatch
+        name: Patch Release
+        caches:
+          - maven
+        script:
+          - export TESTCONTAINERS_RYUK_DISABLED=true
+          - /bin/bash ./release-application.sh 2
+    - step: &releaseMajor
+        name: Major (breaking) Release
+        caches:
+          - maven
+        script:
+          - export TESTCONTAINERS_RYUK_DISABLED=true
+          - /bin/bash ./release-application.sh 0
     - step: &dockerRebuildFromTag
         name: Rebuild Docker from tag
         caches:
@@ -163,7 +177,12 @@ pipelines:
             - step:
                 <<: *sigridCI
   custom:
+    maven-release-patch:
+      - step: *release
     maven-release:
+      - step: *release
+      - step: *githubMirror
+    maven-release-major:
       - step: *release
       - step: *githubMirror
     docker-build-demo:

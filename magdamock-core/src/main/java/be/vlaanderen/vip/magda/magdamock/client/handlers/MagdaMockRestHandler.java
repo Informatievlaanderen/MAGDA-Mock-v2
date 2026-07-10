@@ -69,7 +69,7 @@ public class MagdaMockRestHandler extends AbstractMockHandler {
     private MagdaMockRestHandler.MockRestResponse parseRestResponse(Response response, String correlationId) {
         if (response.getStatus() == 404) {
             log.info("Received status 404 while parsing rest response");
-            return new MockRestResponse(null, 404, Map.of("x-correlation-id", List.of(correlationId), "Content-Type", List.of("application/json")));
+            return new MockRestResponse(response.getBody(), 404, Map.of("x-correlation-id", List.of(correlationId), "Content-Type", List.of("application/json")));
         }
         Map<String, List<String>> headers = new HashMap<>();
         for (String headerName : response.getHeaders().keys()) {
