@@ -178,12 +178,12 @@ pipelines:
                 <<: *sigridCI
   custom:
     maven-release-patch:
-      - step: *release
+      - step: *releasePatch
     maven-release:
       - step: *release
       - step: *githubMirror
     maven-release-major:
-      - step: *release
+      - step: *releaseMajor
       - step: *githubMirror
     docker-build-demo:
       - step: *dockerBuildDemo
