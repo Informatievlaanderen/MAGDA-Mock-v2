@@ -65,6 +65,23 @@
     "requestFields": [
       {
         "path": "INSZ",
+        "value": "00610122309"
+      },
+      {
+        "path": "//Vragen/Vraag/Inhoud/Criteria/Inkomensjaar",
+        "value": "2022"
+      }
+
+    ],
+    "xpathExpression": "//Artikelnummer",
+    "expectedValue": "000000000"
+  },
+  {
+    "naam": "GeefAanslagbiljetPersonenbelasting",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
         "value": "10610122309"
       }
     ],

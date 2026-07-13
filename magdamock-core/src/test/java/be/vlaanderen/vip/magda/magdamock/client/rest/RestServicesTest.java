@@ -766,7 +766,7 @@ class RestServicesTest {
                                 "",
                                 "POST",
                                 """
-                                        {"actie":"OFFER", "dossierNummer":"2024.02.22.005", "partijCode":"0643634986"}
+                                        {"actie":"OFFER", "dossierNummer":"2024.02.22.005"}
                                         """,
                                 Map.of()
                         ),
@@ -779,7 +779,7 @@ class RestServicesTest {
                                 "",
                                 "POST",
                                 """
-                                        {"actie":"OFFER", "partijCode":"0643634986"}
+                                        {"actie":"OFFER"}
                                         """,
                                 Map.of()
                         ),
@@ -792,7 +792,7 @@ class RestServicesTest {
                                 "",
                                 "POST",
                                 """
-                                        {"actie":"not found", "partijCode":"not found"}
+                                        {"actie":"not found"}
                                         """,
                                 Map.of()
                         ),
