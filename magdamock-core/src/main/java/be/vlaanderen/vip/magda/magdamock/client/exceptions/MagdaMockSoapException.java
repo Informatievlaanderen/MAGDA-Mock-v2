@@ -33,6 +33,6 @@ public class MagdaMockSoapException extends RuntimeException {
                 
                 """, faultCode, faultString, detail));
         log.error(faultString, cause);
-        this.document = MagdaDocument.fromDocument(EmptyElementsFilter.getInstance().filter(null,EmptyElementsFilter.getInstance().filter(null, document.getXml())));
+        this.document = MagdaDocument.fromDocument(EmptyElementsFilter.getInstance().filter(null, document.getXml()));
     }
 }
