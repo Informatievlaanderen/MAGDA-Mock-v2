@@ -1,19 +1,20 @@
 package be.vlaanderen.vip.magda.magdamock.client.handlers;
 
 import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.client.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcher;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcherImpl;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.filters.EmptyElementsFilter;
 import be.vlaanderen.vip.magda.magdamock.filters.MagdaMockFilter;
-import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
 import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -33,19 +34,12 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
     private final SoapResponsePatcher soapResponsePatcher = new SoapResponsePatcherImpl();
     private final List<MagdaMockFilter> filters;
 
-    public MagdaMockSoapHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil) {
-        super(wireMockData, timeoutUtil);
-        this.soapRequestValidator = new LenientSoapBodyValidator();
-        this.soapResponseValidator = new LenientSoapBodyValidator();
-        this.filters = new ArrayList<>();
-    }
-
     public MagdaMockSoapHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
         super(wireMockData, timeoutUtil);
         this.soapRequestValidator = soapRequestValidator;
         this.soapResponseValidator = soapResponseValidator;
         this.filters = new ArrayList<>();
-        this.filters.add(new EmptyElementsFilter());
+        this.filters.add(EmptyElementsFilter.getInstance());
     }
 
 

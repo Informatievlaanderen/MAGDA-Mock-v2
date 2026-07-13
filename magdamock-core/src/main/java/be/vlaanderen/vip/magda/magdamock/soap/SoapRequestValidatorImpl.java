@@ -1,27 +1,18 @@
 package be.vlaanderen.vip.magda.magdamock.soap;
 
 import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.client.exceptions.MagdaMockSoapException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.IntStream;
 
 @Slf4j
 public class SoapRequestValidatorImpl extends SoapBodyValidator {
@@ -99,46 +90,27 @@ public class SoapRequestValidatorImpl extends SoapBodyValidator {
         try {
             var factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             String path = XML_FOLDERS_AND_XSDS.get(String.format("%s/%s", naam, versie));
+            log.info("Trying to load validator from {}", path);
             var schema = factory.newSchema(new File(String.format("%s/%s", xsdPath, path)));
             var validator = schema.newValidator();
             validator.setErrorHandler(new XsdErrorHandler());
             return validator;
         } catch (Exception e) {
-            log.error("Error while finding validator for {} {}", naam, versie, e);
-            return null;
+            throw new MagdaMockSoapException(String.format("Unable to locate the request XSD schema for %s-%s .", naam, versie), "Server", "", e);
         }
     }
 
     @SneakyThrows
-    public void validateXml(MagdaDocument magdaDocument) throws SoapValidationError {
+    public void validateXml(MagdaDocument magdaDocument) throws MagdaMockSoapException {
         String naam = magdaDocument.xpath("//Context/Naam").item(0).getTextContent();
         String versie = magdaDocument.xpath("//Context/Versie").item(0).getTextContent();
+        Validator validator = getValidator(naam, versie);
         try {
-            Validator validator = getValidator(naam, versie);
             NodeList xpath = magdaDocument.xpath("//soapenv:Body/*");
             Document xml = nodelistToDocument(xpath);
             validator.validate(new DOMSource(xml));
         } catch (Exception e) {
-            throw new SoapValidationError(
-                    MagdaDocument.fromString(
-                            String.format("""
-                                            <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
-                                                <SOAP-ENV:Header/>
-                                                <SOAP-ENV:Body>
-                                                    <ns0:Fault xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/">
-                                                        <faultcode>Server</faultcode>
-                                                        <faultstring>10001 - Fout formaat in de vraag (XML validatie) ++ reden</faultstring>
-                                                        <detail>
-                                                            <message>%s</message>
-                                                        </detail>
-                                                    </ns0:Fault>
-                                                </SOAP-ENV:Body>
-                                            </SOAP-ENV:Envelope>
-                                            """,
-                                    e.getMessage()
-                            )
-                    )
-            );
+            throw new MagdaMockSoapException(String.format("Request is not compliant with the associated XSD schema specification. Reason: %s", e.getMessage()), "Server", "", e);
         }
     }
 }

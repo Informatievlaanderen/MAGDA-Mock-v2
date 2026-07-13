@@ -30,6 +30,10 @@ public class SoapLogHelper {
         }
     }
 
+    public static void contextSetCorrelationId(String correlationId) {
+        MDC.put("CorrelationId", correlationId);
+    }
+
     public enum LifecyclePhase {
         NOT_SPECIFIED,
         REQUEST_VALIDATION,
