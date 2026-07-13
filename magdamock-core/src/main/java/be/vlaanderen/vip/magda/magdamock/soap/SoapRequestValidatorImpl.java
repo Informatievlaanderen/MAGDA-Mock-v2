@@ -1,7 +1,7 @@
 package be.vlaanderen.vip.magda.magdamock.soap;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
-import be.vlaanderen.vip.magda.magdamock.client.exceptions.MagdaMockSoapException;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
@@ -96,7 +96,7 @@ public class SoapRequestValidatorImpl extends SoapBodyValidator {
             validator.setErrorHandler(new XsdErrorHandler());
             return validator;
         } catch (Exception e) {
-            throw new MagdaMockSoapException(String.format("Unable to locate the request XSD schema for %s-%s .", naam, versie), "Server", "", e);
+            throw new MagdaMockSoapException(String.format("Unable to locate the request XSD schema for %s-%s .", naam, versie), "Server", e);
         }
     }
 
@@ -110,7 +110,7 @@ public class SoapRequestValidatorImpl extends SoapBodyValidator {
             Document xml = nodelistToDocument(xpath);
             validator.validate(new DOMSource(xml));
         } catch (Exception e) {
-            throw new MagdaMockSoapException(String.format("Request is not compliant with the associated XSD schema specification. Reason: %s", e.getMessage()), "Server", "", e);
+            throw new MagdaMockSoapException(String.format("Request is not compliant with the associated XSD schema specification. Reason: %s", e.getMessage()), "Server", e);
         }
     }
 }

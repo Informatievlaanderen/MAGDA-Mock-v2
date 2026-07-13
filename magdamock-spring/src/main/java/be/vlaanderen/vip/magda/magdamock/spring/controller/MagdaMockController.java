@@ -1,10 +1,10 @@
 package be.vlaanderen.vip.magda.magdamock.spring.controller;
 
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaDocument;
 import be.vlaanderen.vip.magda.exception.MagdaConnectionException;
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
-import be.vlaanderen.vip.magda.magdamock.client.exceptions.MagdaMockSoapException;
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockRestHandler;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
@@ -90,7 +90,7 @@ public class MagdaMockController {
         try {
             return MagdaDocument.fromString(request);
         } catch (Exception e) {
-            throw new MagdaMockSoapException(String.format("Unable to parse SOAP request. Reason: %s", e.getCause().toString()), "Server", "", e);
+            throw new MagdaMockSoapException(String.format("Unable to parse SOAP request. Reason: %s", e.getCause().toString()), "Server", e);
         }
     }
 

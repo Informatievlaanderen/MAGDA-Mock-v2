@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.soap;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaDocument;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 

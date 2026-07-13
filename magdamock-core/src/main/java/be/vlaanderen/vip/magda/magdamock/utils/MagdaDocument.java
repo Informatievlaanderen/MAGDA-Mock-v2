@@ -1,10 +1,14 @@
-package be.vlaanderen.vip.magda.client;
+package be.vlaanderen.vip.magda.magdamock.utils;
 
+import be.vlaanderen.vip.magda.client.MagdaServiceIdentification;
 import be.vlaanderen.vip.magda.client.xml.XmlUtils;
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.dom4j.dom.DOMNodeHelper;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -75,7 +79,7 @@ public class MagdaDocument {
 
             return db.parse(is);
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            throw new MagdaDocumentException("Failed to parse stream as document", e);
+            throw new MagdaMockSoapException("Response contains invalid XML content.", "Server", e.getMessage(), e);
         }
     }
 
@@ -102,7 +106,7 @@ public class MagdaDocument {
     public List<String> getValues(String expression) {
         var values = new ArrayList<String>();
         var nodes = xpath(expression);
-        for(var pos = 0; pos < nodes.getLength(); pos++) {
+        for (var pos = 0; pos < nodes.getLength(); pos++) {
             values.add(nodes.item(pos).getTextContent());
         }
 
@@ -129,10 +133,10 @@ public class MagdaDocument {
             public String getNamespaceURI(String prefix) {
                 return switch (prefix) {
                     case "soapenv" -> "http://schemas.xmlsoap.org/soap/envelope/";
-                    case "wsu"     -> "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd";
-                    case "wsse"    -> "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
-                    case "ds"      -> "http://www.w3.org/2000/09/xmldsig#";
-                    default        -> defaultNamespace;
+                    case "wsu" -> "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd";
+                    case "wsse" -> "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
+                    case "ds" -> "http://www.w3.org/2000/09/xmldsig#";
+                    default -> defaultNamespace;
                 };
             }
 
@@ -157,49 +161,11 @@ public class MagdaDocument {
         }
     }
 
-    public void setValueOrRemoveNode(String expression, String value) {
-        if(value != null) {
-            setValue(expression, value);
-        } else {
-            removeNode(expression);
-        }
-    }
-
-    public void createNode(String expression, String nodeName) {
-        var node = xml.createElement(nodeName);
-        xpath(expression).item(0).appendChild(node);
-    }
-
-    public void createTextNode(String expression, String nodeName, String value) {
-        var node = xml.createElement(nodeName);
-        var textNode = xml.createTextNode(value);
-        node.appendChild(textNode);
-        xpath(expression).item(0).appendChild(node);
-    }
-
     public void removeNode(String expression) {
         var nodes = xpath(expression);
-        for(var pos = nodes.getLength() - 1; pos >= 0; pos--) { // traverse the list in reverse, because this is going to be messing with the indices
+        for (var pos = nodes.getLength() - 1; pos >= 0; pos--) { // traverse the list in reverse, because this is going to be messing with the indices
             var elm = (Element) nodes.item(pos);
             elm.getParentNode().removeChild(elm);
-        }
-    }
-
-    public void createAttribute(String expression, String attributeName, String value)
-    {
-        var nodes = xpath(expression);
-        for (var pos = 0; pos < nodes.getLength(); pos++) {
-            var elm = (Element) nodes.item(pos);
-            elm.setAttribute(attributeName, value);
-        }
-    }
-
-    public void removeAttribute(String expression)
-    {
-        var nodes = xpath(expression);
-        for(var pos = nodes.getLength() - 1; pos >= 0; pos--) { // traverse the list in reverse, because this is going to be messing with the indices
-            var attr = (Attr) nodes.item(pos);
-            attr.getOwnerElement().removeAttributeNode(attr);
         }
     }
 
@@ -221,5 +187,14 @@ public class MagdaDocument {
             log.warn("Error converting XML to string: ", e);
         }
         return "";
+    }
+
+    public record MagdaServiceIdentification(
+            String name,
+            String version
+    ) {
+        public String getServiceNaam() {
+            return String.format("%s-%s", name, version);
+        }
     }
 }

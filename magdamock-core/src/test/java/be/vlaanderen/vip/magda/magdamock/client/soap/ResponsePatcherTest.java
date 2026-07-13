@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaDocument;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 

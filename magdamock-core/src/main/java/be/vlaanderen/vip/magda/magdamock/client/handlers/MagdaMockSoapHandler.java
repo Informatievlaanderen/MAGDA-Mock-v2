@@ -1,7 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.handlers;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
-import be.vlaanderen.vip.magda.magdamock.client.exceptions.MagdaMockSoapException;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaDocument;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcher;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcherImpl;
@@ -14,12 +13,12 @@ import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.Response;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -129,7 +128,7 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         } catch (Exception e) {
             log.info("Unable to extract date and time from request");
         }
-        return DateTimeFormatter.RFC_1123_DATE_TIME.format(LocalDateTime.now());
+        return DateTimeFormatter.RFC_1123_DATE_TIME.format(OffsetDateTime.now());
     }
 
     private Document parseSoapResponse(Response response) {
