@@ -61,6 +61,7 @@ class SOAPServicesTest {
 
                 String requestBody = buildSoapRequest(naam, versie, requestFields);
                 MagdaDocument magdaDocument = MagdaDocument.fromString(requestBody);
+                System.err.println(magdaDocument);
                 MagdaMockSoapHandler.MockSoapResponse response = magdaMockConnection.sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(magdaDocument.getXml()));
                 Document document = response.document();
 

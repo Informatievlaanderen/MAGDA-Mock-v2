@@ -92,7 +92,7 @@ public class SoapStubRegistrar {
                     subDir("GeefKindVoordelen", VERSION_02_00, KEY_INSZ),
 
                     // Inkomen
-                    subDir("GeefAanslagbiljetPersonenbelasting", VERSION_02_00, KEY_INSZ),
+                    flatFile("GeefAanslagbiljetPersonenbelasting", VERSION_02_00, KEY_INSZ, "//Criteria/Inkomensjaar"),
 
                     // Kadaster
                     subDir("GeefCadNetTransacties", VERSION_01_00, KEY_INSZ),
