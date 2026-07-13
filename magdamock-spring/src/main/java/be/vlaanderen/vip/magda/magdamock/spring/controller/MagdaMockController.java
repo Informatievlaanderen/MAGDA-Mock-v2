@@ -9,6 +9,7 @@ import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
@@ -47,8 +48,18 @@ public class MagdaMockController {
     }
 
     @PostMapping(value = {SOAP_BASE_URL}, produces = {TEXT_XML_VALUE}, consumes = {APPLICATION_XML_VALUE, TEXT_XML_VALUE})
-    public ResponseEntity<String> magdaSoap0200WebService(@RequestBody String request) throws MagdaConnectionException {
-        return processMagdaMockRequest(request);
+    public ResponseEntity<String> magdaSoap0200WebService(@RequestBody String request, HttpServletRequest incomingRequest) throws MagdaConnectionException {
+        MDC.clear();
+        Map<String, String> headers = new HashMap<>();
+        for (Iterator<String> it = incomingRequest.getHeaderNames().asIterator(); it.hasNext(); ) {
+            String headerName = it.next();
+            headers.put(headerName.toLowerCase(), incomingRequest.getHeader(headerName));
+        }
+        MDC.put("CorrelationId", headers.getOrDefault("x-correlation-id", "unknown"));
+
+        var response = processMagdaMockRequest(request);
+        MDC.clear();
+        return response;
     }
 
     private ResponseEntity<String> processMagdaMockRequest(String request) throws MagdaConnectionException {
