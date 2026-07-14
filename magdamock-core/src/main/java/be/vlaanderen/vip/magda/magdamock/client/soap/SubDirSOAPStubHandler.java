@@ -1,8 +1,10 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
+import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -50,7 +52,11 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
 
 
         List<String> values;
+        SoapLogHelper.contextSetLifecyclePhase(SoapLogHelper.LifecyclePhase.SOAP_SETUP);
+        MDC.put("Service", String.format("%s.%s-%s", domain, service, version));
+        MDC.put("Filename", fileName);
         log.info("Stubbing for SOAP: {} {} {} {}", domain, service, version, fileName);
+
 
         if (isFileOnly(fileName)) {
             String strippedFilename = fileName.replace(".xml", "");
@@ -58,6 +64,8 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
         } else {
             values = getValues(fileName);
         }
+        log.debug("Keys: {}", String.join(" | ", keys));
+        log.debug("Values: {}", String.join(" | ", values));
 
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
@@ -81,7 +89,9 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
             }
         }
 
-        mappingBuilder = mappingBuilder.atPriority(priority - values.size());
+        int actualPriority = priority - values.size();
+        mappingBuilder = mappingBuilder.atPriority(actualPriority);
+        log.debug("Priority of stub {}",  actualPriority);
 
         wireMockServer.stubFor(
                 mappingBuilder.willReturn(
@@ -99,6 +109,7 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
                                 )
                 )
         );
+        MDC.clear();
     }
 
     private List<String> getValues(String fileName) {

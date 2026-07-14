@@ -35,6 +35,7 @@ public class SoapLogHelper {
 
     public enum LifecyclePhase {
         NOT_SPECIFIED,
+        SOAP_SETUP,
         REQUEST_VALIDATION,
         REQUEST_PRE_PROCESSING,
         RESPONSE_MAPPING,
