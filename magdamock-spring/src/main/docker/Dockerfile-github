@@ -1,0 +1,10 @@
+FROM eclipse-temurin:${eclipse-temurin-java.version}
+
+VOLUME /tmp
+
+EXPOSE 8080:8080
+
+CMD ["java", "-jar", "/app.jar"]
+
+COPY target/*.jar app.jar
+COPY src/main/resources/magda.xsd /data/magda.xsd
