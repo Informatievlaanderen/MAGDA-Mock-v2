@@ -1,4 +1,4 @@
-package be.vlaanderen.vip.magda.magdamock.client.util;
+package be.vlaanderen.vip.magda.magdamock.client.utils;
 
 import be.vlaanderen.vip.magda.magdamock.client.soap.Domain;
 import be.vlaanderen.vip.magda.magdamock.client.soap.Service;

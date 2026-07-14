@@ -25,6 +25,7 @@
 		<mapstruct.version>1.6.3</mapstruct.version>
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
 		<spring-boot.version>3.5.15</spring-boot.version>
+		<mockito.version>5.23.0</mockito.version>
     </properties>
 
 	<profiles>
