@@ -13,6 +13,7 @@
 		<maven.compiler.target>25</maven.compiler.target>
 		<!-- Used for Docker image -->
 		<vdip-java.version>25-jre</vdip-java.version>
+		<eclipse-temurin-java.version>25-jre</eclipse-temurin-java.version>
 		<docker.image>magda.magdamock</docker.image>
 		<mockito.version>5.3.1</mockito.version>
 		<slf4j.version>2.0.18</slf4j.version>
@@ -45,6 +46,18 @@
 	    </distributionManagement>
 	  </profile>
 
+
+		<profile>
+			<!-- This profile is enabled when running the Github pipeline -->
+			<id>github</id>
+			<distributionManagement>
+				<repository>
+					<id>github</id>
+					<name>GitHub Packages</name>
+					<url>https://maven.pkg.github.com/Informatievlaanderen/MAGDA-Mock-v2</url>
+				</repository>
+			</distributionManagement>
+		</profile>
 	</profiles>
 
 	<dependencies>

@@ -84,10 +84,7 @@ Then the steps are:
 
 Dockerfile:
 ```dockerfile
-ARG MAGDAMOCK_VERSION="latest"
-ARG DOCKER_URL="vlaamseoverheid-magda-docker-releases.jfrog.io"
-
-FROM ${DOCKER_URL}/magda/magda.magdamock:${MAGDAMOCK_VERSION}
+FROM ghcr.io/informatievlaanderen/magda-mock-v2:x.y.z
 
 COPY ./application.yml application.yml
 COPY ./rest           /data/rest
