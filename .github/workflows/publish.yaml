@@ -3,8 +3,7 @@ name: publish-artifacts
 run-name: Publish artifacts to Github packages
 on:
   push:
-    tags:
-      - '*'
+  workflow_dispatch: # allow manual triggering as well
 env:
   REGISTRY: ghcr.io
   # Image name must be lower case
@@ -23,7 +22,6 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
       - name: Publish
-        # Disable tester module because it depends on an internal library.
         # Disable artifactory profile and enable github for deployment.
         run: mvn --batch-mode deploy -P "!artifactory,github"
         env:
