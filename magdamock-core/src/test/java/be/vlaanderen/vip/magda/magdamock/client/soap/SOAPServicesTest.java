@@ -1,11 +1,14 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaDocument;
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -37,77 +40,101 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class SOAPServicesTest {
 
-        MagdaMockConnection magdaMockConnection;
+        static class MappingsTest {
+                MagdaMockConnection magdaMockConnection;
 
-        @BeforeEach
-        void setUp() throws IOException, URISyntaxException {
-                Path path = Paths.get(getClass()
-                        .getClassLoader()
-                        .getResource("soap")
-                        .toURI());
+                @BeforeEach
+                void setUp() throws IOException, URISyntaxException {
+                        Path path = Paths.get(getClass()
+                                .getClassLoader()
+                                .getResource("soap")
+                                .toURI());
 
-                magdaMockConnection = MagdaMockConnection.create("", path.toAbsolutePath().toString(), "");
-        }
+                        magdaMockConnection = MagdaMockConnection.create("", path.toAbsolutePath().toString(), "");
+                }
 
-        @ParameterizedTest
-        @MethodSource("allSoapServices")
-        void testService(
-                String naam,
-                String versie,
-                List<RequestField> requestFields,
-                String xpathExpression,
-                String expectedValue
-        ) throws XPathExpressionException {
+                @ParameterizedTest
+                @MethodSource("allSoapServices")
+                void testService(
+                        String naam,
+                        String versie,
+                        List<RequestField> requestFields,
+                        String xpathExpression,
+                        String expectedValue
+                ) throws XPathExpressionException {
+                        String requestBody = buildSoapRequest(naam, versie, requestFields);
+                        MagdaDocument magdaDocument = MagdaDocument.fromString(requestBody);
+                        MagdaMockSoapHandler.MockSoapResponse response = magdaMockConnection.sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(magdaDocument.getXml()));
+                        Document document = response.document();
 
-                String requestBody = buildSoapRequest(naam, versie, requestFields);
-                MagdaDocument magdaDocument = MagdaDocument.fromString(requestBody);
-                System.err.println(magdaDocument);
-                MagdaMockSoapHandler.MockSoapResponse response = magdaMockConnection.sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(magdaDocument.getXml()));
-                Document document = response.document();
+                        XPath xpath = XPathFactory.newInstance().newXPath();
+                        String actualValue = xpath.evaluate(xpathExpression, document);
 
-                XPath xpath = XPathFactory.newInstance().newXPath();
-                String actualValue = xpath.evaluate(xpathExpression, document);
+                        assertEquals(expectedValue, actualValue);
+                }
 
-                assertEquals(expectedValue, actualValue);
-        }
+                record SoapServiceArgument(
+                        String naam,
+                        String versie,
+                        List<RequestField> requestFields,
+                        String xpathExpression,
+                        String expectedValue
+                ) {
+                }
 
-        record SoapServiceArgument(
-                String naam,
-                String versie,
-                List<RequestField> requestFields,
-                String xpathExpression,
-                String expectedValue
-        ) {
-        }
+                static Stream<Arguments> allSoapServices() {
+                        ObjectMapper objectMapper = new ObjectMapper();
 
-        static Stream<Arguments> allSoapServices() {
-                ObjectMapper objectMapper = new ObjectMapper();
+                        try (var inputStream = SOAPServicesTest.class
+                                .getClassLoader()
+                                .getResourceAsStream("soap/soap-services.json")) {
 
-                try (var inputStream = SOAPServicesTest.class
-                        .getClassLoader()
-                        .getResourceAsStream("soap/soap-services.json")) {
+                                if (inputStream == null) {
+                                        throw new IllegalStateException("Resource not found: soap/soap-services.json");
+                                }
 
-                        if (inputStream == null) {
-                                throw new IllegalStateException("Resource not found: soap/soap-services.json");
+                                List<SoapServiceArgument> cases = objectMapper.readValue(
+                                        inputStream,
+                                        new TypeReference<List<SoapServiceArgument>>() {
+                                        }
+                                );
+
+                                return cases.stream()
+                                        .map(c -> arguments(
+                                                c.naam(),
+                                                c.versie(),
+                                                c.requestFields(),
+                                                c.xpathExpression(),
+                                                c.expectedValue()
+                                        ));
+                        } catch (IOException e) {
+                                throw new IllegalStateException("Unable to load SOAP service arguments from JSON", e);
                         }
-
-                        List<SoapServiceArgument> cases = objectMapper.readValue(
-                                inputStream,
-                                new TypeReference<List<SoapServiceArgument>>() {}
-                        );
-
-                        return cases.stream()
-                                .map(c -> arguments(
-                                        c.naam(),
-                                        c.versie(),
-                                        c.requestFields(),
-                                        c.xpathExpression(),
-                                        c.expectedValue()
-                                ));
-                } catch (IOException e) {
-                        throw new IllegalStateException("Unable to load SOAP service arguments from JSON", e);
                 }
         }
+
+
+        static class ExceptionTests {
+                MagdaMockConnection magdaMockConnection;
+
+                @BeforeEach
+                void setUp() throws IOException, URISyntaxException {
+                        Path path = Paths.get(getClass()
+                                .getClassLoader()
+                                .getResource("soap")
+                                .toURI());
+
+                        magdaMockConnection = MagdaMockConnection.create("", path.toAbsolutePath().toString(), "");
+                }
+
+                @Test
+                public void whenInvalidServiceIsGiven_shouldThrowException() {
+                        String requestBody = buildSoapRequest("Unknown", "versie", List.of());
+                        MagdaDocument magdaDocument = MagdaDocument.fromString(requestBody);
+                        Assertions.assertThrows(MagdaMockSoapException.class, () -> magdaMockConnection.sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(magdaDocument.getXml())));
+                }
+        }
+
 
         private static String buildSoapRequest(String naam, String versie, List<RequestField> requestFields) {
                 try {
@@ -132,8 +159,8 @@ class SOAPServicesTest {
                         Element request = document.createElement("Request");
                         body.appendChild(request);
 
-                        appendPathValue(document, request, "Naam", naam);
-                        appendPathValue(document, request, "Versie", versie);
+                        appendPathValue(document, request, "//Verzoek/Context/Naam", naam);
+                        appendPathValue(document, request, "//Verzoek/Context/Versie", versie);
 
                         appendPathValue(document, request, "Bericht/Afzender/Identificatie", "soap-services-test-identificatie");
 
@@ -196,6 +223,7 @@ class SOAPServicesTest {
                 return writer.toString();
         }
 
-        record RequestField(String path, String value) {}
+        record RequestField(String path, String value) {
+        }
 }
 

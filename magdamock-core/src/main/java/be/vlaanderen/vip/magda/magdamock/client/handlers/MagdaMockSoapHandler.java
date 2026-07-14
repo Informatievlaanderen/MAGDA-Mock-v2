@@ -1,5 +1,7 @@
 package be.vlaanderen.vip.magda.magdamock.client.handlers;
 
+import be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar;
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaDocument;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcher;
@@ -23,6 +25,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class MagdaMockSoapHandler extends AbstractMockHandler {
@@ -32,6 +36,7 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
     private final SoapBodyValidator soapResponseValidator;
     private final SoapResponsePatcher soapResponsePatcher = new SoapResponsePatcherImpl();
     private final List<MagdaMockFilter> filters;
+    private final Set<MagdaDocument.MagdaServiceIdentification> knownServiceIdentifications;
 
     public MagdaMockSoapHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
         super(wireMockData, timeoutUtil);
@@ -39,6 +44,9 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         this.soapResponseValidator = soapResponseValidator;
         this.filters = new ArrayList<>();
         this.filters.add(EmptyElementsFilter.getInstance());
+
+        this.knownServiceIdentifications = SoapStubRegistrar.SoapStubDefinitions.allDefinitions().stream()
+                .map(def -> new MagdaDocument.MagdaServiceIdentification(def.service(), def.version())).collect(Collectors.toSet());
     }
 
 
@@ -47,6 +55,8 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         MagdaDocument request = MagdaDocument.fromDocument(xml);
         SoapLogHelper.contextSetSoapServiceNameVersion(request);
         SoapLogHelper.contextSetReference(request);
+        checkServiceExistsInMagdaMock(request);
+
         SoapLogHelper.contextSetLifecyclePhase(SoapLogHelper.LifecyclePhase.REQUEST_VALIDATION);
         soapRequestValidator.validateXml(request);
 
@@ -150,6 +160,14 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
                 </soapenv:Envelope>""".formatted(magdaDocument);
 
         return MagdaDocument.fromString(soap).getXml();
+    }
+
+    private void checkServiceExistsInMagdaMock(MagdaDocument request) {
+        var serviceIdentification = request.getServiceIdentification();
+        log.debug("Checking if service {} exists", serviceIdentification);
+        if (!knownServiceIdentifications.contains(serviceIdentification)) {
+            throw new MagdaMockSoapException(String.format("Response mapping is undefined for %s", serviceIdentification.getServiceNaam()), "Server", null);
+        }
     }
 
     public record MockSoapResponse(

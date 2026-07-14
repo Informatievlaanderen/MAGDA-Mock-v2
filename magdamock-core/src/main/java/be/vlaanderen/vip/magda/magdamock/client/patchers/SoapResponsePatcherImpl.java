@@ -45,6 +45,7 @@ public class SoapResponsePatcherImpl implements SoapResponsePatcher {
     @Override
     public MagdaDocument patchResponse(MagdaDocument request, Document response) {
         SoapResponsePatcher soapResponsePatcher = soapResponsePatcherMap.get(request.getServiceIdentification());
+        System.err.println(soapResponsePatcher);
         if (soapResponsePatcher != null) {
             return soapResponsePatcher.patchResponse(request, response);
         }
