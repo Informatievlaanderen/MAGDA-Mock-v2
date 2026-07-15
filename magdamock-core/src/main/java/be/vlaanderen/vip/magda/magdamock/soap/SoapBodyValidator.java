@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.soap;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import lombok.SneakyThrows;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public abstract class SoapBodyValidator {
-    public abstract void validateXml(MagdaDocument magdaDocument) throws SoapValidationError;
+    public abstract void validateXml(MagdaMockDocument magdaMockDocument) throws SoapValidationError;
 
     protected Document nodelistToDocument(NodeList nodeList) throws ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.soap;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -98,15 +98,15 @@ public class SoapResponseValidatorImpl extends SoapBodyValidator {
     }
 
     @SneakyThrows
-    public void validateXml(MagdaDocument magdaDocument) throws SoapValidationError {
-        String naam = magdaDocument.xpath("//Context/Naam").item(0).getTextContent();
-        String versie = magdaDocument.xpath("//Context/Versie").item(0).getTextContent();
+    public void validateXml(MagdaMockDocument magdaMockDocument) throws SoapValidationError {
+        String naam = magdaMockDocument.xpath("//Context/Naam").item(0).getTextContent();
+        String versie = magdaMockDocument.xpath("//Context/Versie").item(0).getTextContent();
         try {
             Validator validator = getValidator(naam, versie);
-            validator.validate(new DOMSource(magdaDocument.getXml()));
+            validator.validate(new DOMSource(magdaMockDocument.getXml()));
         } catch (Exception e) {
             throw new SoapValidationError(
-                    MagdaDocument.fromString(
+                    MagdaMockDocument.fromString(
                             String.format("""
                                             <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                                                 <SOAP-ENV:Header/>

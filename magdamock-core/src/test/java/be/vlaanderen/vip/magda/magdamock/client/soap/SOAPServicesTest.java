@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -60,9 +60,9 @@ class SOAPServicesTest {
         ) throws XPathExpressionException {
 
                 String requestBody = buildSoapRequest(naam, versie, requestFields);
-                MagdaDocument magdaDocument = MagdaDocument.fromString(requestBody);
-                System.err.println(magdaDocument);
-                MagdaMockSoapHandler.MockSoapResponse response = magdaMockConnection.sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(magdaDocument.getXml()));
+                MagdaMockDocument magdaMockDocument = MagdaMockDocument.fromString(requestBody);
+                System.err.println(magdaMockDocument);
+                MagdaMockSoapHandler.MockSoapResponse response = magdaMockConnection.sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(magdaMockDocument.getXml()));
                 Document document = response.document();
 
                 XPath xpath = XPathFactory.newInstance().newXPath();

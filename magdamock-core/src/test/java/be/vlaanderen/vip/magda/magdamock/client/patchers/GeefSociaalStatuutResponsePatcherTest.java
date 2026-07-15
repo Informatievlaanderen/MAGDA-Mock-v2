@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.patchers;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.client.soap.ResponsePatcherTest;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
@@ -79,13 +79,13 @@ class GeefSociaalStatuutResponsePatcherTest extends ResponsePatcherTest {
                 </Root>
                 """;
 
-        MagdaDocument request = MagdaDocument.fromString(requestXml);
+        MagdaMockDocument request = MagdaMockDocument.fromString(requestXml);
         Document response = parseXml(responseXml);
 
         GeefSociaalStatuutResponsePatcher soapResponse =
                 new GeefSociaalStatuutResponsePatcher(fixedClock, () -> FIXED_UUID);
 
-        MagdaDocument result = soapResponse.patchResponse(request, response);
+        MagdaMockDocument result = soapResponse.patchResponse(request, response);
 
         assertEquals("bart.peeters", result.getValue("//Ontvanger/Gebruiker"));
         assertBasicFields(result);
@@ -163,13 +163,13 @@ class GeefSociaalStatuutResponsePatcherTest extends ResponsePatcherTest {
                 </Root>
                 """;
 
-        MagdaDocument request = MagdaDocument.fromString(requestXml);
+        MagdaMockDocument request = MagdaMockDocument.fromString(requestXml);
         Document response = parseXml(responseXml);
 
         GeefSociaalStatuutResponsePatcher soapResponse =
                 new GeefSociaalStatuutResponsePatcher(fixedClock, () -> FIXED_UUID);
 
-        MagdaDocument result = soapResponse.patchResponse(request, response);
+        MagdaMockDocument result = soapResponse.patchResponse(request, response);
 
         assertBasicFields(result);
         assertNull(result.getValue("//Ontvanger/Gebruiker"));

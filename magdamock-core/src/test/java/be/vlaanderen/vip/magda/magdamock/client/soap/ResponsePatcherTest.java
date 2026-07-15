@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
@@ -31,7 +31,7 @@ public abstract class ResponsePatcherTest {
         return factory.newDocumentBuilder().parse(new InputSource(new StringReader(xml)));
     }
 
-    protected void assertBasicFields(MagdaDocument result) {
+    protected void assertBasicFields(MagdaMockDocument result) {
         assertEquals("REQ-123", result.getValue("//Ontvanger/Referte"));
         assertEquals("REQ-123", result.getValue("//Antwoord/Referte"));
         assertEquals("SENDER-ID", result.getValue("//Ontvanger/Identificatie"));

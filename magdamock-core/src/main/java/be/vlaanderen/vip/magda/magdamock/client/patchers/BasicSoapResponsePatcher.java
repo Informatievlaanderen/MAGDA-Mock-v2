@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.patchers;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 
@@ -30,8 +30,8 @@ public class BasicSoapResponsePatcher implements SoapResponsePatcher {
     }
 
     @Override
-    public MagdaDocument patchResponse(MagdaDocument request, Document response) {
-        MagdaDocument madgaDocumentResponse = new MagdaDocument(response);
+    public MagdaMockDocument patchResponse(MagdaMockDocument request, Document response) {
+        MagdaMockDocument madgaDocumentResponse = new MagdaMockDocument(response);
 
         var senderReference = request.getValue("//Afzender/Referte");
         madgaDocumentResponse.setValue("//Ontvanger/Referte", senderReference);
