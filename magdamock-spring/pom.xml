@@ -9,8 +9,8 @@
         <version>0.29.0-SNAPSHOT</version>
     </parent>
 
+    <packaging>jar</packaging>
     <artifactId>magdamock-spring</artifactId>
-
 
     <dependencies>
         <dependency>

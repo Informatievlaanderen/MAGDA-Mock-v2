@@ -23,7 +23,7 @@ jobs:
           distribution: 'temurin'
       - name: Publish
         # Disable artifactory profile and enable github for deployment.
-        run: mvn --batch-mode deploy -P "!artifactory,github"
+        run: mvn --batch-mode deploy -P "!artifactory,github" -Pfat-jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Login to docker registry
