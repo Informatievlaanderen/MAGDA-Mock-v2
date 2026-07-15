@@ -1,10 +1,11 @@
-FROM eclipse-temurin:25-jre
+FROM vlaamseoverheid-magda-docker-public.jfrog.io/magda/vdip-java:${vdip-java.version}
 
 VOLUME /tmp
+# The docker image expects this location
+COPY target/${project.build.finalName}.jar /opt/app/app.jar
+# The helm chart expects this location
+COPY target/${project.build.finalName}.jar /app.jar
+
+COPY src/main/resources/magda.xsd /data/magda.xsd
 
 EXPOSE 8080:8080
-
-CMD ["java", "-jar", "/app.jar"]
-
-COPY target/*.jar app.jar
-COPY src/main/resources/magda.xsd /data/magda.xsd
