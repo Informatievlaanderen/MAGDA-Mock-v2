@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
-import be.vlaanderen.vip.magda.client.MagdaServiceIdentification;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import com.github.tomakehurst.wiremock.WireMockServer;
 
 import java.io.IOException;
@@ -29,9 +29,9 @@ public class SoapStubRegistrar {
     public static final String KEY_GRONDNUMMER = "//Grondnummer";
     public static final String KEY_GEBOUWID = "//GebouwId";
 
-    private final Map<MagdaServiceIdentification, SoapStubHandler> soapStubHandlerMap;
+    private final Map<MagdaMockDocument.MagdaServiceIdentification, SoapStubHandler> soapStubHandlerMap;
 
-    public SoapStubRegistrar(Map<MagdaServiceIdentification, SoapStubHandler> soapStubHandlerMap) {
+    public SoapStubRegistrar(Map<MagdaMockDocument.MagdaServiceIdentification, SoapStubHandler> soapStubHandlerMap) {
         this.soapStubHandlerMap = soapStubHandlerMap;
     }
 
@@ -64,16 +64,16 @@ public class SoapStubRegistrar {
     }
 
     private SoapStubHandler determineSoapStubHandler(String service, String version) {
-        return soapStubHandlerMap.get(new MagdaServiceIdentification(service, version));
+        return soapStubHandlerMap.get(new MagdaMockDocument.MagdaServiceIdentification(service, version));
     }
 
-    private static Map<MagdaServiceIdentification, SoapStubHandler> createHandlers(
+    private static Map<MagdaMockDocument.MagdaServiceIdentification, SoapStubHandler> createHandlers(
             WireMockServer wireMockServer,
             String soapTestPath
     ) {
         return SoapStubDefinitions.allDefinitions().stream()
                 .collect(Collectors.toMap(
-                        definition -> new MagdaServiceIdentification(definition.service(), definition.version()),
+                        definition -> new MagdaMockDocument.MagdaServiceIdentification(definition.service(), definition.version()),
                         definition -> definition.createHandler(wireMockServer, soapTestPath)
                 ));
     }

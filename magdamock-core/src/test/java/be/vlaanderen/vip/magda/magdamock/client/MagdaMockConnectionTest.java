@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.utils.MockDataTemplateHelper;
@@ -54,7 +54,7 @@ class MagdaMockConnectionTest {
     void whenDocumentFound_shouldReturnDocument() {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendDocument(
-                MagdaDocument.fromString("""
+                MagdaMockDocument.fromString("""
                         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://magda.vlaanderen.be/persoon/soap/geefpersoon/v02_02">
                             <soapenv:Header/>
                             <soapenv:Body>
@@ -95,7 +95,7 @@ class MagdaMockConnectionTest {
     void whenSenderIdIsMissing_shouldReturnMagdaError13001() {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendDocument(
-                MagdaDocument.fromString("""
+                MagdaMockDocument.fromString("""
                     <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://magda.vlaanderen.be/persoon/soap/geefpersoon/v02_02">
                         <soapenv:Header/>
                         <soapenv:Body>
@@ -135,8 +135,8 @@ class MagdaMockConnectionTest {
                     """).getXml()
         );
         assertNotNull(response);
-        MagdaDocument magdaDocument = MagdaDocument.fromDocument(response);
-        assertEquals("13001", magdaDocument.getValue("//Uitzonderingen/Uitzondering/Identificatie"));
+        MagdaMockDocument magdaMockDocument = MagdaMockDocument.fromDocument(response);
+        assertEquals("13001", magdaMockDocument.getValue("//Uitzonderingen/Uitzondering/Identificatie"));
     }
 
     @Test
@@ -144,7 +144,7 @@ class MagdaMockConnectionTest {
     void whenTemplateDocumentFound_shouldReturnDocumentWithTemplateFilledIn() {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendDocument(
-                MagdaDocument.fromString("""
+                MagdaMockDocument.fromString("""
                         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://magda.vlaanderen.be/persoon/soap/geefpersoon/v02_02">
                             <soapenv:Header/>
                             <soapenv:Body>
@@ -179,7 +179,7 @@ class MagdaMockConnectionTest {
                         """).getXml()
         );
         assertNotNull(response);
-        MagdaDocument doc = MagdaDocument.fromDocument(response);
+        MagdaMockDocument doc = MagdaMockDocument.fromDocument(response);
         String date = doc.getValue("//Context/Bericht/Tijdstip/Datum");
         LocalDate today = LocalDate.now();
         String formattedDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -191,7 +191,7 @@ class MagdaMockConnectionTest {
     void whenDocumentNotFound_shouldReturnNull() {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendDocument(
-                MagdaDocument.fromString("""
+                MagdaMockDocument.fromString("""
                         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://magda.vlaanderen.be/persoon/soap/geefpersoon/v02_02">
                             <soapenv:Header/>
                             <soapenv:Body>

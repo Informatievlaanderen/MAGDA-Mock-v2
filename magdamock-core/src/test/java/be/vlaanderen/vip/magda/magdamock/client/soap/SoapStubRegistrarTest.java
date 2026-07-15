@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
-import be.vlaanderen.vip.magda.client.MagdaServiceIdentification;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.jupiter.api.Test;
 
@@ -150,7 +150,7 @@ class SoapStubRegistrarTest {
         SoapStubHandler handler = mock(SoapStubHandler.class);
 
         SoapStubRegistrar registrar = new SoapStubRegistrar(
-                Map.of(new MagdaServiceIdentification("GeefPersoon", VERSION_02_02), handler)
+                Map.of(new MagdaMockDocument.MagdaServiceIdentification("GeefPersoon", VERSION_02_02), handler)
         );
 
         Version version = mock(Version.class);

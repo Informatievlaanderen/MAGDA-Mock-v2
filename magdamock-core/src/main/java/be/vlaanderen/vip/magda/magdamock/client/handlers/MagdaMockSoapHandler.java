@@ -1,6 +1,5 @@
 package be.vlaanderen.vip.magda.magdamock.client.handlers;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcher;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcherImpl;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
@@ -9,6 +8,7 @@ import be.vlaanderen.vip.magda.magdamock.filters.MagdaMockFilter;
 import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.Response;
@@ -50,7 +50,7 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
     public MockSoapResponse sendSoapRequest(MockSoapRequest mockSoapRequest) {
         Document xml = mockSoapRequest.document();
         timeoutUtil.timeout();
-        MagdaDocument request = MagdaDocument.fromDocument(xml);
+        MagdaMockDocument request = MagdaMockDocument.fromDocument(xml);
         soapRequestValidator.validateXml(request);
         String dateHeader = getDateHeaderFromSoapRequest(request);
         String soapUrl = wireMockServer.url("/soap");
@@ -67,7 +67,7 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         return new MockSoapResponse(wrappedResponse, 200);
     }
 
-    private Document filterResponse(MagdaDocument request, Document checkedResponse) {
+    private Document filterResponse(MagdaMockDocument request, Document checkedResponse) {
         Document document = checkedResponse;
         for (MagdaMockFilter filter : filters) {
             document = filter.filter(request, document);
@@ -75,18 +75,18 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         return document;
     }
 
-    private Document validateSoapResponse(MagdaDocument request, Document response) throws SoapValidationError {
+    private Document validateSoapResponse(MagdaMockDocument request, Document response) throws SoapValidationError {
         response = validateSoapSender(request, response);
-        soapResponseValidator.validateXml(MagdaDocument.fromDocument(response));
+        soapResponseValidator.validateXml(MagdaMockDocument.fromDocument(response));
         return response;
     }
 
-    private Document validateSoapSender(MagdaDocument request, Document response) {
+    private Document validateSoapSender(MagdaMockDocument request, Document response) {
         String identification = request.getValue("//Afzender/Identificatie");
         LocalDateTime now = LocalDateTime.now();
 
         if (identification == null || identification.isBlank()) {
-            Node uitzonderingenNode = MagdaDocument.fromString(String.format("""
+            Node uitzonderingenNode = MagdaMockDocument.fromString(String.format("""
                                     <Uitzonderingen>
                                         <Uitzondering>
                                             <Identificatie>13001</Identificatie>
@@ -113,7 +113,7 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         return response;
     }
 
-    private String getDateHeaderFromSoapRequest(MagdaDocument request) {
+    private String getDateHeaderFromSoapRequest(MagdaMockDocument request) {
         LocalDate date;
         try {
             String dateString = request.getValue("//Verzoek/Context/Bericht/Tijdstip/Datum").strip();
@@ -126,24 +126,24 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
     }
 
     private Document parseSoapResponse(Response response) {
-        return MagdaDocument.fromString(response.getBodyAsString()).getXml();
+        return MagdaMockDocument.fromString(response.getBodyAsString()).getXml();
     }
 
-    private Document patchResponse(MagdaDocument request, Document document) {
+    private Document patchResponse(MagdaMockDocument request, Document document) {
         return soapResponsePatcher.patchResponse(request, document).getXml();
     }
 
     private Document wrapInEnvelope(Document bodyDocument) {
-        MagdaDocument magdaDocument = MagdaDocument.fromDocument(bodyDocument);
+        MagdaMockDocument magdaMockDocument = MagdaMockDocument.fromDocument(bodyDocument);
         var soap = """
                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" >
                 <soapenv:Header/>
                     <soapenv:Body>
                     %s
                     </soapenv:Body>
-                </soapenv:Envelope>""".formatted(magdaDocument);
+                </soapenv:Envelope>""".formatted(magdaMockDocument);
 
-        return MagdaDocument.fromString(soap).getXml();
+        return MagdaMockDocument.fromString(soap).getXml();
     }
 
     public record MockSoapResponse(

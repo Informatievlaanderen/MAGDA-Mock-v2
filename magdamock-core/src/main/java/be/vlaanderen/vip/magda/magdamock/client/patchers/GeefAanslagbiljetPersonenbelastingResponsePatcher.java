@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.patchers;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 
@@ -20,12 +20,12 @@ public class GeefAanslagbiljetPersonenbelastingResponsePatcher extends BasicSoap
     }
 
     @Override
-    public MagdaDocument patchResponse(MagdaDocument request, Document response) {
-        MagdaDocument magdaDocument = super.patchResponse(request, response);
+    public MagdaMockDocument patchResponse(MagdaMockDocument request, Document response) {
+        MagdaMockDocument magdaMockDocument = super.patchResponse(request, response);
 
-        magdaDocument.setValue("//Antwoorden/Antwoord/Inhoud/AanslagbiljetPersonenbelasting/Inkomensjaar",
+        magdaMockDocument.setValue("//Antwoorden/Antwoord/Inhoud/AanslagbiljetPersonenbelasting/Inkomensjaar",
                 request.getValue("//Vragen/Vraag/Inhoud/Criteria/Inkomensjaar"));
 
-        return magdaDocument;
+        return magdaMockDocument;
     }
 }

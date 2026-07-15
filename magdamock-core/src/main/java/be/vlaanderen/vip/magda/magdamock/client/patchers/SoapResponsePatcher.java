@@ -1,10 +1,10 @@
 package be.vlaanderen.vip.magda.magdamock.client.patchers;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import org.w3c.dom.Document;
 
 public interface SoapResponsePatcher {
 
-    MagdaDocument patchResponse(MagdaDocument request, Document response);
+    MagdaMockDocument patchResponse(MagdaMockDocument request, Document response);
 
 }

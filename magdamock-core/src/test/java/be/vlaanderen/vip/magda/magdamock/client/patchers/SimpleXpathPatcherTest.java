@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.patchers;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.client.soap.ResponsePatcherTest;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
@@ -70,13 +70,13 @@ public class SimpleXpathPatcherTest extends ResponsePatcherTest {
                 </Root>
                 """;
 
-        MagdaDocument request = MagdaDocument.fromString(requestXml);
+        MagdaMockDocument request = MagdaMockDocument.fromString(requestXml);
         Document response = parseXml(responseXml);
 
         SimpleXpathPatcher soapResponse =
                 new SimpleXpathPatcher(fixedClock, () -> FIXED_UUID, "//Root/INSZ", "//Criteria/INSZ");
 
-        MagdaDocument result = soapResponse.patchResponse(request, response);
+        MagdaMockDocument result = soapResponse.patchResponse(request, response);
 
         assertEquals("00000000000", result.getValue("//INSZ"));
     }
@@ -132,13 +132,13 @@ public class SimpleXpathPatcherTest extends ResponsePatcherTest {
                 </Root>
                 """;
 
-        MagdaDocument request = MagdaDocument.fromString(requestXml);
+        MagdaMockDocument request = MagdaMockDocument.fromString(requestXml);
         Document response = parseXml(responseXml);
 
         SimpleXpathPatcher soapResponse =
                 new SimpleXpathPatcher(fixedClock, () -> FIXED_UUID, "//Root/INSZ", "//Criteria/INSZ");
 
-        MagdaDocument result = soapResponse.patchResponse(request, response);
+        MagdaMockDocument result = soapResponse.patchResponse(request, response);
         assertNull(result.getValue("//Ontvanger/Gebruiker"));
     }
 }

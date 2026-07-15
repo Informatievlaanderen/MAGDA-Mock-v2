@@ -3,7 +3,7 @@
   <parent>
 	  <artifactId>magda.magdamock</artifactId>
 	  <groupId>be.vlaanderen.vip</groupId>
-	  <version>0.25.0</version>
+	  <version>0.26.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -16,19 +16,24 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>be.vlaanderen.vip.mock</groupId>
-			<artifactId>magdaconnector</artifactId>
-			<version>3.45.0</version>
-			<scope>test</scope>
-		</dependency>
-
         <dependency>
             <groupId>org.wiremock</groupId>
             <artifactId>wiremock-jetty12</artifactId>
             <version>3.13.2</version>
         </dependency>
 
+		<dependency>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>2.2.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.20.0</version>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>

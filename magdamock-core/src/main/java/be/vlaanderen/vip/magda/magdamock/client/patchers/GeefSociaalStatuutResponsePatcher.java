@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.patchers;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 
@@ -20,19 +20,19 @@ public class GeefSociaalStatuutResponsePatcher extends BasicSoapResponsePatcher 
     }
 
     @Override
-    public MagdaDocument patchResponse(MagdaDocument request, Document response) {
-        MagdaDocument magdaDocument = super.patchResponse(request, response);
-        magdaDocument.setValue("//INSZ", request.getValue("//INSZ"));
+    public MagdaMockDocument patchResponse(MagdaMockDocument request, Document response) {
+        MagdaMockDocument magdaMockDocument = super.patchResponse(request, response);
+        magdaMockDocument.setValue("//INSZ", request.getValue("//INSZ"));
 
         var socialStatuteNamesRequest = request.getValues("//SociaalStatuut/Naam");
-        var socialStatuteNamesResponse = magdaDocument.getValues("//SociaalStatuut/Naam");
+        var socialStatuteNamesResponse = magdaMockDocument.getValues("//SociaalStatuut/Naam");
 
-        socialStatuteNamesResponse.stream().filter(x -> !socialStatuteNamesRequest.contains(x)).forEach(x -> magdaDocument.removeNode("//SociaalStatuut[Naam[text()='" + x + "']]"));
-        socialStatuteNamesRequest.stream().filter(x -> !socialStatuteNamesResponse.contains(x)).forEach(x -> writeNotAppliedSocialStatute(magdaDocument, x));
-        return magdaDocument;
+        socialStatuteNamesResponse.stream().filter(x -> !socialStatuteNamesRequest.contains(x)).forEach(x -> magdaMockDocument.removeNode("//SociaalStatuut[Naam[text()='" + x + "']]"));
+        socialStatuteNamesRequest.stream().filter(x -> !socialStatuteNamesResponse.contains(x)).forEach(x -> writeNotAppliedSocialStatute(magdaMockDocument, x));
+        return magdaMockDocument;
     }
 
-    private void writeNotAppliedSocialStatute(MagdaDocument response, String socialStatuteName) {
+    private void writeNotAppliedSocialStatute(MagdaMockDocument response, String socialStatuteName) {
         /*
             <SociaalStatuut>
                 <Naam>SOCIAL_STATUTE_NAME</Naam>

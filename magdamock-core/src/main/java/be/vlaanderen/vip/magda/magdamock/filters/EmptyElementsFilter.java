@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.filters;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -28,7 +28,7 @@ public class EmptyElementsFilter implements MagdaMockFilter {
         </xsl:stylesheet>
         """;
 
-    public Document filter(MagdaDocument request, Document response) {
+    public Document filter(MagdaMockDocument request, Document response) {
         if (response == null) {
             return null;
         }

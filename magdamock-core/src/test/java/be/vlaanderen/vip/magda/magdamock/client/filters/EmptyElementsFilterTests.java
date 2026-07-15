@@ -1,6 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.filters;
 
-import be.vlaanderen.vip.magda.client.MagdaDocument;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.filters.EmptyElementsFilter;
 import be.vlaanderen.vip.magda.magdamock.filters.MagdaMockFilter;
 import org.junit.jupiter.api.Assertions;
@@ -11,7 +11,7 @@ public class EmptyElementsFilterTests {
     @Test
     public void testEmptyElementsFilter() {
         MagdaMockFilter magdaMockFilter = new EmptyElementsFilter();
-        Document document = MagdaDocument.fromString("""
+        Document document = MagdaMockDocument.fromString("""
                 <root>
                     <Element1>filled in</Element1>
                     <Element2 attribute="filled in"></Element2>
@@ -20,7 +20,7 @@ public class EmptyElementsFilterTests {
                 </root>
                 """).getXml();
         document = magdaMockFilter.filter(null, document);
-        MagdaDocument magdaDocument = MagdaDocument.fromDocument(document);
+        MagdaMockDocument magdaMockDocument = MagdaMockDocument.fromDocument(document);
         Assertions.assertEquals(1, document.getElementsByTagName("Element1").getLength());
         Assertions.assertEquals(1, document.getElementsByTagName("Element2").getLength());
         Assertions.assertEquals(0, document.getElementsByTagName("Element3").getLength());

@@ -1,8 +1,5 @@
 package be.vlaanderen.vip.magda.magdamock.client;
 
-import be.vlaanderen.vip.magda.client.connection.MagdaConnection;
-import be.vlaanderen.vip.magda.client.domeinservice.MagdaRegistrationInfo;
-import be.vlaanderen.vip.magda.client.rest.MagdaRestRequest;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockRestHandler;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
 import be.vlaanderen.vip.magda.magdamock.client.rest.MockRestMapping;
@@ -37,7 +34,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
-public class MagdaMockConnection implements MagdaConnection {
+public class MagdaMockConnection {
     private final MagdaMockRestHandler restHandler;
     private final MagdaMockSoapHandler soapHandler;
     private final ObjectMapper mapper;
@@ -95,7 +92,6 @@ public class MagdaMockConnection implements MagdaConnection {
     }
 
     // NOTE: this function is to remain backwards compatible with magdamock.service
-    @Override
     @Deprecated
     public Document sendDocument(Document xml) throws SoapValidationError {
         return Optional.ofNullable(sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(xml))).map(MagdaMockSoapHandler.MockSoapResponse::document).orElse(null);
@@ -105,13 +101,6 @@ public class MagdaMockConnection implements MagdaConnection {
         return soapHandler.sendSoapRequest(mockSoapRequest);
     }
 
-    @Override
-    @Deprecated
-    public Pair<JsonNode, Integer> sendRestRequest(MagdaRestRequest request, MagdaRegistrationInfo registrationInfo) {
-        throw new NotImplementedException();
-    }
-
-    @Override
     @Deprecated
     @SneakyThrows
     public Pair<JsonNode, Integer> sendRestRequest(String path, String query, String method, String requestBody) {
