@@ -1,4 +1,4 @@
-FROM eclipse-temurin:${eclipse-temurin-java.version}
+FROM eclipse-temurin:25-jre
 
 VOLUME /tmp
 

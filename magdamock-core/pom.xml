@@ -3,7 +3,7 @@
   <parent>
 	  <artifactId>magda.magdamock</artifactId>
 	  <groupId>be.vlaanderen.vip</groupId>
-	  <version>0.27.0</version>
+	  <version>0.28.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
