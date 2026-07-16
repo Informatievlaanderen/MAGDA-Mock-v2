@@ -861,7 +861,7 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
+        "path": "//Criteria/INSZ",
         "value": "67621546751"
       }
     ],
@@ -873,20 +873,8 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "67621546751X"
-      }
-    ],
-    "xpathExpression": "//Pasfoto/INSZ",
-    "expectedValue": "00000000000"
-  },
-  {
-    "naam": "GeefPasfoto",
-    "versie": "02.00.0000",
-    "requestFields": [
-      {
-        "path": "INSZ",
-        "value": ""
+        "path": "//Criteria/INSZ",
+        "value": "00000000000"
       }
     ],
     "xpathExpression": "//Pasfoto/INSZ",
@@ -1303,6 +1291,10 @@
       {
         "path": "INSZ",
         "value": "00683042157"
+      },
+      {
+        "path": "//SocialeStatuten/SociaalStatuut/Naam",
+        "value": "GENT_PARKING_CHILD"
       }
     ],
     "xpathExpression": "//SociaalStatuut/Naam",
@@ -1315,6 +1307,10 @@
       {
         "path": "INSZ",
         "value": "00683042158"
+      },
+      {
+        "path": "//SocialeStatuten/SociaalStatuut/Naam",
+        "value": "SOCIAL_STATUTE_NAME"
       }
     ],
     "xpathExpression": "//SociaalStatuut/Naam",

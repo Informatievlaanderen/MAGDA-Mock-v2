@@ -17,29 +17,46 @@ import java.io.StringReader;
 public class EmptyElementsFilter implements MagdaMockFilter {
 
     private static final String XSLT = """
-        <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-          <xsl:template match="*[not(@*) and not(*) and not(normalize-space())]"/>
-          
-          <xsl:template match="node()|@*">
-            <xsl:copy>
-              <xsl:apply-templates select="node()|@*"/>
-            </xsl:copy>
-          </xsl:template>
-        </xsl:stylesheet>
-        """;
+            <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+              <xsl:template match="*[not(@*) and not(*) and not(normalize-space())]"/>
+            
+              <xsl:template match="node()|@*">
+                <xsl:copy>
+                  <xsl:apply-templates select="node()|@*"/>
+                </xsl:copy>
+              </xsl:template>
+            </xsl:stylesheet>
+            """;
+    private static EmptyElementsFilter INSTANCE;
+
+    public static EmptyElementsFilter getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new EmptyElementsFilter();
+        }
+        return INSTANCE;
+    }
 
     public Document filter(MagdaMockDocument request, Document response) {
         if (response == null) {
             return null;
         }
         try {
-            TransformerFactory factory = TransformerFactory.newInstance();
-            Transformer transformer = factory.newTransformer(new StreamSource(new StringReader(XSLT)));
+            Document returnValue = response;
+            boolean stop = false;
+            int counter = 0;
+            while(!stop && ++counter < 10) {
+                counter++;
+                TransformerFactory factory = TransformerFactory.newInstance();
+                Transformer transformer = factory.newTransformer(new StreamSource(new StringReader(XSLT)));
 
-            DOMResult outputTarget = new DOMResult();
+                DOMResult outputTarget = new DOMResult();
 
-            transformer.transform(new DOMSource(response), outputTarget);
-            return (Document) outputTarget.getNode();
+                transformer.transform(new DOMSource(returnValue), outputTarget);
+                Document temporaryValue = (Document) outputTarget.getNode();
+                stop = MagdaMockDocument.fromDocument(temporaryValue).toString().equals(MagdaMockDocument.fromDocument(returnValue).toString());
+                returnValue = temporaryValue;
+            }
+            return returnValue;
         } catch (TransformerException e) {
             return response;
         }

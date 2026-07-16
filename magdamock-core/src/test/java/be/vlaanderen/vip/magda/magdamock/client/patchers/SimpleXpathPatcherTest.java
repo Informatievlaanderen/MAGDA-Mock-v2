@@ -1,13 +1,12 @@
 package be.vlaanderen.vip.magda.magdamock.client.patchers;
 
-import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.client.soap.ResponsePatcherTest;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SimpleXpathPatcherTest extends ResponsePatcherTest {
 

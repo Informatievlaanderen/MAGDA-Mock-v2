@@ -78,12 +78,12 @@ public class SoapStubRegistrar {
                 ));
     }
 
-    static class SoapStubDefinitions {
+    public static class SoapStubDefinitions {
 
         private SoapStubDefinitions() {
         }
 
-        static List<SoapStubDefinition> allDefinitions() {
+        public static List<SoapStubDefinition> allDefinitions() {
             return List.of(
                     // Dossier
                     subDir("GeefDossiers", VERSION_02_00, KEY_INSZ),
@@ -221,7 +221,7 @@ public class SoapStubRegistrar {
         }
     }
 
-    record SoapStubDefinition(
+    public record SoapStubDefinition(
             String service,
             String version,
             SoapStubHandlerFactory factory

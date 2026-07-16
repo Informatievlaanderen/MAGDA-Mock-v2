@@ -1,9 +1,7 @@
 package be.vlaanderen.vip.magda.magdamock.client.handlers;
 
-import be.vlaanderen.vip.magda.magdamock.client.exceptions.MagdaMockRestException;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.Response;

@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.utils;
 
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.dom4j.dom.DOMNodeHelper;
@@ -76,7 +77,7 @@ public class MagdaMockDocument {
 
             return db.parse(is);
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            throw new RuntimeException("Response contains invalid XML content.", e);
+            throw new MagdaMockSoapException("Document contains invalid XML content.", "Server", e.getMessage(), e);
         }
     }
 

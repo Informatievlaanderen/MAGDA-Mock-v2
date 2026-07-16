@@ -1,4 +1,4 @@
-package be.vlaanderen.vip.magda.magdamock.client.exceptions;
+package be.vlaanderen.vip.magda.magdamock.exceptions;
 
 /**
  * An exception to be thrown by MagdaMock in case MagdaMock really fails to handle a response,

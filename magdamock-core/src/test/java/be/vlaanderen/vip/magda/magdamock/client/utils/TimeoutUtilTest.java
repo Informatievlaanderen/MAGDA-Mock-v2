@@ -1,4 +1,4 @@
-package be.vlaanderen.vip.magda.magdamock.client.util;
+package be.vlaanderen.vip.magda.magdamock.client.utils;
 
 import be.vlaanderen.vip.magda.magdamock.utils.RandomTimeoutUtil;
 import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;

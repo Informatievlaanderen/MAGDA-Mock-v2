@@ -1,8 +1,11 @@
 package be.vlaanderen.vip.magda.magdamock.soap;
 
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.dom.DOMSource;
@@ -87,45 +90,25 @@ public class SoapResponseValidatorImpl extends SoapBodyValidator {
         try {
             var factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             String path = XML_FOLDERS_AND_XSDS.get(String.format("%s/%s", naam, versie));
+            log.info("Trying to load xml response validator from {}", path);
             var schema = factory.newSchema(new File(String.format("%s/%s", xsdPath, path)));
             var validator = schema.newValidator();
             validator.setErrorHandler(new XsdErrorHandler());
             return validator;
         } catch (Exception e) {
-            log.error("Error while finding validator for {} {}", naam, versie, e);
-            return null;
+            throw new MagdaMockSoapException(String.format("Unable to locate the response XSD schema for %s-%s .", naam, versie), "Server", e);
         }
     }
 
     @SneakyThrows
-    public void validateXml(MagdaMockDocument magdaMockDocument) throws SoapValidationError {
-        String naam = magdaMockDocument.xpath("//Context/Naam").item(0).getTextContent();
-        String versie = magdaMockDocument.xpath("//Context/Versie").item(0).getTextContent();
+    public void validateXml(MagdaMockDocument magdaDocument) throws MagdaMockSoapException {
+        String naam = magdaDocument.xpath("//Context/Naam").item(0).getTextContent();
+        String versie = magdaDocument.xpath("//Context/Versie").item(0).getTextContent();
+        Validator validator = getValidator(naam, versie);
         try {
-            Validator validator = getValidator(naam, versie);
-            validator.validate(new DOMSource(magdaMockDocument.getXml()));
+            validator.validate(new DOMSource(magdaDocument.getXml()));
         } catch (Exception e) {
-            throw new SoapValidationError(
-                    MagdaMockDocument.fromString(
-                            String.format("""
-                                            <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
-                                                <SOAP-ENV:Header/>
-                                                <SOAP-ENV:Body>
-                                                    <ns0:Fault xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/">
-                                                        <faultcode>Data</faultcode>
-                                                        <faultstring>Fout formaat in de test data
-                                                        </faultstring>
-                                                        <detail>
-                                                            <message>%s</message>
-                                                        </detail>
-                                                    </ns0:Fault>
-                                                </SOAP-ENV:Body>
-                                            </SOAP-ENV:Envelope>
-                                            """,
-                                    e.getMessage()
-                            )
-                    )
-            );
+            throw new MagdaMockSoapException(String.format("Response is not compliant with the associated XSD schema specification. Reason: %s", e.getMessage()), "Server", e);
         }
     }
 }
