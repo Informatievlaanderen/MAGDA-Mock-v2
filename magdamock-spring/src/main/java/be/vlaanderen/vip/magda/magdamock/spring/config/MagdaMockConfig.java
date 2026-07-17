@@ -18,6 +18,7 @@ public class MagdaMockConfig {
     Integer minimumTimeoutMillis;
     Integer maximumTimeoutMillis;
     boolean enableTimeout;
+    boolean logRequestBody;
 
     @Bean
     public MagdaMockConnection magdaMockConnection() throws IOException {
@@ -32,6 +33,6 @@ public class MagdaMockConfig {
             minimumTimeoutMillis = null;
             maximumTimeoutMillis = null;
         }
-        return MagdaMockConnection.create(restTestPath, soapTestPath, magdaXsdPath, minimumTimeoutMillis, maximumTimeoutMillis);
+        return MagdaMockConnection.create(restTestPath, soapTestPath, magdaXsdPath, minimumTimeoutMillis, maximumTimeoutMillis, logRequestBody);
     }
 }

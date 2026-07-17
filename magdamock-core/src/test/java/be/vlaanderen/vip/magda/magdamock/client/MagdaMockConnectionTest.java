@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.containing;
@@ -30,7 +31,7 @@ class MagdaMockConnectionTest {
     @SneakyThrows
     void whenTemplateReplacesOk_shouldReturnStatus200AndExpectedOutput() {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
-        var response = connection.sendRestRequest("/template/ok", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT", "");
+        var response = connection.sendRestRequest("/template/ok", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT", UUID.randomUUID().toString());
         assertEquals(200, response.status());
         assertEquals("\"2019-10-19\"", new ObjectMapper().readTree(response.body()).get("test").toString());
         assertNotNull(response.headers().get("x-correlation-id"));
@@ -41,7 +42,7 @@ class MagdaMockConnectionTest {
     @SneakyThrows
     void whenTemplateReplacesNok_shouldReturnStatus500() {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
-        var response = connection.sendRestRequest("/template/nok", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT", "");
+        var response = connection.sendRestRequest("/template/nok", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT", UUID.randomUUID().toString());
         assertEquals(
                 "{\"test\":\"{formatDate (dateMath (dateMath (parseDate request.headers.Date) '-10d') '-5y')}}\"}",
                 new ObjectMapper().readTree(response.body()).toString()

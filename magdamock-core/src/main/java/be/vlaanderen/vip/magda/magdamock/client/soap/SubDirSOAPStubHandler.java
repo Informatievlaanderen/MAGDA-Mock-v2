@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
+import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -52,7 +53,7 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
 
 
         List<String> values;
-        SoapLogHelper.contextSetLifecyclePhase(SoapLogHelper.LifecyclePhase.SOAP_SETUP);
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.SOAP_SETUP);
         MDC.put("Service", String.format("%s.%s-%s", domain, service, version));
         MDC.put("Filename", fileName);
         log.info("Stubbing for SOAP: {} {} {} {}", domain, service, version, fileName);

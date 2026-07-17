@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.handlers;
 
+import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar;
 import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
@@ -35,14 +36,16 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
     private final SoapBodyValidator soapRequestValidator;
     private final SoapBodyValidator soapResponseValidator;
+    private final boolean logRequestBody;
     private final SoapResponsePatcher soapResponsePatcher = new SoapResponsePatcherImpl();
     private final List<MagdaMockFilter> filters;
     private final Set<MagdaMockDocument.MagdaServiceIdentification> knownServiceIdentifications;
 
-    public MagdaMockSoapHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
+    public MagdaMockSoapHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator, boolean logRequestBody) {
         super(wireMockData, timeoutUtil);
         this.soapRequestValidator = soapRequestValidator;
         this.soapResponseValidator = soapResponseValidator;
+        this.logRequestBody = logRequestBody;
         this.filters = new ArrayList<>();
         this.filters.add(EmptyElementsFilter.getInstance());
 
@@ -58,14 +61,17 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         SoapLogHelper.contextSetReference(request);
         checkServiceExistsInMagdaMock(request);
 
-        SoapLogHelper.contextSetLifecyclePhase(SoapLogHelper.LifecyclePhase.REQUEST_VALIDATION);
+        if (logRequestBody) {
+            log.debug("Request body {}", request);
+        }
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.REQUEST_VALIDATION);
         soapRequestValidator.validateXml(request);
 
-        SoapLogHelper.contextSetLifecyclePhase(SoapLogHelper.LifecyclePhase.REQUEST_PRE_PROCESSING);
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.REQUEST_PRE_PROCESSING);
         timeoutUtil.timeout();
         String dateHeader = getDateHeaderFromSoapRequest(request);
 
-        SoapLogHelper.contextSetLifecyclePhase(SoapLogHelper.LifecyclePhase.RESPONSE_MAPPING);
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_MAPPING);
         String soapUrl = wireMockServer.url("/soap");
         Request mockRequest = createInternalWiremockRequest(soapUrl, "POST", request.toString(), dateHeader, "text/xml");
         Response response = routeRequest(mockRequest);
@@ -74,11 +80,11 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         }
         Document document = parseSoapResponse(response);
 
-        SoapLogHelper.contextSetLifecyclePhase(SoapLogHelper.LifecyclePhase.RESPONSE_POST_PROCESSING);
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_POST_PROCESSING);
         Document patchedResponse = patchResponse(request, document);
         Document filteredResponse = filterResponse(request, patchedResponse);
 
-        SoapLogHelper.contextSetLifecyclePhase(SoapLogHelper.LifecyclePhase.RESPONSE_VALIDATION);
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_VALIDATION);
         Document checkedResponse = validateSoapResponse(request, filteredResponse);
         Document wrappedResponse = wrapInEnvelope(checkedResponse);
         return new MockSoapResponse(wrappedResponse, 200);

@@ -1,5 +1,8 @@
 package be.vlaanderen.vip.magda.magdamock.client.rest;
 
+import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
+import be.vlaanderen.vip.magda.magdamock.client.logging.RestLogHelper;
+import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -40,11 +43,12 @@ public class RestDirectoryHandler {
         } else {
             this.defaultPriority = 50;
         }
-        this.fallbackPriority = defaultPriority + 50;
+        this.fallbackPriority = Math.min(99, defaultPriority + 40);
         objectMapper = new ObjectMapper();
     }
 
     public void addAllStubs() {
+        RestLogHelper.contextSetLifecyclePhase(LifecyclePhase.REST_SETUP);
         Path path = rootPath;
         for (String pathPart : mockRestMapping.folderPath()) {
             path = path.resolve(pathPart);

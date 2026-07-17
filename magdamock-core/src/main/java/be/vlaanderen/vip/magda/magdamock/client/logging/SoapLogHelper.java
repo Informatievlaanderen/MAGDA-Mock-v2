@@ -32,15 +32,4 @@ public class SoapLogHelper {
     public static void contextSetCorrelationId(String correlationId) {
         MDC.put("CorrelationId", correlationId);
     }
-
-    public enum LifecyclePhase {
-        NOT_SPECIFIED,
-        SOAP_SETUP,
-        REQUEST_VALIDATION,
-        REQUEST_PRE_PROCESSING,
-        RESPONSE_MAPPING,
-        RESPONSE_DYNAMIC_FUNCTIONS,
-        RESPONSE_POST_PROCESSING,
-        RESPONSE_VALIDATION
-    }
 }

@@ -1,6 +1,8 @@
 package be.vlaanderen.vip.magda.magdamock.spring.controller;
 
 
+import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
+import be.vlaanderen.vip.magda.magdamock.client.logging.RestLogHelper;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
 import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
@@ -53,7 +55,7 @@ public class MagdaMockController {
     @PostMapping(value = {SOAP_BASE_URL}, produces = {TEXT_XML_VALUE}, consumes = {APPLICATION_XML_VALUE, TEXT_XML_VALUE})
     public ResponseEntity<String> magdaSoap0200WebService(@RequestBody String request, HttpServletRequest incomingRequest) {
         MDC.clear();
-        SoapLogHelper.contextSetLifecyclePhase(SoapLogHelper.LifecyclePhase.NOT_SPECIFIED);
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.NOT_SPECIFIED);
         Map<String, String> headers = new HashMap<>();
         for (Iterator<String> it = incomingRequest.getHeaderNames().asIterator(); it.hasNext(); ) {
             String headerName = it.next();
@@ -110,6 +112,8 @@ public class MagdaMockController {
             method = {RequestMethod.DELETE, RequestMethod.GET, RequestMethod.PATCH, RequestMethod.POST, RequestMethod.PUT}
     )
     protected ResponseEntity<String> magdaRestEndpoint(@RequestBody(required = false) String requestBody, HttpServletRequest incomingRequest) {
+        MDC.clear();
+        RestLogHelper.contextSetLifecyclePhase(LifecyclePhase.NOT_SPECIFIED);
         requestBody = requestBody == null ? "" : requestBody;
         String method = incomingRequest.getMethod();
         List<String> splittedRequestUri = new ArrayList<>(Arrays.stream(incomingRequest.getRequestURI().split(Pattern.quote(REST_BASE_URL))).toList());
@@ -122,6 +126,7 @@ public class MagdaMockController {
             headers.put(headerName.toLowerCase(), incomingRequest.getHeader(headerName));
         }
         var response = mockConnection.sendRestRequest(new MagdaMockRestHandler.MockRestRequest(path, query, method, requestBody, headers));
+        MDC.clear();
         return new ResponseEntity<>(Optional.ofNullable(response.body()).map(String::new).map(Object::toString).orElse(""), CollectionUtils.toMultiValueMap(response.headers()), HttpStatusCode.valueOf(response.status()));
     }
 }

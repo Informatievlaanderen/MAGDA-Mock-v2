@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -40,7 +41,8 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class SOAPServicesTest {
 
-        static class MappingsTest {
+        @Nested
+        class MappingsTest {
                 MagdaMockConnection magdaMockConnection;
 
                 @BeforeEach
@@ -113,8 +115,8 @@ class SOAPServicesTest {
                 }
         }
 
-
-        static class ExceptionTests {
+        @Nested
+        class ExceptionTests {
                 MagdaMockConnection magdaMockConnection;
 
                 @BeforeEach
