@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<web:GeefSociaalStatuutResponse xmlns:web="http://magda.vlaanderen.be/soczek/soap/geefsociaalstatuut/v03_00">
+<web:GeefArbeidsongeschiktheidResponse xmlns:web="http://magda.vlaanderen.be/soczek/soap/geefarbeidsongeschiktheid/v01_00">
     <Repliek>
         <Context>
-            <Naam>GeefSociaalStatuut</Naam>
-            <Versie>03.00.0000</Versie>
+            <Naam>GeefArbeidsongeschiktheid</Naam>
+            <Versie>01.00.0000</Versie>
             <Bericht>
                 <Type>ANTWOORD</Type>
                 <Tijdstip>
@@ -26,20 +26,15 @@
             <Antwoord>
                 <Referte>?</Referte>
                 <Inhoud>
-                    <Persoon>
-                        <INSZ>00000000000</INSZ>
-                        <SocialeStatuten>
-                            <SociaalStatuut>
-                                <Naam>SOCIAL_STATUTE_NAME</Naam>
-                                <Resultaat>
-                                    <Code>0</Code>
-                                    <Omschrijving>Niet van toepassing</Omschrijving>
-                                </Resultaat>
-                            </SociaalStatuut>
-                        </SocialeStatuten>
-                    </Persoon>
+                    <ConsultAttestResponse>
+                        <status>
+                            <value>NO_DATA_FOUND</value>
+                            <code>MSG00100</code>
+                            <description>Treatment successful, but no data found at the supplier</description>
+                        </status>
+                    </ConsultAttestResponse>
                 </Inhoud>
             </Antwoord>
         </Antwoorden>
     </Repliek>
-</web:GeefSociaalStatuutResponse>
+</web:GeefArbeidsongeschiktheidResponse>

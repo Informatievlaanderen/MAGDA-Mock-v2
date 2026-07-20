@@ -1,0 +1,56 @@
+<web:GeefLeefloonperiodesResponse xmlns:web="http://webservice.geefleefloonperiodesdienst-02_00.soczek-02_00.vip.vlaanderen.be">
+    <Repliek>
+        <Context>
+            <Naam>GeefLeefloonperiodes</Naam>
+            <Versie>02.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>?</Datum>
+                    <Tijd>?</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <Leefloonperiodes DatumBegin="2025-01-01" DatumEinde="2025-12-31">
+                        <Leefloonperiode>
+                            <INSZ>83660634135</INSZ>
+                            <OCMW>0212234515</OCMW>
+                            <Periode>
+                                <Begin>2025-01-01</Begin>
+                                <Einde>2025-04-30</Einde>
+                            </Periode>
+                            <Categorie>
+                                <Code Beschrijving="Equivalent leefloon">EQUIVALENT_LIVING_WAGE</Code>
+                            </Categorie>
+                        </Leefloonperiode>
+                        <Leefloonperiode>
+                            <INSZ>83660634135</INSZ>
+                            <OCMW>0212234515</OCMW>
+                            <Periode>
+                                <Begin>2025-05-01</Begin>
+                                <Einde>2025-12-25</Einde>
+                            </Periode>
+                            <Categorie>
+                                <Code Beschrijving="Gewoon leefloon">LIVING_WAGE</Code>
+                            </Categorie>
+                        </Leefloonperiode>
+                    </Leefloonperiodes>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:GeefLeefloonperiodesResponse>

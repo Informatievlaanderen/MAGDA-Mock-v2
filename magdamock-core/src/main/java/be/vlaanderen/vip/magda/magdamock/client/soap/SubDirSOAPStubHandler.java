@@ -70,23 +70,19 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
 
         for (int i = 0; i < keys.size(); i++) {
             String key = keys.get(i);
-            if (!isDefaultFile) {
-                if (i >= values.size()) {
-                    continue;
+            if (i >= values.size()) {
+                continue;
+            }
+            String value = values.get(i);
+            if (!value.isEmpty() && !value.equals("default")) {
+                String xpathExpression;
+                if (key.endsWith("/name()")) {
+                    String nodeKey = key.substring(0, key.length() - "/name()".length());
+                    xpathExpression = nodeKey + "[local-name()='" + value + "']";
+                } else {
+                    xpathExpression = key + "[normalize-space()='" + value + "']";
                 }
-                String value = values.get(i);
-                if (!value.isEmpty()) {
-                    String xpathExpression;
-                    if (key.endsWith("/name()")) {
-                        String nodeKey = key.substring(0, key.length() - "/name()".length());
-                        xpathExpression = nodeKey + "[local-name()='" + value + "']";
-                    } else {
-                        xpathExpression = key + "[normalize-space()='" + value + "']";
-                    }
-                    mappingBuilder = mappingBuilder.withRequestBody(matchingXPath(xpathExpression));
-                }
-            } else {
-                break;
+                mappingBuilder = mappingBuilder.withRequestBody(matchingXPath(xpathExpression));
             }
         }
 

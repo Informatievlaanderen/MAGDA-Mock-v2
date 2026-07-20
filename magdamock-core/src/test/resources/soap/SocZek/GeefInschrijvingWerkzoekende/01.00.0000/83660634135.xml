@@ -1,0 +1,76 @@
+<web:GeefInschrijvingWerkzoekendeResponse xmlns:web="http://magda.vlaanderen.be/soczek/soap/geefinschrijvingwerkzoekende/v01_00">
+    <Repliek>
+        <Context>
+            <Naam>GeefInschrijvingWerkzoekende</Naam>
+            <Versie>01.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>?</Datum>
+                    <Tijd>?</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <ConsultContactAndInscriptionResponse>
+                        <status>
+                            <value>DATA_FOUND</value>
+                            <code>MSG00000</code>
+                            <description>Treatment successful</description>
+                        </status>
+                        <ssin>83660634135</ssin>
+                        <results>
+                            <pes source="VDAB">
+                                <status>
+                                    <value>DATA_FOUND</value>
+                                    <code>MSG00000</code>
+                                    <description>Treatment successful</description>
+                                </status>
+                                <result>
+                                    <contact>
+                                        <belgianAddress>
+                                            <postalCode>8000</postalCode>
+                                            <cityName>Brugge</cityName>
+                                            <streetName>Kerkstraat</streetName>
+                                            <streetCode>0000</streetCode>
+                                            <houseNumber>15</houseNumber>
+                                            <boxNumber>A</boxNumber>
+                                        </belgianAddress>
+                                        <phoneNumber>00320000000</phoneNumber>
+                                        <emailAddress>john.doe@example.com</emailAddress>
+                                    </contact>
+                                    <inscriptions>
+                                        <inscription>
+                                            <inceptionTimestamp>2025-06-10T00:00:00.000</inceptionTimestamp>
+                                            <categoryNEO>
+                                                <code>090</code>
+                                                <description language="NL">Vrijwillig ingeschreven voltijds werkenden</description>
+                                            </categoryNEO>
+                                            <categoryPES>
+                                                <code>VDAB090</code>
+                                                <description language="NL">Voltijdse arbeidsovereenkomst</description>
+                                            </categoryPES>
+                                        </inscription>
+                                    </inscriptions>
+                                </result>
+                            </pes>
+                        </results>
+                    </ConsultContactAndInscriptionResponse>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:GeefInschrijvingWerkzoekendeResponse>

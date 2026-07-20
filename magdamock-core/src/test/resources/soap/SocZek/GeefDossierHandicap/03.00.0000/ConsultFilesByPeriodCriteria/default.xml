@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web:GeefDossierHandicapResponse xmlns:web="http://magda.vlaanderen.be/soczek/soap/geefdossierhandicap/v03_00">
+    <Repliek>
+        <Context>
+            <Naam>GeefDossierHandicap</Naam>
+            <Versie>03.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>?</Datum>
+                    <Tijd>?</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <ConsultFilesByPeriodResponse>
+                        <status>
+                            <value>NO_DATA_FOUND</value>
+                            <code>MSG00100</code>
+                            <description>Treatment successful, but no data found at the supplier.</description>
+                        </status>
+                    </ConsultFilesByPeriodResponse>
+                </Inhoud>
+                <Uitzonderingen>
+                    <Uitzondering>
+                        <Identificatie>70001</Identificatie>
+                        <Oorsprong>KSZ</Oorsprong>
+                        <Type>WAARSCHUWING</Type>
+                        <Tijdstip>
+                            <Datum>0001-01-01</Datum>
+                            <Tijd>00:00:00.000</Tijd>
+                        </Tijdstip>
+                        <Diagnose>Antwoord met waarschuwing ConsultFilesByPeriodResponse</Diagnose>
+                        <Omstandigheid>NO_DATA_FOUND</Omstandigheid>
+                        <Annotaties>
+                            <Annotatie>
+                                <Naam>status code</Naam>
+                                <Waarde>MSG00100</Waarde>
+                            </Annotatie>
+                            <Annotatie>
+                                <Naam>status description</Naam>
+                                <Waarde>Treatment successful, but no data found at the supplier.</Waarde>
+                            </Annotatie>
+                        </Annotaties>
+                    </Uitzondering>
+                </Uitzonderingen>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:GeefDossierHandicapResponse>

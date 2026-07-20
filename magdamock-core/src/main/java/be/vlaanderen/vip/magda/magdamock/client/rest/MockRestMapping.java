@@ -39,6 +39,9 @@ public record MockRestMapping(List<String> folderPath, List<String> queryParamet
             new MockRestMapping(List.of("v1", "organisaties", "verenigingen", "verenigingen", "vertegenwoordigers", "patch"), List.of(), 2, List.of(), "/v1/organisaties/verenigingen/verenigingen/%s/vertegenwoordigers/%s", "PATCH"),
             new MockRestMapping(List.of("v1", "organisaties", "verenigingen", "verenigingen", "vertegenwoordigers", "delete"), List.of(), 2, List.of(), "/v1/organisaties/verenigingen/verenigingen/%s/vertegenwoordigers/%s", "DELETE"),
 
+            // SocZek HandicapVolledigeDossiers
+            new MockRestMapping(List.of("v1", "socZek", "handicap", "volledigeDossiers", "get"), List.of("rrnr"), 0, List.of(), "/v1/socZek/handicap/volledigeDossiers", "GET"),
+
             // SocZek SocialeHuisvestingCIR
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "zoeken", "post"), List.of(), 0, List.of("dossierType", "dossierStatus", "dossierNummer"), "/v1/socZek/socialeHuisvesting/dossiers/zoeken", "POST"),
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "dossiers", "dossier", "dossierNummer", "get"), List.of(), 1, List.of(), "/v1/socZek/socialeHuisvesting/dossiers/dossier/%s", "GET"),
@@ -73,7 +76,6 @@ public record MockRestMapping(List<String> folderPath, List<String> queryParamet
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "certificaat", "post"), List.of(), 1, List.of(), "/v1/socZek/socialeHuisvesting/woningen/%s/epcwaarden/certificaat", "POST"),
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "markeerReferentieversie", "patch"), List.of(), 1, List.of("epcVersieId"), "/v1/socZek/socialeHuisvesting/woningen/%s/epcwaarden/markeerReferentieversie", "PATCH"),
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "epcVersieId", "delete"), List.of(), 2, List.of(), "/v1/socZek/socialeHuisvesting/woningen/%s/epcwaarden/%s", "DELETE")
-
     );
 
     // url parameters should be marked with %s, as such they can be filled in with String.format

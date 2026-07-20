@@ -1,0 +1,6 @@
+{
+  "response": {
+    "status": 200,
+    "jsonBody": { "message": "socZek/handicap/volledigeDossiers/get", "mappingType": "default" }
+  }
+}

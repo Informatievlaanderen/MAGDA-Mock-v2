@@ -17,10 +17,11 @@ public class SoapStubRegistrar {
     public static final String VERSION_03_00 = "03.00.0000";
 
     public static final String KEY_INSZ = "//INSZ";
-    public static final String KEY_ONDERNEMINGSNUMMER = "//Ondernemingsnummer";
-    public static final String KEY_BOEKJAAR = "//Boekjaar";
     public static final String KEY_RRNR = "//rrnr";
     public static final String KEY_SSIN = "//ssin";
+    public static final String KEY_INSS = "//INSS";
+    public static final String KEY_ONDERNEMINGSNUMMER = "//Ondernemingsnummer";
+    public static final String KEY_BOEKJAAR = "//Boekjaar";
     public static final String KEY_EIGENDOMID = "//EigendomId";
     public static final String KEY_EIGENDOMSTOESTANDID = "//EigendomstoestandId";
     public static final String KEY_DOSSIERNUMMER = "//Dossiernummer";
@@ -164,12 +165,22 @@ public class SoapStubRegistrar {
                     // SocEcon
                     subDir("GeefStatusRechtOndersteuningen", VERSION_02_00, KEY_INSZ),
 
-                    // SocSec
+                    // SocZec
+                    flatFile("GeefArbeidsongeschiktheid", VERSION_01_00, KEY_SSIN, "//yearQuarter"),
+                    subDir("GeefAttestWerkloosheid", VERSION_01_00, KEY_INSS),
                     subDir("GeefBetalingenHandicap", VERSION_03_00, KEY_SSIN),
-                    subDir("GeefDossierHandicap", VERSION_03_00, KEY_SSIN),
+                    subDir("GeefDossierHandicap", VERSION_03_00, "//Criteria/child::*[1]/name()", KEY_SSIN),
+                    // Criteria/child::*[1]/name() -> tag name of the first child node in element Criteria -> ConsultFilesByDateCriteria | ConsultFilesByPeriodCriteria
+                    subDir("GeefInschrijvingWerkzoekende", VERSION_01_00, KEY_SSIN),
                     subDir("GeefLeefloonbedragen", VERSION_02_00, KEY_INSZ),
+                    subDir("GeefLeefloonperiodes", VERSION_02_00, KEY_INSZ),
+                    flatFile("GeefPensioen", VERSION_02_00, KEY_INSZ, "//Criteria/Pijler"),
+                    flatFile("GeefPensioenrechten", VERSION_02_00, KEY_INSZ, "//Criteria/Pijler"),
+                    subDir("GeefStatuutRVV", VERSION_02_00, KEY_INSZ),
                     subDir("GeefSociaalStatuut", VERSION_03_00, KEY_INSZ),
+                    subDir("GeefVervangingsinkomenUitWerkloosheid", VERSION_02_01, KEY_INSZ),
                     subDir("GeefVolledigDossierHandicap", VERSION_03_00, KEY_RRNR),
+                    subDir("GeefWerkzoekende", VERSION_02_00, KEY_INSZ),
 
                     // Vastgoed
                     subDir("GeefEpc", VERSION_02_01,

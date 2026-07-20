@@ -51,7 +51,7 @@
                             <Datum>2024-03-15</Datum>
                             <Tijd>10:21:40.797</Tijd>
                         </Tijdstip>
-                        <Diagnose>Antwoord met waarschuwing</Diagnose>
+                        <Diagnose>Antwoord met waarschuwing ConsultFilesByDateResponse</Diagnose>
                         <Omstandigheid>NO_DATA_FOUND</Omstandigheid>
                         <Annotaties>
                             <Annotatie>

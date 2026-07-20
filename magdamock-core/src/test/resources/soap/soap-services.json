@@ -1212,6 +1212,65 @@
     "xpathExpression": "//Status/Omschrijving",
     "expectedValue": "Toegekend"
   },
+
+
+
+  {
+    "naam": "GeefArbeidsongeschiktheid",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "ssin",
+        "value": "83660634135"
+      },
+      {
+          "path": "yearQuarter",
+          "value": "2025Q1"
+      }
+    ],
+    "xpathExpression": "//ssin",
+    "expectedValue": "83660634135"
+  },
+  {
+    "naam": "GeefArbeidsongeschiktheid",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "ssin",
+        "value": "83660634136"
+      },
+      {
+        "path": "yearQuarter",
+        "value": "2025Q1"
+      }
+    ],
+    "xpathExpression": "//value",
+    "expectedValue": "NO_DATA_FOUND"
+  },
+  {
+    "naam": "GeefAttestWerkloosheid",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "INSS",
+        "value": "83660634135"
+      }
+    ],
+    "xpathExpression": "(//*[local-name()='INSS'])[1]",
+    "expectedValue": "83660634135"
+  },
+  {
+    "naam": "GeefAttestWerkloosheid",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "INSS",
+        "value": "83660634136"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "70002"
+  },
   {
     "naam": "GeefBetalingenHandicap",
     "versie": "03.00.0000",
@@ -1241,24 +1300,88 @@
     "versie": "03.00.0000",
     "requestFields": [
       {
+        "path": "//Criteria/ConsultFilesByDateCriteria",
+        "value": "test"
+      },
+      {
         "path": "ssin",
         "value": "00683042157"
       }
     ],
-    "xpathExpression": "//lastName",
-    "expectedValue": "DEKKER"
+    "xpathExpression": "//ssin",
+    "expectedValue": "00683042157"
   },
   {
     "naam": "GeefDossierHandicap",
     "versie": "03.00.0000",
     "requestFields": [
       {
+        "path": "//Criteria/ConsultFilesByDateCriteria",
+        "value": "test"
+      },
+      {
         "path": "ssin",
         "value": "00683042158"
       }
     ],
     "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Antwoord met waarschuwing"
+    "expectedValue": "Antwoord met waarschuwing ConsultFilesByDateResponse"
+  },
+  {
+    "naam": "GeefDossierHandicap",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/ConsultFilesByPeriodCriteria",
+        "value": "test"
+      },
+      {
+        "path": "ssin",
+        "value": "83660634135"
+      }
+    ],
+    "xpathExpression": "//ssin",
+    "expectedValue": "83660634135"
+  },
+  {
+    "naam": "GeefDossierHandicap",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/ConsultFilesByPeriodCriteria",
+        "value": "test"
+      },
+      {
+        "path": "ssin",
+        "value": "83660634136"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Antwoord met waarschuwing ConsultFilesByPeriodResponse"
+  },
+  {
+    "naam": "GeefInschrijvingWerkzoekende",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "ssin",
+        "value": "83660634135"
+      }
+    ],
+    "xpathExpression": "//ssin",
+    "expectedValue": "83660634135"
+  },
+  {
+    "naam": "GeefInschrijvingWerkzoekende",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "ssin",
+        "value": "83660634136"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "70002"
   },
   {
     "naam": "GeefLeefloonbedragen",
@@ -1285,6 +1408,94 @@
     "expectedValue": "Geen gegevens gevonden voor de vraag"
   },
   {
+    "naam": "GeefLeefloonperiodes",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634135"
+      }
+    ],
+    "xpathExpression": "(//INSZ)[1]",
+    "expectedValue": "83660634135"
+  },
+  {
+    "naam": "GeefLeefloonperiodes",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634136"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30001"
+  },
+  {
+    "naam": "GeefPensioen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634135"
+      },
+      {
+        "path": "//Criteria/Pijler",
+        "value": "1"
+      }
+    ],
+    "xpathExpression": "//INSZ",
+    "expectedValue": "83660634135"
+  },
+  {
+    "naam": "GeefPensioen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634136"
+      },
+      {
+        "path": "//Criteria/Pijler",
+        "value": "1"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30001"
+  },
+  {
+    "naam": "GeefPensioenrechten",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634135"
+      },
+      {
+        "path": "//Criteria/Pijler",
+        "value": "1"
+      }
+    ],
+    "xpathExpression": "//INSZ",
+    "expectedValue": "83660634135"
+  },
+  {
+    "naam": "GeefPensioenrechten",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634136"
+      },
+      {
+        "path": "//Criteria/Pijler",
+        "value": "1"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30001"
+  },
+  {
     "naam": "GeefSociaalStatuut",
     "versie": "03.00.0000",
     "requestFields": [
@@ -1294,11 +1505,11 @@
       },
       {
         "path": "//SocialeStatuten/SociaalStatuut/Naam",
-        "value": "GENT_PARKING_CHILD"
+        "value": "STATUUT_A"
       }
     ],
     "xpathExpression": "//SociaalStatuut/Naam",
-    "expectedValue": "GENT_PARKING_CHILD"
+    "expectedValue": "STATUUT_A"
   },
   {
     "naam": "GeefSociaalStatuut",
@@ -1315,6 +1526,54 @@
     ],
     "xpathExpression": "//SociaalStatuut/Naam",
     "expectedValue": "SOCIAL_STATUTE_NAME"
+  },
+  {
+    "naam": "GeefStatuutRVV",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634135"
+      }
+    ],
+    "xpathExpression": "//Statuut/Datum",
+    "expectedValue": "2025-10-01"
+  },
+  {
+    "naam": "GeefStatuutRVV",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634136"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30001"
+  },
+  {
+    "naam": "GeefVervangingsinkomenUitWerkloosheid",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634135"
+      }
+    ],
+    "xpathExpression": "//INSZ",
+    "expectedValue": "83660634135"
+  },
+  {
+    "naam": "GeefVervangingsinkomenUitWerkloosheid",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634136"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30001"
   },
   {
     "naam": "GeefVolledigDossierHandicap",
@@ -1340,6 +1599,33 @@
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag"
   },
+  {
+    "naam": "GeefWerkzoekende",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634135"
+      }
+    ],
+    "xpathExpression": "//INSZ",
+    "expectedValue": "83660634135"
+  },
+  {
+    "naam": "GeefWerkzoekende",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "83660634136"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30001"
+  },
+
+
+
   {
     "naam": "GeefEpc",
     "versie": "02.01.0000",

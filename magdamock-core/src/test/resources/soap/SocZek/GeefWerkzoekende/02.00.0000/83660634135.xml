@@ -1,0 +1,49 @@
+<web:GeefWerkzoekendeResponse xmlns:web="http://webservice.geefwerkzoekendedienst-02_00.soczek-02_00.vip.vlaanderen.be">
+    <Repliek>
+        <Context>
+            <Naam>GeefWerkzoekende</Naam>
+            <Versie>02.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>?</Datum>
+                    <Tijd>?</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <Werkzoekende>
+                        <INSZ>83660634135</INSZ>
+                        <CategorieWZ>
+                            <Code>VERPLICHT</Code>
+                            <Omschrijving>gekend bij VDAB als verplicht ingeschreven WZ</Omschrijving>
+                        </CategorieWZ>
+                        <PastInTrajectNaarWerk>
+                            <Resultaat>
+                                <Code>IN BEHANDELING</Code>
+                                <Omschrijving>De vraag of de opleiding past in het door VDAB vastgestelde traject naar werk, is in behandeling</Omschrijving>
+                            </Resultaat>
+                            <PeriodeGeldigheid>
+                                <Begin>2025-09-20</Begin>
+                                <Einde>2026-06-24</Einde>
+                            </PeriodeGeldigheid>
+                        </PastInTrajectNaarWerk>
+                    </Werkzoekende>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:GeefWerkzoekendeResponse>

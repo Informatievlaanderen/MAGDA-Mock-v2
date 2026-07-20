@@ -654,6 +654,28 @@ class RestServicesTest {
                             "default"
                             , "application/json"
                     ), Arguments.of(
+	                        new MagdaMockRestHandler.MockRestRequest(
+	                                "/v1/socZek/handicap/volledigeDossiers",
+	                                "rrnr=83660634135",
+	                                "GET",
+	                                "",
+	                                Map.of()
+	                        ),
+	                        "socZek/handicap/volledigeDossiers/get?rrnr=83660634135",
+	                        "specific",
+	                        "application/json"
+	                ), Arguments.of(
+	                        new MagdaMockRestHandler.MockRestRequest(
+	                                "/v1/socZek/handicap/volledigeDossiers",
+	                                "rrnr=83660634136",
+	                                "GET",
+	                                "",
+	                                Map.of()
+	                        ),
+	                        "socZek/handicap/volledigeDossiers/get",
+	                        "default",
+	                        "application/json"
+	                ), Arguments.of(
                             new MagdaMockRestHandler.MockRestRequest(
                                     "/v1/socZek/socialeHuisvesting/dossiers/zoeken",
                                     "",
