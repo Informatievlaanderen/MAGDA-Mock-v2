@@ -14,39 +14,36 @@ class BasicSoapResponsePatcherTest extends ResponsePatcherTest {
     void patchResponse_withGebruiker() throws Exception {
         String requestXml = """
             <Root>
-                <Afzender>
-                    <Referte>REQ-123</Referte>
-                    <Identificatie>SENDER-ID</Identificatie>
-                    <Hoedanigheid>SENDER-ROLE</Hoedanigheid>
-                    <Gebruiker>bart.peeters</Gebruiker>
-                </Afzender>
+            <Verzoek>
+                <Context>
+                    <Naam>GeefAanslagbiljetPersonenbelasting</Naam>
+                    <Versie>02.00.0000</Versie>
+                    <Bericht>
+                        <Type>VRAAG</Type>
+                        <Tijdstip>
+                            <Datum>2026-07-20</Datum>
+                            <Tijd>13:28:08.366</Tijd>
+                        </Tijdstip>
+                        <Afzender>
+                            <Referte>REQ-123</Referte>
+                            <Identificatie>SENDER-ID</Identificatie>
+                            <Hoedanigheid>SENDER-ROLE</Hoedanigheid>
+                            <Gebruiker>bart.peeters</Gebruiker>
+                        </Afzender>
+                    </Bericht>
+                </Context>
+                </Verzoek>
             </Root>
             """;
 
         String responseXml = """
             <Root>
-                <Ontvanger>
-                    <Referte>OLD</Referte>
-                    <Identificatie>OLD</Identificatie>
-                    <Hoedanigheid>OLD</Hoedanigheid>
-                    <Gebruiker>OLD</Gebruiker>
-                </Ontvanger>
-                <Antwoord>
-                    <Referte>OLD</Referte>
-                </Antwoord>
-                <Context>
-                    <Bericht>
-                        <Tijdstip>
-                            <Datum>OLD</Datum>
-                            <Tijd>OLD</Tijd>
-                        </Tijdstip>
-                    </Bericht>
-                </Context>
-                <Afzender>
-                    <Referte>OLD</Referte>
-                    <Identificatie>OLD</Identificatie>
-                    <Naam>OLD</Naam>
-                </Afzender>
+                    <Repliek>
+                        <Antwoord>
+                            <Referte>
+                            </Referte>
+                        </Antwoord>
+                    </Repliek>
             </Root>
             """;
 
@@ -65,38 +62,35 @@ class BasicSoapResponsePatcherTest extends ResponsePatcherTest {
     void patchResponse_withOutGebruiker() throws Exception {
         String requestXml = """
             <Root>
-                <Afzender>
-                    <Referte>REQ-123</Referte>
-                    <Identificatie>SENDER-ID</Identificatie>
-                    <Hoedanigheid>SENDER-ROLE</Hoedanigheid>
-                </Afzender>
+            <Verzoek>
+                <Context>
+                    <Naam>GeefAanslagbiljetPersonenbelasting</Naam>
+                    <Versie>02.00.0000</Versie>
+                    <Bericht>
+                        <Type>VRAAG</Type>
+                        <Tijdstip>
+                            <Datum>2026-07-20</Datum>
+                            <Tijd>13:28:08.366</Tijd>
+                        </Tijdstip>
+                        <Afzender>
+                            <Referte>REQ-123</Referte>
+                            <Identificatie>SENDER-ID</Identificatie>
+                            <Hoedanigheid>SENDER-ROLE</Hoedanigheid>
+                        </Afzender>
+                    </Bericht>
+                </Context>
+                </Verzoek>
             </Root>
             """;
 
         String responseXml = """
             <Root>
-                <Ontvanger>
-                    <Referte>OLD</Referte>
-                    <Identificatie>OLD</Identificatie>
-                    <Hoedanigheid>OLD</Hoedanigheid>
-                    <Gebruiker>TO_BE_REMOVED</Gebruiker>
-                </Ontvanger>
-                <Antwoord>
-                    <Referte>OLD</Referte>
-                </Antwoord>
-                <Context>
-                    <Bericht>
-                        <Tijdstip>
-                            <Datum>OLD</Datum>
-                            <Tijd>OLD</Tijd>
-                        </Tijdstip>
-                    </Bericht>
-                </Context>
-                <Afzender>
-                    <Referte>OLD</Referte>
-                    <Identificatie>OLD</Identificatie>
-                    <Naam>OLD</Naam>
-                </Afzender>
+                    <Repliek>
+                        <Antwoord>
+                            <Referte>
+                            </Referte>
+                        </Antwoord>
+                    </Repliek>
             </Root>
             """;
 

@@ -3,11 +3,13 @@ package be.vlaanderen.vip.magda.magdamock.client.patchers;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -31,28 +33,62 @@ public class BasicSoapResponsePatcher implements SoapResponsePatcher {
 
     @Override
     public MagdaMockDocument patchResponse(MagdaMockDocument request, Document response) {
-        MagdaMockDocument madgaDocumentResponse = new MagdaMockDocument(response);
+        try {
+            Document requestDoc = request.getXml();
+            NodeList contextNodes = requestDoc.getElementsByTagName("Context");
+            NodeList oldContextNodes = response.getElementsByTagName("Context");
+            for (int i = 0; i < oldContextNodes.getLength(); i++) {
+                Node oldContext = oldContextNodes.item(i);
+                oldContext.getParentNode().removeChild(oldContext);
+            }
 
-        var senderReference = request.getValue("//Afzender/Referte");
-        madgaDocumentResponse.setValue("//Ontvanger/Referte", senderReference);
-        madgaDocumentResponse.setValue("//Antwoord/Referte", senderReference);
-        madgaDocumentResponse.setValue("//Ontvanger/Identificatie", request.getValue("//Afzender/Identificatie"));
-        madgaDocumentResponse.setValue("//Ontvanger/Hoedanigheid", request.getValue("//Afzender/Hoedanigheid"));
+            if (contextNodes.getLength() != 0) {
+                Node requestContext = contextNodes.item(0);
+                Node importedContext = response.importNode(requestContext, true);
 
-        Optional.ofNullable(request.getValue("//Afzender/Gebruiker"))
-                .ifPresentOrElse(user -> madgaDocumentResponse.setValue("//Ontvanger/Gebruiker", user),
-                        () -> madgaDocumentResponse.removeNode("//Ontvanger/Gebruiker"));
+                NodeList repliekNodes = response.getElementsByTagName("Repliek");
+                Node repliekElement = repliekNodes.item(0);
+                repliekElement.insertBefore(importedContext, repliekElement.getFirstChild());
 
-        LocalDateTime now = LocalDateTime.now(clock);
-        madgaDocumentResponse.setValue("//Context/Bericht/Tijdstip/Datum", now.format(DATE_FORMAT));
+                NodeList afzenderNodes = ((Element) importedContext).getElementsByTagName("Afzender");
+                if (afzenderNodes.getLength() > 0) {
+                    // Move all children from afzender to ontvanger
+                    Node oldAfzender = afzenderNodes.item(0);
+                    Node ontvanger = response.createElement("Ontvanger");
+                    while (oldAfzender.hasChildNodes()) {
+                        ontvanger.appendChild(oldAfzender.getFirstChild());
+                    }
+                    oldAfzender.getParentNode().replaceChild(ontvanger, oldAfzender);
 
-        madgaDocumentResponse.setValue("//Context/Bericht/Tijdstip/Tijd", now.format(TIME_FORMAT));
+                    // Afzender identificatie voor Magda Mock
+                    Node newAfzender = response.createElement("Afzender");
+                    Element identificatie = response.createElement("Identificatie");
+                    identificatie.setTextContent("kb.vlaanderen.be/aiv/magda-mock-server");
+                    newAfzender.appendChild(identificatie);
+                    Element naam = response.createElement("Naam");
+                    naam.setTextContent("Magda Mock Server");
+                    newAfzender.appendChild(naam);
+                    Node referte = response.createElement("Referte");
+                    referte.setTextContent(uuidSupplier.get().toString());
+                    newAfzender.appendChild(referte);
 
-        // Identificeert antwoord als komend van Magda Mock
-        madgaDocumentResponse.setValue("//Afzender/Referte", uuidSupplier.get().toString());
-        madgaDocumentResponse.setValue("//Afzender/Identificatie", "kb.vlaanderen.be/aiv/magda-mock-server");
-        madgaDocumentResponse.setValue("//Afzender/Naam", "Magda Mock Server");
+                    ontvanger.getParentNode().insertBefore(newAfzender, ontvanger);
+                }
+            }
+            MagdaMockDocument madgaDocumentResponse = new MagdaMockDocument(response);
 
-        return madgaDocumentResponse;
+            madgaDocumentResponse.setValue("//Antwoord/Referte", uuidSupplier.get().toString());
+
+            LocalDateTime now = LocalDateTime.now(clock);
+            madgaDocumentResponse.setValue("//Context/Bericht/Tijdstip/Datum", now.format(DATE_FORMAT));
+            madgaDocumentResponse.setValue("//Context/Bericht/Tijdstip/Tijd", now.format(TIME_FORMAT));
+
+            madgaDocumentResponse.setValue("//Context/Bericht/Type", "ANTWOORD");
+
+            return madgaDocumentResponse;
+        } catch (Exception e) {
+            log.error("Exception while patching SOAP response", e);
+            return new MagdaMockDocument(response);
+        }
     }
 }

@@ -17,12 +17,21 @@ class GeefSociaalStatuutResponsePatcherTest extends ResponsePatcherTest {
     void patchResponse_shouldPatchBaseFieldsCopyInszRemoveExtraStatutesAndAddMissingOnes() throws Exception {
         String requestXml = """
                 <Root>
+                    <Context>
+                    <Bericht>
+                                            <Tijdstip>
+                            <Datum>2026-07-20</Datum>
+                            <Tijd>13:28:08.366</Tijd>
+                        </Tijdstip>
+                    </Bericht>
+
                     <Afzender>
                         <Referte>REQ-123</Referte>
                         <Identificatie>SENDER-ID</Identificatie>
                         <Hoedanigheid>SENDER-ROLE</Hoedanigheid>
                         <Gebruiker>bart.peeters</Gebruiker>
                     </Afzender>
+                    </Context>
                     <INSZ>12345678901</INSZ>
                     <SocialeStatuten>
                         <SociaalStatuut>
@@ -37,29 +46,30 @@ class GeefSociaalStatuutResponsePatcherTest extends ResponsePatcherTest {
 
         String responseXml = """
                 <Root>
+                <Repliek>
+                <Context>
                     <Ontvanger>
                         <Referte>OLD</Referte>
                         <Identificatie>OLD</Identificatie>
                         <Hoedanigheid>OLD</Hoedanigheid>
                         <Gebruiker>OLD</Gebruiker>
                     </Ontvanger>
-                    <Antwoord>
-                        <Referte>OLD</Referte>
-                    </Antwoord>
-                    <Context>
                         <Bericht>
                             <Tijdstip>
                                 <Datum>OLD</Datum>
                                 <Tijd>OLD</Tijd>
                             </Tijdstip>
                         </Bericht>
-                    </Context>
                     <Afzender>
                         <Referte>OLD</Referte>
                         <Identificatie>OLD</Identificatie>
                         <Naam>OLD</Naam>
                     </Afzender>
+                    </Context>
                     <INSZ>00000000000</INSZ>
+                    <Antwoord>
+                        <Referte>OLD</Referte>
+                    </Antwoord>
                     <SocialeStatuten>
                         <SociaalStatuut>
                             <Naam>STATUUT_A</Naam>
@@ -76,6 +86,7 @@ class GeefSociaalStatuutResponsePatcherTest extends ResponsePatcherTest {
                             </Resultaat>
                         </SociaalStatuut>
                     </SocialeStatuten>
+                    </Repliek>
                 </Root>
                 """;
 
@@ -112,11 +123,20 @@ class GeefSociaalStatuutResponsePatcherTest extends ResponsePatcherTest {
     void patchResponse_shouldRemoveGebruikerWhenMissingInRequest() throws Exception {
         String requestXml = """
                 <Root>
+                    <Context>
+                    <Bericht>
+                                            <Tijdstip>
+                            <Datum>2026-07-20</Datum>
+                            <Tijd>13:28:08.366</Tijd>
+                        </Tijdstip>
+                    </Bericht>
+
                     <Afzender>
                         <Referte>REQ-123</Referte>
                         <Identificatie>SENDER-ID</Identificatie>
                         <Hoedanigheid>SENDER-ROLE</Hoedanigheid>
                     </Afzender>
+                    </Context>
                     <INSZ>12345678901</INSZ>
                     <SocialeStatuten>
                         <SociaalStatuut>
@@ -128,29 +148,30 @@ class GeefSociaalStatuutResponsePatcherTest extends ResponsePatcherTest {
 
         String responseXml = """
                 <Root>
+                <Repliek>
+                <Context>
                     <Ontvanger>
                         <Referte>OLD</Referte>
                         <Identificatie>OLD</Identificatie>
                         <Hoedanigheid>OLD</Hoedanigheid>
-                        <Gebruiker>TO_BE_REMOVED</Gebruiker>
+                        <Gebruiker>OLD</Gebruiker>
                     </Ontvanger>
-                    <Antwoord>
-                        <Referte>OLD</Referte>
-                    </Antwoord>
-                    <Context>
                         <Bericht>
                             <Tijdstip>
                                 <Datum>OLD</Datum>
                                 <Tijd>OLD</Tijd>
                             </Tijdstip>
                         </Bericht>
-                    </Context>
                     <Afzender>
                         <Referte>OLD</Referte>
                         <Identificatie>OLD</Identificatie>
                         <Naam>OLD</Naam>
                     </Afzender>
+                    </Context>
                     <INSZ>00000000000</INSZ>
+                    <Antwoord>
+                        <Referte>OLD</Referte>
+                    </Antwoord>
                     <SocialeStatuten>
                         <SociaalStatuut>
                             <Naam>STATUUT_A</Naam>
@@ -160,6 +181,7 @@ class GeefSociaalStatuutResponsePatcherTest extends ResponsePatcherTest {
                             </Resultaat>
                         </SociaalStatuut>
                     </SocialeStatuten>
+                    </Repliek>
                 </Root>
                 """;
 

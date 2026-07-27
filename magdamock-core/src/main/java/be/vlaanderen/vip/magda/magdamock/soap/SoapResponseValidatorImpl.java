@@ -102,8 +102,8 @@ public class SoapResponseValidatorImpl extends SoapBodyValidator {
 
     @SneakyThrows
     public void validateXml(MagdaMockDocument magdaDocument) throws MagdaMockSoapException {
-        String naam = magdaDocument.xpath("//Context/Naam").item(0).getTextContent();
-        String versie = magdaDocument.xpath("//Context/Versie").item(0).getTextContent();
+        String naam = magdaDocument.getValue("//Context/Naam");
+        String versie = magdaDocument.getValue("//Context/Versie");
         Validator validator = getValidator(naam, versie);
         try {
             validator.validate(new DOMSource(magdaDocument.getXml()));
