@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
+import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ class SoapStubRegistrarTest {
 
     @Test
     void all_shouldContainAllRegisteredServicesAndVersions() {
-        List<SoapStubRegistrar.SoapStubDefinition> definitions = SoapStubRegistrar.SoapStubDefinitions.allDefinitions();
+        List<MockSoapMapping> definitions = MockSoapMapping.MAPPINGS;
 
         Set<String> actual = definitions.stream()
                 .map(definition -> definition.service() + "|" + definition.version())
@@ -123,26 +124,9 @@ class SoapStubRegistrarTest {
 
     @Test
     void createHandler_shouldCreateSubDirHandler() {
-        var definition = SoapStubRegistrar.SoapStubDefinitions.allDefinitions().stream()
-                .filter(d -> d.service().equals("GeefPersoon") && d.version().equals(VERSION_02_02))
-                .findFirst()
-                .orElseThrow();
+        var handlers = MockSoapMapping.createHandlersMap(mock(WireMockServer.class), "soap");
 
-        SoapStubHandler handler = definition.createHandler(mock(WireMockServer.class), "soap");
-
-        assertInstanceOf(SubDirSOAPStubHandler.class, handler);
-    }
-
-    @Test
-    void createHandler_shouldCreatePasfotoHandler() {
-        var definition = SoapStubRegistrar.SoapStubDefinitions.allDefinitions().stream()
-                .filter(d -> d.service().equals("GeefPasfoto") && d.version().equals(VERSION_02_00))
-                .findFirst()
-                .orElseThrow();
-
-        SoapStubHandler handler = definition.createHandler(mock(WireMockServer.class), "soap");
-
-        assertInstanceOf(SubDirSOAPStubHandler.class, handler);
+        assertInstanceOf(SubDirSOAPStubHandler.class, handlers.values().iterator().next());
     }
 
     @Test

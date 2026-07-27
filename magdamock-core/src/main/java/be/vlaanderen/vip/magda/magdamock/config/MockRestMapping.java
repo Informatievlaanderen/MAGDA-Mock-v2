@@ -1,4 +1,4 @@
-package be.vlaanderen.vip.magda.magdamock.client.rest;
+package be.vlaanderen.vip.magda.magdamock.config;
 
 import java.util.List;
 

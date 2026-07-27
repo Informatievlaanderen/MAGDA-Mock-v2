@@ -2,6 +2,7 @@ package be.vlaanderen.vip.magda.magdamock.client.handlers;
 
 import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar;
+import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcher;
@@ -49,7 +50,7 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         this.filters = new ArrayList<>();
         this.filters.add(EmptyElementsFilter.getInstance());
 
-        this.knownServiceIdentifications = SoapStubRegistrar.SoapStubDefinitions.allDefinitions().stream()
+        this.knownServiceIdentifications = MockSoapMapping.MAPPINGS.stream()
                 .map(def -> new MagdaMockDocument.MagdaServiceIdentification(def.service(), def.version())).collect(Collectors.toSet());
     }
 

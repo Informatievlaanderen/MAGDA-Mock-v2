@@ -2,7 +2,7 @@ package be.vlaanderen.vip.magda.magdamock.client.rest;
 
 import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.RestLogHelper;
-import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
+import be.vlaanderen.vip.magda.magdamock.config.MockRestMapping;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;

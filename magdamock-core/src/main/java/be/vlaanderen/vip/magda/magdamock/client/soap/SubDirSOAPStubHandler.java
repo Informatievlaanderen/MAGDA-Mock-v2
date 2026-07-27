@@ -24,10 +24,6 @@ public class SubDirSOAPStubHandler extends AbstractSoapStubHandler {
     private final List<String> keys;
     private final String separator;
 
-    public SubDirSOAPStubHandler(WireMockServer wireMockServer, String soapTestPath, List<String> keys) {
-        this(wireMockServer, soapTestPath, keys, "/");
-    }
-
     public SubDirSOAPStubHandler(WireMockServer wireMockServer, String soapTestPath, List<String> keys, String separator) {
         super(wireMockServer, soapTestPath);
         this.keys = keys;

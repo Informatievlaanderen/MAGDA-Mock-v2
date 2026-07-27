@@ -3,7 +3,7 @@ package be.vlaanderen.vip.magda.magdamock.client;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockRestHandler;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
 import be.vlaanderen.vip.magda.magdamock.client.rest.DefaultWiremockMapping;
-import be.vlaanderen.vip.magda.magdamock.client.rest.MockRestMapping;
+import be.vlaanderen.vip.magda.magdamock.config.MockRestMapping;
 import be.vlaanderen.vip.magda.magdamock.client.rest.RestDirectoryHandler;
 import be.vlaanderen.vip.magda.magdamock.client.soap.Domain;
 import be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar;
@@ -22,7 +22,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.tuple.Pair;
 import org.w3c.dom.Document;
 
