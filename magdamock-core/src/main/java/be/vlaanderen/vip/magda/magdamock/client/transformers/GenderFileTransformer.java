@@ -1,4 +1,4 @@
-package be.vlaanderen.vip.magda.magdamock.client.soap;
+package be.vlaanderen.vip.magda.magdamock.client.transformers;
 
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.extension.Parameters;
@@ -36,7 +36,7 @@ public class GenderFileTransformer implements ResponseDefinitionTransformerV2 {
     private final Random random;
 
     private final ConcurrentMap<String, List<Path>> cache = new ConcurrentHashMap<>();
-    static final String NAME = "gender-file-transformer";
+    public static final String NAME = "gender-file-transformer";
 
     public GenderFileTransformer(Path filesRoot) {
         this(filesRoot, new Random());

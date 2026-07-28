@@ -1,4 +1,4 @@
-package be.vlaanderen.vip.magda.magdamock.client.rest;
+package be.vlaanderen.vip.magda.magdamock.client.wiremock;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.stubbing.StubMapping;

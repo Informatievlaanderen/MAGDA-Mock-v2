@@ -11,6 +11,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.namespace.NamespaceContext;
+import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
@@ -90,6 +91,9 @@ public class MagdaMockDocument {
     }
 
     public String getValue(String expression) {
+        if (expression.endsWith("name()") || expression.startsWith("local-name")) {
+            return (String) xpath(expression, null, XPathConstants.STRING);
+        }
         return getValue(expression, null);
     }
 
@@ -111,11 +115,11 @@ public class MagdaMockDocument {
         return values;
     }
 
-    public NodeList xpath(String expression, String defaultNamespace) {
+    public Object xpath(String expression, String defaultNamespace, QName returnType) {
         final var xpath = makeXpath(defaultNamespace);
         try {
             // TODO improvement: use pre-compiled xpath expressions instead of compiling them on the fly
-            return (NodeList) xpath.compile(expression).evaluate(xml, XPathConstants.NODESET);
+            return xpath.compile(expression).evaluate(xml, returnType);
         } catch (XPathExpressionException e) {
             log.warn("Error retrieving value '{}' : ", expression, e);
         }
@@ -124,6 +128,10 @@ public class MagdaMockDocument {
 
     public NodeList xpath(String expression) {
         return xpath(expression, null);
+    }
+
+    private NodeList xpath(String expression, String defaultNamespace) {
+        return (NodeList) xpath(expression, defaultNamespace, XPathConstants.NODESET);
     }
 
     private XPath makeXpath(String defaultNamespace) {

@@ -1791,15 +1791,15 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "NISCode",
+        "path": "//Criteria/NISCode",
         "value": "44021"
       },
       {
-        "path": "Type",
+        "path": "//Criteria/Type",
         "value": "Pand"
       },
       {
-        "path": "Referte",
+        "path": "//Criteria/Referte",
         "value": "PA19-000873"
       }
     ],
@@ -1867,11 +1867,11 @@
         "value": "44021"
       },
       {
-        "path": "//Type",
+        "path": "//Criteria/Bijlagen/Bijlage/Type",
         "value": "Document"
       },
       {
-        "path": "//Referte",
+        "path": "//Criteria/Bijlagen/Bijlage/Referte",
         "value": "DOC26-00000876"
       }
     ],
@@ -1901,10 +1901,6 @@
       {
         "path": "//Criteria/NISCode",
         "value": "11002"
-      },
-      {
-        "path": "//Criteria/VraagAdviesAanWvl",
-        "value": ""
       }
     ],
     "xpathExpression": "//Bijlage/Referte",

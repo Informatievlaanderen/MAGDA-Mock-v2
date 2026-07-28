@@ -1,16 +1,14 @@
 package be.vlaanderen.vip.magda.magdamock.client.handlers;
 
 import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
-import be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar;
-import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
-import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcher;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcherImpl;
+import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.filters.EmptyElementsFilter;
 import be.vlaanderen.vip.magda.magdamock.filters.MagdaMockFilter;
-import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;

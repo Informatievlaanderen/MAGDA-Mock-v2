@@ -2,12 +2,11 @@ package be.vlaanderen.vip.magda.magdamock.client;
 
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockRestHandler;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
-import be.vlaanderen.vip.magda.magdamock.client.rest.DefaultWiremockMapping;
-import be.vlaanderen.vip.magda.magdamock.config.MockRestMapping;
-import be.vlaanderen.vip.magda.magdamock.client.rest.RestDirectoryHandler;
-import be.vlaanderen.vip.magda.magdamock.client.soap.Domain;
-import be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar;
+import be.vlaanderen.vip.magda.magdamock.client.wiremock.DefaultWiremockMapping;
+import be.vlaanderen.vip.magda.magdamock.client.wiremock.WiremockTransformerStubCreator;
 import be.vlaanderen.vip.magda.magdamock.config.EmbeddedWireMockBuilder;
+import be.vlaanderen.vip.magda.magdamock.config.MockRestMapping;
+import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
@@ -16,7 +15,6 @@ import be.vlaanderen.vip.magda.magdamock.soap.SoapResponseValidatorImpl;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
 import be.vlaanderen.vip.magda.magdamock.utils.NoopTimeoutUtil;
 import be.vlaanderen.vip.magda.magdamock.utils.RandomTimeoutUtil;
-import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +24,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +46,7 @@ public class MagdaMockConnection {
         TimeoutUtil timeoutUtil = new NoopTimeoutUtil();
         return create(wiremockServerData, soapRequestValidator, soapResponseValidator, timeoutUtil);
     }
+
     public static MagdaMockConnection create(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator, TimeoutUtil timeoutUtil) {
         return create(wiremockServerData, soapRequestValidator, soapResponseValidator, timeoutUtil, false);
     }
@@ -68,17 +66,22 @@ public class MagdaMockConnection {
         return create(restDataPath, soapTestPath, xsdPath, minimumTimeoutMillis, maximumTimeoutMillis, mappings, logRequestBody);
     }
 
-    public static MagdaMockConnection create(String restDataPath, String soapTestPath, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis, List<MockRestMapping> mappings, boolean logRequestBody) throws IOException {
-        List<Domain> domains = SoapResourceUtil.loadDomainsFromPaths(SoapResourceUtil.resolvePaths(soapTestPath));
-        WireMockData wireMockData = new EmbeddedWireMockBuilder().soapTestPath(soapTestPath).build();
-        SoapStubRegistrar soapStubRegistrar = new SoapStubRegistrar(wireMockData.wireMockServer(), soapTestPath);
-        domains.forEach(soapStubRegistrar::registerDomain);
-
-        if (restDataPath != null && !restDataPath.isEmpty()) {
-            Path restPath = Path.of(restDataPath);
-            List<RestDirectoryHandler> directoryHandlers = mappings.stream().map(mockRestMapping -> new RestDirectoryHandler(mockRestMapping, wireMockData.wireMockServer(), restPath)).toList();
-            directoryHandlers.forEach(RestDirectoryHandler::addAllStubs);
+    public static MagdaMockConnection create(String restDataPath, String soapTestPath, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis, List<MockRestMapping> restMappings, boolean logRequestBody) throws IOException {
+        WireMockData wireMockData = new EmbeddedWireMockBuilder().soapTestPath(soapTestPath).restTestPath(restDataPath).build();
+        for (MockRestMapping restMapping : restMappings) {
+            WiremockTransformerStubCreator.addRestTransformerStub(wireMockData.wireMockServer(), restMapping);
         }
+        for (MockSoapMapping soapMapping : MockSoapMapping.MAPPINGS) {
+            switch (soapMapping.stubHandler()) {
+                case FileSoap ->
+                        WiremockTransformerStubCreator.addSoapFileTransformerStub(wireMockData.wireMockServer(), soapMapping);
+                case SubDirSoap ->
+                        WiremockTransformerStubCreator.addSoapSubdirTransformerStub(wireMockData.wireMockServer(), soapMapping);
+                default ->
+                        log.error("Unable to create stub for soap mapping {}, there is not a fitting transformer configured", soapMapping.getId());
+            }
+        }
+
         DefaultWiremockMapping.addDefaultFallbackWiremockMapping(wireMockData.wireMockServer());
 
         SoapBodyValidator soapRequestValidator, soapResponseValidator;

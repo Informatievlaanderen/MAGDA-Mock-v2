@@ -1,8 +1,8 @@
 package be.vlaanderen.vip.magda.magdamock.client.utils;
 
-import be.vlaanderen.vip.magda.magdamock.client.soap.Domain;
-import be.vlaanderen.vip.magda.magdamock.client.soap.Service;
-import be.vlaanderen.vip.magda.magdamock.client.soap.Version;
+import be.vlaanderen.vip.magda.magdamock.soap.Domain;
+import be.vlaanderen.vip.magda.magdamock.soap.Service;
+import be.vlaanderen.vip.magda.magdamock.soap.Version;
 import be.vlaanderen.vip.magda.magdamock.utils.SoapResourceUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;

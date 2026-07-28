@@ -1,4 +1,4 @@
-package be.vlaanderen.vip.magda.magdamock.client.soap;
+package be.vlaanderen.vip.magda.magdamock.soap;
 
 import java.util.List;
 
