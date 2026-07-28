@@ -33,7 +33,7 @@ public abstract class ResponsePatcherTest {
 
     protected void assertBasicFields(MagdaMockDocument result) {
         assertEquals("REQ-123", result.getValue("//Ontvanger/Referte"));
-        assertEquals("REQ-123", result.getValue("//Antwoord/Referte"));
+        assertEquals(UUID_STRING, result.getValue("//Antwoord/Referte"));
         assertEquals("SENDER-ID", result.getValue("//Ontvanger/Identificatie"));
         assertEquals("SENDER-ROLE", result.getValue("//Ontvanger/Hoedanigheid"));
 

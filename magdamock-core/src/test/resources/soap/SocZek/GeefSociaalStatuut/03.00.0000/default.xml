@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<v03:GeefSociaalStatuutResponse xmlns:v03="http://magda.vlaanderen.be/soczek/soap/geefsociaalstatuut/v03_00">
+<web:GeefSociaalStatuutResponse xmlns:web="http://magda.vlaanderen.be/soczek/soap/geefsociaalstatuut/v03_00">
     <Repliek>
         <Context>
             <Naam>GeefSociaalStatuut</Naam>
@@ -7,24 +7,24 @@
             <Bericht>
                 <Type>ANTWOORD</Type>
                 <Tijdstip>
-                    <Datum>2024-03-21</Datum>
-                    <Tijd>12:21:40.797</Tijd>
+                    <Datum>?</Datum>
+                    <Tijd>?</Tijd>
                 </Tijdstip>
                 <Afzender>
-                    <Identificatie>vip.vlaanderen.be</Identificatie>
-                    <Naam>MagdaGateway</Naam>
-                    <Referte>d00c2291-f643-489f-8071-791822f0ad8f</Referte>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
                 </Afzender>
                 <Ontvanger>
-                    <Identificatie>gent.be/ipdc2858</Identificatie>
-                    <Referte>AREF_QT_860921_102202</Referte>
-                    <Hoedanigheid>ipdc2858</Hoedanigheid>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
                 </Ontvanger>
             </Bericht>
         </Context>
         <Antwoorden>
             <Antwoord>
-                <Referte>a288c410-5094-45f4-95cf-1eabe97efcd4</Referte>
+                <Referte>?</Referte>
                 <Inhoud>
                     <Persoon>
                         <INSZ>00000000000</INSZ>
@@ -42,4 +42,4 @@
             </Antwoord>
         </Antwoorden>
     </Repliek>
-</v03:GeefSociaalStatuutResponse>
+</web:GeefSociaalStatuutResponse>

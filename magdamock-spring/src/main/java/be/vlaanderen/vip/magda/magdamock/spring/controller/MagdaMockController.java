@@ -1,13 +1,18 @@
 package be.vlaanderen.vip.magda.magdamock.spring.controller;
 
 
+import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
+import be.vlaanderen.vip.magda.magdamock.client.logging.RestLogHelper;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockRestHandler;
 import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
-import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
+import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
@@ -24,9 +29,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.TEXT_XML;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_XML_VALUE;
 import static org.springframework.util.MimeTypeUtils.TEXT_XML_VALUE;
@@ -40,59 +45,64 @@ public class MagdaMockController {
     private static final String REST_BASE_URL = "/rest";
 
     private final MagdaMockConnection mockConnection;
+    private final String correlationIdHeaderName = "x-correlation-id";
+
 
     public MagdaMockController(MagdaMockConnection mockConnection) {
         this.mockConnection = mockConnection;
     }
 
     @PostMapping(value = {SOAP_BASE_URL}, produces = {TEXT_XML_VALUE}, consumes = {APPLICATION_XML_VALUE, TEXT_XML_VALUE})
-    public ResponseEntity<String> magdaSoap0200WebService(@RequestBody String request) {
-        return processMagdaMockRequest(request);
+    public ResponseEntity<String> magdaSoap0200WebService(@RequestBody String request, HttpServletRequest incomingRequest) {
+        MDC.clear();
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.NOT_SPECIFIED);
+        Map<String, String> headers = new HashMap<>();
+        for (Iterator<String> it = incomingRequest.getHeaderNames().asIterator(); it.hasNext(); ) {
+            String headerName = it.next();
+            headers.put(headerName.toLowerCase(), incomingRequest.getHeader(headerName));
+        }
+        String correlationId = headers.getOrDefault(correlationIdHeaderName, UUID.randomUUID().toString());
+        SoapLogHelper.contextSetCorrelationId(correlationId);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(correlationIdHeaderName, correlationId);
+
+        var response = processMagdaMockRequest(request, httpHeaders);
+        MDC.clear();
+        return response;
     }
 
-    private ResponseEntity<String> processMagdaMockRequest(String request) {
+    private ResponseEntity<String> processMagdaMockRequest(String request, HttpHeaders httpHeaders) {
         //TODO: handle request parsing errors and return Magda Uitzondering error
         try {
             MagdaMockDocument requestDocument = parseDocument(request);
             var magdaResponse = mockConnection.sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(requestDocument.getXml()));
             if (magdaResponse != null) {
-                return parseInputstream(MagdaMockDocument.fromDocument(magdaResponse.document()));
+                return parseInputstream(MagdaMockDocument.fromDocument(magdaResponse.document()), httpHeaders);
 
             } else {
-                return ResponseEntity.notFound().build();
+                return ResponseEntity.notFound().headers(httpHeaders).build();
             }
-        } catch (SoapValidationError e) {
-            return ResponseEntity.internalServerError().contentType(TEXT_XML).body(e.getExceptionBody().toString());
+        } catch (MagdaMockSoapException e) {
+            return ResponseEntity.internalServerError().contentType(TEXT_XML).headers(httpHeaders).body(e.getDocument().toString());
         }
     }
 
-    private MagdaMockDocument parseDocument(String request) throws SoapValidationError {
+    private MagdaMockDocument parseDocument(String request) throws MagdaMockSoapException {
         try {
             return MagdaMockDocument.fromString(request);
-        } catch (Exception e) {
-            throw new SoapValidationError(MagdaMockDocument.fromString("""
-                    <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
-                        <SOAP-ENV:Header/>
-                        <SOAP-ENV:Body>
-                            <ns0:Fault xmlns:ns0="http://schemas.xmlsoap.org/soap/envelope/">
-                                <faultcode>soap:Client</faultcode>
-                                <faultstring>Problems creating SAAJ object model</faultstring>
-                            </ns0:Fault>
-                        </SOAP-ENV:Body>
-                    </SOAP-ENV:Envelope>
-                    """
-            ));
+        } catch (MagdaMockSoapException e) {
+            throw new MagdaMockSoapException(String.format("Unable to parse SOAP request. Reason: %s", e.getCause().toString()), "Server", e.getCause());
         }
     }
 
-    private ResponseEntity<String> parseInputstream(MagdaMockDocument magdaMockDocument) {
+    private ResponseEntity<String> parseInputstream(MagdaMockDocument magdaMockDocument, HttpHeaders httpHeaders) {
         if (magdaMockDocument != null) {
-            return ResponseEntity.ok().contentType(TEXT_XML).body(magdaMockDocument.toString());
+            return ResponseEntity.ok().contentType(TEXT_XML).headers(httpHeaders).body(magdaMockDocument.toString());
         } else {
             log.error("Could not find XML");
 
             // TODO: maak en return MAGDA Uitzondering antwoord
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().headers(httpHeaders).build();
         }
     }
 
@@ -102,6 +112,8 @@ public class MagdaMockController {
             method = {RequestMethod.DELETE, RequestMethod.GET, RequestMethod.PATCH, RequestMethod.POST, RequestMethod.PUT}
     )
     protected ResponseEntity<String> magdaRestEndpoint(@RequestBody(required = false) String requestBody, HttpServletRequest incomingRequest) {
+        MDC.clear();
+        RestLogHelper.contextSetLifecyclePhase(LifecyclePhase.NOT_SPECIFIED);
         requestBody = requestBody == null ? "" : requestBody;
         String method = incomingRequest.getMethod();
         List<String> splittedRequestUri = new ArrayList<>(Arrays.stream(incomingRequest.getRequestURI().split(Pattern.quote(REST_BASE_URL))).toList());
@@ -114,6 +126,7 @@ public class MagdaMockController {
             headers.put(headerName.toLowerCase(), incomingRequest.getHeader(headerName));
         }
         var response = mockConnection.sendRestRequest(new MagdaMockRestHandler.MockRestRequest(path, query, method, requestBody, headers));
+        MDC.clear();
         return new ResponseEntity<>(Optional.ofNullable(response.body()).map(String::new).map(Object::toString).orElse(""), CollectionUtils.toMultiValueMap(response.headers()), HttpStatusCode.valueOf(response.status()));
     }
 }

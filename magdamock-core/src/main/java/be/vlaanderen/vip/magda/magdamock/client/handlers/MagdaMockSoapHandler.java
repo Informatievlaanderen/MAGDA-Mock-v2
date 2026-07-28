@@ -1,11 +1,14 @@
 package be.vlaanderen.vip.magda.magdamock.client.handlers;
 
+import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
+import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcher;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcherImpl;
+import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.filters.EmptyElementsFilter;
 import be.vlaanderen.vip.magda.magdamock.filters.MagdaMockFilter;
-import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
@@ -18,10 +21,13 @@ import org.w3c.dom.Node;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class MagdaMockSoapHandler extends AbstractMockHandler {
@@ -29,30 +35,42 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss.SSS");
     private final SoapBodyValidator soapRequestValidator;
     private final SoapBodyValidator soapResponseValidator;
+    private final boolean logRequestBody;
     private final SoapResponsePatcher soapResponsePatcher = new SoapResponsePatcherImpl();
     private final List<MagdaMockFilter> filters;
+    private final Set<MagdaMockDocument.MagdaServiceIdentification> knownServiceIdentifications;
 
-    public MagdaMockSoapHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil) {
-        super(wireMockData, timeoutUtil);
-        this.soapRequestValidator = new LenientSoapBodyValidator();
-        this.soapResponseValidator = new LenientSoapBodyValidator();
-        this.filters = new ArrayList<>();
-    }
-
-    public MagdaMockSoapHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator) {
+    public MagdaMockSoapHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator, boolean logRequestBody) {
         super(wireMockData, timeoutUtil);
         this.soapRequestValidator = soapRequestValidator;
         this.soapResponseValidator = soapResponseValidator;
+        this.logRequestBody = logRequestBody;
         this.filters = new ArrayList<>();
-        this.filters.add(new EmptyElementsFilter());
+        this.filters.add(EmptyElementsFilter.getInstance());
+
+        this.knownServiceIdentifications = MockSoapMapping.MAPPINGS.stream()
+                .map(def -> new MagdaMockDocument.MagdaServiceIdentification(def.service(), def.version())).collect(Collectors.toSet());
     }
+
 
     public MockSoapResponse sendSoapRequest(MockSoapRequest mockSoapRequest) {
         Document xml = mockSoapRequest.document();
-        timeoutUtil.timeout();
         MagdaMockDocument request = MagdaMockDocument.fromDocument(xml);
+        SoapLogHelper.contextSetSoapServiceNameVersion(request);
+        SoapLogHelper.contextSetReference(request);
+        checkServiceExistsInMagdaMock(request);
+
+        if (logRequestBody) {
+            log.debug("Request body {}", request);
+        }
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.REQUEST_VALIDATION);
         soapRequestValidator.validateXml(request);
+
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.REQUEST_PRE_PROCESSING);
+        timeoutUtil.timeout();
         String dateHeader = getDateHeaderFromSoapRequest(request);
+
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_MAPPING);
         String soapUrl = wireMockServer.url("/soap");
         Request mockRequest = createInternalWiremockRequest(soapUrl, "POST", request.toString(), dateHeader, "text/xml");
         Response response = routeRequest(mockRequest);
@@ -60,8 +78,12 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
             return null;
         }
         Document document = parseSoapResponse(response);
+
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_POST_PROCESSING);
         Document patchedResponse = patchResponse(request, document);
         Document filteredResponse = filterResponse(request, patchedResponse);
+
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_VALIDATION);
         Document checkedResponse = validateSoapResponse(request, filteredResponse);
         Document wrappedResponse = wrapInEnvelope(checkedResponse);
         return new MockSoapResponse(wrappedResponse, 200);
@@ -75,8 +97,8 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         return document;
     }
 
-    private Document validateSoapResponse(MagdaMockDocument request, Document response) throws SoapValidationError {
-        response = validateSoapSender(request, response);
+    private Document validateSoapResponse(MagdaMockDocument request, Document document) throws SoapValidationError {
+        Document response = validateSoapSender(request, document);
         soapResponseValidator.validateXml(MagdaMockDocument.fromDocument(response));
         return response;
     }
@@ -122,11 +144,15 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         } catch (Exception e) {
             log.info("Unable to extract date and time from request");
         }
-        return "";
+        return DateTimeFormatter.RFC_1123_DATE_TIME.format(OffsetDateTime.now());
     }
 
     private Document parseSoapResponse(Response response) {
-        return MagdaMockDocument.fromString(response.getBodyAsString()).getXml();
+        try {
+            return MagdaMockDocument.fromString(response.getBodyAsString()).getXml();
+        } catch (MagdaMockSoapException e) {
+            throw new MagdaMockSoapException("Response contains invalid XML content.", "Server", e.getMessage(), e.getCause());
+        }
     }
 
     private Document patchResponse(MagdaMockDocument request, Document document) {
@@ -144,6 +170,14 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
                 </soapenv:Envelope>""".formatted(magdaMockDocument);
 
         return MagdaMockDocument.fromString(soap).getXml();
+    }
+
+    private void checkServiceExistsInMagdaMock(MagdaMockDocument request) {
+        var serviceIdentification = request.getServiceIdentification();
+        log.debug("Checking if service {} exists", serviceIdentification);
+        if (!knownServiceIdentifications.contains(serviceIdentification)) {
+            throw new MagdaMockSoapException(String.format("Response mapping is undefined for %s", serviceIdentification.getServiceNaam()), "Server", null);
+        }
     }
 
     public record MockSoapResponse(

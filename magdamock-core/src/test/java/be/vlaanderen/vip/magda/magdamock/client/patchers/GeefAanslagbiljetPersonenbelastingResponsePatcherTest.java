@@ -14,12 +14,21 @@ class GeefAanslagbiljetPersonenbelastingResponsePatcherTest extends ResponsePatc
     void patchResponse_shouldPatchBaseFieldsAndCopyInkomensjaarAndPatchInkomensJaar() throws Exception {
         String requestXml = """
                 <Root>
+                    <Context>
+                    <Bericht>
+                                            <Tijdstip>
+                            <Datum>2026-07-20</Datum>
+                            <Tijd>13:28:08.366</Tijd>
+                        </Tijdstip>
+                    </Bericht>
+
                     <Afzender>
                         <Referte>REQ-123</Referte>
                         <Identificatie>SENDER-ID</Identificatie>
                         <Hoedanigheid>SENDER-ROLE</Hoedanigheid>
                         <Gebruiker>bart.peeters</Gebruiker>
                     </Afzender>
+                    </Context>
                     <Vragen>
                         <Vraag>
                             <Inhoud>
@@ -34,30 +43,29 @@ class GeefAanslagbiljetPersonenbelastingResponsePatcherTest extends ResponsePatc
 
         String responseXml = """
                 <Root>
+                <Repliek>
+                <Context>
                     <Ontvanger>
                         <Referte>OLD</Referte>
                         <Identificatie>OLD</Identificatie>
                         <Hoedanigheid>OLD</Hoedanigheid>
                         <Gebruiker>OLD</Gebruiker>
                     </Ontvanger>
-                    <Antwoord>
-                        <Referte>OLD</Referte>
-                    </Antwoord>
-                    <Context>
                         <Bericht>
                             <Tijdstip>
                                 <Datum>OLD</Datum>
                                 <Tijd>OLD</Tijd>
                             </Tijdstip>
                         </Bericht>
-                    </Context>
                     <Afzender>
                         <Referte>OLD</Referte>
                         <Identificatie>OLD</Identificatie>
                         <Naam>OLD</Naam>
                     </Afzender>
+                    </Context>
                     <Antwoorden>
                         <Antwoord>
+                        <Referte>OLD</Referte>
                             <Inhoud>
                                 <AanslagbiljetPersonenbelasting>
                                     <Inkomensjaar>OLD_YEAR</Inkomensjaar>
@@ -65,6 +73,7 @@ class GeefAanslagbiljetPersonenbelastingResponsePatcherTest extends ResponsePatc
                             </Inhoud>
                         </Antwoord>
                     </Antwoorden>
+                    </Repliek>
                 </Root>
                 """;
 
@@ -89,11 +98,20 @@ class GeefAanslagbiljetPersonenbelastingResponsePatcherTest extends ResponsePatc
     void patchResponse_shouldRemoveGebruikerWhenMissingInRequestAndPatchInkomensJaar() throws Exception {
         String requestXml = """
                 <Root>
+                    <Context>
+                    <Bericht>
+                                            <Tijdstip>
+                            <Datum>2026-07-20</Datum>
+                            <Tijd>13:28:08.366</Tijd>
+                        </Tijdstip>
+                    </Bericht>
+
                     <Afzender>
                         <Referte>REQ-123</Referte>
                         <Identificatie>SENDER-ID</Identificatie>
                         <Hoedanigheid>SENDER-ROLE</Hoedanigheid>
                     </Afzender>
+                    </Context>
                     <Vragen>
                         <Vraag>
                             <Inhoud>
@@ -108,6 +126,8 @@ class GeefAanslagbiljetPersonenbelastingResponsePatcherTest extends ResponsePatc
 
         String responseXml = """
                 <Root>
+            <Repliek>
+                <Context>
                     <Ontvanger>
                         <Referte>OLD</Referte>
                         <Identificatie>OLD</Identificatie>
@@ -130,8 +150,10 @@ class GeefAanslagbiljetPersonenbelastingResponsePatcherTest extends ResponsePatc
                         <Identificatie>OLD</Identificatie>
                         <Naam>OLD</Naam>
                     </Afzender>
+                    </Context>
                     <Antwoorden>
                         <Antwoord>
+                            <Referte>OLD</Referte>
                             <Inhoud>
                                 <AanslagbiljetPersonenbelasting>
                                     <Inkomensjaar>OLD_YEAR</Inkomensjaar>
@@ -139,6 +161,7 @@ class GeefAanslagbiljetPersonenbelastingResponsePatcherTest extends ResponsePatc
                             </Inhoud>
                         </Antwoord>
                     </Antwoorden>
+                    </Repliek>
                 </Root>
                 """;
 

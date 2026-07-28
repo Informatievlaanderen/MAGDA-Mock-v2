@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
+import be.vlaanderen.vip.magda.magdamock.client.transformers.GenderFileTransformer;
 import com.github.tomakehurst.wiremock.extension.Parameters;
 import com.github.tomakehurst.wiremock.http.ResponseDefinition;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
@@ -13,7 +14,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Random;
 
-import static be.vlaanderen.vip.magda.magdamock.client.soap.SoapStubRegistrar.VERSION_02_00;
+import static be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping.VERSION_02_00;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;

@@ -1,6 +1,8 @@
 package be.vlaanderen.vip.magda.magdamock.config;
 
-import be.vlaanderen.vip.magda.magdamock.client.soap.GenderFileTransformer;
+import be.vlaanderen.vip.magda.magdamock.client.transformers.GenderFileTransformer;
+import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaRestFileResponseTransformer;
+import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaSoapFileResponseTransformer;
 import be.vlaanderen.vip.magda.magdamock.utils.MockDataTemplateHelper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
@@ -12,6 +14,7 @@ public class EmbeddedWireMockBuilder {
 
     private Integer wiremockPort;
     private String soapTestPath;
+    private String restTestPath;
     private String fileSource;
 
     public EmbeddedWireMockBuilder() {}
@@ -23,6 +26,11 @@ public class EmbeddedWireMockBuilder {
 
     public EmbeddedWireMockBuilder soapTestPath(String soapTestPath) {
         this.soapTestPath = soapTestPath;
+        return this;
+    }
+
+    public EmbeddedWireMockBuilder restTestPath(String restTestPath) {
+        this.restTestPath = restTestPath;
         return this;
     }
 
@@ -40,7 +48,11 @@ public class EmbeddedWireMockBuilder {
                 .port(wiremockPort)
                 .httpServerFactory(factory)
                 .globalTemplating(true)
-                .extensions(MockDataTemplateHelper.getTemplateHelperExtensions(), new GenderFileTransformer(Path.of(soapTestPath)));
+                .extensions(MockDataTemplateHelper.getTemplateHelperExtensions(),
+                        new GenderFileTransformer(Path.of(soapTestPath)),
+                        new MagdaSoapFileResponseTransformer(Path.of(soapTestPath)),
+                        new MagdaRestFileResponseTransformer(Path.of(restTestPath))
+                );
         if (fileSource != null) {
             config = config
                     .usingFilesUnderDirectory(fileSource);

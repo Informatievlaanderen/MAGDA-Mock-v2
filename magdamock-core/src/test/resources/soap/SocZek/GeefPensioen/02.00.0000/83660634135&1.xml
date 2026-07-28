@@ -1,0 +1,84 @@
+<web:GeefPensioenResponse xmlns:web="http://webservice.geefpensioendienst-02_00.soczek-02_00.vip.vlaanderen.be">
+    <Repliek>
+        <Context>
+            <Naam>GeefPensioen</Naam>
+            <Versie>02.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>?</Datum>
+                    <Tijd>?</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <Pensioen DatumTijdModificatie="2025-09-21T10:30:00.000">
+                        <INSZ>83660634135</INSZ>
+                        <Instellingen>
+                            <Instelling>
+                                <Ondernemingsnummer>0206731645</Ondernemingsnummer>
+                                <Naam>Federale Pensioendienst (FPD)</Naam>
+                                <Rechten>
+                                    <Recht>
+                                        <Pijler>Eerste</Pijler>
+                                        <DossierId>2025.0010.ABC</DossierId>
+                                        <DatumBeginPensioen>2025-10-01</DatumBeginPensioen>
+                                        <Periode>
+                                            <Begin>2025-10-01</Begin>
+                                        </Periode>
+                                        <CategorieVoordeel>
+                                            <Code>11</Code>
+                                            <Omschrijving>Legaal pensioen</Omschrijving>
+                                        </CategorieVoordeel>
+                                        <Voordeelcode>
+                                            <Code>01</Code>
+                                            <Omschrijving>Rustpensioen werknemer</Omschrijving>
+                                        </Voordeelcode>
+                                        <CategoriePensioen>
+                                            <Code>1</Code>
+                                            <Omschrijving>Rust of persoonlijk recht, ook te gebruiken in geval van betaling van kapitalen bij leven</Omschrijving>
+                                        </CategoriePensioen>
+                                        <Periodiciteit>
+                                            <Code>1</Code>
+                                            <Omschrijving>Maandelijks</Omschrijving>
+                                        </Periodiciteit>
+                                        <Gezinstoestand>
+                                            <Code>2</Code>
+                                            <Omschrijving>Alleenstaande</Omschrijving>
+                                        </Gezinstoestand>
+                                        <Gezinslast>
+                                            <Code>2</Code>
+                                            <Omschrijving>Zonder gezinslast</Omschrijving>
+                                        </Gezinslast>
+                                        <CategorieWerkgever>
+                                            <Code>1</Code>
+                                            <Omschrijving>Privaatrechtelijke onderneming of instelling</Omschrijving>
+                                        </CategorieWerkgever>
+                                        <AdministratieveSituatie>
+                                            <Code>A1</Code>
+                                            <Omschrijving>Collectief pensioenstelsel met werkgever als inrichter</Omschrijving>
+                                        </AdministratieveSituatie>
+                                        <Oorsprong>Nationaal</Oorsprong>
+                                    </Recht>
+                                </Rechten>
+                            </Instelling>
+                        </Instellingen>
+                    </Pensioen>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:GeefPensioenResponse>

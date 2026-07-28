@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web:GeefArbeidsongeschiktheidResponse xmlns:web="http://magda.vlaanderen.be/soczek/soap/geefarbeidsongeschiktheid/v01_00">
+    <Repliek>
+        <Context>
+            <Naam>GeefArbeidsongeschiktheid</Naam>
+            <Versie>01.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>?</Datum>
+                    <Tijd>?</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <ConsultAttestResponse>
+                        <status>
+                            <value>NO_DATA_FOUND</value>
+                            <code>MSG00100</code>
+                            <description>Treatment successful, but no data found at the supplier</description>
+                        </status>
+                    </ConsultAttestResponse>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:GeefArbeidsongeschiktheidResponse>

@@ -1,0 +1,53 @@
+<web:GeefInschrijvingWerkzoekendeResponse xmlns:web="http://magda.vlaanderen.be/soczek/soap/geefinschrijvingwerkzoekende/v01_00">
+    <Repliek>
+        <Context>
+            <Naam>GeefInschrijvingWerkzoekende</Naam>
+            <Versie>01.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>?</Datum>
+                    <Tijd>?</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Uitzonderingen>
+                    <Uitzondering>
+                        <Identificatie>70002</Identificatie>
+                        <Oorsprong>KSZ</Oorsprong>
+                        <Type>FOUT</Type>
+                        <Tijdstip>
+                            <Datum>0001-01-01</Datum>
+                            <Tijd>00:00:00.000</Tijd>
+                        </Tijdstip>
+                        <Diagnose>Antwoord met fout</Diagnose>
+                        <Omstandigheid>10000</Omstandigheid>
+                        <Annotaties>
+                            <Annotatie>
+                                <Naam>status code</Naam>
+                                <Waarde>200000</Waarde>
+                            </Annotatie>
+                            <Annotatie>
+                                <Naam>status description</Naam>
+                                <Waarde>Geen gegevens beschikbaar voor de opgegeven periode</Waarde>
+                            </Annotatie>
+                        </Annotaties>
+                    </Uitzondering>
+                </Uitzonderingen>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:GeefInschrijvingWerkzoekendeResponse>

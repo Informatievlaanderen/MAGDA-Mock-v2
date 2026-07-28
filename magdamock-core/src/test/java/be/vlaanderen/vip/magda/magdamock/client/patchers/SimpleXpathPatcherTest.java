@@ -1,13 +1,12 @@
 package be.vlaanderen.vip.magda.magdamock.client.patchers;
 
-import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.client.soap.ResponsePatcherTest;
+import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SimpleXpathPatcherTest extends ResponsePatcherTest {
 
@@ -85,6 +84,8 @@ public class SimpleXpathPatcherTest extends ResponsePatcherTest {
     void patchResponse_shouldNotFailWhenINSZNotPresent() throws Exception {
         String requestXml = """
                 <Root>
+                    <Repliek>
+                    <Context>
                     <Afzender>
                         <Referte>REQ-123</Referte>
                         <Identificatie>SENDER-ID</Identificatie>
@@ -93,33 +94,14 @@ public class SimpleXpathPatcherTest extends ResponsePatcherTest {
                     <Criteria>
                         <INSZ>00000000000</INSZ>
                     </Criteria>
+                    </Context>
+                    </Repliek>
                 </Root>
                 """;
 
         String responseXml = """
                 <Root>
-                    <Ontvanger>
-                        <Referte>OLD</Referte>
-                        <Identificatie>OLD</Identificatie>
-                        <Hoedanigheid>OLD</Hoedanigheid>
-                        <Gebruiker>TO_BE_REMOVED</Gebruiker>
-                    </Ontvanger>
-                    <Antwoord>
-                        <Referte>OLD</Referte>
-                    </Antwoord>
-                    <Context>
-                        <Bericht>
-                            <Tijdstip>
-                                <Datum>OLD</Datum>
-                                <Tijd>OLD</Tijd>
-                            </Tijdstip>
-                        </Bericht>
-                    </Context>
-                    <Afzender>
-                        <Referte>OLD</Referte>
-                        <Identificatie>OLD</Identificatie>
-                        <Naam>OLD</Naam>
-                    </Afzender>
+                    <Repliek>
                     <SocialeStatuten>
                         <SociaalStatuut>
                             <Naam>STATUUT_A</Naam>
@@ -129,6 +111,7 @@ public class SimpleXpathPatcherTest extends ResponsePatcherTest {
                             </Resultaat>
                         </SociaalStatuut>
                     </SocialeStatuten>
+                    </Repliek>
                 </Root>
                 """;
 
@@ -140,5 +123,6 @@ public class SimpleXpathPatcherTest extends ResponsePatcherTest {
 
         MagdaMockDocument result = soapResponse.patchResponse(request, response);
         assertNull(result.getValue("//Ontvanger/Gebruiker"));
+        assertEquals(request.getValue("//Afzender/Referte"), result.getValue("//Ontvanger/Referte"));
     }
 }
