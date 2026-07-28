@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web:GeefPersoonResponse xmlns:web="http://magda.vlaanderen.be/persoon/soap/geefpersoon/v02_02">
+    <Repliek>
+        <Context>
+            <Naam>GeefPersoon</Naam>
+            <Versie>02.02.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>0001-01-01</Datum>
+                    <Tijd>00:00:00.000</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <Persoon Bron="KSZ" DatumCreatie="2023-02-02" DatumModificatie="2024-03-12">
+                        <INSZ>84691585173</INSZ>
+                        <Naam DatumBegin="2023-02-02">
+                            <Achternamen>
+                                <Achternaam>Bakkali</Achternaam>
+                            </Achternamen>
+                            <Voornamen>
+                                <Voornaam>Amrani</Voornaam>
+                            </Voornamen>
+                        </Naam>
+                        <Geslacht>
+                            <Code>1</Code>
+                            <Omschrijving>Mannelijk</Omschrijving>
+                        </Geslacht>
+                        <Register DatumBegin="2023-02-02">
+                            <Code>4</Code>
+                            <Omschrijving>Vreemdeling K.B. 30/10/91</Omschrijving>
+                        </Register>
+                        <Nationaliteiten>
+                            <Nationaliteit DatumBegin="1979-05-06">
+                                <Code>306</Code>
+                                <Omschrijving>Congo (Dem. Rep.)</Omschrijving>
+                            </Nationaliteit>
+                        </Nationaliteiten>
+                        <Geboorte DatumBegin="1979-05-06">
+                            <Datum>1979-05-06</Datum>
+                            <Plaats>
+                                <Gemeente>
+                                    <Naam>Stanleystad</Naam>
+                                </Gemeente>
+                                <Land>
+                                    <NISCode>359</NISCode>
+                                    <ISOCode>COD</ISOCode>
+                                    <Naam>BELGISCH KONGO</Naam>
+                                </Land>
+                            </Plaats>
+                            <Aktenummer>00000</Aktenummer>
+                        </Geboorte>
+                        <Adressen>
+                            <ContactAdres DatumBegin="2023-04-04">
+                                <Straatnaam>
+                                    <String>Hoogstraat</String>
+                                    <Taal>nl</Taal>
+                                </Straatnaam>
+                                <Huisnummer>65</Huisnummer>
+                                <Busnummer>A</Busnummer>
+                                <Gemeentenaam>
+                                    <String>Gent</String>
+                                    <Taal>nl</Taal>
+                                </Gemeentenaam>
+                                <Land>
+                                    <String>BELGIE</String>
+                                    <Taal>nl</Taal>
+                                </Land>
+                                <Postcode>9000</Postcode>
+                                <NISCodeLand>150</NISCodeLand>
+                                <ISOCodeLand>BEL</ISOCodeLand>
+                                <NISCodeGemeente>44021</NISCodeGemeente>
+                                <Type>
+                                    <Code>1</Code>
+                                    <Omschrijving Taal="nl">Tijdelijk verblijf</Omschrijving>
+                                </Type>
+                            </ContactAdres>
+                        </Adressen>
+                    </Persoon>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:GeefPersoonResponse>

@@ -887,10 +887,30 @@
       {
         "path": "INSZ",
         "value": "00600099536"
+      },
+      {
+        "path": "//Inhoud/Bron",
+        "value": "RR"
       }
     ],
     "xpathExpression": "//Gemeente/Naam",
     "expectedValue": "Kortenberg"
+  },
+  {
+    "naam": "GeefPersoon",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "84691585173"
+      },
+      {
+        "path": "//Inhoud/Bron",
+        "value": "KSZ"
+      }
+    ],
+    "xpathExpression": "//Gemeente/Naam",
+    "expectedValue": "Stanleystad"
   },
   {
     "naam": "GeefPersoon",
