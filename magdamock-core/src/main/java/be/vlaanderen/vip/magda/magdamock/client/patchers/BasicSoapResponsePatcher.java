@@ -34,6 +34,28 @@ public class BasicSoapResponsePatcher implements SoapResponsePatcher {
     @Override
     public MagdaMockDocument patchResponse(MagdaMockDocument request, Document response) {
         try {
+            MagdaMockDocument madgaDocumentResponse = constructContext(request, response);
+
+            madgaDocumentResponse.setValue("//Antwoord/Referte", uuidSupplier.get().toString());
+
+            LocalDateTime now = LocalDateTime.now(clock);
+            madgaDocumentResponse.setValue("//Uitzonderingen/Uitzondering/Tijdstip/Datum", now.format(DATE_FORMAT));
+            madgaDocumentResponse.setValue("//Uitzonderingen/Uitzondering/Tijdstip/Tijd", now.format(TIME_FORMAT));
+
+            madgaDocumentResponse.setValue("//Context/Bericht/Tijdstip/Datum", now.format(DATE_FORMAT));
+            madgaDocumentResponse.setValue("//Context/Bericht/Tijdstip/Tijd", now.format(TIME_FORMAT));
+
+            madgaDocumentResponse.setValue("//Context/Bericht/Type", "ANTWOORD");
+
+            return madgaDocumentResponse;
+        } catch (Exception e) {
+            log.error("Exception while patching SOAP response", e);
+            return new MagdaMockDocument(response);
+        }
+    }
+
+    public MagdaMockDocument constructContext(MagdaMockDocument request, Document response) {
+        try {
             Document requestDoc = request.getXml();
             NodeList contextNodes = requestDoc.getElementsByTagName("Context");
             NodeList oldContextNodes = response.getElementsByTagName("Context");
@@ -75,19 +97,9 @@ public class BasicSoapResponsePatcher implements SoapResponsePatcher {
                     ontvanger.getParentNode().insertBefore(newAfzender, ontvanger);
                 }
             }
-            MagdaMockDocument madgaDocumentResponse = new MagdaMockDocument(response);
-
-            madgaDocumentResponse.setValue("//Antwoord/Referte", uuidSupplier.get().toString());
-
-            LocalDateTime now = LocalDateTime.now(clock);
-            madgaDocumentResponse.setValue("//Context/Bericht/Tijdstip/Datum", now.format(DATE_FORMAT));
-            madgaDocumentResponse.setValue("//Context/Bericht/Tijdstip/Tijd", now.format(TIME_FORMAT));
-
-            madgaDocumentResponse.setValue("//Context/Bericht/Type", "ANTWOORD");
-
-            return madgaDocumentResponse;
+            return new MagdaMockDocument(response);
         } catch (Exception e) {
-            log.error("Exception while patching SOAP response", e);
+            log.error("Exception while constructing context in SOAP response", e);
             return new MagdaMockDocument(response);
         }
     }
