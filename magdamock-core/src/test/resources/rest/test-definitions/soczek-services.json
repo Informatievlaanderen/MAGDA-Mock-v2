@@ -1,0 +1,632 @@
+[
+  {
+    "path": "/v1/socZek/handicap/volledigeDossiers",
+    "query": "rrnr=83660634135",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "socZek/handicap/volledigeDossiers/get?rrnr=83660634135",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/handicap/volledigeDossiers",
+    "query": "rrnr=83660634136",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "socZek/handicap/volledigeDossiers/get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/zoeken",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"dossierType\":\"RFH\", \"dossierNummer\":\"2023.01.11.0016\"}",
+    "headers": {},
+    "expectedMessage": "dossierzoeken post dossierNummer en dossierType",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/zoeken",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"dossierType\":\"RFH\", \"dossierNummer\":\"2023.01.11.0016\", \"dossierStatus\":\"CHKO\"}",
+    "headers": {},
+    "expectedMessage": "dossierzoeken post dossierNummer, dossierType en dossierStatus",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/zoeken",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"dossierStatus\":\"CHKO\", \"dossierType\":\"RFH\"}",
+    "headers": {},
+    "expectedMessage": "dossierzoeken post dossierType en dossierStatus",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/zoeken",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"dossierStatus\":\"not found\", \"dossierType\":\"not found\"}",
+    "headers": {},
+    "expectedMessage": "dossierzoeken post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/dossier/2017.03.17",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "dossierzoeken post dossierstatus mapping get dossiernummer",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/dossier/not_found",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "dossierzoeken get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/bijlage",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"bijlageIdentificatie\":\"12346789\", \"partijCode\":\"0484648468488\", \"dossierNummer\":\"2024.02.22.005\"}",
+    "headers": {},
+    "expectedMessage": "dossierBijlage post partijCode, bijlageIdentification en dossierNummer",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/bijlage",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"bijlageIdentificatie\":\"12346789\", \"partijCode\":\"0484648468488\"}",
+    "headers": {},
+    "expectedMessage": "dossierBijlage post partijCode en bijlageIdentification",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/bijlage",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"bijlageIdentificatie\":\"not found\", \"partijCode\":\"not found\"}",
+    "headers": {},
+    "expectedMessage": "dossierBijlage post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/verwerkDossierActie",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"actie\":\"OFFER\", \"dossierNummer\":\"2024.02.22.005\"}",
+    "headers": {},
+    "expectedMessage": "verwerkDossierActie post partijCode, dossierNummer en actie",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/verwerkDossierActie",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"actie\":\"OFFER\"}",
+    "headers": {},
+    "expectedMessage": "wijzigDossierRangschikkingen post partijCode en actie",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/verwerkDossierActie",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"actie\":\"not found\"}",
+    "headers": {},
+    "expectedMessage": "verwerkDossierActie post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/dossier/2023.07.06.0002",
+    "query": "",
+    "method": "PUT",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "dossierzoeken put dossiernummer",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/dossier/not_found",
+    "query": "",
+    "method": "PUT",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "dossierzoeken put",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/bevestigDossierVerwerking",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"dossierNummer\":\"2024.02.22.005\"}",
+    "headers": {},
+    "expectedMessage": "bevestigDossierVerwerking post dossiernummer",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/wijzigDossierRangschikkingen",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"dossierNummer\":\"not found\"}",
+    "headers": {},
+    "expectedMessage": "wijzigDossierRangschikkingen post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/partijInformatieWijzigingen",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"partijCode\":\"0643634986\"}",
+    "headers": {},
+    "expectedMessage": "partijInformatieWijzigingen post partijCode",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/partijInformatieWijzigingen",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"partijCode\":\"not found\"}",
+    "headers": {},
+    "expectedMessage": "partijInformatieWijzigingen post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingen",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"partijCode\":\"0400954844\"}",
+    "headers": {},
+    "expectedMessage": "zwarteLijstMeldingen post partijCode",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingen",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"partijCode\":\"not found\"}",
+    "headers": {},
+    "expectedMessage": "zwarteLijstMeldingen post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/dossierMetBijlages/2023.07.06.0002",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "dossierMetBijlages get dossierNummer",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/dossierMetBijlages/not_found",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "dossierMetBijlages get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/gemeentes",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "gemeentes get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/31005",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "wijkenVoorGemeente get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/not_found",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "wijkenVoorGemeente get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/31005",
+    "query": "",
+    "method": "PUT",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "wijkenVoorGemeente put",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/gemeentes/wijkenVoorGemeente/not_found",
+    "query": "",
+    "method": "PUT",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "wijkenVoorGemeente put",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingVoor",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"rijksregisternummer\":\"906111123456\"}",
+    "headers": {},
+    "expectedMessage": "zwarteLijstMeldingenVoor post rijkregisternummer",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/zwarteLijstMeldingVoor",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"rijksregisternummer\":\"not found\"}",
+    "headers": {},
+    "expectedMessage": "zwarteLijstMeldingenVoor post rijkregisternummer",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningen get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningen get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningen patch",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningen patch",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen",
+    "query": "gemeenteNISCode=23027&gebouweenheidId=16230836",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningen get all",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningen get all",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\n  \"eigenaarOrganisatieId\": \"0400898624\",\n  \"gebouweenheidId\": \"16230836\",\n  \"woonmaatschappijWoningId\": \"775\",\n  \"woonmaatschappijWoningCode\": \"031030\",\n  \"woonmaatschappijWoningGroepCode\": \"HAL031\",\n  \"adres\": {\n    \"straatnaam\": \"Labbeekstraat\",\n    \"huisnummer\": \"100\",\n    \"postcode\": \"1500\",\n    \"gemeenteNISCode\": \"23027\"\n  },\n  \"bouwjaar\": 1982,\n  \"bebouwingsType\": \"OB\"\n}",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningen post all",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningen post all",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/woningkenmerkscores",
+    "query": "woningKenmerkCategorie=ERP",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningkenmerkscores get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown/woningkenmerkscores",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningkenmerkscores get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/woningkenmerkscores",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningkenmerkscores patch",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown/woningkenmerkscores",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting woningkenmerkscores patch",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/markthuurwaarden",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting markthuurwaarden get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown/markthuurwaarden",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting markthuurwaarden get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/markthuurwaarden/simulatie",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting markthuurwaarden post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/conditiescore",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting conditiescore get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown/conditiescore",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting conditiescore get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/conditiescore/simulatie",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting conditiescore post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/energiecorrectie",
+    "query": "epcVersie=Huidig&datumVanaf=2020-06-01&datumTot=2026-06-30",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting energiecorrectie get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown/energiecorrectie",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting energiecorrectie get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting epcwaarden get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting epcwaarden get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden/brondata/970939B2-75B3-4F14-BDDE-2AB9ACFB6EEF",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting epcwaarden brondata get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden/brondata/unknown",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting epcwaarden brondata get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden/document/970939B2-75B3-4F14-BDDE-2AB9ACFB6EEF",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting epcwaarden document get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden/document/unknown",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting epcwaarden document get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden/certificaat",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting certificaat post",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden/certificaat",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting certificaat post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden/markeerReferentieversie",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "{\n  \"status\": \"Huidig\",\n  \"epcVersieId\": \"2058936\"\n}",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting epcwaarden markeerReferentieversie patch",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden/markeerReferentieversie",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting epcwaarden markeerReferentieversie patch",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/ZYKTR/epcwaarden/2058936",
+    "query": "",
+    "method": "DELETE",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting epcwaarden markeerReferentieversie delete",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/socZek/socialeHuisvesting/woningen/unknown/epcwaarden/unknown",
+    "query": "",
+    "method": "DELETE",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "sociale huisvesting epcwaarden markeerReferentieversie delete",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  }
+]

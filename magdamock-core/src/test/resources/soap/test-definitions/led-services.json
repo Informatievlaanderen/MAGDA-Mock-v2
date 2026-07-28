@@ -1,0 +1,99 @@
+[
+
+  {
+    "naam": "AnnuleerBewijs",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "99610100179"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden"
+  },
+  {
+    "naam": "AnnuleerBewijs",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "09610100179"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden!"
+  },
+  {
+    "naam": "GeefBewijs",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00671031676"
+      }
+    ],
+    "xpathExpression": "//Leverancier/Bewijsreferte",
+    "expectedValue": "2014070108135743808300040H"
+  },
+  {
+    "naam": "GeefBewijs",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "10671031676"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden."
+  },
+  {
+    "naam": "RegistreerBewijs",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "99610100150"
+      }
+    ],
+    "xpathExpression": "//Inhoud/Melding",
+    "expectedValue": "OK"
+  },
+  {
+    "naam": "RegistreerBewijs",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "09610100150"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden"
+  },
+  {
+    "naam": "RegistreerMutatieBewijs",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "99610100179"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden"
+  },
+  {
+    "naam": "RegistreerMutatieBewijs",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "09610100179"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden!"
+  }
+]

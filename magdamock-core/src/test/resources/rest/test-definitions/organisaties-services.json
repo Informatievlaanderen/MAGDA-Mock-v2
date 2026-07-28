@@ -1,0 +1,462 @@
+[
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/zoeken",
+    "query": "q=doelgroep.maximumleeftijd:100",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging zoeken get query",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/zoeken",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging zoeken get query",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0001031",
+    "query": "q=doelgroep.maximumleeftijd:100",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging zoeken get vcode",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/ongekend",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging zoeken get vcode",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0001031",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging zoeken patch vcode",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/ongekend",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging zoeken patch vcode",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0001031/stop",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging zoeken post vcode stop",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/ongekend/stop",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging zoeken post vcode stop",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0001031/historiek",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging historiek get vcode",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/ongekend/historiek",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging historiek get vcode",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/feitelijkeverenigingen",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"naam\": \"Vereniging zonder naam\"}",
+    "headers": {},
+    "expectedMessage": "vereniging feitelijkeverenigingen post",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/feitelijkeverenigingen",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging feitelijkeverenigingen post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/kbo",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"kboNummer\": \"0123465798\"}",
+    "headers": {},
+    "expectedMessage": "vereniging kbo post",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/kbo",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging kbo post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/vzer",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"naam\": \"Vereniging zonder naam\"}",
+    "headers": {},
+    "expectedMessage": "vereniging vzer post",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/vzer",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vzer post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/contactgegevens/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging contactgegevens patch",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/contactgegevens/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging contactgegevens patch",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/contactgegevens/1",
+    "query": "",
+    "method": "DELETE",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging contactgegevens delete",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/contactgegevens/1",
+    "query": "",
+    "method": "DELETE",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging contactgegevens delete",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/kbo",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch kbo",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/kbo",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch kbo",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/kbo/contactgegevens/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch kbo contactgegevens",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/kbo/contactgegevens/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch kbo contactgegevens",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/kbo/locaties/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch kbo locaties",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/kbo/locaties/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch kbo locaties",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/lidmaatschappen",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode post lidmaatschappen",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/lidmaatschappen",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode post lidmaatschappen",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/lidmaatschappen/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch lidmaatschappen",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/lidmaatschappen/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch lidmaatschappen",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/lidmaatschappen/1",
+    "query": "",
+    "method": "DELETE",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode delete lidmaatschappen",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/lidmaatschappen/1",
+    "query": "",
+    "method": "DELETE",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode delete lidmaatschappen",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/locaties",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode post locaties",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/locaties",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode post locaties",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/locaties/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch locaties",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/locaties/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch locaties",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/locaties/1",
+    "query": "",
+    "method": "DELETE",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode delete locaties",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/locaties/1",
+    "query": "",
+    "method": "DELETE",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode delete locaties",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/subtype",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch subtype",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/subtype",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch subtype",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/vertegenwoordigers",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode post vertegenwoordigers",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/vertegenwoordigers",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode post vertegenwoordigers",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/vertegenwoordigers/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch vertegenwoordigers",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/vertegenwoordigers/1",
+    "query": "",
+    "method": "PATCH",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode patch vertegenwoordigers",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/vertegenwoordigers/1",
+    "query": "",
+    "method": "DELETE",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode delete vertegenwoordigers",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/vertegenwoordigers/1",
+    "query": "",
+    "method": "DELETE",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging vcode delete vertegenwoordigers",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  }
+]

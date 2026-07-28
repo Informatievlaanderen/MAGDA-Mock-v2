@@ -1,0 +1,98 @@
+[
+  {
+    "naam": "RegistreerInschrijving",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "89610532179"
+      }
+    ],
+    "xpathExpression": "//Resultaat",
+    "expectedValue": "0"
+  },
+  {
+    "naam": "RegistreerInschrijving",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "79610532179"
+      }
+    ],
+    "xpathExpression": "//Resultaat",
+    "expectedValue": "1"
+  },
+  {
+    "naam": "RegistreerInschrijving",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Subject/Type",
+        "value": "OND"
+      },
+      {
+        "path": "//Subject/Sleutel",
+        "value": "1"
+      }
+    ],
+    "xpathExpression": "//Resultaat",
+    "expectedValue": "1"
+  },
+  {
+    "naam": "RegistreerInschrijving",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Subject/Type",
+        "value": "PERS"
+      },
+      {
+        "path": "//Subject/Sleutel",
+        "value": "89610532179"
+      }
+    ],
+    "xpathExpression": "//Resultaat",
+    "expectedValue": "0"
+  },
+  {
+    "naam": "RegistreerInschrijving",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Subject/Type",
+        "value": "PERS"
+      },
+      {
+        "path": "//Subject/Sleutel",
+        "value": "89610532178"
+      }
+    ],
+    "xpathExpression": "//Resultaat",
+    "expectedValue": "1"
+  },
+  {
+    "naam": "RegistreerUitschrijving",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "91610100176"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Te veel gelijktijdige bevragingen"
+  },
+  {
+    "naam": "RegistreerUitschrijving",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "91610100178"
+      }
+    ],
+    "xpathExpression": "//Resultaat",
+    "expectedValue": "1"
+  }
+]

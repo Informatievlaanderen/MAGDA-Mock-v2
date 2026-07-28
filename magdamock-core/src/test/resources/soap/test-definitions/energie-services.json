@@ -1,0 +1,42 @@
+[
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Adres/Postcode",
+        "value": "1000"
+      },
+      {
+        "path": "//Criteria/Adres/Straat",
+        "value": "Slachthuislaan"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "1"
+      }
+    ],
+    "xpathExpression": "//Attestnummer",
+    "expectedValue": "20170401-0001948124-1"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Adres/Postcode",
+        "value": "9308"
+      },
+      {
+        "path": "//Criteria/Adres/Straat",
+        "value": "Hoogstraat"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "27"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Er heeft zich een interne fout voorgedaan"
+  }
+]

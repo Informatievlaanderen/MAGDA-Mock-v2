@@ -1,0 +1,158 @@
+[
+  {
+    "naam": "GeefCadNetTransacties",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "99610100179"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefCadNetTransacties",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "89610100179"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefHistoriekEigendomstoestand",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "89610100179"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefKadastraleAfdelingenOpKBO",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "1023451552"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefTransacties",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "99610100179"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefTransacties",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "09610100179"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "ZoekEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "39620999783"
+      }
+    ],
+    "xpathExpression": "//SleutelToestandPUR",
+    "expectedValue": "10012985"
+  },
+  {
+    "naam": "ZoekEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "49620999783"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "ZoekPerceel",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "49620999783"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "ZoekVerkoopprijzen",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Provincie",
+        "value": "40000"
+      },
+      {
+        "path": "//Criteria/AdministratieveGemeentes/AdministratieveGemeente",
+        "value": "41034"
+      },
+      {
+        "path": "//Criteria/TypesInschrijving/TypeInschrijving",
+        "value": "82"
+      },
+      {
+        "path": "//Criteria/CodesKadastraleAardVolgensAkte/CodeKadastraleAardVolgensAkte",
+        "value": "23"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "ZoekVerkoopprijzen",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Provincie",
+        "value": "40000"
+      },
+      {
+        "path": "//Criteria/AdministratieveGemeentes/AdministratieveGemeente",
+        "value": "41034"
+      },
+      {
+        "path": "//Criteria/TypesInschrijving/TypeInschrijving",
+        "value": "82"
+      },
+      {
+        "path": "//Criteria/CodesKadastraleAardVolgensAkte/CodeKadastraleAardVolgensAkte",
+        "value": "24"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  }
+]

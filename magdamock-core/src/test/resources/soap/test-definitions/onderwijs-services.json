@@ -1,0 +1,26 @@
+[
+  {
+    "naam": "GeefHistoriekInschrijving",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00600099536"
+      }
+    ],
+    "xpathExpression": "//Contactgegevens/Email",
+    "expectedValue": "marcel.kerff@cbeopenschool.be"
+  },
+  {
+    "naam": "GeefHistoriekInschrijving",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "10600099536"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag."
+  }
+]
