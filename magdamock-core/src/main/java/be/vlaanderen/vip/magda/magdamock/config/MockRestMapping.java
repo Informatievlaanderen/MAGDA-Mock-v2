@@ -9,7 +9,7 @@ public record MockRestMapping(List<String> folderPath,
                               boolean defaultOnly) {
     public static final List<MockRestMapping> MAPPINGS = List.of(
             // Company
-            new MockRestMapping(List.of("v1", "company", "billRetainment", "retainmentObligations", "search", "post"), List.of(), List.of(), List.of("/enterpriseIdentifiers/0"), "/v1/company/billRetainment/retainmentObligations/search", "POST"),
+            new MockRestMapping(List.of("v1", "company", "billRetainment", "retainmentObligations", "search", "post"), List.of(), List.of(), List.of(), List.of("/enterpriseIdentifiers/0"), "/v1/company/billRetainment/retainmentObligations/search", "POST"),
 
             // Mobility
             new MockRestMapping(List.of("v1", "mobility", "registrations", "get", "plateNr"), List.of(), List.of("plateNr"), List.of(), List.of(), "/v1/mobility/registrations", "GET", 40),
