@@ -68,6 +68,10 @@ class RestServicesTest {
             }
         }
 
+        static Stream<Arguments> allCompanyServices() {
+            return allRestServices("rest/test-definitions/company-services.json");
+        }
+
         static Stream<Arguments> allMobilityServices() {
             return allRestServices("rest/test-definitions/mobility-services.json");
         }
@@ -88,6 +92,18 @@ class RestServicesTest {
                     .toURI());
 
             magdaMockConnection = MagdaMockConnection.create(path.toAbsolutePath().toString(), "", "");
+        }
+
+        @ParameterizedTest
+        @MethodSource("allCompanyServices")
+        @SneakyThrows
+        void testCompanyRestService(
+                MagdaMockRestHandler.MockRestRequest mockRestRequest,
+                String expectedMessage,
+                String expectedMappingType,
+                String expectedContentTypeHeader
+        ) {
+            testRestService(mockRestRequest, expectedMessage, expectedMappingType, expectedContentTypeHeader);
         }
 
         @ParameterizedTest

@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/v1/company/billRetainment/retainmentObligations/search",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\"@context\": \"https://vlaamseoverheid.atlassian.net/wiki/download/attachments/6118410708/context-billretainment.jsonld?version=1\", \"enterpriseIdentifiers\": [\"1827364950\", \"NL821159080B01\", \"99208695E1\", \"1665765735\"]}",
+    "headers": {},
+    "expectedMessage": "company billretainment obligations search mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/company/billRetainment/retainmentObligations/search",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "company billretainment obligations search mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  }
+]

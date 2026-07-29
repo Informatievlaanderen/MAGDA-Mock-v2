@@ -13,6 +13,7 @@ import com.github.tomakehurst.wiremock.http.QueryParameter;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.ResponseDefinition;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
+import com.jayway.jsonpath.JsonPath;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -127,7 +128,10 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
             } else {
                 try {
                     JsonNode j = new ObjectMapper().readTree(request.getBody());
-                    fileParts.add(j.get(key).asText());
+                    if (!key.startsWith("/")) {
+                        key = "/" + key;
+                    }
+                    fileParts.add(j.at(key).asText());
                 } catch (Exception e) {
                     log.error("Error occured while extracting body parameter", e);
                     fileParts.add("");
