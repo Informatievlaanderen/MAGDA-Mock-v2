@@ -79,6 +79,10 @@ class RestServicesTest {
         static Stream<Arguments> allOrganisatiesServices() {
             return allRestServices("rest/test-definitions/organisaties-services.json");
         }
+        
+        static Stream<Arguments> allPersoonServices() {
+            return allRestServices("rest/test-definitions/persoon-services.json");
+        }
 
         static Stream<Arguments> allSocZekServices() {
             return allRestServices("rest/test-definitions/soczek-services.json");
@@ -131,6 +135,18 @@ class RestServicesTest {
         }
 
         @ParameterizedTest
+        @MethodSource("allPersoonServices")
+        @SneakyThrows
+        void testPersoonRestService(
+                MagdaMockRestHandler.MockRestRequest mockRestRequest,
+                String expectedMessage,
+                String expectedMappingType,
+                String expectedContentTypeHeader
+        ) {
+            testRestService(mockRestRequest, expectedMessage, expectedMappingType, expectedContentTypeHeader);
+        }
+
+        @ParameterizedTest
         @MethodSource("allSocZekServices")
         @SneakyThrows
         void testSocZekRestService(
@@ -159,11 +175,11 @@ class RestServicesTest {
             );
             var response = magdaMockConnection.sendRestRequest(restRequest);
             Assertions.assertNotNull(response);
+            Assertions.assertEquals(200, response.status());
             JsonNode jsonBody = new ObjectMapper().readTree(response.body());
             Assertions.assertEquals(expectedMessage, jsonBody.get("message").textValue());
             Assertions.assertEquals(expectedMappingType, jsonBody.get("mappingType").textValue());
             Assertions.assertTrue(response.headers().get("Content-Type").contains(expectedContentTypeHeader));
-            Assertions.assertEquals(200, response.status());
         }
 
         record RestServiceArgument(
@@ -203,7 +219,7 @@ class RestServicesTest {
                             "",
                             "TEST",
                             "",
-                            Map.of("x-correlation-id", UUID.randomUUID().toString())
+                            new HashMap<>(Map.of("x-correlation-id", UUID.randomUUID().toString()))
                     )
             );
             Assertions.assertEquals(500, response.status());

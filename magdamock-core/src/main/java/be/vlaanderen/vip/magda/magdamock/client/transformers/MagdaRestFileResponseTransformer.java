@@ -67,7 +67,7 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
 
             if (responseFile == null) {
                 log.debug("Didn't find any matching file");
-                return new ResponseDefinitionBuilder().withStatus(404).build();
+                return new ResponseDefinitionBuilder().withStatus(666).build();
             }
             log.debug("Found best matching file: {}", responseFile.toFile().getAbsolutePath());
 
@@ -94,6 +94,7 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
             return responseDefinitionBuilder
                     .build();
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("Exception occurred while trying to construct a REST response", e);
             return new ResponseDefinitionBuilder()
                     .withStatus(666)
@@ -104,6 +105,11 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
 
     private List<String> getUrlAndQueryParameters(Request request, MockRestMapping mockRestMapping) {
         List<String> fileParts = new ArrayList<>();
+
+        // header params
+        for (String key : mockRestMapping.headerParameters()) {
+            fileParts.add(request.getHeader(key));
+        }
 
         // url params
         for (String key : mockRestMapping.urlParameters()) {
