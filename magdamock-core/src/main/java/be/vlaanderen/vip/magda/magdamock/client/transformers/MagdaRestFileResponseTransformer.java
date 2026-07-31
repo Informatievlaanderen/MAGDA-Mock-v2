@@ -3,6 +3,7 @@ package be.vlaanderen.vip.magda.magdamock.client.transformers;
 import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.RestLogHelper;
 import be.vlaanderen.vip.magda.magdamock.config.MockRestMapping;
+import be.vlaanderen.vip.magda.magdamock.config.rest.RestParameter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
@@ -106,41 +107,35 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
     private List<String> getUrlAndQueryParameters(Request request, MockRestMapping mockRestMapping) {
         List<String> fileParts = new ArrayList<>();
 
-        // header params
-        for (String key : mockRestMapping.headerParameters()) {
-            fileParts.add(request.getHeader(key));
-        }
-
-        // url params
-        for (String key : mockRestMapping.urlParameters()) {
-            fileParts.add(request.getPathParameters().get(key));
-        }
-
-        // query params
-        for (String key : mockRestMapping.queryParameters()) {
-            QueryParameter queryParameter = request.queryParameter(key);
-            if (queryParameter.isPresent()) {
-                fileParts.add(queryParameter.firstValue());
-            } else {
-                fileParts.add("");
-            }
-        }
-
-        // body params
-        for (String key : mockRestMapping.requestBodyParameters()) {
-            FormParameter formParameter = request.formParameter(key);
-            if (formParameter.isPresent()) {
-                fileParts.add(formParameter.firstValue());
-            } else {
-                try {
-                    JsonNode j = new ObjectMapper().readTree(request.getBody());
-                    if (!key.startsWith("/")) {
-                        key = "/" + key;
+        for (RestParameter restParameter : mockRestMapping.restParameters()) {
+            String key = restParameter.getValue();
+            switch (restParameter.getType()) {
+                case HEADER -> fileParts.add(request.getHeader(key));
+                case QUERY -> {
+                    QueryParameter queryParameter = request.queryParameter(key);
+                    if (queryParameter.isPresent()) {
+                        fileParts.add(queryParameter.firstValue());
+                    } else {
+                        fileParts.add("");
                     }
-                    fileParts.add(j.at(key).asText());
-                } catch (Exception e) {
-                    log.error("Error occured while extracting body parameter", e);
-                    fileParts.add("");
+                }
+                case PATH -> fileParts.add(request.getPathParameters().get(key));
+                case BODY -> {
+                    FormParameter formParameter = request.formParameter(key);
+                    if (formParameter.isPresent()) {
+                        fileParts.add(formParameter.firstValue());
+                    } else {
+                        try {
+                            JsonNode j = new ObjectMapper().readTree(request.getBody());
+                            if (!key.startsWith("/")) {
+                                key = "/" + key;
+                            }
+                            fileParts.add(j.at(key).asText());
+                        } catch (Exception e) {
+                            log.error("Error occured while extracting body parameter", e);
+                            fileParts.add("");
+                        }
+                    }
                 }
             }
         }
