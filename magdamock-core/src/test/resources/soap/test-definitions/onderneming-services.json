@@ -1,0 +1,349 @@
+[  {
+  "naam": "GeefAdressenLocaties",
+  "versie": "02.00.0000",
+  "requestFields": [
+    {
+      "path": "Ondernemingsnummer",
+      "value": "1999999943"
+    }
+  ],
+  "xpathExpression": "//Uitzondering/Diagnose",
+  "expectedValue": "Geen gegevens gevonden voor de vraag"
+},
+  {
+    "naam": "GeefAdressenLocaties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefBeschikbareJaarrekeningen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "1999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefBeschikbareJaarrekeningen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefDeelnemingen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "1999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefDeelnemingen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefFiscaleInhoudingsplicht",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "1999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefFiscaleInhoudingsplicht",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefFiscaleSchuld",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "1999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefFiscaleSchuld",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefFuncties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00600099734"
+      }
+    ],
+    "xpathExpression": "//FunctiehouderVan",
+    "expectedValue": "0242069537"
+  },
+  {
+    "naam": "GeefFuncties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "10600099734"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefJaarrekeningen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0200065765"
+      },
+      {
+        "path": "Boekjaar",
+        "value": "2018"
+      }
+    ],
+    "xpathExpression": "//AantalBedrag/Waarde",
+    "expectedValue": "5969700"
+  },
+  {
+    "naam": "GeefJaarrekeningen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "1200065765"
+      },
+      {
+        "path": "Boekjaar",
+        "value": "2018"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefOnderneming",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0200065765"
+      }
+    ],
+    "xpathExpression": "//Straat/Naam",
+    "expectedValue": "Panhuisstraat"
+  },
+  {
+    "naam": "GeefOnderneming",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "1200065765"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefOndernemingSignalen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "1999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefOndernemingSignalen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefOndernemingVKBO",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0242069537"
+      }
+    ],
+    "xpathExpression": "//Straat/Naam",
+    "expectedValue": "Motstraat"
+  },
+  {
+    "naam": "GeefOndernemingVKBO",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "1242069537"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefPCenTW",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "1999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefPCenTW",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefSocialeSchuld",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "1999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefSocialeSchuld",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefTewerkstelling",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "1999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefTewerkstelling",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "Ondernemingsnummer",
+        "value": "0999999943"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "ZoekOnderneming",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Naam",
+        "value": "Stad Brugge"
+      },
+      {
+        "path": "//Criteria/Adres/GemeenteNISCode",
+        "value": "31005"
+      }
+    ],
+    "xpathExpression": "//Ondernemingen/Onderneming/Ondernemingsnummer",
+    "expectedValue": "0207528035"
+  },
+  {
+    "naam": "ZoekOnderneming",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Naam",
+        "value": "Stad Brugge"
+      }
+    ],
+    "xpathExpression": "//Ondernemingen/Onderneming/Ondernemingsnummer",
+    "expectedValue": "0206684927"
+  }
+]

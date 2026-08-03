@@ -5,6 +5,8 @@ import be.vlaanderen.vip.magda.magdamock.client.logging.RestLogHelper;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.tomakehurst.wiremock.http.HttpHeader;
+import com.github.tomakehurst.wiremock.http.HttpHeaders;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +42,7 @@ public class MagdaMockRestHandler extends AbstractMockHandler {
         RestLogHelper.contextSetLifecyclePhase(LifecyclePhase.REQUEST_PRE_PROCESSING);
         String correlationIdHeader = magdaRestRequest.headers().getOrDefault(HEADER_KEY_CORRELATION_ID, "");
         String correlationId = Optional.ofNullable(correlationIdHeader).orElse(UUID.randomUUID().toString());
-        String dateHeader =  magdaRestRequest.headers().getOrDefault("date", "");
+        magdaRestRequest.headers().putIfAbsent("date", "");
         timeoutUtil.timeout();
 
         RestLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_MAPPING);
@@ -61,7 +63,11 @@ public class MagdaMockRestHandler extends AbstractMockHandler {
             log.debug("Request body: {}", requestBody);
 
         String url = String.join("?", parts);
-        Request mockRequest = createInternalWiremockRequest(url, method, requestBody, dateHeader, "application/json");
+        HttpHeaders headers = new HttpHeaders();
+        for (Map.Entry<String, String> kv : magdaRestRequest.headers().entrySet()) {
+            headers = headers.plus(new HttpHeader(kv.getKey(), kv.getValue()));
+        }
+        Request mockRequest = createInternalWiremockRequest(url, method, requestBody, headers, "application/json");
         Response response = routeRequest(mockRequest);
         RestLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_POST_PROCESSING);
         return parseRestResponse(magdaRestRequest, response, correlationId);

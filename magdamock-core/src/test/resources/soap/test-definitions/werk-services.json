@@ -1,0 +1,99 @@
+[
+
+  {
+    "naam": "GeefDmfaVoorWerknemer",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "02622200138"
+      }
+    ],
+    "xpathExpression": "//Identificatie/Nummer",
+    "expectedValue": "3021456789"
+  },
+  {
+    "naam": "GeefDmfaVoorWerknemer",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "02622200130"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefLoopbaanARZA",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00630300287"
+      }
+    ],
+    "xpathExpression": "//Ondernemingsnummer",
+    "expectedValue": "0409088689"
+  },
+  {
+    "naam": "GeefLoopbaanARZA",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00630300280"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefLoopbaanonderbrekingen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "62680599650"
+      }
+    ],
+    "xpathExpression": "//Dossiernummer",
+    "expectedValue": "DOSSIER007"
+  },
+  {
+    "naam": "GeefLoopbaanonderbrekingen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "62680599652"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden"
+  },
+  {
+    "naam": "GeefWerkrelaties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00630300287"
+      }
+    ],
+    "xpathExpression": "//Werkgever/RSZNummer",
+    "expectedValue": "0456123791"
+  },
+  {
+    "naam": "GeefWerkrelaties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00630300280"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  }
+]

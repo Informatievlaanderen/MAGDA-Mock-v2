@@ -1,0 +1,146 @@
+[
+  {
+    "naam": "GeefHistoriekMutatiedossier",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "Dossiernummer",
+        "value": "00630300280"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "EigendomId",
+        "value": "00630300280"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefWoningKwaliteit",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "//Criteria/Type",
+        "value": "Pand"
+      },
+      {
+        "path": "//Criteria/Referte",
+        "value": "PA19-000873"
+      }
+    ],
+    "xpathExpression": "//Straatnaam",
+    "expectedValue": "Karel Van Overmeirelaan"
+  },
+  {
+    "naam": "ZoekWoningKwaliteit",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "//Zoekterm",
+        "value": "dit is mijn zoekterm"
+      }
+    ],
+    "xpathExpression": "//Straatnaam",
+    "expectedValue": "Dorpsstraat"
+  },
+  {
+    "naam": "ZoekWoningKwaliteit",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "//Zoekterm",
+        "value": "5809589 EN19-002373 9052 Dorp 44082B0200/00M000"
+      }
+    ],
+    "xpathExpression": "//Straatnaam/String",
+    "expectedValue": "Varendrieskouter"
+  },
+  {
+    "naam": "GeefWoningKwaliteitBijlage",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//NISCode",
+        "value": "11002"
+      },
+      {
+        "path": "//Type",
+        "value": "Not found"
+      },
+      {
+        "path": "//Referte",
+        "value": "FOT26-00000039"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Er werd geen bijlage voor type Document gevonden met ID DOC19-002888."
+  },
+  {
+    "naam": "GeefWoningKwaliteitBijlage",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//NISCode",
+        "value": "44021"
+      },
+      {
+        "path": "//Criteria/Bijlagen/Bijlage/Type",
+        "value": "Document"
+      },
+      {
+        "path": "//Criteria/Bijlagen/Bijlage/Referte",
+        "value": "DOC26-00000876"
+      }
+    ],
+    "xpathExpression": "//Foto/Naam",
+    "expectedValue": "FOT25-123564.jpg"
+  },
+  {
+    "naam": "BewaarWoningKwaliteit",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/NISCode",
+        "value": "11002"
+      },
+      {
+        "path": "//Criteria/ZetEntiteitGesloopt",
+        "value": ""
+      }
+    ],
+    "xpathExpression": "//ReferteEntiteit",
+    "expectedValue": "EN19-002025"
+  },
+  {
+    "naam": "BewaarWoningKwaliteitBijlage",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/NISCode",
+        "value": "11002"
+      }
+    ],
+    "xpathExpression": "//Bijlage/Referte",
+    "expectedValue": "DOC26-00000876"
+  }
+]

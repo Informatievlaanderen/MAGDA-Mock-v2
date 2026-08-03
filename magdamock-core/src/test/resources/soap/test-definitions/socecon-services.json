@@ -1,0 +1,14 @@
+[
+  {
+    "naam": "GeefStatusRechtOndersteuningen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "67621546751"
+      }
+    ],
+    "xpathExpression": "//Status/Omschrijving",
+    "expectedValue": "Toegekend"
+  }
+]

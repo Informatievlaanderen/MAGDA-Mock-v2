@@ -13,6 +13,8 @@ import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapValidationError;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
+import com.github.tomakehurst.wiremock.http.HttpHeader;
+import com.github.tomakehurst.wiremock.http.HttpHeaders;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -72,7 +74,7 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
 
         SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_MAPPING);
         String soapUrl = wireMockServer.url("/soap");
-        Request mockRequest = createInternalWiremockRequest(soapUrl, "POST", request.toString(), dateHeader, "text/xml");
+        Request mockRequest = createInternalWiremockRequest(soapUrl, "POST", request.toString(), new HttpHeaders(new HttpHeader("Date", dateHeader)), "text/xml");
         Response response = routeRequest(mockRequest);
         if (response.getStatus() == 404) {
             return null;

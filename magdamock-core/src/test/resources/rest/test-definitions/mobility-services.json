@@ -1,0 +1,102 @@
+[
+  {
+    "path": "/v1/mobility/registrations",
+    "query": "plateNr=123ABC",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility plate mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "text/plain"
+  },
+  {
+    "path": "/v1/mobility/registrations",
+    "query": "vin=VIN-123",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility vin mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrations",
+    "query": "vin=VIN&unifier=123",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility vin and unifier mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrations",
+    "query": "plateUID=2345678",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility plateUID mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrations",
+    "query": "plateUID=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrations",
+    "query": "nationalNr=2345678",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility nationalNr mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrations",
+    "query": "nationalNr=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrations",
+    "query": "companyNr=2345678",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility companyNr mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrations",
+    "query": "companyNr=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrations",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  }
+]

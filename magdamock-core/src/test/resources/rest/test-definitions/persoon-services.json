@@ -1,0 +1,26 @@
+[
+  {
+    "path": "/v1/persoon/handtekeningen",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {
+      "x-insz": "84691585173"
+    },
+    "expectedMessage": "persoon handtekeningen",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/persoon/handtekeningen",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {
+      "x-insz": "84691585199"
+    },
+    "expectedMessage": "persoon handtekeningen",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  }
+]

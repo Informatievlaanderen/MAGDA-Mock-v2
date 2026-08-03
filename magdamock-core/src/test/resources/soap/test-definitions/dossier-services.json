@@ -1,0 +1,26 @@
+[
+  {
+    "naam": "GeefDossiers",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "02663099890"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Ongekende foutcode van de bron, contacteer Magda helpdesk"
+  },
+  {
+    "naam": "GeefDossiers",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "99999999999"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  }
+]

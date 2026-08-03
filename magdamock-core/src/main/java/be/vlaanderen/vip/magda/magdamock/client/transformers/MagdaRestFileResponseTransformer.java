@@ -3,6 +3,7 @@ package be.vlaanderen.vip.magda.magdamock.client.transformers;
 import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.RestLogHelper;
 import be.vlaanderen.vip.magda.magdamock.config.MockRestMapping;
+import be.vlaanderen.vip.magda.magdamock.config.rest.RestParameter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
@@ -13,6 +14,7 @@ import com.github.tomakehurst.wiremock.http.QueryParameter;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.ResponseDefinition;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
+import com.jayway.jsonpath.JsonPath;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,7 +68,7 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
 
             if (responseFile == null) {
                 log.debug("Didn't find any matching file");
-                return new ResponseDefinitionBuilder().withStatus(404).build();
+                return new ResponseDefinitionBuilder().withStatus(666).build();
             }
             log.debug("Found best matching file: {}", responseFile.toFile().getAbsolutePath());
 
@@ -93,6 +95,7 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
             return responseDefinitionBuilder
                     .build();
         } catch (Exception e) {
+            e.printStackTrace();
             log.error("Exception occurred while trying to construct a REST response", e);
             return new ResponseDefinitionBuilder()
                     .withStatus(666)
@@ -104,33 +107,35 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
     private List<String> getUrlAndQueryParameters(Request request, MockRestMapping mockRestMapping) {
         List<String> fileParts = new ArrayList<>();
 
-        // url params
-        for (String key : mockRestMapping.urlParameters()) {
-            fileParts.add(request.getPathParameters().get(key));
-        }
-
-        // query params
-        for (String key : mockRestMapping.queryParameters()) {
-            QueryParameter queryParameter = request.queryParameter(key);
-            if (queryParameter.isPresent()) {
-                fileParts.add(queryParameter.firstValue());
-            } else {
-                fileParts.add("");
-            }
-        }
-
-        // body params
-        for (String key : mockRestMapping.requestBodyParameters()) {
-            FormParameter formParameter = request.formParameter(key);
-            if (formParameter.isPresent()) {
-                fileParts.add(formParameter.firstValue());
-            } else {
-                try {
-                    JsonNode j = new ObjectMapper().readTree(request.getBody());
-                    fileParts.add(j.get(key).asText());
-                } catch (Exception e) {
-                    log.error("Error occured while extracting body parameter", e);
-                    fileParts.add("");
+        for (RestParameter restParameter : mockRestMapping.restParameters()) {
+            String key = restParameter.getValue();
+            switch (restParameter.getType()) {
+                case HEADER -> fileParts.add(request.getHeader(key));
+                case QUERY -> {
+                    QueryParameter queryParameter = request.queryParameter(key);
+                    if (queryParameter.isPresent()) {
+                        fileParts.add(queryParameter.firstValue());
+                    } else {
+                        fileParts.add("");
+                    }
+                }
+                case PATH -> fileParts.add(request.getPathParameters().get(key));
+                case BODY -> {
+                    FormParameter formParameter = request.formParameter(key);
+                    if (formParameter.isPresent()) {
+                        fileParts.add(formParameter.firstValue());
+                    } else {
+                        try {
+                            JsonNode j = new ObjectMapper().readTree(request.getBody());
+                            if (!key.startsWith("/")) {
+                                key = "/" + key;
+                            }
+                            fileParts.add(j.at(key).asText());
+                        } catch (Exception e) {
+                            log.error("Error occured while extracting body parameter", e);
+                            fileParts.add("");
+                        }
+                    }
                 }
             }
         }

@@ -36,11 +36,7 @@ public class AbstractMockHandler {
     }
 
     // As there need to be certain parameters filled in to avoid wiremock throwing nullpointers while templating, we create the request ourselves
-    protected Request createInternalWiremockRequest(String url, String method, String requestBody, String dateHeader, String contentType) {
-        if (dateHeader == null) {
-            dateHeader = "";
-        }
-        HttpHeaders httpHeaders = new HttpHeaders(new HttpHeader("Date", dateHeader));
+    protected Request createInternalWiremockRequest(String url, String method, String requestBody, HttpHeaders httpHeaders, String contentType) {
         return new Request() {
             @Override
             public String getUrl() {

@@ -1,0 +1,414 @@
+[
+  {
+    "naam": "GeefAttest",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "02651615189"
+      }
+    ],
+    "xpathExpression": "//Attest/INSZ",
+    "expectedValue": "02651615189"
+  },
+  {
+    "naam": "GeefAttest",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "12651615189"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Fout in opgegeven zoekcriteria: Ongekende attestnaam"
+  },
+  {
+    "naam": "GeefGezinssamenstelling",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "57611399743"
+      }
+    ],
+    "xpathExpression": "//Partner/INSZ",
+    "expectedValue": "62680599650"
+  },
+  {
+    "naam": "GeefGezinssamenstelling",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "47611399743"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefGezinssamenstelling",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "57611399743"
+      }
+    ],
+    "xpathExpression": "//Gezinslid/INSZ",
+    "expectedValue": "57611399743"
+  },
+  {
+    "naam": "GeefGezinssamenstelling",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "47611399743"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefHistoriekGezinssamenstelling",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00631499723"
+      }
+    ],
+    "xpathExpression": "//Achternamen/Achternaam",
+    "expectedValue": "Konincks"
+  },
+  {
+    "naam": "GeefHistoriekGezinssamenstelling",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "10631499723"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefHistoriekPersoon",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00641999774"
+      }
+    ],
+    "xpathExpression": "//Achternamen/Achternaam",
+    "expectedValue": "Janssens"
+  },
+  {
+    "naam": "GeefHistoriekPersoon",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "10641999774"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefHistoriekPersoon",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00641999774"
+      }
+    ],
+    "xpathExpression": "//Achternamen/Achternaam",
+    "expectedValue": "Janssens"
+  },
+  {
+    "naam": "GeefHistoriekPersoon",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "10641999774"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefPasfoto",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/INSZ",
+        "value": "67621546751"
+      }
+    ],
+    "xpathExpression": "//Pasfoto/INSZ",
+    "expectedValue": "67621546751"
+  },
+  {
+    "naam": "GeefPasfoto",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/INSZ",
+        "value": "00000000000"
+      }
+    ],
+    "xpathExpression": "//Pasfoto/INSZ",
+    "expectedValue": "00000000000"
+  },
+  {
+    "naam": "GeefPersoon",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00600099536"
+      },
+      {
+        "path": "//Inhoud/Bron",
+        "value": "RR"
+      }
+    ],
+    "xpathExpression": "//Gemeente/Naam",
+    "expectedValue": "Kortenberg"
+  },
+  {
+    "naam": "GeefPersoon",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "84691585173"
+      },
+      {
+        "path": "//Inhoud/Bron",
+        "value": "KSZ"
+      }
+    ],
+    "xpathExpression": "//Gemeente/Naam",
+    "expectedValue": "Stanleystad"
+  },
+  {
+    "naam": "GeefPersoon",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "10600099536"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefPersoonMutatiesNotificaties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Ontvangstreferte",
+        "value": "Monitoring"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Ongeldige ontvangstreferte"
+  },
+  {
+    "naam": "GeefPersoonMutatiesNotificaties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Ontvangstreferte",
+        "value": "MonitoringNotFound"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen verdere gegevens beschikbaar"
+  },
+  {
+    "naam": "RaadpleegLeerkredietsaldo",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Ontvangstreferte",
+        "value": "00660602889"
+      }
+    ],
+    "xpathExpression": "//RaadpleegLeerkredietsaldoAntwoord/Leerkredietsaldo",
+    "expectedValue": "200"
+  },
+  {
+    "naam": "RaadpleegLeerkredietsaldo",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Ontvangstreferte",
+        "value": "10660602889"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Fout tegen bedrijfsregel."
+  },
+  {
+    "naam": "ZoekPersoonOpAdres",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Bron",
+        "value": "KSZ"
+      },
+      {
+        "path": "//Criteria/Adres/PostCode",
+        "value": "9850"
+      },
+      {
+        "path": "//Criteria/Adres/Straatcode",
+        "value": "1"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "40"
+      },
+      {
+        "path": "//Criteria/EnkelReferentiepersoon",
+        "value": "0"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Adres: Ongeldige straatcode"
+  },
+  {
+    "naam": "ZoekPersoonOpAdres",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Bron",
+        "value": "RR"
+      },
+      {
+        "path": "//Criteria/Adres/PostCode",
+        "value": "1000"
+      },
+      {
+        "path": "//Criteria/Adres/Straatcode",
+        "value": "2396"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "1"
+      },
+      {
+        "path": "//Criteria/EnkelReferentiepersoon",
+        "value": "0"
+      }
+    ],
+    "xpathExpression": "//Achternamen/Achternaam",
+    "expectedValue": "Dupe"
+  },
+  {
+    "naam": "ZoekPersoonOpAdres",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Bron",
+        "value": "RR"
+      },
+      {
+        "path": "//Criteria/Adres/PostCode",
+        "value": "9470"
+      },
+      {
+        "path": "//Criteria/Adres/Straatcode",
+        "value": "1002"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "21"
+      },
+      {
+        "path": "//Criteria/EnkelReferentiepersoon",
+        "value": "1"
+      }
+    ],
+    "xpathExpression": "//Achternamen/Achternaam",
+    "expectedValue": "VanBellingengen"
+  },
+  {
+    "naam": "ZoekPersoonOpAdres",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Bron",
+        "value": "XX"
+      },
+      {
+        "path": "//Criteria/Adres/Postcode",
+        "value": "9470"
+      },
+      {
+        "path": "//Criteria/Adres/Straatcode",
+        "value": "1002"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "21"
+      },
+      {
+        "path": "//Criteria/EnkelReferentiepersoon",
+        "value": "1"
+      }
+    ],
+    "xpathExpression": "//Persoon/INSZ",
+    "expectedValue": "99999999999"
+  },
+  {
+    "naam": "ZoekPersoonOpNaam",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Bron",
+        "value": "RR"
+      },
+      {
+        "path": "//Criteria/Naam/Achternaam",
+        "value": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      },
+      {
+        "path": "//Criteria/Geboorte/Datum",
+        "value": "2000-01-01"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "ZoekPersoonOpNaam",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Bron",
+        "value": "XX"
+      },
+      {
+        "path": "//Criteria/Naam/Achternaam",
+        "value": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      },
+      {
+        "path": "//Criteria/Geboorte/Datum",
+        "value": "2000-01-01"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  }
+]
