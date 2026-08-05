@@ -101,25 +101,13 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
 
     private List<String> determineFilenameOptionsForFlatfile(List<String> xpathValues) {
         List<String> fileNames = new ArrayList<>();
-        int i = 1 << xpathValues.size();
-        while (i-- > 0) {
-            List<String> filenameParts = new ArrayList<>();
-            for (int j = 0; j < xpathValues.size(); j++) {
-                int index = xpathValues.size() - j - 1;
-                boolean isSet = (i & (1 << index)) != 0;
-                if (isSet) {
-                    filenameParts.add(xpathValues.get(j));
-                } else {
-                    filenameParts.add("");
-                }
-            }
+        List<String> filenameParts = new ArrayList<>(xpathValues);
+        fileNames.add(String.join("&", filenameParts));
+        while (!filenameParts.isEmpty() && filenameParts.getLast().isBlank()) {
+            filenameParts.removeLast();
             fileNames.add(String.join("&", filenameParts));
-
-            while (!filenameParts.isEmpty() && filenameParts.getLast().isBlank()) {
-                filenameParts.removeLast();
-                fileNames.add(String.join("&", filenameParts));
-            }
         }
+        fileNames.removeIf(String::isBlank);
         fileNames.add("default");
         return fileNames;
     }

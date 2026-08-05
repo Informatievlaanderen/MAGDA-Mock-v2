@@ -151,24 +151,11 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
     private List<Path> determineFilenameOptions(List<String> fileParts, MockRestMapping mockRestMapping) {
         List<String> fileNames = new ArrayList<>();
         if (!mockRestMapping.defaultOnly()) {
-            int i = 1 << fileParts.size();
-            while (i-- > 0) {
-                List<String> filenameParts = new ArrayList<>();
-                for (int j = 0; j < fileParts.size(); j++) {
-                    int index = fileParts.size() - j - 1;
-                    boolean isSet = (i & (1 << index)) != 0;
-                    if (isSet) {
-                        filenameParts.add(fileParts.get(j));
-                    } else {
-                        filenameParts.add("");
-                    }
-                }
+            List<String> filenameParts = new ArrayList<>(fileParts);
+            fileNames.add(String.join("&", filenameParts));
+            while (!filenameParts.isEmpty() && filenameParts.getLast().isBlank()) {
+                filenameParts.removeLast();
                 fileNames.add(String.join("&", filenameParts));
-
-                while (!filenameParts.isEmpty() && filenameParts.getLast().isBlank()) {
-                    filenameParts.removeLast();
-                    fileNames.add(String.join("&", filenameParts));
-                }
             }
             fileNames.removeIf(String::isBlank);
         }
