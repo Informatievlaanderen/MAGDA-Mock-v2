@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import be.vlaanderen.vip.magda.magdamock.client.MagdaMockConnection;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Data
 @Configuration
@@ -15,14 +16,15 @@ public class MagdaMockConfig {
     String soapTestPath;
     String restTestPath;
     String magdaXsdPath;
+    Boolean magdaXsdEnabled;
     Integer minimumTimeoutMillis;
     Integer maximumTimeoutMillis;
-    boolean enableTimeout;
+    Boolean enableTimeout;
     boolean logRequestBody;
 
     @Bean
     public MagdaMockConnection magdaMockConnection() throws IOException {
-        if (enableTimeout) {
+        if (Objects.requireNonNullElse(enableTimeout, false)) {
             if (minimumTimeoutMillis == null) {
                 minimumTimeoutMillis = 0;
             }
@@ -33,6 +35,6 @@ public class MagdaMockConfig {
             minimumTimeoutMillis = null;
             maximumTimeoutMillis = null;
         }
-        return MagdaMockConnection.create(restTestPath, soapTestPath, magdaXsdPath, minimumTimeoutMillis, maximumTimeoutMillis, logRequestBody);
+        return MagdaMockConnection.create(restTestPath, soapTestPath, Objects.requireNonNullElse(magdaXsdEnabled, true), magdaXsdPath, minimumTimeoutMillis, maximumTimeoutMillis, logRequestBody);
     }
 }
