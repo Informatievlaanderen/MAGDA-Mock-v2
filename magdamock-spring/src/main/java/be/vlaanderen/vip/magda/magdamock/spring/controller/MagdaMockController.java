@@ -77,7 +77,7 @@ public class MagdaMockController {
             MagdaMockDocument requestDocument = parseDocument(request);
             var magdaResponse = mockConnection.sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(requestDocument.getXml()));
             if (magdaResponse != null) {
-                return parseInputstream(MagdaMockDocument.fromDocument(magdaResponse.document()), httpHeaders);
+                return parseInputstream(magdaResponse, httpHeaders);
 
             } else {
                 return ResponseEntity.notFound().headers(httpHeaders).build();
@@ -95,15 +95,18 @@ public class MagdaMockController {
         }
     }
 
-    private ResponseEntity<String> parseInputstream(MagdaMockDocument magdaMockDocument, HttpHeaders httpHeaders) {
-        if (magdaMockDocument != null) {
-            return ResponseEntity.ok().contentType(TEXT_XML).headers(httpHeaders).body(magdaMockDocument.toString());
-        } else {
+    private ResponseEntity<String> parseInputstream(MagdaMockSoapHandler.MockSoapResponse magdaMockDocument, HttpHeaders httpHeaders) {
+        if (magdaMockDocument == null) {
             log.error("Could not find XML");
 
-            // TODO: maak en return MAGDA Uitzondering antwoord
             return ResponseEntity.notFound().headers(httpHeaders).build();
         }
+
+        for (String key : magdaMockDocument.headers().keySet()) {
+            httpHeaders.addAll(key, magdaMockDocument.headers().get(key));
+        }
+
+        return ResponseEntity.ok().headers(httpHeaders).body(MagdaMockDocument.fromDocument(magdaMockDocument.document()).toString());
     }
 
 

@@ -89,6 +89,7 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
             return new ResponseDefinitionBuilder()
                     .withStatus(200)
                     .withHeader("Content-Type", "text/xml; charset=utf-8")
+                    .withHeader("X-MagdaMock-Content-Location", responseFile.toFile().getAbsolutePath())
                     .withBody(Files.readString(responseFile))
                     .build();
         } catch (IOException e) {

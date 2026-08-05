@@ -27,7 +27,10 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -88,7 +91,12 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_VALIDATION);
         Document checkedResponse = validateSoapResponse(request, filteredResponse);
         Document wrappedResponse = wrapInEnvelope(checkedResponse);
-        return new MockSoapResponse(wrappedResponse, 200);
+        Map<String, List<String>> headers = new HashMap<>();
+        for (String headerName : response.getHeaders().keys()) {
+            headers.put(headerName, response.getHeaders().getHeader(headerName).values());
+        }
+        headers.remove("Matched-Stub-Id");
+        return new MockSoapResponse(wrappedResponse, 200, headers);
     }
 
     private Document filterResponse(MagdaMockDocument request, Document checkedResponse) {
@@ -184,7 +192,8 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
 
     public record MockSoapResponse(
             Document document,
-            Integer statusCode
+            Integer statusCode,
+            Map<String, List<String>> headers
     ) {
     }
 

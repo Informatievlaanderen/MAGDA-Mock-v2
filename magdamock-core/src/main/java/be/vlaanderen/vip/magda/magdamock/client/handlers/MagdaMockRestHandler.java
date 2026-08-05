@@ -113,6 +113,7 @@ public class MagdaMockRestHandler extends AbstractMockHandler {
         if (!headers.containsKey("Content-Type")) {
             headers.put("Content-Type", List.of("application/json"));
         }
+        headers.remove("Matched-Stub-Id");
         headers.put(HEADER_KEY_CORRELATION_ID, List.of(correlationId));
         return new MockRestResponse(response.getBody(), response.getStatus(), headers);
     }

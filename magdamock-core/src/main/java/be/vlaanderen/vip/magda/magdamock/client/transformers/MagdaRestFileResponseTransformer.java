@@ -14,7 +14,6 @@ import com.github.tomakehurst.wiremock.http.QueryParameter;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.ResponseDefinition;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
-import com.jayway.jsonpath.JsonPath;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -93,6 +92,7 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
                 }
             }
             return responseDefinitionBuilder
+                    .withHeader("X-MagdaMock-Content-Location", responseFile.toFile().getAbsolutePath())
                     .build();
         } catch (Exception e) {
             e.printStackTrace();
