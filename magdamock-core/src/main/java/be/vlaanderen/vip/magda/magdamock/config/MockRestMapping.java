@@ -89,10 +89,7 @@ public record MockRestMapping(List<String> folderPath,
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "document", "documentId", "get"), List.of(RestPathParameter.of("vmswWoningId"), RestPathParameter.of("documentId")), "/v1/socZek/socialeHuisvesting/woningen/{vmswWoningId}/epcwaarden/document/{documentId}", "GET"),
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "certificaat", "post"), List.of(RestPathParameter.of("vmswWoningId")), "/v1/socZek/socialeHuisvesting/woningen/{vmswWoningId}/epcwaarden/certificaat", "POST"),
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "markeerReferentieversie", "patch"), List.of(RestPathParameter.of("vmswWoningId"), RestBodyParameter.of("epcVersieId")), "/v1/socZek/socialeHuisvesting/woningen/{vmswWoningId}/epcwaarden/markeerReferentieversie", "PATCH"),
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "epcVersieId", "delete"), List.of(RestPathParameter.of("vmswWoningId"), RestPathParameter.of("epcVersieId")), "/v1/socZek/socialeHuisvesting/woningen/{vmswWoningId}/epcwaarden/{epcVersieId}", "DELETE"),
-
-            //Onderneming
-            new MockRestMapping(List.of("v1", "onderneming", "ondernemingen", "adressenLocaties", "get"), List.of(RestPathParameter.of("ondernemingsNummer")), "/v1/onderneming/ondernemingen/adressenLocaties/{ondernemingsNummer}", "GET")
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "epcVersieId", "delete"), List.of(RestPathParameter.of("vmswWoningId"), RestPathParameter.of("epcVersieId")), "/v1/socZek/socialeHuisvesting/woningen/{vmswWoningId}/epcwaarden/{epcVersieId}", "DELETE")
     );
 
     // url parameters should be marked with {parameterName}
