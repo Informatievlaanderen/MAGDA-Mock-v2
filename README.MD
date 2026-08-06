@@ -139,7 +139,7 @@ A broader demo, with the same concept and containing more data can be found in h
 
 ## Endpoints
 
-There are 3 endpoints, two for SOAP (`/soap` and `/soap/WebService`) and one for REST (`/rest`).
+There are 3 endpoints, two for SOAP (`/soap` and `/api/Magda-02.00/soap/WebService`) and one for REST (`/rest`).
 The SOAP service to be mocked is matched based on the envelope fields `//Naam` and `//Versie`.
 The REST service to be mocked is matched based on the path/method combination.
 

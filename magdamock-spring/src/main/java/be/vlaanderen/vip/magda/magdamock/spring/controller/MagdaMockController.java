@@ -42,7 +42,7 @@ public class MagdaMockController {
     // Gemeenschappelijk endpoint voor alle soap
     private static final String SOAP_BASE_URL = "/soap";
     // Endpoint used for application that cannot change the soap url that is used
-    private static final String SOAP_LEGACY_BASE_URL = "/soap/WebService";
+    private static final String SOAP_LEGACY_BASE_URL = "/api/Magda-02.00/soap/WebService";
     // Gemeenschappelijk endpoint voor alle rest
     private static final String REST_BASE_URL = "/rest";
 
