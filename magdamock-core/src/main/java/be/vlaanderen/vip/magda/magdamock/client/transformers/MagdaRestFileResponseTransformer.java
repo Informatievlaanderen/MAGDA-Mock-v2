@@ -2,6 +2,7 @@ package be.vlaanderen.vip.magda.magdamock.client.transformers;
 
 import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.RestLogHelper;
+import be.vlaanderen.vip.magda.magdamock.config.MissingParameterConfiguration;
 import be.vlaanderen.vip.magda.magdamock.config.MockRestMapping;
 import be.vlaanderen.vip.magda.magdamock.config.rest.RestParameter;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -49,7 +50,11 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
             for (MockRestMapping mockRestMapping : mockRestMappingList) {
                 List<String> fileParts = getUrlAndQueryParameters(request, mockRestMapping);
 
-                fileNameOptions.addAll(determineFilenameOptions(fileParts, mockRestMapping));
+                if (mockRestMapping.missingParameterConfiguration().equals(MissingParameterConfiguration.EmptyString)) {
+                    fileNameOptions.addAll(determineFilenameOptions(fileParts, mockRestMapping));
+                } else {
+                    fileNameOptions.addAll(determineFilenameOptionsWithWildcardBlanks(fileParts, mockRestMapping));
+                }
             }
 
             boolean stop = false;
@@ -158,6 +163,38 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
                 fileNames.add(String.join("&", filenameParts));
             }
             fileNames.removeIf(String::isBlank);
+        }
+        fileNames.add("default");
+
+        return fileNames.stream().map(
+                fileName -> filesRoot
+                        .resolve(mockRestMapping.toPath())
+                        .resolve(fileName + ".json")
+        ).toList();
+    }
+
+    private List<Path> determineFilenameOptionsWithWildcardBlanks(List<String> fileParts, MockRestMapping mockRestMapping) {
+        List<String> fileNames = new ArrayList<>();
+        if (!mockRestMapping.defaultOnly()) {
+            int i = 1 << fileParts.size();
+            while (i-- > 0) {
+                List<String> filenameParts = new ArrayList<>();
+                for (int j = 0; j < fileParts.size(); j++) {
+                    int index = fileParts.size() - j - 1;
+                    boolean isSet = (i & (1 << index)) != 0;
+                    if (isSet) {
+                        filenameParts.add(fileParts.get(j));
+                    } else {
+                        filenameParts.add("");
+                    }
+                }
+                fileNames.add(String.join("&", filenameParts));
+
+                while (!filenameParts.isEmpty() && filenameParts.getLast().isBlank()) {
+                    filenameParts.removeLast();
+                    fileNames.add(String.join("&", filenameParts));
+                }
+            }
         }
         fileNames.add("default");
 

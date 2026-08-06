@@ -6,13 +6,12 @@ import be.vlaanderen.vip.magda.magdamock.config.rest.RestParameter;
 import be.vlaanderen.vip.magda.magdamock.config.rest.RestPathParameter;
 import be.vlaanderen.vip.magda.magdamock.config.rest.RestQueryParameter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public record MockRestMapping(List<String> folderPath,
                               List<RestParameter> restParameters,
                               String url, String method, Integer priority,
-                              boolean defaultOnly) {
+                              boolean defaultOnly, MissingParameterConfiguration missingParameterConfiguration) {
     public static final List<MockRestMapping> MAPPINGS = List.of(
             // Company
             new MockRestMapping(List.of("v1", "company", "billRetainment", "retainmentObligations", "search", "post"), List.of(RestBodyParameter.of("/enterpriseIdentifiers/0")), "/v1/company/billRetainment/retainmentObligations/search", "POST"),
@@ -23,7 +22,7 @@ public record MockRestMapping(List<String> folderPath,
             new MockRestMapping(List.of("v1", "mobility", "registrations", "get", "vin"), List.of(RestQueryParameter.of("vin"), RestQueryParameter.of("unifier")), "/v1/mobility/registrations", "GET", 42),
             new MockRestMapping(List.of("v1", "mobility", "registrations", "get", "nationalNr"), List.of(RestQueryParameter.of("nationalNr")), "/v1/mobility/registrations", "GET", 43),
             new MockRestMapping(List.of("v1", "mobility", "registrations", "get", "companyNr"), List.of(RestQueryParameter.of("companyNr")), "/v1/mobility/registrations", "GET", 44),
-            new MockRestMapping(List.of("v1", "mobility", "registrations", "get"), List.of(), "/v1/mobility/registrations", "GET", 50, true),
+            new MockRestMapping(List.of("v1", "mobility", "registrations", "get"), List.of(), "/v1/mobility/registrations", "GET", 50, true, MissingParameterConfiguration.EmptyString),
 
             // Organisaties.verenigingen
             new MockRestMapping(List.of("v1", "organisaties", "verenigingen", "verenigingen", "zoeken", "get"), List.of(RestQueryParameter.of("q")), "/v1/organisaties/verenigingen/verenigingen/zoeken", "GET", 40),
@@ -95,15 +94,15 @@ public record MockRestMapping(List<String> folderPath,
     // url parameters should be marked with {parameterName}
     // priority: when set, overrides the default calculated priority (lower number = higher precedence in WireMock)
     public MockRestMapping(List<String> folderPath, List<RestParameter> restParameters, String url, String method) {
-        this(folderPath, restParameters, url, method, 66, false);
+        this(folderPath, restParameters, url, method, 66, false, MissingParameterConfiguration.EmptyString);
     }
 
     public MockRestMapping(List<String> folderPath, List<RestParameter> restParameters, String url, String method, Integer priority) {
-        this(folderPath, restParameters, url, method, priority, false);
+        this(folderPath, restParameters, url, method, priority, false, MissingParameterConfiguration.EmptyString);
     }
 
     public MockRestMapping(List<String> folderPath, List<RestParameter> restParameters, String url, String method, boolean defaultOnly) {
-        this(folderPath, restParameters, url, method, 66, defaultOnly);
+        this(folderPath, restParameters, url, method, 66, defaultOnly, MissingParameterConfiguration.EmptyString);
     }
 
     public String toPath() {

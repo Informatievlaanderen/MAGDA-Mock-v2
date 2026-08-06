@@ -4,7 +4,7 @@ import java.util.List;
 
 public record MockSoapMapping(String domain, String service, String version,
                               List<String> keys, String separator, String xsdRequestPath, String xsdResponsePath,
-                              StubHandler stubHandler) {
+                              StubHandler stubHandler, MissingParameterConfiguration missingParameterConfiguration) {
 
     public static final String VERSION_01_00 = "01.00.0000";
     public static final String VERSION_02_00 = "02.00.0000";
@@ -40,7 +40,7 @@ public record MockSoapMapping(String domain, String service, String version,
             new MockSoapMapping("Gezin", "GeefKindVoordelen", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Gezin.GeefKindVoordelenDienst-02.00/WebService/GeefKindVoordelen.xsd", "Gezin.GeefKindVoordelenDienst-02.00/WebService/GeefKindVoordelenResponse.xsd"),
 
             // Inkomen
-            new MockSoapMapping("Inkomen", "GeefAanslagbiljetPersonenbelasting", VERSION_02_00, List.of(KEY_INSZ, "//Criteria/Inkomensjaar"), SEPERATOR_FILE_NAME, "Inkomen.GeefAanslagbiljetPersonenbelastingDienst-02.00/WebService/GeefAanslagbiljetPersonenbelasting.xsd", "Inkomen.GeefAanslagbiljetPersonenbelastingDienst-02.00/WebService/GeefAanslagbiljetPersonenbelastingResponse.xsd"),
+            new MockSoapMapping("Inkomen", "GeefAanslagbiljetPersonenbelasting", VERSION_02_00, List.of(KEY_INSZ, "//Criteria/Inkomensjaar"), SEPERATOR_FILE_NAME, "Inkomen.GeefAanslagbiljetPersonenbelastingDienst-02.00/WebService/GeefAanslagbiljetPersonenbelasting.xsd", "Inkomen.GeefAanslagbiljetPersonenbelastingDienst-02.00/WebService/GeefAanslagbiljetPersonenbelastingResponse.xsd", StubHandler.FileSoap, MissingParameterConfiguration.Wildcard),
 
             // Kadaster
             new MockSoapMapping("Kadaster", "GeefCadNetTransacties", VERSION_01_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Kadaster.GeefCadNetTransactiesDienst-01.00/WebService/GeefCadNetTransacties.xsd", "Kadaster.GeefCadNetTransactiesDienst-01.00/WebService/GeefCadNetTransactiesResponse.xsd"),
@@ -151,7 +151,7 @@ public record MockSoapMapping(String domain, String service, String version,
         this(domain, service, version, keys, separator, xsdRequestPath, xsdResponsePath, switch (separator) {
             case SEPERATOR_FILE_NAME -> StubHandler.FileSoap;
             default -> StubHandler.SubDirSoap;
-        });
+        }, MissingParameterConfiguration.EmptyString);
     }
 
     public String getId() {
