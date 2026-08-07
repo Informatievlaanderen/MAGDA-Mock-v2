@@ -1,10 +1,13 @@
 package be.vlaanderen.vip.magda.magdamock.config;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public record MockSoapMapping(String domain, String service, String version,
                               List<String> keys, String separator, String xsdRequestPath, String xsdResponsePath,
                               StubHandler stubHandler, MissingParameterConfiguration missingParameterConfiguration) {
+    public static final String SEPERATOR_DIRECTORY = "/";
+    public static final String SEPERATOR_FILE_NAME = "&";
 
     public static final String VERSION_01_00 = "01.00.0000";
     public static final String VERSION_02_00 = "02.00.0000";
@@ -23,8 +26,13 @@ public record MockSoapMapping(String domain, String service, String version,
     public static final String KEY_KADASTRALE_AFDELING = "//KadastraleAfdeling";
     public static final String KEY_SECTIE = "//Sectie";
     public static final String KEY_GRONDNUMMER = "//Grondnummer";
-    public static final String SEPERATOR_DIRECTORY = "/";
-    public static final String SEPERATOR_FILE_NAME = "&";
+    public static final String KEY_GEBOUW_ID = "//Criteria/GebouwId";
+    public static final String KEY_GEBOUWEENHEID_ID = "//Criteria/GebouweenheidId";
+    public static final String KEY_ADRES_GEMEENTE = "//Criteria/Adres/Gemeente";
+    public static final String KEY_ADRES_STRAAT = "//Criteria/Adres/Straat";
+    public static final String KEY_ADRES_HUISNUMMER = "//Criteria/Adres/Huisnummer";
+    public static final String KEY_ADRES_BUSNUMMER = "//Criteria/Adres/Busnummer";
+    public static final String KEY_ATTESTNUMMER = "//Criteria/Attestnummer";
 
     public static final List<MockSoapMapping> MAPPINGS = List.of(
             // Dossier
@@ -32,9 +40,13 @@ public record MockSoapMapping(String domain, String service, String version,
 
             // Energie
             new MockSoapMapping("Energie", "GeefEpc", VERSION_02_01, List.of(
-                    "//Criteria/Adres/Postcode",
-                    "//Criteria/Adres/Straat",
-                    "//Criteria/Adres/Huisnummer"), SEPERATOR_DIRECTORY, "Energie.GeefEpcDienst-02.01/WebService/GeefEpc.xsd", "Energie.GeefEpcDienst-02.01/WebService/GeefEpcResponse.xsd"),
+                    KEY_GEBOUW_ID,
+                    KEY_GEBOUWEENHEID_ID,
+                    KEY_ADRES_GEMEENTE,
+                    KEY_ADRES_STRAAT,
+                    KEY_ADRES_HUISNUMMER,
+                    KEY_ADRES_BUSNUMMER,
+                    KEY_ATTESTNUMMER), SEPERATOR_DIRECTORY, "Energie.GeefEpcDienst-02.01/WebService/GeefEpc.xsd", "Energie.GeefEpcDienst-02.01/WebService/GeefEpcResponse.xsd", StubHandler.GeefEpc, MissingParameterConfiguration.EmptyString),
 
             // Gezin
             new MockSoapMapping("Gezin", "GeefKindVoordelen", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Gezin.GeefKindVoordelenDienst-02.00/WebService/GeefKindVoordelen.xsd", "Gezin.GeefKindVoordelenDienst-02.00/WebService/GeefKindVoordelenResponse.xsd"),
@@ -146,6 +158,7 @@ public record MockSoapMapping(String domain, String service, String version,
             new MockSoapMapping("Vlok", "GeefWoningKwaliteitBijlage", VERSION_02_00, List.of("//NISCode", "//Criteria/Bijlagen/Bijlage[1]/Type", "//Criteria/Bijlagen/Bijlage[1]/Referte"), SEPERATOR_FILE_NAME, "Vlok.GeefWoningKwaliteitBijlageDienst-02.00/WebService/GeefWoningKwaliteitBijlage.xsd", "Vlok.GeefWoningKwaliteitBijlageDienst-02.00/WebService/GeefWoningKwaliteitBijlageResponse.xsd"),
             new MockSoapMapping("Vlok", "ZoekWoningKwaliteit", VERSION_02_00, List.of("//NISCode", "//Zoekterm"), SEPERATOR_FILE_NAME, "Vlok.ZoekWoningKwaliteitDienst-02.00/WebService/ZoekWoningKwaliteit.xsd", "Vlok.ZoekWoningKwaliteitDienst-02.00/WebService/ZoekWoningKwaliteitResponse.xsd")
     );
+
     private MockSoapMapping(String domain, String service, String version,
                             List<String> keys, String separator, String xsdRequestPath, String xsdResponsePath) {
         this(domain, service, version, keys, separator, xsdRequestPath, xsdResponsePath, switch (separator) {
@@ -158,9 +171,12 @@ public record MockSoapMapping(String domain, String service, String version,
         return String.format("%s.%s.%s", domain, service, version);
     }
 
+    public Path getPath() {return Path.of(domain, service, version);}
+
     public enum StubHandler {
         FileSoap,
         SubDirSoap,
+        GeefEpc,
         GeefPasfoto
     }
 }

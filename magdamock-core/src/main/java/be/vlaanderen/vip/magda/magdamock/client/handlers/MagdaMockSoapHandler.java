@@ -161,6 +161,8 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         try {
             return MagdaMockDocument.fromString(response.getBodyAsString()).getXml();
         } catch (MagdaMockSoapException e) {
+            log.error("Unable to parse soap response", e);
+            log.error("File contents: {}", response.getBodyAsString());
             throw new MagdaMockSoapException("Response contains invalid XML content.", "Server", e.getMessage(), e.getCause());
         }
     }

@@ -26,7 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTransformerV2 {
     public static String NAME = "magda-soap-response-transformer";
-    private final Path filesRoot;
+    protected final Path filesRoot;
 
     @Override
     public ResponseDefinition transform(ServeEvent serveEvent) {

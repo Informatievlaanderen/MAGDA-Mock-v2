@@ -77,6 +77,8 @@ public class MagdaMockConnection {
                         WiremockTransformerStubCreator.addSoapFileTransformerStub(wireMockData.wireMockServer(), soapMapping);
                 case SubDirSoap ->
                         WiremockTransformerStubCreator.addSoapSubdirTransformerStub(wireMockData.wireMockServer(), soapMapping);
+                case GeefEpc ->
+                        WiremockTransformerStubCreator.addGeefEpcTransformerStub(wireMockData.wireMockServer(), soapMapping);
                 default ->
                         log.error("Unable to create stub for soap mapping {}, there is not a fitting transformer configured", soapMapping.getId());
             }
