@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,15 +48,24 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
 
             log.debug("Fetching all parameters to find a mapping for {}", id);
             List<Path> fileNameOptions = new ArrayList<>();
+            List<Path> defaultNameOptions = new ArrayList<>();
             for (MockRestMapping mockRestMapping : mockRestMappingList) {
                 List<String> fileParts = getUrlAndQueryParameters(request, mockRestMapping);
-
-                if (mockRestMapping.missingParameterConfiguration().equals(MissingParameterConfiguration.EmptyString)) {
-                    fileNameOptions.addAll(determineFilenameOptions(fileParts, mockRestMapping));
-                } else {
-                    fileNameOptions.addAll(determineFilenameOptionsWithWildcardBlanks(fileParts, mockRestMapping));
+                if (!mockRestMapping.defaultOnly()) {
+                    if (mockRestMapping.missingParameterConfiguration().equals(MissingParameterConfiguration.EmptyString)) {
+                        fileNameOptions.addAll(determineFilenameOptions(fileParts, mockRestMapping));
+                    } else {
+                        fileNameOptions.addAll(determineFilenameOptionsWithWildcardBlanks(fileParts, mockRestMapping));
+                    }
                 }
+                defaultNameOptions.addAll(determineDefaultOptions(fileParts, mockRestMapping));
             }
+            if (mockRestMappingList.size() == 1) {
+                defaultNameOptions.add(filesRoot.resolve(mockRestMappingList.getFirst().toPath())
+                                .resolve("default.json")
+                );
+            }
+            fileNameOptions.addAll(defaultNameOptions);
 
             boolean stop = false;
             int i = 0;
@@ -83,8 +93,13 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
             responseDefinitionBuilder = responseDefinitionBuilder.withStatus(status);
 
             if (response.has("body")) {
-                byte[] body = response.get("body").binaryValue();
-                responseDefinitionBuilder = responseDefinitionBuilder.withBody(body);
+                String textBody = response.get("body").asText();
+                byte[] binaryBody = response.get("body").binaryValue();
+                if (textBody != null) {
+                    responseDefinitionBuilder = responseDefinitionBuilder.withBody(textBody);
+                } else {
+                    responseDefinitionBuilder = responseDefinitionBuilder.withBody(binaryBody);
+                }
             } else if (response.has("jsonBody")) {
                 JsonNode body = response.get("jsonBody");
                 responseDefinitionBuilder = responseDefinitionBuilder.withJsonBody(body);
@@ -107,6 +122,18 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
                     .withHeader("Content-Type", "text/plain; charset=utf-8")
                     .build();
         }
+    }
+
+    private List<Path> determineDefaultOptions(List<String> fileParts, MockRestMapping mockRestMapping) {
+        long count = fileParts.stream().filter(filePart -> filePart != null && !filePart.isEmpty()).count();
+        boolean isDefault = mockRestMapping.defaultOnly();
+        if (isDefault || count >= 1) {
+            return List.of(
+                    filesRoot.resolve(mockRestMapping.toPath())
+                            .resolve("default.json")
+            );
+        }
+        return List.of();
     }
 
     private List<String> getUrlAndQueryParameters(Request request, MockRestMapping mockRestMapping) {
@@ -164,7 +191,6 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
             }
             fileNames.removeIf(String::isBlank);
         }
-        fileNames.add("default");
 
         return fileNames.stream().map(
                 fileName -> filesRoot
@@ -196,7 +222,6 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
                 }
             }
         }
-        fileNames.add("default");
 
         return fileNames.stream().map(
                 fileName -> filesRoot
