@@ -1,0 +1,66 @@
+<web:GeefBijdrageARZAResponse xmlns:web="http://magda.vlaanderen.be/werk/soap/geefbijdragearza/v01_00">
+    <Repliek>
+        <Context>
+            <Naam>GeefBijdrageARZA</Naam>
+            <Versie>01.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>0001-01-01</Datum>
+                    <Tijd>00:00:00.000</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <ConsultContributionsResponse>
+                        <status>
+                            <value>NO_DATA_FOUND</value>
+                            <code>MSG00100</code>
+                            <description>Treatment successful, but no data found at the supplier</description>
+                            <information>
+                                <fieldName>Reason</fieldName>
+                                <fieldValue>No data for requested period</fieldValue>
+                            </information>
+                        </status>
+                    </ConsultContributionsResponse>
+                </Inhoud>
+                <Uitzonderingen>
+                    <Uitzondering>
+                        <Identificatie>70001</Identificatie>
+                        <Oorsprong>KSZ</Oorsprong>
+                        <Type>WAARSCHUWING</Type>
+                        <Tijdstip>
+                            <Datum>0001-01-01</Datum>
+                            <Tijd>00:00:00.000</Tijd>
+                        </Tijdstip>
+                        <Diagnose>Antwoord met waarschuwing</Diagnose>
+                        <Omstandigheid>NO_DATA_FOUND</Omstandigheid>
+                        <Annotaties>
+                            <Annotatie>
+                                <Naam>status code</Naam>
+                                <Waarde>MSG00100</Waarde>
+                            </Annotatie>
+                            <Annotatie>
+                                <Naam>status description</Naam>
+                                <Waarde>Treatment successful, but no data found at the supplier</Waarde>
+                            </Annotatie>
+                        </Annotaties>
+                    </Uitzondering>
+                </Uitzonderingen>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:GeefBijdrageARZAResponse>

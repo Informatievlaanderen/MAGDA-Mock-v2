@@ -1,0 +1,72 @@
+<web:GeefBijdrageARZAResponse xmlns:web="http://magda.vlaanderen.be/werk/soap/geefbijdragearza/v01_00">
+    <Repliek>
+        <Context>
+            <Naam>GeefBijdrageARZA</Naam>
+            <Versie>01.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>0001-01-01</Datum>
+                    <Tijd>00:00:00.000</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <ConsultContributionsResponse>
+                        <status>
+                            <value>DATA_FOUND</value>
+                            <code>MSG00000</code>
+                            <description>Treatment successful</description>
+                        </status>
+                        <ssin>83660634135</ssin>
+                        <contributions>
+                            <contribution>
+                                <quarter>2026Q1</quarter>
+                                <socialInsuranceFund>
+                                    <enterpriseNumber>1999990342</enterpriseNumber>
+                                    <code>002</code>
+                                </socialInsuranceFund>
+                                <contributionSituation>
+                                    <code>10</code>
+                                    <description language="NL">Betaald</description>
+                                </contributionSituation>
+                                <ziv>
+                                    <code>1</code>
+                                    <description language="NL">zelfstandige in hoofdberoep voor de pensioenleeftijd</description>
+                                </ziv>
+                            </contribution>
+                            <contribution>
+                                <quarter>2026Q2</quarter>
+                                <socialInsuranceFund>
+                                    <enterpriseNumber>1999990342</enterpriseNumber>
+                                    <code>002</code>
+                                </socialInsuranceFund>
+                                <contributionSituation>
+                                    <code>00</code>
+                                    <description language="NL">Niet betaald</description>
+                                </contributionSituation>
+                                <ziv>
+                                    <code>1</code>
+                                    <description language="NL">zelfstandige in hoofdberoep voor de pensioenleeftijd</description>
+                                </ziv>
+                            </contribution>
+                        </contributions>
+                    </ConsultContributionsResponse>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:GeefBijdrageARZAResponse>
