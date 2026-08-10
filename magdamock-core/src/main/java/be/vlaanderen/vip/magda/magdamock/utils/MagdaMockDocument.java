@@ -47,19 +47,6 @@ public class MagdaMockDocument {
         return new MagdaMockDocument(parseString(document));
     }
 
-    public static MagdaMockDocument fromStream(InputStream document) {
-        return new MagdaMockDocument(parseStream(document));
-    }
-
-    public static MagdaMockDocument fromResource(Class<?> clazz, String name) {
-        var resource = clazz.getResourceAsStream(name);
-        if (resource != null) {
-            return new MagdaMockDocument(parseStream(resource));
-        } else {
-            return null;
-        }
-    }
-
     public static MagdaMockDocument fromDocument(Document doc) {
         return new MagdaMockDocument(doc);
     }
