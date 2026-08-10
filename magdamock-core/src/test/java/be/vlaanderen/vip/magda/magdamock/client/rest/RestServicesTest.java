@@ -95,7 +95,7 @@ class RestServicesTest {
                     .getResource("rest")
                     .toURI());
 
-            magdaMockConnection = MagdaMockConnection.create(path.toAbsolutePath().toString(), "", "", false);
+            magdaMockConnection = MagdaMockConnection.create(path.toAbsolutePath().toString(), "", "", false, false);
         }
 
         @ParameterizedTest
@@ -207,7 +207,7 @@ class RestServicesTest {
                     .getResource("rest")
                     .toURI());
 
-            magdaMockConnection = MagdaMockConnection.create(path.toAbsolutePath().toString(), "", "", false);
+            magdaMockConnection = MagdaMockConnection.create(path.toAbsolutePath().toString(), "", "", false, false);
         }
 
 
