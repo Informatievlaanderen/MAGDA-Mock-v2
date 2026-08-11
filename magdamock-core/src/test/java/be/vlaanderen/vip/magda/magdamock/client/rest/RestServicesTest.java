@@ -79,6 +79,10 @@ class RestServicesTest {
         static Stream<Arguments> allOrganisatiesServices() {
             return allRestServices("rest/test-definitions/organisaties-services.json");
         }
+
+        static Stream<Arguments> allOndernemingServices() {
+            return allRestServices("rest/test-definitions/onderneming-services.json");
+        }
         
         static Stream<Arguments> allPersoonServices() {
             return allRestServices("rest/test-definitions/persoon-services.json");
@@ -86,6 +90,10 @@ class RestServicesTest {
 
         static Stream<Arguments> allSocZekServices() {
             return allRestServices("rest/test-definitions/soczek-services.json");
+        }
+
+        static Stream<Arguments> allWerkServices() {
+            return allRestServices("rest/test-definitions/werk-services.json");
         }
 
         @BeforeEach
@@ -102,6 +110,30 @@ class RestServicesTest {
         @MethodSource("allCompanyServices")
         @SneakyThrows
         void testCompanyRestService(
+                MagdaMockRestHandler.MockRestRequest mockRestRequest,
+                String expectedMessage,
+                String expectedMappingType,
+                String expectedContentTypeHeader
+        ) {
+            testRestService(mockRestRequest, expectedMessage, expectedMappingType, expectedContentTypeHeader);
+        }
+
+        @ParameterizedTest
+        @MethodSource("allOndernemingServices")
+        @SneakyThrows
+        void testOndernemingRestService(
+                MagdaMockRestHandler.MockRestRequest mockRestRequest,
+                String expectedMessage,
+                String expectedMappingType,
+                String expectedContentTypeHeader
+        ) {
+            testRestService(mockRestRequest, expectedMessage, expectedMappingType, expectedContentTypeHeader);
+        }
+
+        @ParameterizedTest
+        @MethodSource("allWerkServices")
+        @SneakyThrows
+        void testWerkRestService(
                 MagdaMockRestHandler.MockRestRequest mockRestRequest,
                 String expectedMessage,
                 String expectedMappingType,

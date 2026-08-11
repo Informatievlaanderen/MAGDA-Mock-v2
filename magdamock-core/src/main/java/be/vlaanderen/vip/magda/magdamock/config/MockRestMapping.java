@@ -88,7 +88,18 @@ public record MockRestMapping(List<String> folderPath,
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "document", "documentId", "get"), List.of(RestPathParameter.of("vmswWoningId"), RestPathParameter.of("documentId")), "/v1/socZek/socialeHuisvesting/woningen/{vmswWoningId}/epcwaarden/document/{documentId}", "GET"),
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "certificaat", "post"), List.of(RestPathParameter.of("vmswWoningId")), "/v1/socZek/socialeHuisvesting/woningen/{vmswWoningId}/epcwaarden/certificaat", "POST"),
             new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "markeerReferentieversie", "patch"), List.of(RestPathParameter.of("vmswWoningId"), RestBodyParameter.of("epcVersieId")), "/v1/socZek/socialeHuisvesting/woningen/{vmswWoningId}/epcwaarden/markeerReferentieversie", "PATCH"),
-            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "epcVersieId", "delete"), List.of(RestPathParameter.of("vmswWoningId"), RestPathParameter.of("epcVersieId")), "/v1/socZek/socialeHuisvesting/woningen/{vmswWoningId}/epcwaarden/{epcVersieId}", "DELETE")
+            new MockRestMapping(List.of("v1", "socZek", "socialeHuisvesting", "woningen", "vmswWoningId", "epcwaarden", "epcVersieId", "delete"), List.of(RestPathParameter.of("vmswWoningId"), RestPathParameter.of("epcVersieId")), "/v1/socZek/socialeHuisvesting/woningen/{vmswWoningId}/epcwaarden/{epcVersieId}", "DELETE"),
+
+            //Onderneming
+            new MockRestMapping(List.of("v1", "onderneming", "ondernemingen", "adressenLocaties", "get"), List.of(RestPathParameter.of("ondernemingsNummer")), "/v1/onderneming/ondernemingen/adressenLocaties/{ondernemingsNummer}", "GET"),
+
+            //company
+            new MockRestMapping(List.of("v1", "company", "ubo", "companyCompositions", "controls", "get"), List.of(RestHeaderParameter.of("companyNumber"), RestQueryParameter.of("controlType")), "/v1/company/ubo/companyCompositions/controls", "GET"),
+            new MockRestMapping(List.of("v1", "company", "ubo", "controls", "get"), List.of(RestPathParameter.of("controlId")), "/v1/company/ubo/controls/{controlId}", "GET"),
+
+            //werk
+            new MockRestMapping(List.of("v1", "werk", "verrichtingen", "get"), List.of(RestHeaderParameter.of("x-insz")), "/v1/werk/verrichtingen", "GET")
+
     );
 
     // url parameters should be marked with {parameterName}

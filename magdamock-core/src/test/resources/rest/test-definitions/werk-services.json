@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/v1/werk/verrichtingen",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {"x-insz" : "85640300207"},
+    "expectedMessage": "werk verrichtingen get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/werk/verrichtingen",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {"x-insz" : "85640300208"},
+    "expectedMessage": "werk verrichtingen get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  }
+]
