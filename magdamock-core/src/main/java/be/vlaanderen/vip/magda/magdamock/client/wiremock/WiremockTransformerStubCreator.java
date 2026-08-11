@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.client.wiremock;
 
+import be.vlaanderen.vip.magda.magdamock.client.transformers.GeefEpcResponseTransformer;
 import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaRestFileResponseTransformer;
 import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaSoapFileResponseTransformer;
 import be.vlaanderen.vip.magda.magdamock.config.MockRestMapping;
@@ -53,6 +54,7 @@ public class WiremockTransformerStubCreator {
                         )
         );
     }
+
     public static void addSoapFileTransformerStub(WireMockServer wireMockServer, MockSoapMapping mockSoapMapping) {
         String domain = mockSoapMapping.domain();
         String service = mockSoapMapping.service();
@@ -73,6 +75,27 @@ public class WiremockTransformerStubCreator {
                                         .withTransformerParameter("domain", domain)
                                         .withTransformerParameter("service", service)
                                         .withTransformerParameter("version", version)
+                        )
+        );
+    }
+    public static void addGeefEpcTransformerStub(WireMockServer wireMockServer, MockSoapMapping mockSoapMapping) {
+        String service = mockSoapMapping.service();
+        String version = mockSoapMapping.version();
+        String id = mockSoapMapping.getId();
+        log.info("Adding GeefEpc stub for {}", id);
+        wireMockServer.stubFor(
+                post(urlEqualTo("/soap"))
+                        .withRequestBody(matchingXPath(
+                                "//*[local-name()='Naam' and normalize-space()='" + service + "']"
+                        ))
+                        .withRequestBody(matchingXPath(
+                                "//*[local-name()='Versie' and normalize-space()='" + version + "']"
+                        ))
+                        .willReturn(
+                                aResponse()
+                                        .withStatus(666)
+                                        .withTransformers(GeefEpcResponseTransformer.NAME)
+                                        .withTransformerParameter("mapping-id", id)
                         )
         );
     }

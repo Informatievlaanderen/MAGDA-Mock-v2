@@ -173,7 +173,7 @@ class SOAPServicesTest {
                     .getResource("soap")
                     .toURI());
 
-            magdaMockConnection = MagdaMockConnection.create("", path.toAbsolutePath().toString(), "");
+            magdaMockConnection = MagdaMockConnection.create("", path.toAbsolutePath().toString(), "", false, false);
         }
 
         static Stream<Arguments> dossierServices() {
@@ -453,7 +453,7 @@ class SOAPServicesTest {
                     .getResource("soap")
                     .toURI());
 
-            magdaMockConnection = MagdaMockConnection.create("", path.toAbsolutePath().toString(), "");
+            magdaMockConnection = MagdaMockConnection.create("", path.toAbsolutePath().toString(), "", false, false);
         }
 
         @Test

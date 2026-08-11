@@ -77,23 +77,107 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "00630300287"
+        "path": "//Werknemer/INSZ",
+        "value": "85640300207"
       }
     ],
     "xpathExpression": "//Werkgever/RSZNummer",
-    "expectedValue": "0456123791"
+    "expectedValue": "263987415"
   },
   {
     "naam": "GeefWerkrelaties",
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "00630300280"
+        "path": "Ondernemingsnummer",
+        "value": "0206731645"
+      }
+    ],
+    "xpathExpression": "//Ondernemingsnummer",
+    "expectedValue": "0206731645"
+  },
+  {
+    "naam": "GeefWerkrelaties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Relatie/Werkgever/RSZNummer",
+        "value": "263987415"
+      }
+    ],
+    "xpathExpression": "//RSZNummer",
+    "expectedValue": "263987415"
+  },
+  {
+    "naam": "GeefWerkrelaties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Werkgever/Ondernemingsnummer",
+        "value": "0206731645"
+      },
+      {
+        "path": "//Werkgever/INSZ",
+        "value": "85640300207"
+      }
+    ],
+    "xpathExpression": "//Werkgever/RSZNummer",
+    "expectedValue": "263987415"
+  },
+  {
+    "naam": "GeefWerkrelaties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Werkgever/RSZNummer",
+        "value": "263987415"
+      },
+      {
+        "path": "//Werkgever/INSZ",
+        "value": "85640300207"
+      }
+    ],
+    "xpathExpression": "//Werkgever/RSZNummer",
+    "expectedValue": "263987415"
+  },
+  {
+    "naam": "GeefWerkrelaties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Werkgever/RSZNummer",
+        "value": "263987413"
+      },
+      {
+        "path": "//Werkgever/INSZ",
+        "value": "85640300206"
+      }
+    ],
+    "xpathExpression": "//Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefBijdrageARZA",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "ssin",
+        "value": "83660634135"
+      }
+    ],
+    "xpathExpression": "//socialInsuranceFund/enterpriseNumber",
+    "expectedValue": "1999990342"
+  },
+  {
+    "naam": "GeefBijdrageARZA",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "ssin",
+        "value": "83660634134"
       }
     ],
     "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Geen gegevens gevonden voor de vraag"
+    "expectedValue": "Antwoord met waarschuwing"
   }
 ]

@@ -1,0 +1,6 @@
+{
+  "response": {
+    "status": 200,
+    "jsonBody": {"message": "controls get", "mappingType": "specific"}
+  }
+}

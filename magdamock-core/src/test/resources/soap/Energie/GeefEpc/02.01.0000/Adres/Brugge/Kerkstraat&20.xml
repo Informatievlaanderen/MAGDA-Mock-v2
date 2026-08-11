@@ -1,25 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <web:GeefEpcResponse xmlns:web="http://webservice.geefepcdienst-02_01.energie-02_01.epb.vea.lne.vlaanderen.be">
    <Repliek>
       <Context>
          <Naam>GeefEpc</Naam>
          <Versie>02.01.0000</Versie>
          <Bericht>
-            <Type>ANTWOORD</Type>
-            <Tijdstip>
-               <Datum>2000-00-00</Datum>
-               <Tijd>00:00</Tijd>
-            </Tijdstip>
-            <Afzender>
-               <Identificatie>vip.vlaanderen.be</Identificatie>
-               <Naam>MagdaGateway</Naam>
-               <Referte>02caeca8-2999-48f7-99a2-bb4fb5c13e19</Referte>
-            </Afzender>
-            <Ontvanger>
-               <Identificatie>Afzender-A</Identificatie>
-               <Referte>XE:1191:34140:2793</Referte>
-               <Hoedanigheid>188</Hoedanigheid>
-            </Ontvanger>
-         </Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>0001-01-01</Datum>
+                    <Tijd>00:00</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
       </Context>
       <Antwoorden>
          <Antwoord>
@@ -29,7 +30,7 @@
                   <EnergieEenheid>
                      <Epc id="1100387">
                         <Identificatie>
-                           <Attestnummer>20170401-0001948124-1</Attestnummer>
+                           <Attestnummer>20170401-0001985264-1</Attestnummer>
                         </Identificatie>
                         <BouwjaarVolgensEPC>1966</BouwjaarVolgensEPC>
                         <BouwjaarGekend>true</BouwjaarGekend>
@@ -76,12 +77,12 @@
                         <Ligging>
                            <Adres arId="1567828">
                               <Straat>
-                                 <Naam>Cederstraat</Naam>
+                                 <Naam>Kerkstraat</Naam>
                               </Straat>
-                              <HuisNummer>26</HuisNummer>
+                              <HuisNummer>20</HuisNummer>
                               <Gemeente>
-                                 <PostCode>2800</PostCode>
-                                 <Naam>Mechelen</Naam>
+                                 <PostCode>8000</PostCode>
+                                 <Naam>Brugge</Naam>
                               </Gemeente>
                               <Gebouweenheden>
                                  <Gebouweenheid id="6747170">

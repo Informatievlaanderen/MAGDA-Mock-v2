@@ -41,6 +41,8 @@ import static org.springframework.util.MimeTypeUtils.TEXT_XML_VALUE;
 public class MagdaMockController {
     // Gemeenschappelijk endpoint voor alle soap
     private static final String SOAP_BASE_URL = "/soap";
+    // Endpoint used for application that cannot change the soap url that is used
+    private static final String SOAP_LEGACY_BASE_URL = "/api/Magda-02.00/soap/WebService";
     // Gemeenschappelijk endpoint voor alle rest
     private static final String REST_BASE_URL = "/rest";
 
@@ -52,7 +54,7 @@ public class MagdaMockController {
         this.mockConnection = mockConnection;
     }
 
-    @PostMapping(value = {SOAP_BASE_URL}, produces = {TEXT_XML_VALUE}, consumes = {APPLICATION_XML_VALUE, TEXT_XML_VALUE})
+    @PostMapping(value = {SOAP_BASE_URL, SOAP_LEGACY_BASE_URL}, produces = {TEXT_XML_VALUE}, consumes = {APPLICATION_XML_VALUE, TEXT_XML_VALUE})
     public ResponseEntity<String> magdaSoap0200WebService(@RequestBody String request, HttpServletRequest incomingRequest) {
         MDC.clear();
         SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.NOT_SPECIFIED);
@@ -77,7 +79,7 @@ public class MagdaMockController {
             MagdaMockDocument requestDocument = parseDocument(request);
             var magdaResponse = mockConnection.sendSoapRequest(new MagdaMockSoapHandler.MockSoapRequest(requestDocument.getXml()));
             if (magdaResponse != null) {
-                return parseInputstream(MagdaMockDocument.fromDocument(magdaResponse.document()), httpHeaders);
+                return parseInputstream(magdaResponse, httpHeaders);
 
             } else {
                 return ResponseEntity.notFound().headers(httpHeaders).build();
@@ -95,15 +97,18 @@ public class MagdaMockController {
         }
     }
 
-    private ResponseEntity<String> parseInputstream(MagdaMockDocument magdaMockDocument, HttpHeaders httpHeaders) {
-        if (magdaMockDocument != null) {
-            return ResponseEntity.ok().contentType(TEXT_XML).headers(httpHeaders).body(magdaMockDocument.toString());
-        } else {
+    private ResponseEntity<String> parseInputstream(MagdaMockSoapHandler.MockSoapResponse magdaMockDocument, HttpHeaders httpHeaders) {
+        if (magdaMockDocument == null) {
             log.error("Could not find XML");
 
-            // TODO: maak en return MAGDA Uitzondering antwoord
             return ResponseEntity.notFound().headers(httpHeaders).build();
         }
+
+        for (String key : magdaMockDocument.headers().keySet()) {
+            httpHeaders.addAll(key, magdaMockDocument.headers().get(key));
+        }
+
+        return ResponseEntity.ok().headers(httpHeaders).body(MagdaMockDocument.fromDocument(magdaMockDocument.document()).toString());
     }
 
 

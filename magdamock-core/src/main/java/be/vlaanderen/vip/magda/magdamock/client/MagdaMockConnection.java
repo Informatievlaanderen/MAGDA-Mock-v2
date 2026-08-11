@@ -57,16 +57,16 @@ public class MagdaMockConnection {
         return new MagdaMockConnection(restHandler, soapHandler);
     }
 
-    public static MagdaMockConnection create(String restDataPath, String soapTestPath, String xsdPath) throws IOException {
-        return create(restDataPath, soapTestPath, xsdPath, null, null, false);
+    public static MagdaMockConnection create(String restDataPath, String soapTestPath, String xsdPath, boolean xsdRequestEnabled, boolean xsdResponseEnabled) throws IOException {
+        return create(restDataPath, soapTestPath, xsdRequestEnabled, xsdResponseEnabled, xsdPath, null, null, false);
     }
 
-    public static MagdaMockConnection create(String restDataPath, String soapTestPath, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis, boolean logRequestBody) throws IOException {
+    public static MagdaMockConnection create(String restDataPath, String soapTestPath, boolean xsdRequestEnabled, boolean xsdResponseEnabled, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis, boolean logRequestBody) throws IOException {
         List<MockRestMapping> mappings = MockRestMapping.MAPPINGS;
-        return create(restDataPath, soapTestPath, xsdPath, minimumTimeoutMillis, maximumTimeoutMillis, mappings, logRequestBody);
+        return create(restDataPath, soapTestPath, xsdRequestEnabled, xsdResponseEnabled, xsdPath, minimumTimeoutMillis, maximumTimeoutMillis, mappings, logRequestBody);
     }
 
-    public static MagdaMockConnection create(String restDataPath, String soapTestPath, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis, List<MockRestMapping> restMappings, boolean logRequestBody) throws IOException {
+    public static MagdaMockConnection create(String restDataPath, String soapTestPath, boolean xsdRequestEnabled, boolean xsdResponseEnabled, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis, List<MockRestMapping> restMappings, boolean logRequestBody) throws IOException {
         WireMockData wireMockData = new EmbeddedWireMockBuilder().soapTestPath(soapTestPath).restTestPath(restDataPath).build();
         for (MockRestMapping restMapping : restMappings) {
             WiremockTransformerStubCreator.addRestTransformerStub(wireMockData.wireMockServer(), restMapping);
@@ -77,6 +77,8 @@ public class MagdaMockConnection {
                         WiremockTransformerStubCreator.addSoapFileTransformerStub(wireMockData.wireMockServer(), soapMapping);
                 case SubDirSoap ->
                         WiremockTransformerStubCreator.addSoapSubdirTransformerStub(wireMockData.wireMockServer(), soapMapping);
+                case GeefEpc ->
+                        WiremockTransformerStubCreator.addGeefEpcTransformerStub(wireMockData.wireMockServer(), soapMapping);
                 default ->
                         log.error("Unable to create stub for soap mapping {}, there is not a fitting transformer configured", soapMapping.getId());
             }
@@ -85,10 +87,14 @@ public class MagdaMockConnection {
         DefaultWiremockMapping.addDefaultFallbackWiremockMapping(wireMockData.wireMockServer());
 
         SoapBodyValidator soapRequestValidator, soapResponseValidator;
-        if (xsdPath == null || xsdPath.isBlank()) {
-            soapResponseValidator = soapRequestValidator = new LenientSoapBodyValidator();
+        if (!xsdRequestEnabled) {
+            soapRequestValidator = new LenientSoapBodyValidator();
         } else {
             soapRequestValidator = new SoapRequestValidatorImpl(xsdPath);
+        }
+        if (!xsdResponseEnabled) {
+            soapResponseValidator = new LenientSoapBodyValidator();
+        } else {
             soapResponseValidator = new SoapResponseValidatorImpl(xsdPath);
         }
         TimeoutUtil timeoutUtil = new NoopTimeoutUtil();

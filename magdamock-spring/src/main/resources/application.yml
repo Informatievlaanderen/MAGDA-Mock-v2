@@ -7,6 +7,8 @@ magda:
     rest-test-path:  # directory containing REST response files (absolute path)
     soap-test-path:  # directory containing SOAP XML files (absolute path)
     magda-xsd-path: # directory containing SOAP XSD files "src/main/resources/magda.xsd"
+    magda-xsd-request-enabled: true
+    magda-xsd-response-enabled: true
     minimum-timeout-millis:
     maximum-timeout-millis:
     enable-timeout: false

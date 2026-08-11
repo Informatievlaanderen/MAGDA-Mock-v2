@@ -1,10 +1,13 @@
 package be.vlaanderen.vip.magda.magdamock.config;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public record MockSoapMapping(String domain, String service, String version,
                               List<String> keys, String separator, String xsdRequestPath, String xsdResponsePath,
-                              StubHandler stubHandler) {
+                              StubHandler stubHandler, MissingParameterConfiguration missingParameterConfiguration) {
+    public static final String SEPERATOR_DIRECTORY = "/";
+    public static final String SEPERATOR_FILE_NAME = "&";
 
     public static final String VERSION_01_00 = "01.00.0000";
     public static final String VERSION_02_00 = "02.00.0000";
@@ -23,8 +26,13 @@ public record MockSoapMapping(String domain, String service, String version,
     public static final String KEY_KADASTRALE_AFDELING = "//KadastraleAfdeling";
     public static final String KEY_SECTIE = "//Sectie";
     public static final String KEY_GRONDNUMMER = "//Grondnummer";
-    public static final String SEPERATOR_DIRECTORY = "/";
-    public static final String SEPERATOR_FILE_NAME = "&";
+    public static final String KEY_GEBOUW_ID = "//Criteria/GebouwId";
+    public static final String KEY_GEBOUWEENHEID_ID = "//Criteria/GebouweenheidId";
+    public static final String KEY_ADRES_GEMEENTE = "//Criteria/Adres/Gemeente";
+    public static final String KEY_ADRES_STRAAT = "//Criteria/Adres/Straat";
+    public static final String KEY_ADRES_HUISNUMMER = "//Criteria/Adres/Huisnummer";
+    public static final String KEY_ADRES_BUSNUMMER = "//Criteria/Adres/Busnummer";
+    public static final String KEY_ATTESTNUMMER = "//Criteria/Attestnummer";
 
     public static final List<MockSoapMapping> MAPPINGS = List.of(
             // Dossier
@@ -32,15 +40,19 @@ public record MockSoapMapping(String domain, String service, String version,
 
             // Energie
             new MockSoapMapping("Energie", "GeefEpc", VERSION_02_01, List.of(
-                    "//Criteria/Adres/Postcode",
-                    "//Criteria/Adres/Straat",
-                    "//Criteria/Adres/Huisnummer"), SEPERATOR_DIRECTORY, "Energie.GeefEpcDienst-02.01/WebService/GeefEpc.xsd", "Energie.GeefEpcDienst-02.01/WebService/GeefEpcResponse.xsd"),
+                    KEY_GEBOUW_ID,
+                    KEY_GEBOUWEENHEID_ID,
+                    KEY_ADRES_GEMEENTE,
+                    KEY_ADRES_STRAAT,
+                    KEY_ADRES_HUISNUMMER,
+                    KEY_ADRES_BUSNUMMER,
+                    KEY_ATTESTNUMMER), SEPERATOR_DIRECTORY, "Energie.GeefEpcDienst-02.01/WebService/GeefEpc.xsd", "Energie.GeefEpcDienst-02.01/WebService/GeefEpcResponse.xsd", StubHandler.GeefEpc, MissingParameterConfiguration.EmptyString),
 
             // Gezin
             new MockSoapMapping("Gezin", "GeefKindVoordelen", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Gezin.GeefKindVoordelenDienst-02.00/WebService/GeefKindVoordelen.xsd", "Gezin.GeefKindVoordelenDienst-02.00/WebService/GeefKindVoordelenResponse.xsd"),
 
             // Inkomen
-            new MockSoapMapping("Inkomen", "GeefAanslagbiljetPersonenbelasting", VERSION_02_00, List.of(KEY_INSZ, "//Criteria/Inkomensjaar"), SEPERATOR_FILE_NAME, "Inkomen.GeefAanslagbiljetPersonenbelastingDienst-02.00/WebService/GeefAanslagbiljetPersonenbelasting.xsd", "Inkomen.GeefAanslagbiljetPersonenbelastingDienst-02.00/WebService/GeefAanslagbiljetPersonenbelastingResponse.xsd"),
+            new MockSoapMapping("Inkomen", "GeefAanslagbiljetPersonenbelasting", VERSION_02_00, List.of(KEY_INSZ, "//Criteria/Inkomensjaar"), SEPERATOR_FILE_NAME, "Inkomen.GeefAanslagbiljetPersonenbelastingDienst-02.00/WebService/GeefAanslagbiljetPersonenbelasting.xsd", "Inkomen.GeefAanslagbiljetPersonenbelastingDienst-02.00/WebService/GeefAanslagbiljetPersonenbelastingResponse.xsd", StubHandler.FileSoap, MissingParameterConfiguration.Wildcard),
 
             // Kadaster
             new MockSoapMapping("Kadaster", "GeefCadNetTransacties", VERSION_01_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Kadaster.GeefCadNetTransactiesDienst-01.00/WebService/GeefCadNetTransacties.xsd", "Kadaster.GeefCadNetTransactiesDienst-01.00/WebService/GeefCadNetTransactiesResponse.xsd"),
@@ -135,8 +147,9 @@ public record MockSoapMapping(String domain, String service, String version,
             // Werk
             new MockSoapMapping("Werk", "GeefLoopbaanARZA", VERSION_02_01, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Werk.GeefLoopbaanARZADienst-02.01/WebService/GeefLoopbaanARZA.xsd", "Werk.GeefLoopbaanARZADienst-02.01/WebService/GeefLoopbaanARZAResponse.xsd"),
             new MockSoapMapping("Werk", "GeefLoopbaanonderbrekingen", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Werk.GeefLoopbaanonderbrekingenDienst-02.00/WebService/GeefLoopbaanonderbrekingen.xsd", "Werk.GeefLoopbaanonderbrekingenDienst-02.00/WebService/GeefLoopbaanonderbrekingenResponse.xsd"),
-            new MockSoapMapping("Werk", "GeefWerkrelaties", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Werk.GeefWerkrelatiesDienst-02.00/WebService/GeefWerkrelaties.xsd", "Werk.GeefWerkrelatiesDienst-02.00/WebService/GeefWerkrelatiesResponse.xsd"),
+            new MockSoapMapping("Werk", "GeefWerkrelaties", VERSION_02_00, List.of(KEY_INSZ, KEY_ONDERNEMINGSNUMMER, "//Criteria/Relatie/Werkgever/RSZNummer"), SEPERATOR_FILE_NAME, "Werk.GeefWerkrelatiesDienst-02.00/WebService/GeefWerkrelaties.xsd", "Werk.GeefWerkrelatiesDienst-02.00/WebService/GeefWerkrelatiesResponse.xsd"),
             new MockSoapMapping("Werk", "GeefDmfaVoorWerknemer", VERSION_03_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Werk.GeefDmfaVoorWerknemerDienst-03.00/WebService/GeefDmfaVoorWerknemer.xsd", "Werk.GeefDmfaVoorWerknemerDienst-03.00/WebService/GeefDmfaVoorWerknemerResponse.xsd"),
+            new MockSoapMapping("Werk", "GeefBijdrageARZA", VERSION_01_00, List.of(KEY_SSIN), SEPERATOR_DIRECTORY, "Werk.GeefBijdrageARZADienst-01.00/WebService/GeefBijdrageARZA.xsd", "Werk.GeefBijdrageARZADienst-01.00/WebService/GeefBijdrageARZAResponse.xsd"),
 
             //Vlok
             new MockSoapMapping("Vlok", "BewaarWoningKwaliteit", VERSION_02_00, List.of("//Criteria/NISCode", "local-name(//Criteria/NISCode/following-sibling::*[1])"), SEPERATOR_FILE_NAME, "Vlok.BewaarWoningKwaliteitDienst-02.00/WebService/BewaarWoningKwaliteit.xsd", "Vlok.BewaarWoningKwaliteitDienst-02.00/WebService/BewaarWoningKwaliteitResponse.xsd"),
@@ -146,21 +159,25 @@ public record MockSoapMapping(String domain, String service, String version,
             new MockSoapMapping("Vlok", "GeefWoningKwaliteitBijlage", VERSION_02_00, List.of("//NISCode", "//Criteria/Bijlagen/Bijlage[1]/Type", "//Criteria/Bijlagen/Bijlage[1]/Referte"), SEPERATOR_FILE_NAME, "Vlok.GeefWoningKwaliteitBijlageDienst-02.00/WebService/GeefWoningKwaliteitBijlage.xsd", "Vlok.GeefWoningKwaliteitBijlageDienst-02.00/WebService/GeefWoningKwaliteitBijlageResponse.xsd"),
             new MockSoapMapping("Vlok", "ZoekWoningKwaliteit", VERSION_02_00, List.of("//NISCode", "//Zoekterm"), SEPERATOR_FILE_NAME, "Vlok.ZoekWoningKwaliteitDienst-02.00/WebService/ZoekWoningKwaliteit.xsd", "Vlok.ZoekWoningKwaliteitDienst-02.00/WebService/ZoekWoningKwaliteitResponse.xsd")
     );
+
     private MockSoapMapping(String domain, String service, String version,
                             List<String> keys, String separator, String xsdRequestPath, String xsdResponsePath) {
         this(domain, service, version, keys, separator, xsdRequestPath, xsdResponsePath, switch (separator) {
             case SEPERATOR_FILE_NAME -> StubHandler.FileSoap;
             default -> StubHandler.SubDirSoap;
-        });
+        }, MissingParameterConfiguration.EmptyString);
     }
 
     public String getId() {
         return String.format("%s.%s.%s", domain, service, version);
     }
 
+    public Path getPath() {return Path.of(domain, service, version);}
+
     public enum StubHandler {
         FileSoap,
         SubDirSoap,
+        GeefEpc,
         GeefPasfoto
     }
 }

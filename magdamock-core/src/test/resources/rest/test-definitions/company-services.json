@@ -18,5 +18,45 @@
     "expectedMessage": "company billretainment obligations search mapping",
     "expectedMappingType": "default",
     "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/company/ubo/companyCompositions/controls?controlType=CEO",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {"companyNumber" : "0123456789"},
+    "expectedMessage": "companyCompositions controls get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/company/ubo/companyCompositions/controls?controlType=CEO",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {"companyNumber" : "0123456788"},
+    "expectedMessage": "companyCompositions controls get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/company/ubo/controls/1094302",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {"companyNumber" : "0123456789"},
+    "expectedMessage": "controls get",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/company/ubo/controls/1094301",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {"companyNumber" : "0123456788"},
+    "expectedMessage": "controls get",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
   }
 ]

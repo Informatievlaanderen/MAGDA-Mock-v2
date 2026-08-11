@@ -13,11 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 public class MagdaMockSoapException extends RuntimeException {
 
     @Getter
-    private final MagdaMockDocument document;
+    private final String document;
 
     public MagdaMockSoapException(String faultString, String faultCode, Throwable cause) {
         super(faultString, cause);
-        MagdaMockDocument document = MagdaMockDocument.fromString(String.format("""
+
+        String document = String.format("""
                                                 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                                                 <SOAP-ENV:Header/>
                                                 <SOAP-ENV:Body>
@@ -28,14 +29,14 @@ public class MagdaMockSoapException extends RuntimeException {
                                                 </SOAP-ENV:Body>
                                             </SOAP-ENV:Envelope>
                 
-                """, faultCode, faultString));
+                """, faultCode, faultString);
         log.error(faultString, cause);
-        this.document = MagdaMockDocument.fromDocument(EmptyElementsFilter.getInstance().filter(null, document.getXml()));
+        this.document = document;
     }
 
     public MagdaMockSoapException(String faultString, String faultCode, String detail, Throwable cause) {
         super(faultString, cause);
-        MagdaMockDocument document = MagdaMockDocument.fromString(String.format("""
+        String document = String.format("""
                                                 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
                                                 <SOAP-ENV:Header/>
                                                 <SOAP-ENV:Body>
@@ -49,8 +50,8 @@ public class MagdaMockSoapException extends RuntimeException {
                                                 </SOAP-ENV:Body>
                                             </SOAP-ENV:Envelope>
                 
-                """, faultCode, faultString, detail));
+                """, faultCode, faultString, detail);
         log.error("{} Reason: {}", faultString, detail, cause);
-        this.document = MagdaMockDocument.fromDocument(EmptyElementsFilter.getInstance().filter(null, document.getXml()));
+        this.document = document;
     }
 }

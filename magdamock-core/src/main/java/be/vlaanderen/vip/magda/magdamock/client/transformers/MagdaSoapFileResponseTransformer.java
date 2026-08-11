@@ -2,6 +2,7 @@ package be.vlaanderen.vip.magda.magdamock.client.transformers;
 
 import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
+import be.vlaanderen.vip.magda.magdamock.config.MissingParameterConfiguration;
 import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
@@ -25,7 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTransformerV2 {
     public static String NAME = "magda-soap-response-transformer";
-    private final Path filesRoot;
+    protected final Path filesRoot;
 
     @Override
     public ResponseDefinition transform(ServeEvent serveEvent) {
@@ -57,7 +58,11 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
             //
             List<String> fileNames;
             if (mockSoapMapping.stubHandler().equals(MockSoapMapping.StubHandler.FileSoap)) {
-                fileNames = determineFilenameOptionsForFlatfile(xpathValues);
+                if (mockSoapMapping.missingParameterConfiguration().equals(MissingParameterConfiguration.Wildcard)) {
+                    fileNames = determineFilenameOptionsForFlatfileWithWildcardBlanks(xpathValues);
+                } else {
+                    fileNames = determineFilenameOptionsForFlatfile(xpathValues);
+                }
             } else {
                 fileNames = determineFilenameOptionsForSubdir(xpathValues);
             }
@@ -89,6 +94,7 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
             return new ResponseDefinitionBuilder()
                     .withStatus(200)
                     .withHeader("Content-Type", "text/xml; charset=utf-8")
+                    .withHeader("X-MagdaMock-Content-Location", responseFile.toFile().getAbsolutePath())
                     .withBody(Files.readString(responseFile))
                     .build();
         } catch (IOException e) {
@@ -100,6 +106,19 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
     }
 
     private List<String> determineFilenameOptionsForFlatfile(List<String> xpathValues) {
+        List<String> fileNames = new ArrayList<>();
+        List<String> filenameParts = new ArrayList<>(xpathValues);
+        fileNames.add(String.join("&", filenameParts));
+        while (!filenameParts.isEmpty() && filenameParts.getLast().isBlank()) {
+            filenameParts.removeLast();
+            fileNames.add(String.join("&", filenameParts));
+        }
+        fileNames.removeIf(String::isBlank);
+        fileNames.add("default");
+        return fileNames;
+    }
+
+    private List<String> determineFilenameOptionsForFlatfileWithWildcardBlanks(List<String> xpathValues) {
         List<String> fileNames = new ArrayList<>();
         int i = 1 << xpathValues.size();
         while (i-- > 0) {

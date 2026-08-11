@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.config;
 
+import be.vlaanderen.vip.magda.magdamock.client.transformers.GeefEpcResponseTransformer;
 import be.vlaanderen.vip.magda.magdamock.client.transformers.GenderFileTransformer;
 import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaRestFileResponseTransformer;
 import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaSoapFileResponseTransformer;
@@ -49,6 +50,7 @@ public class EmbeddedWireMockBuilder {
                 .httpServerFactory(factory)
                 .globalTemplating(true)
                 .extensions(MockDataTemplateHelper.getTemplateHelperExtensions(),
+                        new GeefEpcResponseTransformer(Path.of(soapTestPath)),
                         new GenderFileTransformer(Path.of(soapTestPath)),
                         new MagdaSoapFileResponseTransformer(Path.of(soapTestPath)),
                         new MagdaRestFileResponseTransformer(Path.of(restTestPath))

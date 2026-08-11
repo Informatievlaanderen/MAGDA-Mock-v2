@@ -64,7 +64,8 @@ The following properties are supported:
 |--------------------------|----------|--------------------------------------------------------------------------|
 | `rest-test-path`         | _(none)_ | Path to the REST mockdata root directory (absolute path recommended)     |
 | `soap-test-path`         | _(none)_ | Path to the SOAP XML mockdata root directory (absolute path recommended) |
-| `magda-xsd-path`         | _(none)_ | Path to the XSD directory; leave blank to disable schema validation      |
+| `magda-xsd-path`         | _(none)_ | Path to the XSD directory                                                |
+| `magda-xsd-enabled`      | `true`   | Boolean indicating whether schema validation is enabled                  |
 | `enable-timeout`         | `false`  | Whether to enable a random artificial timeout                            |
 | `minimum-timeout-millis` | _(none)_ | Timeout configuration; the minimum milliseconds of timeout               |
 | `maximum-timeout-millis` | _(none)_ | Timeout configuration; the maximum milliseconds of timeout               |
@@ -105,6 +106,13 @@ magda:
     rest-test-path: "/data/rest"
     soap-test-path: "/data/soap"
     magda-xsd-path: "/data/magda.xsd" # note, these files are provided in the magdamock base image
+
+management:
+  server:
+    port: 8081
+  endpoint:
+    health:
+      show-details: always
 ```
 
 Build and run the magdamock docker image
@@ -131,7 +139,7 @@ A broader demo, with the same concept and containing more data can be found in h
 
 ## Endpoints
 
-There are 2 endpoints, one for SOAP (`/soap`) and one for REST (`/rest`).
+There are 3 endpoints, two for SOAP (`/soap` and `/api/Magda-02.00/soap/WebService`) and one for REST (`/rest`).
 The SOAP service to be mocked is matched based on the envelope fields `//Naam` and `//Versie`.
 The REST service to be mocked is matched based on the path/method combination.
 

@@ -4,39 +4,142 @@
     "versie": "02.01.0000",
     "requestFields": [
       {
-        "path": "//Criteria/Adres/Postcode",
-        "value": "1000"
-      },
-      {
-        "path": "//Criteria/Adres/Straat",
-        "value": "Slachthuislaan"
-      },
-      {
-        "path": "//Criteria/Adres/Huisnummer",
-        "value": "1"
+        "path": "//Criteria/GebouwId",
+        "value": "1234567"
       }
     ],
     "xpathExpression": "//Attestnummer",
-    "expectedValue": "20170401-0001948124-1"
+    "expectedValue": "20151015-0001324567-1"
   },
   {
     "naam": "GeefEpc",
     "versie": "02.01.0000",
     "requestFields": [
       {
-        "path": "//Criteria/Adres/Postcode",
-        "value": "9308"
-      },
+        "path": "//Criteria/GebouweenheidId",
+        "value": "4568527"
+      }
+    ],
+    "xpathExpression": "//Attestnummer",
+    "expectedValue": "20151015-00013274545-1"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
       {
         "path": "//Criteria/Adres/Straat",
-        "value": "Hoogstraat"
+        "value": "Kerkstraat"
       },
       {
         "path": "//Criteria/Adres/Huisnummer",
-        "value": "27"
+        "value": "20"
+      },
+      {
+        "path": "//Criteria/Adres/Gemeente",
+        "value": "Brugge"
       }
     ],
-    "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Er heeft zich een interne fout voorgedaan"
+    "xpathExpression": "//Attestnummer",
+    "expectedValue": "20170401-0001985264-1"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Adres/Straat",
+        "value": "Kerkstraat"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "10"
+      },
+      {
+        "path": "//Criteria/Adres/Busnummer",
+        "value": "A"
+      },
+      {
+        "path": "//Criteria/Adres/Gemeente",
+        "value": "Brugge"
+      }
+    ],
+    "xpathExpression": "//Attestnummer",
+    "expectedValue": "20151015-0001324567-1"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Attestnummer",
+        "value": "20151015-0001324567-1"
+      }
+    ],
+    "xpathExpression": "//Attestnummer",
+    "expectedValue": "20151015-0001324567-1"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30001"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/GebouwId",
+        "value": "00000"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30006"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/GebouweenheidId",
+        "value": "456852700"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30005"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Adres/Straat",
+        "value": "Kerkstraatttt"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "20"
+      },
+      {
+        "path": "//Criteria/Adres/Gemeente",
+        "value": "Brugge"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30003"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Attestnummer",
+        "value": "20151015-0001324567-0"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30004"
   }
 ]
