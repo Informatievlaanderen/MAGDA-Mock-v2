@@ -50,6 +50,8 @@ public record MockSoapMapping(String domain, String service, String version,
 
             // Gezin
             new MockSoapMapping("Gezin", "GeefKindVoordelen", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Gezin.GeefKindVoordelenDienst-02.00/WebService/GeefKindVoordelen.xsd", "Gezin.GeefKindVoordelenDienst-02.00/WebService/GeefKindVoordelenResponse.xsd"),
+            new MockSoapMapping("Gezin", "GeefKindVoordelen", VERSION_02_01, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Gezin.GeefKindVoordelenDienst-02.01/WebService/GeefKindVoordelen.xsd", "Gezin.GeefKindVoordelenDienst-02.01/WebService/GeefKindVoordelenResponse.xsd"),
+            new MockSoapMapping("Gezin", "GeefZorgtoeslag", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Gezin.GeefZorgtoeslagDienst-02.00/WebService/GeefZorgtoeslag.xsd", "Gezin.GeefZorgtoeslagDienst-02.00/WebService/GeefZorgtoeslagResponse.xsd"),
 
             // Inkomen
             new MockSoapMapping("Inkomen", "GeefAanslagbiljetPersonenbelasting", VERSION_02_00, List.of(KEY_INSZ, "//Criteria/Inkomensjaar"), SEPERATOR_FILE_NAME, "Inkomen.GeefAanslagbiljetPersonenbelastingDienst-02.00/WebService/GeefAanslagbiljetPersonenbelasting.xsd", "Inkomen.GeefAanslagbiljetPersonenbelastingDienst-02.00/WebService/GeefAanslagbiljetPersonenbelastingResponse.xsd", StubHandler.FileSoap, MissingParameterConfiguration.Wildcard),

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web:GeefKindVoordelenResponse xmlns:web="http://magda.vlaanderen.be/gezin/soap/geefkindvoordelen/v02_01">
+    <Repliek>
+        <Context>
+            <Naam>GeefKindVoordelen</Naam>
+            <Versie>02.01.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>0001-01-01</Datum>
+                    <Tijd>00:00:00.000</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Uitzonderingen>
+                    <Uitzondering>
+                        <Identificatie>30001</Identificatie>
+                        <Oorsprong>MAGDA</Oorsprong>
+                        <Type>FOUT</Type>
+                        <Tijdstip>
+                            <Datum>0001-01-01</Datum>
+                            <Tijd>00:00:00.000</Tijd>
+                        </Tijdstip>
+                        <Diagnose>Geen gegevens gevonden voor de vraag</Diagnose>
+                    </Uitzondering>
+                </Uitzonderingen>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:GeefKindVoordelenResponse>
