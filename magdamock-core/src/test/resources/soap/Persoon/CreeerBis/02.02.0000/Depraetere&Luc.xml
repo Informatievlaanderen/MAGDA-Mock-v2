@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web:CreeerBisResponse xmlns:web="http://magda.vlaanderen.be/persoon/soap/creeerbis/v02_02">
+    <Repliek>
+        <Context>
+            <Naam>CreeerBis</Naam>
+            <Versie>02.02.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>0001-01-01</Datum>
+                    <Tijd>00:00:00.000</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <Resultaat>
+                        <Code>1</Code>
+                        <Omschrijving Taal="nl">Wel geslaagd</Omschrijving>
+                    </Resultaat>
+                    <GeregistreerdPersoon DatumBegin="1988-07-16">
+                        <INSZ>88671648987</INSZ>
+                        <Naam DatumBegin="1988-07-16">
+                            <Achternamen>
+                                <Achternaam>Depraetere</Achternaam>
+                            </Achternamen>
+                            <Voornamen>
+                                <Voornaam>Luc</Voornaam>
+                            </Voornamen>
+                        </Naam>
+                        <Geslacht DatumBegin="1988-07-16">
+                            <Code>1</Code>
+                            <Omschrijving Taal="nl">Mannelijk</Omschrijving>
+                        </Geslacht>
+                        <Register DatumBegin="2025-05-14">
+                            <Code>BIS</Code>
+                            <Omschrijving Taal="nl">BIS register</Omschrijving>
+                        </Register>
+                        <Nationaliteiten>
+                            <Nationaliteit DatumBegin="1988-07-16">
+                                <Code>173</Code>
+                                <Omschrijving Taal="nl">Duitsland</Omschrijving>
+                            </Nationaliteit>
+                        </Nationaliteiten>
+                        <Geboorte>
+                            <Datum>1988-07-16</Datum>
+                            <Plaats>
+                                <Land>
+                                    <NISCode>173</NISCode>
+                                    <ISOCode>DEU</ISOCode>
+                                    <Naam>Duitsland</Naam>
+                                </Land>
+                                <Tekst>Berlijn, Duitsland</Tekst>
+                            </Plaats>
+                        </Geboorte>
+                        <Adressen>
+                            <ContactAdres BeginDatum="2025-05-14">
+                                <Huisnummer>55</Huisnummer>
+                                <Land>
+                                    <String>BELGIE</String>
+                                    <Taal>nl</Taal>
+                                </Land>
+                                <Postcode>1933</Postcode>
+                                <NISCodeLand>150</NISCodeLand>
+                                <ISOCodeLand>BEL</ISOCodeLand>
+                                <NISCodeGemeente>23094</NISCodeGemeente>
+                                <StraatCode>3343</StraatCode>
+                                <NietGestandaardiseerdeStraatnaam>
+                                    <String>DOORNEVELD</String>
+                                    <Taal>nl</Taal>
+                                </NietGestandaardiseerdeStraatnaam>
+                                <NietGestandaardiseerdeGemeentenaam>
+                                    <String>ZAVENTEM</String>
+                                    <Taal>nl</Taal>
+                                </NietGestandaardiseerdeGemeentenaam>
+                                <Type>
+                                    <Code>1</Code>
+                                    <Omschrijving Taal="nl">Tijdelijk verblijf</Omschrijving>
+                                </Type>
+                            </ContactAdres>
+                        </Adressen>
+                    </GeregistreerdPersoon>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:CreeerBisResponse>

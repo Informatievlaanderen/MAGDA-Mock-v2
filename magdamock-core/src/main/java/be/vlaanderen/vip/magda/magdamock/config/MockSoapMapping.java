@@ -95,6 +95,7 @@ public record MockSoapMapping(String domain, String service, String version,
             new MockSoapMapping("Onderwijs", "GeefHistoriekInschrijving", VERSION_02_01, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Onderwijs.GeefHistoriekInschrijvingDienst-02.01/WebService/GeefHistoriekInschrijving.xsd", "Onderwijs.GeefHistoriekInschrijvingDienst-02.01/WebService/GeefHistoriekInschrijvingResponse.xsd"),
 
             // Persoon
+            new MockSoapMapping("Persoon", "WijzigKSZPersoon", VERSION_02_02, List.of("//WijzigKSZPersoon/INSZ"), SEPERATOR_DIRECTORY, "Persoon.WijzigKSZPersoonDienst-02.02/WebService/WijzigKSZPersoon.xsd", "Persoon.WijzigKSZPersoonDienst-02.02/WebService/WijzigKSZPersoonResponse.xsd"),
             new MockSoapMapping("Persoon", "GeefAttest", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Persoon.GeefAttestDienst-02.00/WebService/GeefAttest.xsd", "Persoon.GeefAttestDienst-02.00/WebService/GeefAttestResponse.xsd"),
             new MockSoapMapping("Persoon", "GeefGezinssamenstelling", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Persoon.GeefGezinssamenstellingDienst-02.00/WebService/GeefGezinssamenstelling.xsd", "Persoon.GeefGezinssamenstellingDienst-02.00/WebService/GeefGezinssamenstellingResponse.xsd"),
             new MockSoapMapping("Persoon", "GeefGezinssamenstelling", VERSION_02_02, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Persoon.GeefGezinssamenstellingDienst-02.02/WebService/GeefGezinssamenstelling.xsd", "Persoon.GeefGezinssamenstellingDienst-02.02/WebService/GeefGezinssamenstellingResponse.xsd"),
@@ -118,6 +119,7 @@ public record MockSoapMapping(String domain, String service, String version,
                     "//Inhoud/Bron",
                     "//Criteria/Naam/Achternaam",
                     "//Criteria/Geboorte/Datum"), SEPERATOR_DIRECTORY, "Persoon.ZoekPersoonOpNaamDienst-02.02/WebService/ZoekPersoonOpNaam.xsd", "Persoon.ZoekPersoonOpNaamDienst-02.02/WebService/ZoekPersoonOpNaamResponse.xsd"),
+            new MockSoapMapping("Persoon", "CreeerBis", VERSION_02_02, List.of("//Persoon/Naam/Achternaam", "//Persoon/Naam/Voornamen/Voornaam"), SEPERATOR_FILE_NAME, "Persoon.CreeerBisDienst-02.02/WebService/CreeerBis.xsd", "Persoon.CreeerBisDienst-02.02/WebService/CreeerBisResponse.xsd"),
 
             // Repertorium
             new MockSoapMapping("Repertorium", "RegistreerInschrijving", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Repertorium.RegistreerInschrijvingDienst-02.00/WebService/RegistreerInschrijving.xsd", "Repertorium.RegistreerInschrijvingDienst-02.00/WebService/RegistreerInschrijvingResponse.xsd"),

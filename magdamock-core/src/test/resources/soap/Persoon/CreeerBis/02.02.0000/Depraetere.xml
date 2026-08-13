@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web:CreeerBisResponse xmlns:web="http://magda.vlaanderen.be/persoon/soap/creeerbis/v02_02">
+    <Repliek>
+        <Context>
+            <Naam>CreeerBis</Naam>
+            <Versie>02.02.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>0001-01-01</Datum>
+                    <Tijd>00:00:00.000</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <Resultaat>
+                        <Code>0</Code>
+                        <Omschrijving Taal="nl">Niet geslaagd</Omschrijving>
+                    </Resultaat>
+                    <BestaandePersonen>
+                        <Persoon>
+                            <INSZ>88671648987</INSZ>
+                            <Naam DatumBegin="1988-07-16">
+                                <Achternamen>
+                                    <Achternaam>Depraetere</Achternaam>
+                                </Achternamen>
+                                <Voornamen>
+                                    <Voornaam>Luc</Voornaam>
+                                </Voornamen>
+                            </Naam>
+                            <Geslacht DatumBegin="1988-07-16">
+                                <Code>1</Code>
+                                <Omschrijving Taal="nl">Mannelijk</Omschrijving>
+                            </Geslacht>
+                            <Geboortedatum>1988-07-16</Geboortedatum>
+                            <IsOverleden>0</IsOverleden>
+                            <Register>
+                                <Code>BIS</Code>
+                            </Register>
+                        </Persoon>
+                        <Persoon>
+                            <INSZ>90621315434</INSZ>
+                            <Naam DatumBegin="1990-02-13">
+                                <Achternamen>
+                                    <Achternaam>Depraetere</Achternaam>
+                                </Achternamen>
+                                <Voornamen>
+                                    <Voornaam>Lucy</Voornaam>
+                                </Voornamen>
+                            </Naam>
+                            <Geslacht DatumBegin="1990-02-13">
+                                <Code>2</Code>
+                                <Omschrijving Taal="nl">Vrouwelijk</Omschrijving>
+                            </Geslacht>
+                            <Geboortedatum>1990-02-13</Geboortedatum>
+                            <IsOverleden>0</IsOverleden>
+                            <Register>
+                                <Code>BIS</Code>
+                            </Register>
+                        </Persoon>
+                        <Persoon>
+                            <INSZ>74680217747</INSZ>
+                            <Naam DatumBegin="1974-08-02">
+                                <Achternamen>
+                                    <Achternaam>Depraetere</Achternaam>
+                                </Achternamen>
+                                <Voornamen>
+                                    <Voornaam>Lucien</Voornaam>
+                                </Voornamen>
+                            </Naam>
+                            <Geslacht DatumBegin="1974-08-02">
+                                <Code>1</Code>
+                                <Omschrijving Taal="nl">Mannelijk</Omschrijving>
+                            </Geslacht>
+                            <Geboortedatum>1974-08-02</Geboortedatum>
+                            <IsOverleden>0</IsOverleden>
+                            <Register>
+                                <Code>BIS</Code>
+                            </Register>
+                        </Persoon>
+                    </BestaandePersonen>
+                </Inhoud>
+                <Uitzonderingen>
+                    <Uitzondering>
+                        <Identificatie>48002</Identificatie>
+                        <Oorsprong>KSZ</Oorsprong>
+                        <Type>FOUT</Type>
+                        <Tijdstip>
+                            <Datum>0001-01-01</Datum>
+                            <Tijd>00:00:00.000</Tijd>
+                        </Tijdstip>
+                        <Diagnose>Persoon niet gecreëerd, fonetische resultaten gevonden</Diagnose>
+                        <Omstandigheid>REG00006</Omstandigheid>
+                    </Uitzondering>
+                </Uitzonderingen>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:CreeerBisResponse>

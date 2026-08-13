@@ -86,16 +86,18 @@ class SOAPServicesTest {
 
         Element current = request;
 
-        for (String part : parts) {
-            Element child = findDirectChild(current, part);
+        for (int i = 0; i < parts.length - 1; i++) {
+            Element child = findDirectChild(current, parts[i]);
             if (child == null) {
-                child = document.createElement(part);
+                child = document.createElement(parts[i]);
                 current.appendChild(child);
             }
             current = child;
         }
 
-        current.setTextContent(value);
+        Element leaf = document.createElement(parts[parts.length - 1]);
+        current.appendChild(leaf);
+        leaf.setTextContent(value);
     }
 
     private static String normalizePath(String path) {
