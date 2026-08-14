@@ -45,7 +45,9 @@ And then it's possible to include the MagdaMockConnection in another project.
 MagdaConnection connection = MagdaMockConnection.create(
     "path/to/rest/mockdata",
     "path/to/soap/mockdata",
-    "path/to/xsd/data"
+    "path/to/xsd/data",
+    false, //xsd validation enabled for requests
+    false  //xsd validation enabled for responses
 );
 ```
 
@@ -60,15 +62,16 @@ All properties live under the `magda.magdamock` prefix in `application.yml` or `
 
 The following properties are supported:
 
-| Property                 | Default  | Description                                                              |
-|--------------------------|----------|--------------------------------------------------------------------------|
-| `rest-test-path`         | _(none)_ | Path to the REST mockdata root directory (absolute path recommended)     |
-| `soap-test-path`         | _(none)_ | Path to the SOAP XML mockdata root directory (absolute path recommended) |
-| `magda-xsd-path`         | _(none)_ | Path to the XSD directory                                                |
-| `magda-xsd-enabled`      | `true`   | Boolean indicating whether schema validation is enabled                  |
-| `enable-timeout`         | `false`  | Whether to enable a random artificial timeout                            |
-| `minimum-timeout-millis` | _(none)_ | Timeout configuration; the minimum milliseconds of timeout               |
-| `maximum-timeout-millis` | _(none)_ | Timeout configuration; the maximum milliseconds of timeout               |
+| Property                     | Default  | Description                                                              |
+|------------------------------|----------|--------------------------------------------------------------------------|
+| `rest-test-path`             | _(none)_ | Path to the REST mockdata root directory (absolute path recommended)     |
+| `soap-test-path`             | _(none)_ | Path to the SOAP XML mockdata root directory (absolute path recommended) |
+| `magda-xsd-path`             | _(none)_ | Path to the XSD directory                                                |
+| `magda-xsd-request-enabled`  | `true`   | Boolean indicating whether schema validation is enabled for requests     |
+| `magda-xsd-response-enabled` | `true`   | Boolean indicating whether schema validation is enabled for responses    |
+| `enable-timeout`             | `false`  | Whether to enable a random artificial timeout                            |
+| `minimum-timeout-millis`     | _(none)_ | Timeout configuration; the minimum milliseconds of timeout               |
+| `maximum-timeout-millis`     | _(none)_ | Timeout configuration; the maximum milliseconds of timeout               |
 
 
 #### Magdamock with custom data
