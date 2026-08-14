@@ -410,5 +410,93 @@
     ],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "WijzigKSZPersoon",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//WijzigKSZPersoon/INSZ",
+        "value": "88671648987"
+      }
+    ],
+    "xpathExpression": "//Achternaam",
+    "expectedValue": "Depraetere"
+  },
+  {
+    "naam": "WijzigKSZPersoon",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//WijzigKSZPersoon/INSZ",
+        "value": "88671648986"
+      }
+    ],
+    "xpathExpression": "//Diagnose",
+    "expectedValue": "Onbestaand INSZ"
+  },
+  {
+    "naam": "CreeerBis",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//Persoon/Naam/Achternaam",
+        "value": "Depraetere"
+      }
+    ],
+    "xpathExpression": "//Omschrijving",
+    "expectedValue": "Niet geslaagd"
+  },
+  {
+    "naam": "CreeerBis",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//Persoon/Naam/Achternaam",
+        "value": "Depraetere"
+      },
+      {
+        "path": "//Persoon/Naam/Voornamen/Voornaam",
+        "value": "Luc"
+      },
+      {
+        "path": "//Persoon/Naam/Voornamen/Voornaam",
+        "value": "Bart"
+      }
+    ],
+    "xpathExpression": "//Omschrijving",
+    "expectedValue": "Wel geslaagd"
+  },
+  {
+    "naam": "CreeerBis",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//Persoon/Naam/Achternaam",
+        "value": "Depraetere"
+      },
+      {
+        "path": "//Persoon/Naam/Voornamen/Voornaam",
+        "value": "Bart"
+      },
+      {
+        "path": "//Persoon/Naam/Voornamen/Voornaam",
+        "value": "Luc"
+      }
+    ],
+    "xpathExpression": "//Omschrijving",
+    "expectedValue": "Niet geslaagd"
+  },
+  {
+    "naam": "CreeerBis",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//Persoon/Naam/Achternaam",
+        "value": "DepraetereNotFound"
+      }
+    ],
+    "xpathExpression": "//Diagnose",
+    "expectedValue": "Er werd geen geldige wettelijke context opgegeven"
   }
 ]

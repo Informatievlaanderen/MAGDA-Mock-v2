@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<web:GeefDmfaVoorWerknemerResponse xmlns:web="http://magda.vlaanderen.be/werk/soap/geefdmfavoorwerknemer/v03_00">
+<web:WijzigKSZPersoonResponse xmlns:web="http://magda.vlaanderen.be/persoon/soap/wijzigkszpersoon/v02_02">
     <Repliek>
         <Context>
-            <Naam>GeefDmfaVoorWerknemer</Naam>
-            <Versie>03.00.0000</Versie>
+            <Naam>WijzigKSZPersoon</Naam>
+            <Versie>02.02.0000</Versie>
             <Bericht>
                 <Type>ANTWOORD</Type>
                 <Tijdstip>
@@ -25,19 +25,25 @@
         <Antwoorden>
             <Antwoord>
                 <Referte>?</Referte>
+                <Inhoud>
+                    <Resultaat>
+                        <Code>0</Code>
+                        <Omschrijving Taal="nl">Niet geslaagd</Omschrijving>
+                    </Resultaat>
+                </Inhoud>
                 <Uitzonderingen>
                     <Uitzondering>
-                        <Identificatie>30001</Identificatie>
-                        <Oorsprong>MAGDA</Oorsprong>
+                        <Identificatie>30003</Identificatie>
+                        <Oorsprong>KSZ</Oorsprong>
                         <Type>FOUT</Type>
                         <Tijdstip>
                             <Datum>0001-01-01</Datum>
                             <Tijd>00:00:00.000</Tijd>
                         </Tijdstip>
-                        <Diagnose>Geen gegevens gevonden voor de vraag</Diagnose>
+                        <Diagnose>Onbestaand INSZ</Diagnose>
                     </Uitzondering>
                 </Uitzonderingen>
             </Antwoord>
         </Antwoorden>
     </Repliek>
-</web:GeefDmfaVoorWerknemerResponse>
+</web:WijzigKSZPersoonResponse>

@@ -22,5 +22,53 @@
     ],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefKindVoordelen",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "01700462685"
+      }
+    ],
+    "xpathExpression": "//Kind/INSZ",
+    "expectedValue": "01620345635"
+  },
+  {
+    "naam": "GeefKindVoordelen",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "01700462684"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefZorgtoeslag",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "01620345635"
+      }
+    ],
+    "xpathExpression": "//Zorgtoeslag/INSZ",
+    "expectedValue": "01620345635"
+  },
+  {
+    "naam": "GeefZorgtoeslag",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "01620345633"
+      }
+    ],
+    "xpathExpression": "//Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
   }
 ]

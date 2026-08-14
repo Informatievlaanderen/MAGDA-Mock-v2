@@ -31,6 +31,9 @@ class BasicSoapResponsePatcherTest extends ResponsePatcherTest {
                             <Hoedanigheid>SENDER-ROLE</Hoedanigheid>
                             <Gebruiker>bart.peeters</Gebruiker>
                         </Afzender>
+                        <Ontvanger>
+                            <Identificatie>vip.vlaanderen.be</Identificatie>
+                        </Ontvanger>
                     </Bericht>
                 </Context>
                 </Verzoek>
@@ -57,6 +60,9 @@ class BasicSoapResponsePatcherTest extends ResponsePatcherTest {
 
         assertBasicFields(result);
         assertEquals("bart.peeters", result.getValue("//Ontvanger/Gebruiker"));
+
+        // ensure there's only 1 ontvanger identificatie, even though there is an ontvanger element in the request context (that is copied)
+        assertEquals(1, result.xpath("//Ontvanger/Identificatie").getLength());
     }
 
     @Test

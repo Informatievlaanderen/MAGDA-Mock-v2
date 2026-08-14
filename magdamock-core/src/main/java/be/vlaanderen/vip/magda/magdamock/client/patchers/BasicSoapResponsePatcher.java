@@ -74,6 +74,13 @@ public class BasicSoapResponsePatcher implements SoapResponsePatcher {
 
                 NodeList afzenderNodes = ((Element) importedContext).getElementsByTagName("Afzender");
                 if (afzenderNodes.getLength() > 0) {
+                    NodeList oldOntvangerNodes = response.getElementsByTagName("Ontvanger");
+                    for (int i = 0; i < oldOntvangerNodes.getLength(); i++) {
+                        Node toRemoveNode = oldOntvangerNodes.item(i);
+                        toRemoveNode.getParentNode().removeChild(toRemoveNode);
+                    }
+
+
                     // Move all children from afzender to ontvanger
                     Node oldAfzender = afzenderNodes.item(0);
                     Node ontvanger = response.createElement("Ontvanger");

@@ -6,11 +6,27 @@
     "requestFields": [
       {
         "path": "INSZ",
-        "value": "02622200138"
+        "value": "85640300207"
       }
     ],
     "xpathExpression": "//Identificatie/Nummer",
-    "expectedValue": "3021456789"
+    "expectedValue": "8447143775"
+  },
+  {
+    "naam": "GeefDmfaVoorWerknemer",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "85640300207"
+      },
+      {
+        "path" : "//Volgende",
+        "value" : "20254-1234567-8447145417"
+      }
+    ],
+    "xpathExpression": "//Identificatie/Nummer",
+    "expectedValue": "8447145418"
   },
   {
     "naam": "GeefDmfaVoorWerknemer",

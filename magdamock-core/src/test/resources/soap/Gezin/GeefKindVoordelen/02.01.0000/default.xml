@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<web:GeefDmfaVoorWerknemerResponse xmlns:web="http://magda.vlaanderen.be/werk/soap/geefdmfavoorwerknemer/v03_00">
+<web:GeefKindVoordelenResponse xmlns:web="http://magda.vlaanderen.be/gezin/soap/geefkindvoordelen/v02_01">
     <Repliek>
         <Context>
-            <Naam>GeefDmfaVoorWerknemer</Naam>
-            <Versie>03.00.0000</Versie>
+            <Naam>GeefKindVoordelen</Naam>
+            <Versie>02.01.0000</Versie>
             <Bericht>
                 <Type>ANTWOORD</Type>
                 <Tijdstip>
@@ -40,4 +40,4 @@
             </Antwoord>
         </Antwoorden>
     </Repliek>
-</web:GeefDmfaVoorWerknemerResponse>
+</web:GeefKindVoordelenResponse>
