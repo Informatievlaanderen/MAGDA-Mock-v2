@@ -4,6 +4,7 @@ import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.filters.EmptyElementsFilter;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.text.StringEscapeUtils;
 
 /**
  * An exception to be thrown by MagdaMock in case MagdaMock really fails to handle a response,
@@ -28,8 +29,8 @@ public class MagdaMockSoapException extends RuntimeException {
                                                     </ns0:Fault>
                                                 </SOAP-ENV:Body>
                                             </SOAP-ENV:Envelope>
-                
-                """, faultCode, faultString);
+
+                """, escapeXml(faultCode), escapeXml(faultString));
         log.error(faultString, cause);
         this.document = document;
     }
@@ -49,9 +50,13 @@ public class MagdaMockSoapException extends RuntimeException {
                                                     </ns0:Fault>
                                                 </SOAP-ENV:Body>
                                             </SOAP-ENV:Envelope>
-                
-                """, faultCode, faultString, detail);
+
+                """, escapeXml(faultCode), escapeXml(faultString), escapeXml(detail));
         log.error("{} Reason: {}", faultString, detail, cause);
         this.document = document;
+    }
+
+    private static String escapeXml(String value) {
+        return value == null ? "" : StringEscapeUtils.escapeXml10(value);
     }
 }
