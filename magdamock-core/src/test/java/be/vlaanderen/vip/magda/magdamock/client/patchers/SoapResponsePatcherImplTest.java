@@ -7,9 +7,9 @@ import org.w3c.dom.Document;
 import java.util.HashMap;
 import java.util.Map;
 
-import static be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping.VERSION_01_00;
-import static be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping.VERSION_02_00;
-import static be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping.VERSION_03_00;
+import static be.vlaanderen.vip.magda.magdamock.config.MappingLists.VERSION_01_00;
+import static be.vlaanderen.vip.magda.magdamock.config.MappingLists.VERSION_02_00;
+import static be.vlaanderen.vip.magda.magdamock.config.MappingLists.VERSION_03_00;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

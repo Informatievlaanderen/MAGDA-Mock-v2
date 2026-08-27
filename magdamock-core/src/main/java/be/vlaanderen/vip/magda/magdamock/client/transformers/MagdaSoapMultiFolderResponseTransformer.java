@@ -4,6 +4,7 @@ import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.config.MappingLists;
 import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
+import be.vlaanderen.vip.magda.magdamock.config.MultiFolderMockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.extension.Parameters;
@@ -27,8 +28,8 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @AllArgsConstructor
-public class GeefEpcResponseTransformer implements ResponseDefinitionTransformerV2 {
-    public static String NAME = "geefepc-response-transformer";
+public class MagdaSoapMultiFolderResponseTransformer implements ResponseDefinitionTransformerV2 {
+    public static String NAME = "magda-soap-multi-folder-response-transformer";
     private final Path filesRoot;
 
     @Override
@@ -40,52 +41,39 @@ public class GeefEpcResponseTransformer implements ResponseDefinitionTransformer
 
             String id = parameters.getString("mapping-id");
 
-            MockSoapMapping mockSoapMapping = MappingLists.SOAP_MAPPINGS.stream().filter(mapping -> mapping.getId().equals(id)).findFirst().get();
+            MultiFolderMockSoapMapping mockSoapMapping = (MultiFolderMockSoapMapping) MappingLists.SOAP_MAPPINGS.stream().filter(mapping -> mapping.getId().equals(id)).findFirst().get();
             List<String> keys = mockSoapMapping.getKeys();
             MagdaMockDocument requestBody = MagdaMockDocument.fromString(request.getBodyAsString());
             log.debug("Fetching all parameters to find a mapping for {}", mockSoapMapping.getId());
-            Map<String, String> xpathValues = keys.stream()
-                    .map(k -> Pair.of(k, requestBody.getValue(k)))
-                    .map(kv -> {
-                        if (kv.getValue() == null) return Pair.of(kv.getKey(), "");
-                        else return kv;
+            List<String> xpathValues = keys.stream()
+                    .map(requestBody::getValue)
+                    .map(s -> {
+                        if (s == null) return "";
+                        else return s;
                     })
-                    .map(kv ->
-                            Pair.of(kv.getKey(), URLEncoder.encode(kv.getValue(), StandardCharsets.UTF_8)
-                                    .replace("+", "%20"))
-                    ).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+                    .map(s ->
+                            URLEncoder.encode(s, StandardCharsets.UTF_8)
+                                    .replace("+", "%20")
+                    )
+                    .toList();
+            List<List<String>> xpathValuesPerSubMapping = new ArrayList<>();
+            int index = 0;
+            for (Integer amount : mockSoapMapping.getSubfolderNumberOfElements()) {
+                xpathValuesPerSubMapping.add(xpathValues.subList(index, index+amount));
+                index += amount;
+            }
 
             List<Path> fileOptions = new ArrayList<>();
             List<Path> defaultOptions = new ArrayList<>();
             Path mappingPath = mockSoapMapping.getPath();
-            Path pathGebouwId = mappingPath.resolve("GebouwId");
-            String gebouwId = xpathValues.getOrDefault(MappingLists.KEY_GEBOUW_ID, "");
-            if (!gebouwId.isEmpty()) {
-                fileOptions.addAll(determineFilenameOptionsForFlatfile(List.of(gebouwId), pathGebouwId));
-                defaultOptions.add(pathGebouwId);
-            }
-
-            String gebouwEenheidId = xpathValues.getOrDefault(MappingLists.KEY_GEBOUWEENHEID_ID, "");
-            if (!gebouwEenheidId.isEmpty()) {
-                Path pathGebouweenheidId = mappingPath.resolve("GebouweenheidId");
-                fileOptions.addAll(determineFilenameOptionsForFlatfile(List.of(gebouwEenheidId), pathGebouweenheidId));
-                defaultOptions.add(pathGebouweenheidId);
-            }
-
-            String gemeenteNaam = xpathValues.getOrDefault(MappingLists.KEY_ADRES_GEMEENTE, "");
-            if (!gemeenteNaam.isEmpty()) {
-                Path pathAdres = mappingPath.resolve("Adres");
-                Path pathAdresGemeenete = pathAdres.resolve(gemeenteNaam);
-                fileOptions.addAll(determineFilenameOptionsForFlatfile(List.of(xpathValues.get(MappingLists.KEY_ADRES_STRAAT),xpathValues.get(MappingLists.KEY_ADRES_HUISNUMMER), xpathValues.get(MappingLists.KEY_ADRES_BUSNUMMER)), pathAdresGemeenete));
-                defaultOptions.add(pathAdresGemeenete);
-                defaultOptions.add(pathAdres);
-            }
-
-            String attestnummer = xpathValues.getOrDefault(MappingLists.KEY_ATTESTNUMMER, "");
-            if (!attestnummer.isEmpty()) {
-                Path pathAttestnummer = mappingPath.resolve("Attestnummer");
-                fileOptions.addAll(determineFilenameOptionsForFlatfile(List.of(attestnummer), pathAttestnummer));
-                defaultOptions.add(pathAttestnummer);
+            index = 0;
+            for (String subfolder : mockSoapMapping.getSubfolders()) {
+                Path subfolderPath = mappingPath.resolve(subfolder);
+                List<String> valuesXpath = xpathValuesPerSubMapping.get(index++);
+                if (valuesXpath.stream().anyMatch(value -> !value.isEmpty())) {
+                    fileOptions.addAll(determineFilenameOptionsForFlatfile(valuesXpath, subfolderPath));
+                    defaultOptions.add(subfolderPath);
+                }
             }
 
             defaultOptions.add(mappingPath);

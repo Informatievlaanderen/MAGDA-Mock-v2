@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.soap;
 
+import be.vlaanderen.vip.magda.magdamock.config.MappingLists;
 import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
@@ -24,7 +25,7 @@ public class SoapResponseValidatorImpl extends SoapBodyValidator {
     private Validator getValidator(String naam, String versie) {
         try {
             var factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Optional<String> optionalPath = MockSoapMapping.MAPPINGS.stream().filter(mapping -> mapping.service().equals(naam) && mapping.version().equals(versie)).findFirst().map(MockSoapMapping::xsdResponsePath);
+            Optional<String> optionalPath = MappingLists.SOAP_MAPPINGS.stream().filter(mapping -> mapping.getService().equals(naam) && mapping.getVersion().equals(versie)).findFirst().map(MockSoapMapping::getXsdResponsePath);
             if (optionalPath.isEmpty()) {
                 return null;
             }

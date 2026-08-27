@@ -4,22 +4,69 @@
     "versie": "01.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "99610100179"
+        "path": "//Inhoud/Identificator/INSZ",
+        "value": "69653085354"
+      },
+      {
+        "path": "//Inhoud/JaarAkte",
+        "value": "2012"
       }
     ],
-    "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Geen gegevens gevonden voor de vraag"
+    "xpathExpression": "//AkteDatum",
+    "expectedValue": "2012-12-01Z"
   },
   {
     "naam": "GeefCadNetTransacties",
     "versie": "01.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "89610100179"
+        "path": "//Inhoud/Identificator/KBO",
+        "value": "1999990342"
+      },
+      {
+        "path": "//Inhoud/JaarAkte",
+        "value": "2013"
       }
     ],
+    "xpathExpression": "//AkteDatum",
+    "expectedValue": "2013-12-11Z"
+  },
+  {
+    "naam": "GeefCadNetTransacties",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Identificator/PersIdf",
+        "value": "153486"
+      },
+      {
+        "path": "//Inhoud/JaarAkte",
+        "value": "2014"
+      }
+    ],
+    "xpathExpression": "//AkteDatum",
+    "expectedValue": "2014-06-12Z"
+  },
+  {
+    "naam": "GeefCadNetTransacties",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Identificator/Local",
+        "value": "951753"
+      },
+      {
+        "path": "//Inhoud/JaarAkte",
+        "value": "2015"
+      }
+    ],
+    "xpathExpression": "//AkteDatum",
+    "expectedValue": "2015-04-21Z"
+  },
+  {
+    "naam": "GeefCadNetTransacties",
+    "versie": "01.00.0000",
+    "requestFields": [],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag"
   },

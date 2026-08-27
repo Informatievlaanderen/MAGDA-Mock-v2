@@ -1,30 +1,28 @@
 package be.vlaanderen.vip.magda.magdamock.client.soap;
 
+import be.vlaanderen.vip.magda.magdamock.config.MappingLists;
 import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
-import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping.VERSION_01_00;
-import static be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping.VERSION_02_00;
-import static be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping.VERSION_02_01;
-import static be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping.VERSION_02_02;
-import static be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping.VERSION_03_00;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static be.vlaanderen.vip.magda.magdamock.config.MappingLists.VERSION_01_00;
+import static be.vlaanderen.vip.magda.magdamock.config.MappingLists.VERSION_02_00;
+import static be.vlaanderen.vip.magda.magdamock.config.MappingLists.VERSION_02_01;
+import static be.vlaanderen.vip.magda.magdamock.config.MappingLists.VERSION_02_02;
+import static be.vlaanderen.vip.magda.magdamock.config.MappingLists.VERSION_03_00;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
 
 class SoapStubRegistrarTest {
 
     @Test
     void all_shouldContainAllRegisteredServicesAndVersions() {
-        List<MockSoapMapping> definitions = MockSoapMapping.MAPPINGS;
+        List<MockSoapMapping> definitions = MappingLists.SOAP_MAPPINGS;
 
         Set<String> actual = definitions.stream()
-                .map(definition -> definition.service() + "|" + definition.version())
+                .map(definition -> definition.getService() + "|" + definition.getVersion())
                 .collect(Collectors.toSet());
 
         // Dossier

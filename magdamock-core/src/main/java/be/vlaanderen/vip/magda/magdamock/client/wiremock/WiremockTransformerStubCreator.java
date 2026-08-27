@@ -3,6 +3,7 @@ package be.vlaanderen.vip.magda.magdamock.client.wiremock;
 import be.vlaanderen.vip.magda.magdamock.client.transformers.GeefEpcResponseTransformer;
 import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaRestFileResponseTransformer;
 import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaSoapFileResponseTransformer;
+import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaSoapMultiFolderResponseTransformer;
 import be.vlaanderen.vip.magda.magdamock.config.MockRestMapping;
 import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -32,9 +33,9 @@ public class WiremockTransformerStubCreator {
     }
 
     public static void addSoapSubdirTransformerStub(WireMockServer wireMockServer, MockSoapMapping mockSoapMapping) {
-        String domain = mockSoapMapping.domain();
-        String service = mockSoapMapping.service();
-        String version = mockSoapMapping.version();
+        String domain = mockSoapMapping.getDomain();
+        String service = mockSoapMapping.getService();
+        String version = mockSoapMapping.getVersion();
         log.info("Adding generic sub dir stub for {} {} {}", domain, service, version);
         wireMockServer.stubFor(
                 post(urlEqualTo("/soap"))
@@ -56,9 +57,9 @@ public class WiremockTransformerStubCreator {
     }
 
     public static void addSoapFileTransformerStub(WireMockServer wireMockServer, MockSoapMapping mockSoapMapping) {
-        String domain = mockSoapMapping.domain();
-        String service = mockSoapMapping.service();
-        String version = mockSoapMapping.version();
+        String domain = mockSoapMapping.getDomain();
+        String service = mockSoapMapping.getService();
+        String version = mockSoapMapping.getVersion();
         log.info("Adding generic file stub for {} {} {}", domain, service, version);
         wireMockServer.stubFor(
                 post(urlEqualTo("/soap"))
@@ -78,9 +79,10 @@ public class WiremockTransformerStubCreator {
                         )
         );
     }
+
     public static void addGeefEpcTransformerStub(WireMockServer wireMockServer, MockSoapMapping mockSoapMapping) {
-        String service = mockSoapMapping.service();
-        String version = mockSoapMapping.version();
+        String service = mockSoapMapping.getService();
+        String version = mockSoapMapping.getVersion();
         String id = mockSoapMapping.getId();
         log.info("Adding GeefEpc stub for {}", id);
         wireMockServer.stubFor(
@@ -95,6 +97,28 @@ public class WiremockTransformerStubCreator {
                                 aResponse()
                                         .withStatus(666)
                                         .withTransformers(GeefEpcResponseTransformer.NAME)
+                                        .withTransformerParameter("mapping-id", id)
+                        )
+        );
+    }
+
+    public static void addSoapMultiFolderTransformerStub(WireMockServer wireMockServer, MockSoapMapping mockSoapMapping) {
+        String service = mockSoapMapping.getService();
+        String version = mockSoapMapping.getVersion();
+        String id = mockSoapMapping.getId();
+        log.info("Adding Multifolder soap stub for {}", id);
+        wireMockServer.stubFor(
+                post(urlEqualTo("/soap"))
+                        .withRequestBody(matchingXPath(
+                                "//*[local-name()='Naam' and normalize-space()='" + service + "']"
+                        ))
+                        .withRequestBody(matchingXPath(
+                                "//*[local-name()='Versie' and normalize-space()='" + version + "']"
+                        ))
+                        .willReturn(
+                                aResponse()
+                                        .withStatus(666)
+                                        .withTransformers(MagdaSoapMultiFolderResponseTransformer.NAME)
                                         .withTransformerParameter("mapping-id", id)
                         )
         );

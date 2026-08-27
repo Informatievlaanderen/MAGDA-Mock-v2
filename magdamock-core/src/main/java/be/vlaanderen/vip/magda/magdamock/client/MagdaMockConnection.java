@@ -5,6 +5,7 @@ import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
 import be.vlaanderen.vip.magda.magdamock.client.wiremock.DefaultWiremockMapping;
 import be.vlaanderen.vip.magda.magdamock.client.wiremock.WiremockTransformerStubCreator;
 import be.vlaanderen.vip.magda.magdamock.config.EmbeddedWireMockBuilder;
+import be.vlaanderen.vip.magda.magdamock.config.MappingLists;
 import be.vlaanderen.vip.magda.magdamock.config.MockRestMapping;
 import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
@@ -71,12 +72,14 @@ public class MagdaMockConnection {
         for (MockRestMapping restMapping : restMappings) {
             WiremockTransformerStubCreator.addRestTransformerStub(wireMockData.wireMockServer(), restMapping);
         }
-        for (MockSoapMapping soapMapping : MockSoapMapping.MAPPINGS) {
-            switch (soapMapping.stubHandler()) {
+        for (MockSoapMapping soapMapping : MappingLists.SOAP_MAPPINGS) {
+            switch (soapMapping.getStubHandler()) {
                 case FileSoap ->
                         WiremockTransformerStubCreator.addSoapFileTransformerStub(wireMockData.wireMockServer(), soapMapping);
                 case SubDirSoap ->
                         WiremockTransformerStubCreator.addSoapSubdirTransformerStub(wireMockData.wireMockServer(), soapMapping);
+                case MultiFolder ->
+                        WiremockTransformerStubCreator.addSoapMultiFolderTransformerStub(wireMockData.wireMockServer(), soapMapping);
                 case GeefEpc ->
                         WiremockTransformerStubCreator.addGeefEpcTransformerStub(wireMockData.wireMockServer(), soapMapping);
                 default ->
