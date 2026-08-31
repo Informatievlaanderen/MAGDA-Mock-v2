@@ -18,6 +18,9 @@ public class MagdaMockConfig {
     String magdaXsdPath;
     Boolean magdaXsdRequestEnabled;
     Boolean magdaXsdResponseEnabled;
+    String magdaOpenapiPath;
+    Boolean magdaOpenapiRequestEnabled;
+    Boolean magdaOpenapiResponseEnabled;
     Integer minimumTimeoutMillis;
     Integer maximumTimeoutMillis;
     Boolean enableTimeout;
@@ -36,6 +39,6 @@ public class MagdaMockConfig {
             minimumTimeoutMillis = null;
             maximumTimeoutMillis = null;
         }
-        return MagdaMockConnection.create(restTestPath, soapTestPath, Objects.requireNonNullElse(magdaXsdRequestEnabled, true), Objects.requireNonNullElse(magdaXsdResponseEnabled, true), magdaXsdPath, minimumTimeoutMillis, maximumTimeoutMillis, logRequestBody);
+        return MagdaMockConnection.create(restTestPath, soapTestPath, Objects.requireNonNullElse(magdaXsdRequestEnabled, true), Objects.requireNonNullElse(magdaXsdResponseEnabled, true), magdaXsdPath, Objects.requireNonNullElse(magdaOpenapiRequestEnabled, true), Objects.requireNonNullElse(magdaOpenapiResponseEnabled, true), magdaOpenapiPath, minimumTimeoutMillis, maximumTimeoutMillis, logRequestBody);
     }
 }

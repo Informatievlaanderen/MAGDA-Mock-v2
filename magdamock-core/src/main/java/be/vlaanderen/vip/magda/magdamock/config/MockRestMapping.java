@@ -6,6 +6,7 @@ import be.vlaanderen.vip.magda.magdamock.config.rest.RestParameter;
 import be.vlaanderen.vip.magda.magdamock.config.rest.RestPathParameter;
 import be.vlaanderen.vip.magda.magdamock.config.rest.RestQueryParameter;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public record MockRestMapping(List<String> folderPath,
@@ -122,5 +123,9 @@ public record MockRestMapping(List<String> folderPath,
 
     public String getId() {
         return String.format("%s %s", method, url);
+    }
+
+    public Path getOpenApiPath() {
+        return Path.of(toPath(), "openapi.yaml");
     }
 }

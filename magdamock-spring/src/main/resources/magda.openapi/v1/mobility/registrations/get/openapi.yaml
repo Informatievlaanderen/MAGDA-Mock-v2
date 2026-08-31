@@ -1,0 +1,1025 @@
+openapi: 3.1.0
+info:
+  title: Expose Data DIV - Registrations Service
+  description: This RESTful API is designed to query current data registered at the DIV. It returns data of the registration-domain including sub-domains license, certificate, titular and vehicle. Release date August 2020.
+  contact:
+    name: registrationsAPI
+    email: helpdesk.magda@vlaanderen.be
+  license:
+    name: registrationsAPI
+    url: https://overheid.vlaanderen.be/magda
+  version: '1.2'
+servers:
+  - url: /v1/mobility
+paths:
+  /registrations:
+    get:
+      summary: Operations for consultation of registrations current data.
+      parameters:
+        - name: x-correlation-id
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/Correlation-Id'
+        - name: X-Magda-Enduser-ID
+          in: header
+          required: true
+          schema:
+            $ref: '#/components/schemas/Enduser-Id'
+        - name: User-Organisation
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: Target-Organisation
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: User-Organisation-Description
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: Target-Organisation-Description
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: plateNr
+          in: query
+          description: The plate number as a principal parameter.
+          required: false
+          schema:
+            type: string
+        - name: plateUID
+          in: query
+          description: The license unique identifier linked to the plate number as a principal parameter.
+          required: false
+          schema:
+            type: string
+        - name: vin
+          in: query
+          description: The vehicle identification number as a principal parameter.
+          required: false
+          schema:
+            type: string
+        - name: unifier
+          in: query
+          description: The unifier of the vehicle identification number. <br>To be specified always in combination with the VIN.
+          required: false
+          schema:
+            type: string
+        - name: certificateId
+          in: query
+          description: The certificate (CIM) Id as a principal parameter.
+          required: false
+          schema:
+            type: string
+        - name: nationalNr
+          in: query
+          description: The national number as a principal parameter.
+          required: false
+          schema:
+            type: string
+        - name: companyNr
+          in: query
+          description: The company number as a principal parameter.
+          required: false
+          schema:
+            type: string
+        - name: dateTime
+          in: query
+          description: The date for which the data is requested. When not specified, the default will be the current date and time. Always to be specified in combination with a principal query parameter.
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: transactionUID
+          in: query
+          description: The transaction unique identifier as a principal parameter.
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          description: Indicates the size of a page in a paginated collection resource.
+          required: false
+          schema:
+            type: number
+        - name: after
+          in: query
+          description: Indicates the element before the first element of the requested page in a cursor-based paginated collection resource.
+          required: false
+          schema:
+            type: string
+        - name: addressEnrichmentPerson
+          in: query
+          description: Source where titular current addres will be retrieved in case titular is a Person. Omit the query parameter in case the current address is not required.
+          required: false
+          schema:
+            type: string
+            enum:
+              - RR
+              - KSZ
+        - name: addressEnrichmentOrganisation
+          in: query
+          description: Denotes if titular current addres nees to be provided in case the Titular is an organisation. Omit the query parameter in case the current address is not required.
+          required: false
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          description: The result.
+          headers:
+            X-Magda-Exceptions:
+              description: Contains "Uitzonderingen" returned by the MAGDA SOAP services called by the business service to do the data enhancements
+              schema:
+                $ref: '#/components/schemas/MagdaExceptionList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+        '204':
+          description: No result found.
+        '400':
+          description: Invalid data supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '401':
+          description: Invalid authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '404':
+          description: No data found for the requested parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: An unexpected error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '504':
+          description: Gateway Timeout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      tags:
+        - Request Registrations
+components:
+  schemas:
+    Response:
+      description: The object containing the result
+      type: object
+      properties:
+        '@context':
+          type: string
+          default: https://vlaamseoverheid.atlassian.net/wiki/download/attachments/1693680273/Mobility-context.jsonld
+        self:
+          description: Link to this request.
+          type: string
+        items:
+          description: An array of registration objects. The content can be none, one or multiple objects.
+          type: array
+          items:
+            $ref: '#/components/schemas/Registration'
+        total:
+          description: The total amount of elements in the collection resource following the requested parameters.
+          type: number
+        next:
+          description: Link to the next page.
+          type: string
+      required:
+        - self
+        - items
+    Correlation-Id:
+      description: ID of the transaction. Use this ID for log tracing and incident handling.
+      type: string
+      maxLength: 36
+      minLength: 10
+    Enduser-Id:
+      description: Reference to the user that triggerd the request.
+      type: string
+    LangString:
+      description: String with a language attribute
+      type: object
+      properties:
+        string:
+          type: string
+        lang:
+          type: string
+    Identificator:
+      description: OSLO object representing an identification element
+      type: object
+      properties:
+        identificator:
+          type: string
+    Concept:
+      description: A concept in a conceptscheme according to the SKOS vocabulary
+      type: object
+      properties:
+        '@type':
+          description: declaration of the type of the object
+          type: string
+          default: http://www.w3.org/2004/02/skos/core#Concept
+        prefLabel:
+          $ref: '#/components/schemas/LangString'
+    Registration:
+      description: The registration object. Attributes will be limited to what is necessary in relation to your legal purposes.
+      type: object
+      properties:
+        license:
+          $ref: '#/components/schemas/License'
+        certificates:
+          description: An array of certificate data. The content can be none, one or multiple entries.
+          type: array
+          items:
+            $ref: '#/components/schemas/Certificate'
+        titular:
+          $ref: '#/components/schemas/Titular'
+        transaction:
+          $ref: '#/components/schemas/Transaction'
+        vehicle:
+          $ref: '#/components/schemas/Vehicle'
+    License:
+      description: The license object.
+      type: object
+      properties:
+        plateNr:
+          description: The plate number; as it appears on the plate, without any edit characters.
+          type: string
+        plateUID:
+          description: A technical global unique identifier corresponding with the plate number (GUID)
+          type: string
+        plateNrFormatted:
+          description: The plate number format [for Police]
+          type: string
+        plateType:
+          type: object
+          properties:
+            code:
+              description: The type code of the plate
+              type: string
+            description:
+              description: The description of the plate type
+              type: string
+        languageCode:
+          description: The language of the license; fr, nl, de, en
+          type: string
+        startSituationDate:
+          description: 'The begin date of the license. '
+          type: string
+          format: date-time
+        expiryDate:
+          description: The (planned) expiry date (when relevant/known)
+          type: string
+          format: date-time
+        lastRegistrationDate:
+          description: Date of the last registration
+          type: string
+          format: date-time
+        firstRegistrationDateBelgium:
+          description: Date of the first registration in Belgium. In case of an imported and used vehicle (101), the first_immatriculation_date can differ from the date of the first registration in Belgium.  This attribute will contain the date of the first registration in the DIV-records to indicate that the vehicle in question is an already used vehicle, that is registered after import.
+          type: string
+          format: date
+        reRegistrationFlag:
+          description: Indication of re-registration
+          type: string
+        commercialMaxMass:
+          description: The commercial maximum mass allowed
+          type: number
+          format: int32
+        commercialMaxCapacity:
+          description: The commercial maximum capacity allowed
+          type: number
+          format: int32
+        status:
+          type: object
+          properties:
+            code:
+              description: The status of the license (registration)
+              type: string
+            beginDate:
+              description: 'The begin date of this status '
+              type: string
+              format: date-time
+            endDate:
+              description: The end date of this status (as old status) filled when a new status becomes active
+              type: string
+              format: date-time
+            description:
+              description: The description of the status code of the license
+              type: string
+        statusLegal:
+          type: object
+          properties:
+            code:
+              description: The legal status of the license
+              type: string
+            beginDate:
+              description: 'The begin date of this status '
+              type: string
+              format: date-time
+            endDate:
+              description: The end date of this status (as old status) filled when a new status becomes active
+              type: string
+              format: date-time
+            description:
+              description: The description of the legal status code of the license
+              type: string
+        creationDateTime:
+          description: Timestamp of the creation of this object within the datastorage
+          type: string
+          format: date-time
+        lastUpdateDateTime:
+          description: Timestamp of last modification of data within this object
+          type: string
+          format: date-time
+    Certificate:
+      description: The certificate object.
+      type: object
+      properties:
+        id:
+          description: The id of the certificate CIM
+          type: string
+        type:
+          description: The type of the certificate - ORI (Original, DUP (Duplicate), CPY (Copy)
+          type: string
+        beginDate:
+          description: The begin date of the certificate
+          type: string
+          format: date-time
+        statusLegal:
+          type: object
+          properties:
+            code:
+              description: The legal status of the certificate
+              type: string
+            endDate:
+              description: The end date of this status (as old status) filled when a new status becomes active
+              type: string
+              format: date-time
+            description:
+              description: The description of the legal status of the certificate
+              type: string
+        relatedCertificateId:
+          description: The id of the related certificate
+          type: string
+    Titular:
+      description: The titular object.
+      type: object
+      properties:
+        '@id':
+          description: Identification of the Titular object, should be generated in the form _:XXX
+          type: string
+        '@type':
+          description: The type of the titular
+          type: string
+          default: http://purl.org/dc/terms/Agent
+        type:
+          description: 'Indication whether the titular is a natural person (NP) or a moral person/organization (M). '
+          type: string
+        source:
+          description: Indicating the source of the titular identification number in case different from RR/RN and KBO/BCE.
+          type: string
+        title:
+          description: 'The titular title of the plate. Example of values: Prince, Princess, Duke, Duchess, Marquis, Marquise, Earldom, Countess, Viscount, …'
+          type: string
+        person:
+          description: Person object - only available in case the titular-type is a natural person.
+          type: object
+          properties:
+            '@id':
+              description: OSLO Id reference to the Titular object; should be the same value as the titular @id
+              type: string
+            '@type':
+              description: Indicates that it is a person
+              type: string
+              default: http://www.w3.org/ns/person#Person
+            nationalNr:
+              description: The national number of the person
+              $ref: '#/components/schemas/Identificator'
+            lastName:
+              description: The last name(s) of the person
+              type: array
+              items:
+                type: string
+            firstName:
+              description: The first name(s) of the person
+              type: array
+              items:
+                type: string
+            birthYear:
+              description: The year of birth of the titular
+              type: string
+        organisation:
+          description: Organisation object only available in case the titular-type is a moral person (organisation).
+          type: object
+          properties:
+            '@id':
+              description: OSLO Id reference to the Titular object; should be the same value as the titular @id
+              type: string
+            '@type':
+              description: indicates that it is an organisation
+              type: string
+              default: http://www.w3.org/ns/org#Organization
+            companyNr:
+              description: 'The KBO/BCE number of the company. '
+              $ref: '#/components/schemas/Identificator'
+            organisationName:
+              description: Name of the organisation
+              $ref: '#/components/schemas/LangString'
+            isLeaseCompany:
+              description: Indication Y(es) or N(o) whether the organisation is a lease-company (Renta-flag)
+              type: string
+            legalFormCode:
+              description: The legal-form code of the company
+              $ref: '#/components/schemas/Concept'
+            legalFormAbbrev:
+              description: The abbreviation of the legal-form of the company.
+              $ref: '#/components/schemas/Concept'
+        contactInfo:
+          description: In OSLO, the Address is linked the Agents through the contactInfo
+          type: object
+          properties:
+            '@type':
+              description: the contactinfo is of type contactInfo
+              type: string
+              default: https://schema.org/ContactPoint
+            registrationAddress:
+              description: The address of the titular at moment of registration of the plate.
+              $ref: '#/components/schemas/Address'
+            address:
+              description: The address known at DIV. It is to be interpreted as the address of the titular.
+              $ref: '#/components/schemas/Address'
+            currentAddress:
+              description: The current address of the titular. Latest information retrieved based the INSZ OR KBO in the respective authentic source. This data block is only returned when addressEnrichment was requested for the corresponsing type of titual (person or organisation).
+              $ref: '#/components/schemas/Address'
+    Vehicle:
+      description: The vehicle object.
+      type: object
+      properties:
+        vin:
+          description: Vehicle Identification Number or Chassis number. The unique number of the vehicle which is stamped in the vehicle by the manufacturer or competent authority.
+          type: string
+        unifier:
+          description: With the VIN, the unifier creates an unique identification for small VIN.
+          type: string
+        category:
+          type: object
+          properties:
+            code:
+              description: European category code. This entry is used to give the information about the type approval which is stated on the COC. Despite of the different ApprovalNumber it is needed to identify these approvals in an easy way.
+              type: string
+            description:
+              description: 'European category description '
+              type: string
+        makeName:
+          description: The make name of the vehicle.
+          type: string
+        commercialName:
+          description: The commercial name of the vehicle.
+          type: string
+        makeDivCode:
+          description: DIV code of the make name. Will become OBSOLETE in a next release.
+          type: string
+        makeTypeDescription:
+          description: Make type description. Only filled in case of a national homologation. Will become OBSOLETE in a next release.
+          type: string
+        firstRegistrationDate:
+          description: 'The first registration date of the vehicle (the first time a plate was assigned to it). '
+          type: string
+          format: date
+        firstKnownUseDate:
+          description: The first date when the vehicle has been used (not necessary the same date as the first registration date). For example, the scooters were used in Belgium and the registration was only possible in 2015.
+          type: string
+          format: date
+        maxPermLadenMassNational:
+          description: Intended registration/in service maximum permissible laden mass in national traffic. In Belgium this is the maximum national mass (F2). [former mmaNational]
+          type: number
+          format: int32
+        type:
+          description: The type of the vehicle as stated on the approval. This entry is NOT used for commercial description.
+          type: string
+        wvta:
+          description: European homologation type approval number (Whole Vehicle Type-Approval)
+          type: string
+        pvaBelgium:
+          description: Belgian national approval number
+          type: string
+        typeApprovalType:
+          description: This entry is used to give the information about the type approval which is stated on the COC. Despite of the different ApprovalNumber it is needed to identify these approvals in an easy way.
+          type: string
+        individualApprovalType:
+          description: Individual approval type (harmonized/non harmonized)
+          type: string
+        variant:
+          description: The variant of the vehicle as stated on the approval.
+          type: string
+        version:
+          description: The version of the vehicle as stated on the approval.
+          type: string
+        dateCOC:
+          description: The date of the COC
+          type: string
+          format: date
+        status:
+          type: object
+          properties:
+            code:
+              description: 'Vehicle status '
+              type: string
+            description:
+              description: Description of the vehicle status
+              type: string
+        statusLegal:
+          type: object
+          properties:
+            code:
+              description: 'Vehicle legal status '
+              type: string
+            description:
+              description: Description of the vehicle legal status
+              type: string
+        statusAdministrative:
+          type: object
+          properties:
+            code:
+              description: 'Vehicle administrative status '
+              type: string
+            description:
+              description: Description of the vehicle administrative status
+              type: string
+        accidentDate:
+          description: Date of accident
+          type: string
+          format: date
+        demolished:
+          type: object
+          properties:
+            code:
+              description: Indication of demolishing
+              type: string
+            date:
+              description: Destruction or demolished date
+              type: string
+              format: date
+            description:
+              description: Description of code demolished
+              type: string
+        sellerCompanyCode:
+          description: Company code of the seller of the vehicle
+          type: string
+        customsStickerCode:
+          description: The customs sticker code
+          type: string
+        counterType:
+          description: Indication of number of digits on the odometer
+          type: number
+          format: int32
+        distanceType:
+          description: Indication of km (K) or miles (M) as used in the vehicle
+          type: string
+        techControlValidityDate:
+          description: Valid date of the technical control
+          type: string
+          format: date
+        techControlEntryDatetime:
+          description: Entry timestamp of the technical control
+          type: string
+          format: date-time
+        importedCertificateCountryCode:
+          description: Country code (ISO3) of the foreign CIM for the imported vehicle
+          type: string
+        importedCertificatePlateNumber:
+          description: Foreign Plate Number in case of vehicle imported
+          type: string
+        importedCertificateRegistrationDate:
+          description: Registration date of the imported vehicle
+          type: string
+          format: date
+        codeForBodyWork:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleCodeForBodyWork'
+        kind:
+          type: object
+          properties:
+            code:
+              description: Vehicle kind as used in Belgium only.
+              type: string
+            description:
+              description: Description fo the vehicle kind code
+              type: string
+        nationalBuildup:
+          type: object
+          properties:
+            code:
+              description: National buildup codes used by technical inspections.
+              type: string
+            description:
+              description: The description of the national buildup code
+              type: string
+        nationalConfiguration:
+          type: object
+          properties:
+            code:
+              description: National vehicle configuration code used by technical inspections.
+              type: string
+            description:
+              description: Description for the national vehicle configuration code
+              type: string
+        colour:
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleColour'
+        offRoad:
+          description: "'G' value if the vehicle is an 'off-road'; no values in other cases."
+          type: string
+        technicPermissibleMaxMass:
+          description: Maximum permissible mass of the vehicle.
+          type: number
+          format: int32
+        massOfTheVehicleInRunningOrder:
+          description: Mass of the vehicle in running order
+          type: number
+          format: int32
+        referenceMass:
+          description: The reference mass
+          type: number
+        actualMassOfTheVehicle:
+          description: Actual mass of the vehicle
+          type: number
+          format: int32
+        maxPermMassCombination:
+          description: Permissible maximum mass of the combination
+          type: number
+          format: int32
+        numberOfAxles:
+          description: Number of axles of the vehicle
+          type: number
+          format: int32
+        loadWheelbaseRatio:
+          description: The load wheelbase ratio for the vehicle
+          type: number
+          format: float
+        wheelBase:
+          description: 'This is the total wheelbase. Unit of mesure: mm. In case of motor vehicle or drawbar trailer: first axle to most rear axle. In case of centre-axle-trailer or semi-trailer: the coupling point to most rear axle.'
+          type: number
+          format: int32
+        maximumSpeed:
+          description: 'Maximum vehicle speed. Unit: km/h or miles/h'
+          type: number
+          format: int32
+        limiterIndicator:
+          description: Indicates if the vehicle has a limiter installed
+          type: boolean
+        handicapIndicator:
+          description: Indicates if vehicle is built for disabled person
+          type: boolean
+        tachoIndicator:
+          description: Indicates a tachograph
+          type: boolean
+        assistanceWithoutPedallingIndicator:
+          description: Only available when a vehicle is a speed pedelec. This attribute indicates an autonomous propulsion.
+          type: boolean
+        sizeHeight:
+          description: The height of the vehicle
+          type: number
+          format: int32
+        sizeLength:
+          description: The length of the vehicle
+          type: number
+          format: int32
+        sizeWidth:
+          description: The width of the vehicle
+          type: number
+          format: int32
+        nrOfSeatingPositions:
+          description: The number of seating positions (including the driver). The seats designated for use only when the vehicle is stationary are not included.
+          type: number
+          format: int32
+        numberOfStandingPlaces:
+          description: Number of standing places
+          type: number
+          format: int32
+        suspension:
+          type: object
+          properties:
+            code:
+              description: The suspension code
+              type: string
+            description:
+              description: The description of the suspension code
+              type: string
+        exhaustDirectiveRefCode:
+          description: The directive exhaust emisisons code
+          type: string
+        creationDateTime:
+          description: Timestamp of the creation of this object within the datastorage
+          type: string
+          format: date-time
+        lastUpdateDateTime:
+          description: Timestamp of last modification of data within this object
+          type: string
+          format: date-time
+        engine:
+          description: Array containing vehicle engine(s) specifications
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleEngine'
+    VehicleCodeForBodyWork:
+      description: Object containing specific vehicle code for bodywork
+      type: object
+      properties:
+        code:
+          description: Code for bodywork
+          type: string
+        description:
+          description: Description of code for bodywork
+          type: string
+    VehicleColour:
+      description: Object containing the colours for a vehicle
+      type: object
+      properties:
+        code:
+          description: Colour code
+          type: string
+        description:
+          description: Description of code for colour
+          type: string
+    VehicleEngine:
+      description: Object containing specific vehicle technical engine specifications
+      type: object
+      properties:
+        engineNumber:
+          description: The engine number is the unique number of the engine as marked on the engine.
+          type: string
+        engineCapacity:
+          description: Engine capacity (cm^3)
+          type: number
+          format: float
+        electricEngineIndicator:
+          description: 'Electric Engine '
+          type: boolean
+        fuel:
+          description: Array containing vehicle engine fuel(s) specifications
+          type: array
+          items:
+            $ref: '#/components/schemas/VehicleFuel'
+    VehicleFuel:
+      description: Object containing specific vehicle technical engine specifications
+      type: object
+      properties:
+        code:
+          description: The fuel code (carburant)
+          type: string
+        description:
+          description: The fuel description (carburant)
+          type: string
+        maximumNetPower:
+          description: Maximum net power for combustion engine. Not used  for electric engines.
+          type: number
+          format: float
+        euroNormCode:
+          description: 'The emission euronorm '
+          type: string
+        exhaustEmissionLevelEuro:
+          description: Exhaust emission level Euro (called Euronorm)
+          type: string
+        maximumContinuousRatedPower:
+          description: Maximum continuous rated power/30 minutes power
+          type: number
+          format: float
+        weightPowerRatio:
+          description: Power mass ratio
+          type: number
+          format: float
+        electricEnergyConsWeightedComb:
+          description: Electric energy consumption weighted, combined (Wh/km)
+          type: number
+          format: float
+        electricRangeExternChargeable:
+          description: Electric range externally chargeable hybrid vehicle (km)
+          type: number
+          format: int32
+        combinedFuelConsumption:
+          description: Combined fuel consumption
+          type: number
+          format: float
+        combinedCO2:
+          description: Combined CO2
+          type: number
+          format: int32
+        WLTPCombinedCO2:
+          description: All power trains,  CO2 emissions of the WLTP combined testing phase
+          type: number
+          format: int32
+        weightedCombinedCO2:
+          description: Weighted, combined CO2
+          type: number
+          format: int32
+        WLTPWeightedCombinedCO2:
+          description: All power trains, CO2 emissions weighted combined of the WLTP test result
+          type: number
+          format: int32
+        particulatesMassBenchTest:
+          description: Mass of particulates bench (engine and vehicle) emission
+          type: number
+          format: float
+    Address:
+      description: Address In OSLO format.
+      type: object
+      properties:
+        '@type':
+          description: Address info of the contact address
+          type: string
+          default: http://www.w3.org/ns/locn#Address
+        lastUpdateSource:
+          description: The datasource from which the last update of the address occurred (‘RR’, ‘BIS’, ‘KBO’, ‘local’)
+          type: string
+        lastUpdateDateTime:
+          description: The date and time the address has been last updated from the mentioned data source
+          type: string
+          format: date-time
+        streetName:
+          description: Street name of the address
+          $ref: '#/components/schemas/LangString'
+        natRegStreetCode:
+          description: streetcode which defines a street in the municipality.
+          type: string
+        houseNumber:
+          description: Housenumber of the address
+          type: string
+        box:
+          description: POBox number of the address
+          type: string
+        postalCode:
+          description: Postalcode of the address
+          type: string
+        cityNisCode:
+          description: Nis code for the city of the address
+          type: string
+        cityName:
+          description: The city name of the address
+          $ref: '#/components/schemas/LangString'
+        countryName:
+          description: Country name
+          $ref: '#/components/schemas/LangString'
+        countryISO:
+          description: Country code (ISO2Code)
+          type: string
+    Transaction:
+      description: The transaction object.
+      type: object
+      properties:
+        UID:
+          description: The unique identifier of the transaction object
+          type: string
+        typeCode:
+          description: The type code of the transaction
+          type: string
+        subTypeCode:
+          type: object
+          properties:
+            code:
+              description: The subtype code of the transaction
+              type: string
+            description:
+              description: The description of the subtype of the transaction
+              type: string
+        dateTime:
+          description: The timestamp when the transaction occured
+          type: string
+          format: date-time
+        info:
+          description: Object containing additional transaction data.
+          type: object
+          properties:
+            correctionType:
+              type: object
+              properties:
+                code:
+                  description: The type of the correction
+                  type: string
+                description:
+                  description: The description of the correction code
+                  type: string
+            plateNumberPriorTitular:
+              description: Plate number prior titular
+              type: string
+            previousPlateNrTitular:
+              description: Previous plate number titular
+              type: string
+            newVehicle:
+              description: Indication new vehicle
+              type: boolean
+            secondHandVehicle:
+              description: Indication 2nd-hand vehicle
+              type: boolean
+            importedVehicle:
+              description: Indication imported vehicle
+              type: boolean
+            transferAttest:
+              type: object
+              properties:
+                code:
+                  description: The transfer attest code
+                  type: string
+                description:
+                  description: The description of the transfer attest code
+                  type: string
+    ErrorMessage:
+      description: A representation of a generic error message
+      type: object
+      properties:
+        type:
+          description: A URI reference that identifies the problem type. This specification encourages that, when dereferenced, it provide human-readable documentation for the problem type. When this member is not present, its value is assumed to be "about:blank".
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type. It SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization (e.g., using proactive content negotiation.
+          type: string
+        status:
+          description: The HTTP status code generated by the origin server for this occurrence of the problem.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.
+          type: string
+      required:
+        - detail
+        - title
+    MagdaException:
+      description: A representation of a MAGDA exception.
+      type: object
+      properties:
+        code:
+          description: HTTP status code of the request from which this exception stemmed.
+          type: integer
+        origin:
+          description: Who originated this exception.
+          type: string
+          maxLength: 5
+        type:
+          description: 'Specifies the kind of Exception that occurred. ERROR: The main flow could not be executed successfully. WARNING: The main flow was executed successfully, but there was a non-blocking problem. INFO: The main flow was executed without any problem, but there is addition information that can be communicated.'
+          type: string
+          enum:
+            - ERROR
+            - WARNING
+            - INFO
+        date:
+          description: Date-time (yyyy-MM-dd'T'HH:mm:ssXXX) when the error was found.
+          type: string
+          format: date-time
+        diagnosis:
+          description: Short explation of the exception. The possible values are explained in the user guide.
+          type: string
+        circumstance:
+          description: More details of the cause of the exception.
+          type: string
+        annotations:
+          description: Not yet in use. To be worked out later.
+          type: string
+        elementReferences:
+          description: Contains a reference to the payload element on which this exception is applicable.
+          type: string
+        instance:
+          description: Contains a reference to the user that sent the original request.
+          type: string
+      required:
+        - code
+        - date
+        - diagnosis
+        - origin
+        - type
+        - instance
+    MagdaExceptionList:
+      type: object
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/MagdaException'
+          type: array

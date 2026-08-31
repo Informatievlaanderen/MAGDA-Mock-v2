@@ -3,18 +3,20 @@ package be.vlaanderen.vip.magda.magdamock.client.handlers;
 import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.RestLogHelper;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
+import be.vlaanderen.vip.magda.magdamock.rest.RestOpenAPIValidator;
+import be.vlaanderen.vip.magda.magdamock.rest.RestValidator;
 import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.erosb.kappa.core.validation.ValidationException;
 import com.github.tomakehurst.wiremock.http.HttpHeader;
 import com.github.tomakehurst.wiremock.http.HttpHeaders;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.Response;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +27,14 @@ import java.util.UUID;
 public class MagdaMockRestHandler extends AbstractMockHandler {
     private final String HEADER_KEY_CORRELATION_ID = "x-correlation-id";
     private boolean logRequestBody;
+    private final RestValidator restRequestValidator;
+    private final RestValidator restResponseValidator;
 
-    public MagdaMockRestHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil, boolean logRequestBody) {
+    public MagdaMockRestHandler(WireMockData wireMockData, TimeoutUtil timeoutUtil, boolean logRequestBody, RestValidator restRequestValidator, RestValidator restResponseValidator) {
         super(wireMockData, timeoutUtil);
         this.logRequestBody = logRequestBody;
+        this.restRequestValidator = restRequestValidator;
+        this.restResponseValidator = restResponseValidator;
     }
 
     public MockRestResponse sendRestRequest(MockRestRequest magdaRestRequest) {
@@ -75,7 +81,35 @@ public class MagdaMockRestHandler extends AbstractMockHandler {
 
     private Optional<MagdaMockRestHandler.MockRestResponse> validateRestRequest(MockRestRequest magdaRestRequest) {
         String correlationId = magdaRestRequest.headers.get(HEADER_KEY_CORRELATION_ID);
-        if (correlationId == null ||  correlationId.isEmpty()) {
+        Map<String, Collection<String>> headers = new HashMap<>();
+        for (Map.Entry<String, String> kv : magdaRestRequest.headers().entrySet()) {
+            headers.put(kv.getKey(), List.of(kv.getValue()));
+        }
+        try {
+            if (restRequestValidator != null) {
+                restRequestValidator.validateRawRequest(
+                        magdaRestRequest.path,
+                        magdaRestRequest.query,
+                        magdaRestRequest.method,
+                        magdaRestRequest.requestBody,
+                        headers
+                );
+            }
+        } catch (ValidationException validationException) {
+            log.debug("Validation failed: {}", validationException.getMessage());
+            log.debug("Detailed results: {}", validationException.results());
+            return Optional.of(new MockRestResponse(String.format("""
+                    {
+                      "type": "https://iv.api.vlaanderen.be/magda/statuscodes#400",
+                      "status": 400,
+                      "error": "Bad Request",
+                      "message": "%s",
+                      "instance": "%s %s"
+                    }
+                    """, validationException.results(), magdaRestRequest.method, magdaRestRequest.path).getBytes(StandardCharsets.UTF_8),
+                    400, Map.of(HEADER_KEY_CORRELATION_ID, List.of(Optional.ofNullable(correlationId).orElse(UUID.randomUUID().toString())), "Content-Type", List.of("application/json"))));
+        }
+        if (correlationId == null || correlationId.isEmpty()) {
             log.error("Header parameter 'x-correlation-id' is required.");
             return Optional.of(new MockRestResponse(String.format("""
                     {
@@ -115,6 +149,31 @@ public class MagdaMockRestHandler extends AbstractMockHandler {
         }
         headers.remove("Matched-Stub-Id");
         headers.put(HEADER_KEY_CORRELATION_ID, List.of(correlationId));
+        if (magdaRestRequest.path().equals("/v1/mobility/registrations")) {
+            Map<String, Collection<String>> headersCopy = new HashMap<>(headers);
+            if (restResponseValidator != null) {
+                try {
+                    restResponseValidator.validateResponseOnly(
+                            magdaRestRequest.path(),
+                            magdaRestRequest.method(),
+                            response.getStatus(),
+                            response.getBodyAsString(),
+                            headersCopy
+                    );
+                } catch (ValidationException validationException) {
+                    return new MockRestResponse(String.format("""
+                    {
+                      "type": "https://iv.api.vlaanderen.be/magda/statuscodes#500",
+                      "status": 500,
+                      "error": "Invalid response",
+                      "message": "%s",
+                      "instance": "%s %s"
+                    }
+                    """, validationException.results(), magdaRestRequest.method(), magdaRestRequest.path()).getBytes(StandardCharsets.UTF_8),
+                            500, Map.of(HEADER_KEY_CORRELATION_ID, List.of(Optional.ofNullable(correlationId).orElse(UUID.randomUUID().toString())), "Content-Type", List.of("application/json")));
+                }
+            }
+        }
         return new MockRestResponse(response.getBody(), response.getStatus(), headers);
     }
 

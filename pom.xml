@@ -27,6 +27,7 @@
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
 		<spring-boot.version>3.5.15</spring-boot.version>
 		<mockito.version>5.23.0</mockito.version>
+		<kappa.version>2.0.5</kappa.version>
     </properties>
 
 	<profiles>

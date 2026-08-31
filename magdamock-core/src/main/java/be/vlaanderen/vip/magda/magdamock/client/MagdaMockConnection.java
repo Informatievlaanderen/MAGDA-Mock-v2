@@ -8,6 +8,9 @@ import be.vlaanderen.vip.magda.magdamock.config.EmbeddedWireMockBuilder;
 import be.vlaanderen.vip.magda.magdamock.config.MockRestMapping;
 import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
+import be.vlaanderen.vip.magda.magdamock.rest.LenientRestValidator;
+import be.vlaanderen.vip.magda.magdamock.rest.RestOpenAPIValidator;
+import be.vlaanderen.vip.magda.magdamock.rest.RestValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapBodyValidator;
 import be.vlaanderen.vip.magda.magdamock.soap.SoapRequestValidatorImpl;
@@ -24,6 +27,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.w3c.dom.Document;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,23 +56,23 @@ public class MagdaMockConnection {
     }
 
     public static MagdaMockConnection create(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator, TimeoutUtil timeoutUtil, boolean logRequestBody) {
-        MagdaMockRestHandler restHandler = new MagdaMockRestHandler(wiremockServerData, timeoutUtil, logRequestBody);
+        return create(wiremockServerData, soapRequestValidator, soapResponseValidator, null, null, timeoutUtil, logRequestBody);
+    }
+    public static MagdaMockConnection create(WireMockData wiremockServerData, SoapBodyValidator soapRequestValidator, SoapBodyValidator soapResponseValidator, RestValidator restRequestValidator, RestValidator restResponseValidator, TimeoutUtil timeoutUtil, boolean logRequestBody) {
+        MagdaMockRestHandler restHandler = new MagdaMockRestHandler(wiremockServerData, timeoutUtil, logRequestBody, restRequestValidator, restResponseValidator);
         MagdaMockSoapHandler soapHandler = new MagdaMockSoapHandler(wiremockServerData, timeoutUtil, soapRequestValidator, soapResponseValidator, logRequestBody);
         return new MagdaMockConnection(restHandler, soapHandler);
     }
 
     public static MagdaMockConnection create(String restDataPath, String soapTestPath, String xsdPath, boolean xsdRequestEnabled, boolean xsdResponseEnabled) throws IOException {
-        return create(restDataPath, soapTestPath, xsdRequestEnabled, xsdResponseEnabled, xsdPath, null, null, false);
+        return create(restDataPath, soapTestPath, xsdRequestEnabled, xsdResponseEnabled, xsdPath, false, false, null, null, null, false);
     }
 
-    public static MagdaMockConnection create(String restDataPath, String soapTestPath, boolean xsdRequestEnabled, boolean xsdResponseEnabled, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis, boolean logRequestBody) throws IOException {
-        List<MockRestMapping> mappings = MockRestMapping.MAPPINGS;
-        return create(restDataPath, soapTestPath, xsdRequestEnabled, xsdResponseEnabled, xsdPath, minimumTimeoutMillis, maximumTimeoutMillis, mappings, logRequestBody);
-    }
+    // TODO: add rest validation parameters (path + booleans)
 
-    public static MagdaMockConnection create(String restDataPath, String soapTestPath, boolean xsdRequestEnabled, boolean xsdResponseEnabled, String xsdPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis, List<MockRestMapping> restMappings, boolean logRequestBody) throws IOException {
+    public static MagdaMockConnection create(String restDataPath, String soapTestPath, boolean xsdRequestEnabled, boolean xsdResponseEnabled, String xsdPath, boolean openapiRequestEnabled, boolean openapiResponseEnabled, String openapiPath, Integer minimumTimeoutMillis, Integer maximumTimeoutMillis, boolean logRequestBody) throws IOException {
         WireMockData wireMockData = new EmbeddedWireMockBuilder().soapTestPath(soapTestPath).restTestPath(restDataPath).build();
-        for (MockRestMapping restMapping : restMappings) {
+        for (MockRestMapping restMapping : MockRestMapping.MAPPINGS) {
             WiremockTransformerStubCreator.addRestTransformerStub(wireMockData.wireMockServer(), restMapping);
         }
         for (MockSoapMapping soapMapping : MockSoapMapping.MAPPINGS) {
@@ -97,11 +101,21 @@ public class MagdaMockConnection {
         } else {
             soapResponseValidator = new SoapResponseValidatorImpl(xsdPath);
         }
+        RestValidator restRequestValidator = new LenientRestValidator(), restResponseValidator = new LenientRestValidator();
+        if (openapiPath != null) {
+            Path openapiRootPath = Path.of(openapiPath);
+            if (openapiRequestEnabled) {
+                restRequestValidator = new RestOpenAPIValidator(openapiRootPath);
+            }
+            if (openapiResponseEnabled) {
+                restResponseValidator = new RestOpenAPIValidator(openapiRootPath);
+            }
+        }
         TimeoutUtil timeoutUtil = new NoopTimeoutUtil();
         if (minimumTimeoutMillis != null && maximumTimeoutMillis != null) {
             timeoutUtil = new RandomTimeoutUtil(minimumTimeoutMillis, maximumTimeoutMillis);
         }
-        return create(wireMockData, soapRequestValidator, soapResponseValidator, timeoutUtil, logRequestBody);
+        return create(wireMockData, soapRequestValidator, soapResponseValidator, restRequestValidator, restResponseValidator, timeoutUtil, logRequestBody);
     }
 
     // NOTE: this function is to remain backwards compatible with magdamock.service
