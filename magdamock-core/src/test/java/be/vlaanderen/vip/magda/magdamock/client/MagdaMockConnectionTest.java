@@ -37,6 +37,16 @@ class MagdaMockConnectionTest {
         assertNotNull(response.headers().get("x-correlation-id"));
     }
 
+    @Test
+    @SneakyThrows
+    void whenTemplateReplacesOkWithISODate_shouldReturnStatus200AndExpectedOutput() {
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
+        var response = connection.sendRestRequest("/template/ok", "", "GET", "", "2024-10-29", UUID.randomUUID().toString());
+        assertEquals(200, response.status());
+        assertEquals("\"2019-10-19\"", new ObjectMapper().readTree(response.body()).get("test").toString());
+        assertNotNull(response.headers().get("x-correlation-id"));
+    }
+
 
     @Test
     @SneakyThrows
