@@ -34,7 +34,7 @@ public class GeefEpcResponseTransformer implements ResponseDefinitionTransformer
     @Override
     public ResponseDefinition transform(ServeEvent serveEvent) {
         try {
-            SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_MAPPING);
+            SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_ROUTING);
             Request request = serveEvent.getRequest();
             Parameters parameters = serveEvent.getTransformerParameters();
 

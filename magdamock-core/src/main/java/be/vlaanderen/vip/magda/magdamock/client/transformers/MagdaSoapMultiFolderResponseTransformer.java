@@ -3,7 +3,6 @@ package be.vlaanderen.vip.magda.magdamock.client.transformers;
 import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.config.MappingLists;
-import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.config.MultiFolderMockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
@@ -14,7 +13,6 @@ import com.github.tomakehurst.wiremock.http.ResponseDefinition;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -23,8 +21,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 @AllArgsConstructor
@@ -35,7 +31,7 @@ public class MagdaSoapMultiFolderResponseTransformer implements ResponseDefiniti
     @Override
     public ResponseDefinition transform(ServeEvent serveEvent) {
         try {
-            SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_MAPPING);
+            SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_ROUTING);
             Request request = serveEvent.getRequest();
             Parameters parameters = serveEvent.getTransformerParameters();
 

@@ -23,7 +23,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
     @Override
     public ResponseDefinition transform(ServeEvent serveEvent) {
         try {
-            RestLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_MAPPING);
+            RestLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_ROUTING);
             Request request = serveEvent.getRequest();
             Parameters parameters = serveEvent.getTransformerParameters();
 

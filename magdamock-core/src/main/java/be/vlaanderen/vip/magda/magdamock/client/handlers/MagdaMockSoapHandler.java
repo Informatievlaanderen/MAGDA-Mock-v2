@@ -5,7 +5,6 @@ import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcher;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcherImpl;
 import be.vlaanderen.vip.magda.magdamock.config.MappingLists;
-import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.filters.EmptyElementsFilter;
@@ -31,7 +30,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -76,7 +74,7 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         timeoutUtil.timeout();
         String dateHeader = getDateHeaderFromSoapRequest(request);
 
-        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_MAPPING);
+        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_ROUTING);
         String soapUrl = wireMockServer.url("/soap");
         Request mockRequest = createInternalWiremockRequest(soapUrl, "POST", request.toString(), new HttpHeaders(new HttpHeader("Date", dateHeader)), "text/xml");
         Response response = routeRequest(mockRequest);
