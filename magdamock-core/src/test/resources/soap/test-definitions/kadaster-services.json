@@ -201,5 +201,93 @@
     ],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/EigendomId",
+        "value": "30295734"
+      }
+    ],
+    "xpathExpression": "//Onderneming/Naam",
+    "expectedValue": "NATIONALE MAATSCHAPPIJ DER BELGISCHE SPOORWEGEN NMBS"
+  },
+  {
+    "naam": "GeefEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Identificatie/KadastraleAfdeling",
+        "value": "31333"
+      },
+      {
+        "path": "//Identificatie/Sectie",
+        "value": "H"
+      },
+      {
+        "path": "//Identificatie/Grondnummer",
+        "value": "0001"
+      },
+      {
+        "path": "//Identificatie/Letterexponent",
+        "value": "D"
+      },
+      {
+        "path": "//Identificatie/Partitie",
+        "value": "P0000"
+      }
+    ],
+    "xpathExpression": "//KadastraleAfdeling/Omschrijving",
+    "expectedValue": "KNOKKE-HEIST  3 AFD/KNOKKE 3/"
+  },
+  {
+    "naam": "GeefEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Identificatie/KadastraleAfdeling",
+        "value": "44809"
+      },
+      {
+        "path": "//Identificatie/Sectie",
+        "value": "I"
+      },
+      {
+        "path": "//Identificatie/Bisnummer",
+        "value": "52"
+      },
+      {
+        "path": "//Identificatie/Grondnummer",
+        "value": "0649"
+      },
+      {
+        "path": "//Identificatie/Letterexponent",
+        "value": "Y"
+      },
+      {
+        "path": "//Identificatie/Partitie",
+        "value": "P0000"
+      },
+      {
+        "path": "//Identificatie/Letterexponent",
+        "value": "Y"
+      }
+    ],
+    "xpathExpression": "//KadastraleAfdeling/Omschrijving",
+    "expectedValue": "GENT  9 AFD"
+  },
+  {
+    "naam": "GeefEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/EigendomId",
+        "value": "30295733"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
   }
 ]

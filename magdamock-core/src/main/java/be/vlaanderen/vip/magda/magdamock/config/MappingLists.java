@@ -58,7 +58,19 @@ public interface MappingLists {
                     "Kadaster", "GeefCadNetTransacties", VERSION_01_00, List.of("//Inhoud/Identificator/INSZ", "//Inhoud/JaarAkte", "//Inhoud/Identificator/KBO", "//Inhoud/JaarAkte", "//Inhoud/Identificator/PersIdf", "//Inhoud/JaarAkte", "//Inhoud/Identificator/Local", "//Inhoud/JaarAkte"), SEPERATOR_DIRECTORY, "Kadaster.GeefCadNetTransactiesDienst-01.00/WebService/GeefCadNetTransacties.xsd", "Kadaster.GeefCadNetTransactiesDienst-01.00/WebService/GeefCadNetTransactiesResponse.xsd",
                     List.of("INSZ", "KBO", "PersIdf", "Local"), List.of(2, 2, 2, 2)
             ),
-            new MockSoapMapping("Kadaster", "GeefEigendomstoestanden", VERSION_02_00, List.of(KEY_EIGENDOMID), SEPERATOR_DIRECTORY, "Kadaster.GeefEigendomstoestandenDienst-02.00/WebService/GeefEigendomstoestanden.xsd", "Kadaster.GeefEigendomstoestandenDienst-02.00/WebService/GeefEigendomstoestandenResponse.xsd"),
+            new MultiFolderMockSoapMapping(
+                    "Kadaster", "GeefEigendomstoestanden", VERSION_02_00, List.of(
+                    KEY_EIGENDOMID,
+                    "//Identificatie/KadastraleAfdeling",
+                    "//Identificatie/Sectie",
+                    "//Identificatie/Grondnummer",
+                    "//Identificatie/Bisnummer",
+                    "//Identificatie/Cijferexponent",
+                    "//Identificatie/Letterexponent",
+                    "//Identificatie/Partitie"
+            ), SEPERATOR_DIRECTORY, "Kadaster.GeefEigendomstoestandenDienst-02.00/WebService/GeefEigendomstoestanden.xsd", "Kadaster.GeefEigendomstoestandenDienst-02.00/WebService/GeefEigendomstoestandenResponse.xsd",
+                    List.of("EigendomId", "PatKey"), List.of(1, 7)
+            ),
             new MockSoapMapping("Kadaster", "GeefHistoriekEigendomstoestand", VERSION_03_00, List.of(KEY_EIGENDOMSTOESTANDID), SEPERATOR_DIRECTORY, "Kadaster.GeefHistoriekEigendomstoestandDienst-03.00/WebService/GeefHistoriekEigendomstoestand.xsd", "Kadaster.GeefHistoriekEigendomstoestandDienst-03.00/WebService/GeefHistoriekEigendomstoestandResponse.xsd"),
             new MockSoapMapping("Kadaster", "GeefHistoriekMutatiedossier", VERSION_03_00, List.of(KEY_DOSSIERNUMMER), SEPERATOR_DIRECTORY, "Kadaster.GeefHistoriekMutatiedossierDienst-03.00/WebService/GeefHistoriekMutatiedossier.xsd", "Kadaster.GeefHistoriekMutatiedossierDienst-03.00/WebService/GeefHistoriekMutatiedossierResponse.xsd"),
             new MockSoapMapping("Kadaster", "GeefKadastraleAfdelingenOpKBO", VERSION_01_00, List.of(KEY_ONDERNEMINGSNUMMER), SEPERATOR_DIRECTORY, "Kadaster.GeefKadastraleAfdelingenOpKBODienst-01.00/WebService/GeefKadastraleAfdelingenOpKBO.xsd", "Kadaster.GeefKadastraleAfdelingenOpKBODienst-01.00/WebService/GeefKadastraleAfdelingenOpKBOResponse.xsd"),
