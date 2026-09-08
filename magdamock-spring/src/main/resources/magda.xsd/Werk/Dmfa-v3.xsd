@@ -735,6 +735,23 @@
 			<xs:maxInclusive value="99999999999"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="AantalMaandenTeRegulariserenType">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="99999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RedenOntslagType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReferentieMaandelijksBrutoLoonType">
+		<xs:restriction base="xs:long">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="99999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<!--=> COMPLEXE TYPE DEFINITES-->
 	<!-- =========================== -->
 	<!--      GeefDmfa Request       -->
@@ -1998,6 +2015,21 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PeriodeOnderwerping" type="BijzondereBijdragePeriodeOnderwerpingType"/>
+			<xs:element name="AantalMaandenTeRegulariseren" type="AantalMaandenTeRegulariserenType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>01317</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RedenOntslag" type="RedenOntslagType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>01318</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReferentieMaandelijksBrutoLoon" type="ReferentieMaandelijksBrutoLoonType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>01319</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Versie" type="VersieStringType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>100046</xs:documentation>

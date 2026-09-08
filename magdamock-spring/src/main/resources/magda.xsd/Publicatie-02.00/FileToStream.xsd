@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://filetostream.vip.vlaanderen.be" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://generiek-02_00.vip.vlaanderen.be" targetNamespace="http://filetostream.vip.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="2.00">
+	<xs:import namespace="http://generiek-02_00.vip.vlaanderen.be" schemaLocation="../Generiek-02.00/Generiek.xsd"/>
+	<xs:complexType name="RepertoriumCheckType">
+		<xs:sequence>
+			<xs:element name="Persoon" type="RepertoriumPersoonType" minOccurs="0"/>
+			<xs:element name="Onderneming" type="RepertoriumOndernemingType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RepertoriumPersoonType">
+		<xs:sequence>
+			<xs:element name="Actief" type="InschrijvingBaseType"/>
+			<xs:element name="Ooit" type="InschrijvingBaseType" minOccurs="0"/>
+			<xs:element name="Overlap" type="OverlapType" minOccurs="0"/>
+			<xs:element name="Consultatie" type="ConsultatieType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RepertoriumOndernemingType">
+		<xs:sequence>
+			<xs:element name="KBOnummerPad" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InschrijvingBaseType">
+		<xs:sequence>
+			<xs:element name="INSZPad" type="xs:string"/>
+			<xs:element name="Checksum97" type="generiek:VlagEnumType" default="1" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OverlapType">
+		<xs:complexContent>
+			<xs:extension base="InschrijvingBaseType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="Standaard" type="OverlapStandaardType"/>
+						<xs:element name="Kwartaal" type="KwartaalType"/>
+						<xs:element name="Schooljaar" type="OverlapSchooljaarType"/>
+						<xs:element name="JaarDatum" type="OverlapJaarDatumType"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OverlapStandaardType">
+		<xs:sequence>
+			<xs:element name="SysteemDatumFallback" type="generiek:VlagEnumType" minOccurs="0"/>
+			<xs:element name="BeginDatumPad" type="xs:string" minOccurs="0"/>
+			<xs:element name="BeginDatumFallbackPad" type="xs:string" minOccurs="0"/>
+			<xs:element name="EindDatumPad" type="xs:string" minOccurs="0"/>
+			<xs:element name="EindDatumFallbackPad" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KwartaalType">
+		<xs:sequence>
+			<xs:element name="beginJaarPad" type="xs:string"/>
+			<xs:element name="beginKwartaalPad" type="xs:string"/>
+			<xs:element name="eindJaarPad" type="xs:string"/>
+			<xs:element name="eindKwartaalPad" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OverlapSchooljaarType">
+		<xs:sequence>
+			<xs:element name="JaarPad" type="xs:string"/>
+			<xs:element name="Delta" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="-99"/>
+						<xs:maxInclusive value="99"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OverlapJaarDatumType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="JaarPad" type="xs:string"/>
+				<xs:element name="DatumPad" type="xs:string"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsultatieType">
+		<xs:complexContent>
+			<xs:extension base="InschrijvingBaseType">
+				<xs:sequence>
+					<xs:choice>
+						<xs:element name="Standaard" type="ConsultatieStandaardType"/>
+						<xs:element name="Kwartaal" type="KwartaalType"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ConsultatieStandaardType">
+		<xs:sequence>
+			<xs:element name="SysteemDatumFallback" type="generiek:VlagEnumType" minOccurs="0"/>
+			<xs:element name="BeginDatumPad" type="xs:string" minOccurs="0"/>
+			<xs:element name="BeginDatumFallbackPad" type="xs:string" minOccurs="0"/>
+			<xs:element name="EindDatumPad" type="xs:string" minOccurs="0"/>
+			<xs:element name="EindDatumFallbackPad" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

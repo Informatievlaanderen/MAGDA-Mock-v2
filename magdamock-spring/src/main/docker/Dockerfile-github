@@ -2,9 +2,14 @@ FROM eclipse-temurin:25-jre
 
 VOLUME /tmp
 
+COPY target/*.jar app.jar
+COPY target/${project.build.finalName}.jar /app.jar
+
+COPY src/main/resources/magda.xsd /data/magda.xsd
+COPY src/main/resources/scripts /data/scripts
+
 EXPOSE 8080:8080
 
-CMD ["java", "-jar", "/app.jar"]
+RUN apt-get update && apt-get install -y --no-install-recommends git
 
-COPY target/*.jar app.jar
-COPY src/main/resources/magda.xsd /data/magda.xsd
+CMD ["/data/scripts/entrypoint.sh"]

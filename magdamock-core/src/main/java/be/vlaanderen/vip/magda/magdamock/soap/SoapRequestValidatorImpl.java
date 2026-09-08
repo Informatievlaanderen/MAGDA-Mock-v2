@@ -33,8 +33,9 @@ public class SoapRequestValidatorImpl extends SoapBodyValidator {
                 return null;
             }
             String path = optionalPath.get();
-            log.info("Trying to load xml request validator from {}", path);
-            var schema = factory.newSchema(new File(String.format("%s/%s", xsdPath, path)));
+            String fullPath = String.format("%s/%s", xsdPath, path);
+            log.info("Trying to load xml request validator from {}", fullPath);
+            var schema = factory.newSchema(new File(fullPath));
             var validator = schema.newValidator();
             validator.setErrorHandler(new XsdErrorHandler());
             return validator;

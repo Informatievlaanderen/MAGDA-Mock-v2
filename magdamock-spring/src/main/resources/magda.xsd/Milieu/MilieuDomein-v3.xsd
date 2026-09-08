@@ -7,4 +7,6 @@
 	<xsd:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../Generiek/GeneriekDomein-v3.xsd"/>
 	<xsd:include schemaLocation="PubliceerVoertuigemissies-v3.xsd"/>
 	<xsd:include schemaLocation="RegistreerVoertuigemissies-v3.xsd" />
+	<xsd:include schemaLocation="EmissionFlaggedVehicles-v3.xsd"/>
+	<xsd:include schemaLocation="PubliceerBlacklist-v3.xsd"/>
 </xsd:schema>
