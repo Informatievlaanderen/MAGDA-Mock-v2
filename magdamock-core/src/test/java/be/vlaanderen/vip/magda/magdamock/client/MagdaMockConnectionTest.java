@@ -1,5 +1,7 @@
 package be.vlaanderen.vip.magda.magdamock.client;
 
+import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
@@ -24,6 +26,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MagdaMockConnectionTest {
 
@@ -199,9 +202,10 @@ class MagdaMockConnectionTest {
 
     @Test
     @SneakyThrows
-    void whenDocumentNotFound_shouldReturnNull() {
+    void whenDocumentNotFound_shouldThrowException() {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
-        var response = connection.sendDocument(
+        assertThrows(MagdaMockSoapException.class, () -> connection.sendSoapRequest(
+                new MagdaMockSoapHandler.MockSoapRequest(
                 MagdaMockDocument.fromString("""
                         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://magda.vlaanderen.be/persoon/soap/geefpersoon/v02_02">
                             <soapenv:Header/>
@@ -235,8 +239,8 @@ class MagdaMockConnectionTest {
                             </soapenv:Body>
                         </soapenv:Envelope>
                         """).getXml()
-        );
-        assertNull(response);
+                )
+        ));
     }
 
     @Test

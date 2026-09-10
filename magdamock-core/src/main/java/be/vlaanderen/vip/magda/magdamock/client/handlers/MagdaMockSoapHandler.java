@@ -2,6 +2,7 @@ package be.vlaanderen.vip.magda.magdamock.client.handlers;
 
 import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
+import be.vlaanderen.vip.magda.magdamock.client.patchers.MagdaMockPatchException;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcher;
 import be.vlaanderen.vip.magda.magdamock.client.patchers.SoapResponsePatcherImpl;
 import be.vlaanderen.vip.magda.magdamock.config.MappingLists;
@@ -79,16 +80,22 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
         Request mockRequest = createInternalWiremockRequest(soapUrl, "POST", request.toString(), new HttpHeaders(new HttpHeader("Date", dateHeader)), "text/xml");
         Response response = routeRequest(mockRequest);
         if (response.getStatus() == 404) {
-            return null;
+            throw new MagdaMockSoapException(String.format("Response mapping is undefined for %s", request.getServiceIdentification().getServiceNaam()), "Server", null);
         }
         Document document = parseSoapResponse(response);
 
-        SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_POST_PROCESSING);
-        Document patchedResponse = patchResponse(request, document);
-        Document filteredResponse = filterResponse(request, patchedResponse);
+        try {
+            SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_POST_PROCESSING);
+            Document patchedResponse = patchResponse(request, document);
+            document = filterResponse(request, patchedResponse);
+        } catch (MagdaMockPatchException e) {
+            List<String> values = response.getHeaders().getHeader("X-MagdaMock-Content-Location").getValues();
+            String path = !values.isEmpty() ? values.getFirst() : "<unknown path>";
+            throw new MagdaMockSoapException("Failure during response post-processing", "Server", String.format("Located at %s. Details %s", path, e.getMessage()), null);
+        }
 
         SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_VALIDATION);
-        Document checkedResponse = validateSoapResponse(request, filteredResponse);
+        Document checkedResponse = validateSoapResponse(request, document);
         Document wrappedResponse = wrapInEnvelope(checkedResponse);
         Map<String, List<String>> headers = new HashMap<>();
         for (String headerName : response.getHeaders().keys()) {

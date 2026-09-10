@@ -50,7 +50,7 @@ public class BasicSoapResponsePatcher implements SoapResponsePatcher {
             return madgaDocumentResponse;
         } catch (Exception e) {
             log.error("Exception while patching SOAP response", e);
-            return new MagdaMockDocument(response);
+            throw new MagdaMockPatchException(e);
         }
     }
 
@@ -107,7 +107,7 @@ public class BasicSoapResponsePatcher implements SoapResponsePatcher {
             return new MagdaMockDocument(response);
         } catch (Exception e) {
             log.error("Exception while constructing context in SOAP response", e);
-            return new MagdaMockDocument(response);
+            throw new MagdaMockPatchException(e);
         }
     }
 }
