@@ -1,0 +1,13 @@
+languages:
+  - name: "script"
+  - name: "Java"
+dependencychecker:
+  blocklist:
+    - ".*be.vlaanderen.*"
+thirdpartyfindings:
+  enabled: true
+exclude:
+  - ".*/application-local[.]yml" # Exclude application-local.yml config
+  - ".*/application-local[.]yaml"
+  - ".*/application-test[.]yml" # Exclude application-test.yml config
+  - ".*/application-test[.]yaml"
