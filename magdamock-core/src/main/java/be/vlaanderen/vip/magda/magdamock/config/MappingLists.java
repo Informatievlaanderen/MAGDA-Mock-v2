@@ -71,17 +71,42 @@ public interface MappingLists {
             ), SEPERATOR_DIRECTORY, "Kadaster.GeefEigendomstoestandenDienst-02.00/WebService/GeefEigendomstoestanden.xsd", "Kadaster.GeefEigendomstoestandenDienst-02.00/WebService/GeefEigendomstoestandenResponse.xsd",
                     List.of("EigendomId", "PatKey"), List.of(1, 7)
             ),
-            new MockSoapMapping("Kadaster", "GeefHistoriekEigendomstoestand", VERSION_03_00, List.of(KEY_EIGENDOMSTOESTANDID), SEPERATOR_DIRECTORY, "Kadaster.GeefHistoriekEigendomstoestandDienst-03.00/WebService/GeefHistoriekEigendomstoestand.xsd", "Kadaster.GeefHistoriekEigendomstoestandDienst-03.00/WebService/GeefHistoriekEigendomstoestandResponse.xsd"),
-            new MockSoapMapping("Kadaster", "GeefHistoriekMutatiedossier", VERSION_03_00, List.of(KEY_DOSSIERNUMMER), SEPERATOR_DIRECTORY, "Kadaster.GeefHistoriekMutatiedossierDienst-03.00/WebService/GeefHistoriekMutatiedossier.xsd", "Kadaster.GeefHistoriekMutatiedossierDienst-03.00/WebService/GeefHistoriekMutatiedossierResponse.xsd"),
+            new MultiFolderMockSoapMapping(
+                    "Kadaster", "GeefHistoriekEigendomstoestand", VERSION_03_00, List.of(
+                    "//Criteria/EigendomstoestandId",
+                    "//Criteria/KadastraleInschrijving/KadastraleAfdeling",
+                    "//Criteria/KadastraleInschrijving/Artikelnummer",
+                    "//Criteria/KadastraleInschrijving/Volgnummer"
+            ), SEPERATOR_DIRECTORY, "Kadaster.GeefHistoriekEigendomstoestandDienst-03.00/WebService/GeefHistoriekEigendomstoestand.xsd", "Kadaster.GeefHistoriekEigendomstoestandDienst-03.00/WebService/GeefHistoriekEigendomstoestandResponse.xsd",
+                    List.of("EigendomstoestandId", "KadastraleInschrijving"), List.of(1, 3)
+            ),
+            new MockSoapMapping("Kadaster", "GeefHistoriekMutatiedossier", VERSION_03_00, List.of("//Criteria/Dossiernummer"), SEPERATOR_DIRECTORY, "Kadaster.GeefHistoriekMutatiedossierDienst-03.00/WebService/GeefHistoriekMutatiedossier.xsd", "Kadaster.GeefHistoriekMutatiedossierDienst-03.00/WebService/GeefHistoriekMutatiedossierResponse.xsd"),
             new MockSoapMapping("Kadaster", "GeefKadastraleAfdelingenOpKBO", VERSION_01_00, List.of(KEY_ONDERNEMINGSNUMMER), SEPERATOR_DIRECTORY, "Kadaster.GeefKadastraleAfdelingenOpKBODienst-01.00/WebService/GeefKadastraleAfdelingenOpKBO.xsd", "Kadaster.GeefKadastraleAfdelingenOpKBODienst-01.00/WebService/GeefKadastraleAfdelingenOpKBOResponse.xsd"),
-            new MockSoapMapping("Kadaster", "GeefTransacties", VERSION_03_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Kadaster.GeefTransactiesDienst-03.00/WebService/GeefTransacties.xsd", "Kadaster.GeefTransactiesDienst-03.00/WebService/GeefTransactiesResponse.xsd"),
-            new MockSoapMapping("Kadaster", "ZoekEigendomstoestanden", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "Kadaster.ZoekEigendomstoestandenDienst-02.00/WebService/ZoekEigendomstoestanden.xsd", "Kadaster.ZoekEigendomstoestandenDienst-02.00/WebService/ZoekEigendomstoestandenResponse.xsd"),
-            new MockSoapMapping("Kadaster", "ZoekPerceel", VERSION_02_00, List.of(KEY_KADASTRALE_AFDELING, KEY_SECTIE, KEY_GRONDNUMMER), SEPERATOR_DIRECTORY, "Kadaster.ZoekPerceelDienst-02.00/WebService/ZoekPerceel.xsd", "Kadaster.ZoekPerceelDienst-02.00/WebService/ZoekPerceelResponse.xsd"),
+            new MultiFolderMockSoapMapping("Kadaster", "GeefTransacties", VERSION_03_00, List.of(
+                    "//Criteria/INSZ", "//Criteria/Ondernemingsnummer"
+            ), SEPERATOR_DIRECTORY, "Kadaster.GeefTransactiesDienst-03.00/WebService/GeefTransacties.xsd", "Kadaster.GeefTransactiesDienst-03.00/WebService/GeefTransactiesResponse.xsd",
+                    List.of("INSZ", "Ondernemingsnummer"), List.of(1,1)
+            ),
+            new MultiFolderMockSoapMapping("Kadaster", "ZoekEigendomstoestanden", VERSION_02_00, List.of(
+                    "//Criteria/INSZ", "//Criteria/Ondernemingsnummer"
+            ), SEPERATOR_DIRECTORY, "Kadaster.ZoekEigendomstoestandenDienst-02.00/WebService/ZoekEigendomstoestanden.xsd", "Kadaster.ZoekEigendomstoestandenDienst-02.00/WebService/ZoekEigendomstoestandenResponse.xsd",
+                    List.of("INSZ", "Ondernemingsnummer"), List.of(1,1)
+            ),
+            new MockSoapMapping("Kadaster", "ZoekPerceel", VERSION_02_00, List.of(
+                    "//Identificatie/KadastraleAfdeling",
+                    "//Identificatie/Sectie",
+                    "//Identificatie/Grondnummer",
+                    "//Identificatie/Bisnummer",
+                    "//Identificatie/Cijferexponent",
+                    "//Identificatie/Letterexponent",
+                    "//Identificatie/Partitie",
+                    "//Actief"
+            ), SEPERATOR_FILE_NAME, "Kadaster.ZoekPerceelDienst-02.00/WebService/ZoekPerceel.xsd", "Kadaster.ZoekPerceelDienst-02.00/WebService/ZoekPerceelResponse.xsd"),
             new MockSoapMapping("Kadaster", "ZoekVerkoopprijzen", VERSION_03_00, List.of(
                     "//Criteria/Provincie",
-                    "//Criteria/AdministratieveGemeentes/AdministratieveGemeente",
-                    "//Criteria/TypesInschrijving/TypeInschrijving",
-                    "//Criteria/CodesKadastraleAardVolgensAkte/CodeKadastraleAardVolgensAkte"), SEPERATOR_DIRECTORY, "Kadaster.ZoekVerkoopprijzenDienst-03.00/WebService/ZoekVerkoopprijzen.xsd", "Kadaster.ZoekVerkoopprijzenDienst-03.00/WebService/ZoekVerkoopprijzenResponse.xsd"),
+                    "//Criteria/AdministratieveGemeentes/AdministratieveGemeente[1]",
+                    "//Criteria/TypesInschrijving/TypeInschrijving[1]",
+                    "//Criteria/CodesKadastraleAardVolgensAkte/CodeKadastraleAardVolgensAkte[1]"), SEPERATOR_FILE_NAME, "Kadaster.ZoekVerkoopprijzenDienst-03.00/WebService/ZoekVerkoopprijzen.xsd", "Kadaster.ZoekVerkoopprijzenDienst-03.00/WebService/ZoekVerkoopprijzenResponse.xsd"),
 
             // LED
             new MockSoapMapping("LED", "AnnuleerBewijs", VERSION_02_00, List.of(KEY_INSZ), SEPERATOR_DIRECTORY, "LED.AnnuleerBewijsDienst-02.00/WebService/AnnuleerBewijs.xsd", "LED.AnnuleerBewijsDienst-02.00/WebService/AnnuleerBewijsResponse.xsd"),

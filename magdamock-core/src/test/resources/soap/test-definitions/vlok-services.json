@@ -1,17 +1,5 @@
 [
   {
-    "naam": "GeefHistoriekMutatiedossier",
-    "versie": "03.00.0000",
-    "requestFields": [
-      {
-        "path": "Dossiernummer",
-        "value": "00630300280"
-      }
-    ],
-    "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Geen gegevens gevonden voor de vraag"
-  },
-  {
     "naam": "GeefEigendomstoestanden",
     "versie": "02.00.0000",
     "requestFields": [

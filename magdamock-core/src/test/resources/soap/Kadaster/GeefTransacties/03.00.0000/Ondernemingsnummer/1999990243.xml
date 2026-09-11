@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web:GeefTransactiesResponse xmlns:web="http://magda.vlaanderen.be/kadaster/soap/geeftransacties/v03_00">
+	<Repliek>
+		<Context>
+			<Naam>GeefTransacties</Naam>
+			<Versie>01.00.0000</Versie>
+			<Bericht>
+				<Type>ANTWOORD</Type>
+				<Tijdstip>
+					<Datum>0001-01-01</Datum>
+					<Tijd>00:00:00.000</Tijd>
+				</Tijdstip>
+				<Afzender>
+					<Identificatie>?</Identificatie>
+					<Naam>?</Naam>
+					<Referte>?</Referte>
+				</Afzender>
+				<Ontvanger>
+					<Identificatie>?</Identificatie>
+					<Referte>?</Referte>
+					<Hoedanigheid>?</Hoedanigheid>
+				</Ontvanger>
+			</Bericht>
+		</Context>
+		<Antwoorden>
+			<Antwoord>
+				<Referte>?</Referte>
+				<Inhoud>
+					<Ondernemingsnummer>1999990243</Ondernemingsnummer>
+					<Transacties>
+						<Transactie>
+							<DatumTransactie>2021-03-04</DatumTransactie>
+							<Dossiernummer>XXXR-2021-DD-45685212</Dossiernummer>
+							<Overdracht>
+								<Code>In</Code>
+								<Omschrijving Taal="nl">Verwerver</Omschrijving>
+							</Overdracht>
+							<DossierType>
+								<DossierHoofdType>
+									<Code>1</Code>
+									<Omschrijving Taal="nl">Notariële akte</Omschrijving>
+								</DossierHoofdType>
+								<DossierSubType>
+									<Code>10</Code>
+									<Omschrijving Taal="nl">-</Omschrijving>
+								</DossierSubType>
+							</DossierType>
+							<TransactieType>
+								<TransactieHoofdType>
+									<Code>VERKOOPIMMOXX</Code>
+									<Omschrijving Taal="nl">Verkoop (onroerende goederen)</Omschrijving>
+								</TransactieHoofdType>
+							</TransactieType>
+							<PerceelIdentificaties>
+								<PerceelIdentificatie>
+									<KadastraleAfdeling>
+										<Code>31041</Code>
+										<Omschrijving Taal="nl">JABBEKE 2 AFD/JABBEKE</Omschrijving>
+									</KadastraleAfdeling>
+									<Sectie>A</Sectie>
+									<Grondnummer>0844</Grondnummer>
+									<Letterexponent>L</Letterexponent>
+									<Partitie>P0000</Partitie>
+								</PerceelIdentificatie>
+							</PerceelIdentificaties>
+						</Transactie>
+						<Transactie>
+							<DatumTransactie>2026-07-22</DatumTransactie>
+							<Dossiernummer>XXXR-2026-DD-95175384</Dossiernummer>
+							<Overdracht>
+								<Code>Uit</Code>
+								<Omschrijving Taal="nl">Cedent</Omschrijving>
+							</Overdracht>
+							<DossierType>
+								<DossierHoofdType>
+									<Code>1</Code>
+									<Omschrijving Taal="nl">Notariële akte</Omschrijving>
+								</DossierHoofdType>
+								<DossierSubType>
+									<Code>10</Code>
+									<Omschrijving Taal="nl">-</Omschrijving>
+								</DossierSubType>
+							</DossierType>
+							<TransactieType>
+								<TransactieHoofdType>
+									<Code>VERKOOPIMMOXX</Code>
+									<Omschrijving Taal="nl">Verkoop (onroerende goederen)</Omschrijving>
+								</TransactieHoofdType>
+							</TransactieType>
+							<PerceelIdentificaties>
+								<PerceelIdentificatie>
+									<KadastraleAfdeling>
+										<Code>31041</Code>
+										<Omschrijving Taal="nl">JABBEKE 2 AFD/JABBEKE</Omschrijving>
+									</KadastraleAfdeling>
+									<Sectie>A</Sectie>
+									<Grondnummer>0844</Grondnummer>
+									<Letterexponent>L</Letterexponent>
+									<Partitie>P0000</Partitie>
+								</PerceelIdentificatie>
+							</PerceelIdentificaties>
+						</Transactie>
+					</Transacties>
+				</Inhoud>
+			</Antwoord>
+		</Antwoorden>
+	</Repliek>
+</web:GeefTransactiesResponse>
