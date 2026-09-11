@@ -50,7 +50,11 @@ public class MockDataTemplateHelper {
             try {
                 date = LocalDate.parse(toParse.toString(), DateTimeFormatter.RFC_1123_DATE_TIME);
             } catch (Exception ex) {
-                date = LocalDate.now();
+                try {
+                    date = LocalDate.parse(toParse.toString(), DateTimeFormatter.ISO_DATE);
+                } catch (Exception ex2) {
+                    throw new RuntimeException(ex2);
+                }
             }
             return date;
         }

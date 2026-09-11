@@ -2,6 +2,7 @@ package be.vlaanderen.vip.magda.magdamock.client.transformers;
 
 import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
+import be.vlaanderen.vip.magda.magdamock.config.MappingLists;
 import be.vlaanderen.vip.magda.magdamock.config.MissingParameterConfiguration;
 import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
@@ -31,7 +32,7 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
     @Override
     public ResponseDefinition transform(ServeEvent serveEvent) {
         try {
-            SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_MAPPING);
+            SoapLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_ROUTING);
             Request request = serveEvent.getRequest();
             Parameters parameters = serveEvent.getTransformerParameters();
 
@@ -39,8 +40,8 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
             String service = parameters.getString("service");
             String version = parameters.getString("version");
 
-            MockSoapMapping mockSoapMapping = MockSoapMapping.MAPPINGS.stream().filter(mapping -> mapping.service().equals(service) && mapping.version().equals(version)).findFirst().get();
-            List<String> keys = mockSoapMapping.keys();
+            MockSoapMapping mockSoapMapping = MappingLists.SOAP_MAPPINGS.stream().filter(mapping -> mapping.getService().equals(service) && mapping.getVersion().equals(version)).findFirst().get();
+            List<String> keys = mockSoapMapping.getKeys();
             MagdaMockDocument requestBody = MagdaMockDocument.fromString(request.getBodyAsString());
             log.debug("Fetching all parameters to find a mapping for {}", mockSoapMapping.getId());
             List<String> xpathValues = keys.stream()
@@ -57,8 +58,8 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
 
             //
             List<String> fileNames;
-            if (mockSoapMapping.stubHandler().equals(MockSoapMapping.StubHandler.FileSoap)) {
-                if (mockSoapMapping.missingParameterConfiguration().equals(MissingParameterConfiguration.Wildcard)) {
+            if (mockSoapMapping.getStubHandler().equals(MockSoapMapping.StubHandler.FileSoap)) {
+                if (mockSoapMapping.getMissingParameterConfiguration().equals(MissingParameterConfiguration.Wildcard)) {
                     fileNames = determineFilenameOptionsForFlatfileWithWildcardBlanks(xpathValues);
                 } else {
                     fileNames = determineFilenameOptionsForFlatfile(xpathValues);

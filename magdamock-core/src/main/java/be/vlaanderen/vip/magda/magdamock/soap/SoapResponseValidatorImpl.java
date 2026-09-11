@@ -1,5 +1,6 @@
 package be.vlaanderen.vip.magda.magdamock.soap;
 
+import be.vlaanderen.vip.magda.magdamock.config.MappingLists;
 import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
 import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
@@ -24,13 +25,14 @@ public class SoapResponseValidatorImpl extends SoapBodyValidator {
     private Validator getValidator(String naam, String versie) {
         try {
             var factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Optional<String> optionalPath = MockSoapMapping.MAPPINGS.stream().filter(mapping -> mapping.service().equals(naam) && mapping.version().equals(versie)).findFirst().map(MockSoapMapping::xsdResponsePath);
+            Optional<String> optionalPath = MappingLists.SOAP_MAPPINGS.stream().filter(mapping -> mapping.getService().equals(naam) && mapping.getVersion().equals(versie)).findFirst().map(MockSoapMapping::getXsdResponsePath);
             if (optionalPath.isEmpty()) {
                 return null;
             }
             String path = optionalPath.get();
-            log.info("Trying to load xml response validator from {}", path);
-            var schema = factory.newSchema(new File(String.format("%s/%s", xsdPath, path)));
+            String fullPath = String.format("%s/%s", xsdPath, path);
+            log.info("Trying to load xml response validator from {}", fullPath);
+            var schema = factory.newSchema(new File(fullPath));
             var validator = schema.newValidator();
             validator.setErrorHandler(new XsdErrorHandler());
             return validator;

@@ -4,15 +4,12 @@ import be.vlaanderen.vip.magda.magdamock.client.logging.LifecyclePhase;
 import be.vlaanderen.vip.magda.magdamock.client.logging.RestLogHelper;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.utils.TimeoutUtil;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.tomakehurst.wiremock.http.HttpHeader;
 import com.github.tomakehurst.wiremock.http.HttpHeaders;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.Response;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +42,7 @@ public class MagdaMockRestHandler extends AbstractMockHandler {
         magdaRestRequest.headers().putIfAbsent("date", "");
         timeoutUtil.timeout();
 
-        RestLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_MAPPING);
+        RestLogHelper.contextSetLifecyclePhase(LifecyclePhase.RESPONSE_ROUTING);
         String query = magdaRestRequest.query();
         String path = magdaRestRequest.path();
         String method = magdaRestRequest.method();

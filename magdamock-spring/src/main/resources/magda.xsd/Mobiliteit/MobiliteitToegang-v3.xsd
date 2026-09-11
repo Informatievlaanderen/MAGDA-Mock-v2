@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2020 (http://www.altova.com) by Thomas (Government of Flanders) -->
+<xs:schema xmlns="http://magda.vlaanderen.be/mobiliteit-v3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" targetNamespace="http://magda.vlaanderen.be/mobiliteit-v3" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../Generiek/GeneriekDomein-v3.xsd"/>
+	<xs:complexType name="ControleDatumInschrijvingType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Nummerplaat" type="NummerplaatType"/>
+			<xs:element name="LandISOCode" type="CodeISOLandType"/>
+			<xs:element name="DatumInschrijving" type="generiek:DatumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ControleDatumToegangLijstType">
+		<xs:sequence>
+			<xs:element name="Controle" minOccurs="1" maxOccurs="unbounded" type="ControleDatumToegangType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ControleDatumToegangType">
+		<xs:sequence>
+			<xs:element name="Referte" type="generiek:ReferteType" minOccurs="0"/>
+			<xs:element name="Nummerplaat" type="NummerplaatType"/>
+			<xs:element name="LandISOCode" type="CodeISOLandType"/>
+			<xs:element name="DatumControle" type="generiek:DatumType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="NummerplaatType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CodeISOLandType">
+		<xs:restriction base="xs:string">
+			<xs:length value="2" fixed="false"/>
+			<xs:pattern value="[^ ][^ ]"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="ResultatenControlesOpDatumType">
+		<xs:sequence>
+			<xs:element name="ResultaatControle" type="ControleDatumToegangExtendedType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ControleDatumToegangExtendedType">
+		<xs:complexContent>
+			<xs:extension base="ControleDatumToegangType">
+				<xs:sequence>
+					<xs:element name="Resultaat" type="generiek:TekstType" minOccurs="1" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ResultaatControle">
+		<xs:sequence>
+			<xs:element name="Voertuigspecificaties" type="Voertuigspecificaties" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="GecontroleerdePeriode" type="GecontroleerdePeriode" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GecontroleerdePeriode">
+		<xs:sequence>
+			<xs:element name="Periode" type="Periode" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Resultaat" type="Resultaat" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SamengevatteVoertuigGegevens" type="SamengevatteVoertuigGegevens" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Vrijstelling" type="Vrijstelling" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Voertuigspecificaties">
+		<xs:sequence>
+			<xs:element name="Categorie" type="VoertuigCategorieCode" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Aard" type="VoertuigAardCode" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="MassaRijklareToestandKg" type="xs:decimal" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="AantalZitplaatsen" type="xs:unsignedShort" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="HoogstToegelatenGewichtKg" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="DatumEersteInschrijving" type="xs:date" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="DatumLaatsteInschrijving" type="xs:date" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="MotorGegevens" type="motorGegevens" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="motorGegevens">
+		<xs:sequence>
+			<xs:element name="Motor" type="VoertuigMotor" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="VoertuigCategorieCode">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="3"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VoertuigAardCode">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Periode">
+		<xs:sequence>
+			<xs:element name="Begin" type="xs:date" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Einde" type="xs:date" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Vrijstelling">
+		<xs:complexContent>
+			<xs:extension base="Periode">
+				<xs:sequence>
+					<xs:element name="VrijstellingReden" type="StringKort" minOccurs="1" maxOccurs="1"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="StringKort">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="120"/>
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Resultaat">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="120"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="VoertuigMotor">
+		<xs:annotation>
+			<xs:documentation>Object containing specific vehicle technical engine specifications</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Nummer" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The engine number is the unique number of the engine as marked on the engine.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Capaciteit" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Engine capacity (cm^3)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IndicatorElektrischeMotor" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Electric Engine</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Brandstoffen" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Brandstof" type="VoertuigBrandstof" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Object containing specific vehicle engine fuel specifications</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="VoertuigBrandstof">
+		<xs:annotation>
+			<xs:documentation>Object containing specific vehicle technical fuel specifications</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Code" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The fuel code (carburant)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Omschrijving" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The fuel description (carburant)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaximumNettoVermogen" type="xs:decimal" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Maximum net power for combustion engine. Not used for electric engines.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EuronormCode" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The emission euronorm</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GewogenGecombineerdeCO2Uitstoot" type="xs:integer" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Weighted, combined CO2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WltpGewogenGecombineerdeCO2Uitstoot" type="xs:integer" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>All power trains, CO2 emissions weighted combined of the WLTP test result</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SamengevatteVoertuigGegevens">
+		<xs:sequence>
+			<xs:element name="Categorie" type="VoertuigCategorieCode" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Aard" type="VoertuigAardCode" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="MassaRijklareToestandKg" type="xs:decimal" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="AantalZitplaatsen" type="xs:unsignedShort" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="HoogstToegelatenGewichtKg" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="DatumEersteInschrijving" type="xs:date" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="DatumLaatsteInschrijving" type="xs:date" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Vrijstelling" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="SamengevatteMotorGegevens" type="samengevatteMotorGegevens"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="samengevatteMotorGegevens">
+		<xs:sequence>
+			<xs:element name="BrandstofGroep" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Euronorm" type="Euronorm" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Co2UitstootGrPerKm" type="xs:decimal" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="VermogenKW" type="xs:decimal" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Euronorm">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

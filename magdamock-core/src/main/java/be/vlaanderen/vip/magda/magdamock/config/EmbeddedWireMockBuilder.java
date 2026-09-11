@@ -4,6 +4,7 @@ import be.vlaanderen.vip.magda.magdamock.client.transformers.GeefEpcResponseTran
 import be.vlaanderen.vip.magda.magdamock.client.transformers.GenderFileTransformer;
 import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaRestFileResponseTransformer;
 import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaSoapFileResponseTransformer;
+import be.vlaanderen.vip.magda.magdamock.client.transformers.MagdaSoapMultiFolderResponseTransformer;
 import be.vlaanderen.vip.magda.magdamock.utils.MockDataTemplateHelper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
@@ -53,6 +54,7 @@ public class EmbeddedWireMockBuilder {
                         new GeefEpcResponseTransformer(Path.of(soapTestPath)),
                         new GenderFileTransformer(Path.of(soapTestPath)),
                         new MagdaSoapFileResponseTransformer(Path.of(soapTestPath)),
+                        new MagdaSoapMultiFolderResponseTransformer(Path.of(soapTestPath)),
                         new MagdaRestFileResponseTransformer(Path.of(restTestPath))
                 );
         if (fileSource != null) {

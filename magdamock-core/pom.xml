@@ -3,7 +3,7 @@
   <parent>
 	  <artifactId>magda.magdamock</artifactId>
 	  <groupId>be.vlaanderen.vip</groupId>
-	  <version>0.32.0</version>
+	  <version>0.33.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -32,6 +32,12 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.20.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.15.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

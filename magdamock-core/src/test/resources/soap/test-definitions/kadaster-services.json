@@ -4,22 +4,69 @@
     "versie": "01.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "99610100179"
+        "path": "//Inhoud/Identificator/INSZ",
+        "value": "69653085354"
+      },
+      {
+        "path": "//Inhoud/JaarAkte",
+        "value": "2012"
       }
     ],
-    "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Geen gegevens gevonden voor de vraag"
+    "xpathExpression": "//AkteDatum",
+    "expectedValue": "2012-12-01Z"
   },
   {
     "naam": "GeefCadNetTransacties",
     "versie": "01.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "89610100179"
+        "path": "//Inhoud/Identificator/KBO",
+        "value": "1999990342"
+      },
+      {
+        "path": "//Inhoud/JaarAkte",
+        "value": "2013"
       }
     ],
+    "xpathExpression": "//AkteDatum",
+    "expectedValue": "2013-12-11Z"
+  },
+  {
+    "naam": "GeefCadNetTransacties",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Identificator/PersIdf",
+        "value": "153486"
+      },
+      {
+        "path": "//Inhoud/JaarAkte",
+        "value": "2014"
+      }
+    ],
+    "xpathExpression": "//AkteDatum",
+    "expectedValue": "2014-06-12Z"
+  },
+  {
+    "naam": "GeefCadNetTransacties",
+    "versie": "01.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Identificator/Local",
+        "value": "951753"
+      },
+      {
+        "path": "//Inhoud/JaarAkte",
+        "value": "2015"
+      }
+    ],
+    "xpathExpression": "//AkteDatum",
+    "expectedValue": "2015-04-21Z"
+  },
+  {
+    "naam": "GeefCadNetTransacties",
+    "versie": "01.00.0000",
+    "requestFields": [],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag"
   },
@@ -28,11 +75,38 @@
     "versie": "03.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "89610100179"
+        "path": "//Criteria/EigendomstoestandId",
+        "value": "12316343"
       }
     ],
-    "xpathExpression": "//Uitzondering/Diagnose",
+    "xpathExpression": "//KadastraleAfdeling/Code",
+    "expectedValue": "24034"
+  },
+  {
+    "naam": "GeefHistoriekEigendomstoestand",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/KadastraleInschrijving/KadastraleAfdeling",
+        "value": "24034"
+      },
+      {
+        "path": "//Criteria/KadastraleInschrijving/Artikelnummer",
+        "value": "02925"
+      },
+      {
+        "path": "//Criteria/KadastraleInschrijving/Volgnummer",
+        "value": "0001"
+      }
+    ],
+    "xpathExpression": "//KadastraleAfdeling/Code",
+    "expectedValue": "24035"
+  },
+  {
+    "naam": "GeefHistoriekEigendomstoestand",
+    "versie": "03.00.0000",
+    "requestFields": [],
+    "xpathExpression": "//Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag"
   },
   {
@@ -52,10 +126,17 @@
     "versie": "03.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "99610100179"
+        "path": "//Criteria/INSZ",
+        "value": "84691585173"
       }
     ],
+    "xpathExpression": "//INSZ",
+    "expectedValue": "84691585173"
+  },
+  {
+    "naam": "GeefTransacties",
+    "versie": "03.00.0000",
+    "requestFields": [],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag"
   },
@@ -64,10 +145,29 @@
     "versie": "03.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "09610100179"
+        "path": "//Criteria/Ondernemingsnummer",
+        "value": "1999990243"
       }
     ],
+    "xpathExpression": "//Ondernemingsnummer",
+    "expectedValue": "1999990243"
+  },
+  {
+    "naam": "ZoekEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/INSZ",
+        "value": "01700462685"
+      }
+    ],
+    "xpathExpression": "//INSZ",
+    "expectedValue": "01700462685"
+  },
+  {
+    "naam": "ZoekEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag!"
   },
@@ -76,34 +176,108 @@
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "39620999783"
+        "path": "//Criteria/Ondernemingsnummer",
+        "value": "1999990243"
       }
     ],
-    "xpathExpression": "//SleutelToestandPUR",
-    "expectedValue": "10012985"
-  },
-  {
-    "naam": "ZoekEigendomstoestanden",
-    "versie": "02.00.0000",
-    "requestFields": [
-      {
-        "path": "INSZ",
-        "value": "49620999783"
-      }
-    ],
-    "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+    "xpathExpression": "//Ondernemingsnummer",
+    "expectedValue": "1999990243"
   },
   {
     "naam": "ZoekPerceel",
     "versie": "02.00.0000",
     "requestFields": [
       {
-        "path": "INSZ",
-        "value": "49620999783"
+        "path": "//Identificatie/KadastraleAfdeling",
+        "value": "12322"
+      },
+      {
+        "path": "//Identificatie/Sectie",
+        "value": "I"
+      },
+      {
+        "path": "//Identificatie/Grondnummer",
+        "value": "312"
+      },
+      {
+        "path": "//Identificatie/Cijferexponent",
+        "value": "002"
+      },
+      {
+        "path": "//Identificatie/Letterexponent",
+        "value": "D"
+      },
+      {
+        "path": "//Identificatie/Partitie",
+        "value": "P0000"
+      },
+      {
+        "path": "//Actief",
+        "value": "1"
       }
     ],
+    "xpathExpression": "//Perceel/Code",
+    "expectedValue": "201309344"
+  },
+  {
+    "naam": "ZoekPerceel",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Identificatie/KadastraleAfdeling",
+        "value": "12322"
+      },
+      {
+        "path": "//Identificatie/Sectie",
+        "value": "I"
+      },
+      {
+        "path": "//Identificatie/Grondnummer",
+        "value": "312"
+      },
+      {
+        "path": "//Identificatie/Cijferexponent",
+        "value": "002"
+      },
+      {
+        "path": "//Identificatie/Letterexponent",
+        "value": "D"
+      },
+      {
+        "path": "//Identificatie/Partitie",
+        "value": "P0000"
+      },
+      {
+        "path": "//Actief",
+        "value": "0"
+      }
+    ],
+    "xpathExpression": "//Perceel/Code",
+    "expectedValue": "3279291"
+  },
+  {
+    "naam": "ZoekPerceel",
+    "versie": "02.00.0000",
+    "requestFields": [],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
+  },
+  {
+    "naam": "GeefHistoriekMutatiedossier",
+    "versie": "03.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Dossiernummer",
+        "value": "24034/2006/MU/0181"
+      }
+    ],
+    "xpathExpression": "//Mutatiedossier/Dossiernummer",
+    "expectedValue": "24034/2006/MU/0181"
+  },
+  {
+    "naam": "GeefHistoriekMutatiedossier",
+    "versie": "03.00.0000",
+    "requestFields": [],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag"
   },
@@ -113,23 +287,23 @@
     "requestFields": [
       {
         "path": "//Criteria/Provincie",
-        "value": "40000"
+        "value": "10000"
       },
       {
         "path": "//Criteria/AdministratieveGemeentes/AdministratieveGemeente",
-        "value": "41034"
+        "value": "12022"
       },
       {
         "path": "//Criteria/TypesInschrijving/TypeInschrijving",
-        "value": "82"
+        "value": "VENTEIMMEUBV"
       },
       {
         "path": "//Criteria/CodesKadastraleAardVolgensAkte/CodeKadastraleAardVolgensAkte",
         "value": "23"
       }
     ],
-    "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Geen gegevens gevonden voor de vraag"
+    "xpathExpression": "//NaamNotaris",
+    "expectedValue": "DEMOT Hugo"
   },
   {
     "naam": "ZoekVerkoopprijzen",
@@ -154,5 +328,93 @@
     ],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "GeefEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/EigendomId",
+        "value": "30295734"
+      }
+    ],
+    "xpathExpression": "//Onderneming/Naam",
+    "expectedValue": "NATIONALE MAATSCHAPPIJ DER BELGISCHE SPOORWEGEN NMBS"
+  },
+  {
+    "naam": "GeefEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Identificatie/KadastraleAfdeling",
+        "value": "31333"
+      },
+      {
+        "path": "//Identificatie/Sectie",
+        "value": "H"
+      },
+      {
+        "path": "//Identificatie/Grondnummer",
+        "value": "0001"
+      },
+      {
+        "path": "//Identificatie/Letterexponent",
+        "value": "D"
+      },
+      {
+        "path": "//Identificatie/Partitie",
+        "value": "P0000"
+      }
+    ],
+    "xpathExpression": "//KadastraleAfdeling/Omschrijving",
+    "expectedValue": "KNOKKE-HEIST  3 AFD/KNOKKE 3/"
+  },
+  {
+    "naam": "GeefEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Identificatie/KadastraleAfdeling",
+        "value": "44809"
+      },
+      {
+        "path": "//Identificatie/Sectie",
+        "value": "I"
+      },
+      {
+        "path": "//Identificatie/Bisnummer",
+        "value": "52"
+      },
+      {
+        "path": "//Identificatie/Grondnummer",
+        "value": "0649"
+      },
+      {
+        "path": "//Identificatie/Letterexponent",
+        "value": "Y"
+      },
+      {
+        "path": "//Identificatie/Partitie",
+        "value": "P0000"
+      },
+      {
+        "path": "//Identificatie/Letterexponent",
+        "value": "Y"
+      }
+    ],
+    "xpathExpression": "//KadastraleAfdeling/Omschrijving",
+    "expectedValue": "GENT  9 AFD"
+  },
+  {
+    "naam": "GeefEigendomstoestanden",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/EigendomId",
+        "value": "30295733"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Diagnose",
+    "expectedValue": "Geen gegevens gevonden voor de vraag"
   }
 ]

@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Random;
 
-import static be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping.VERSION_02_00;
+import static be.vlaanderen.vip.magda.magdamock.config.MappingLists.VERSION_02_00;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;

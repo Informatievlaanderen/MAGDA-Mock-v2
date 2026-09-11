@@ -1,5 +1,7 @@
 package be.vlaanderen.vip.magda.magdamock.client;
 
+import be.vlaanderen.vip.magda.magdamock.client.handlers.MagdaMockSoapHandler;
+import be.vlaanderen.vip.magda.magdamock.exceptions.MagdaMockSoapException;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import be.vlaanderen.vip.magda.magdamock.config.WireMockData;
 import be.vlaanderen.vip.magda.magdamock.soap.LenientSoapBodyValidator;
@@ -24,6 +26,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MagdaMockConnectionTest {
 
@@ -32,6 +35,16 @@ class MagdaMockConnectionTest {
     void whenTemplateReplacesOk_shouldReturnStatus200AndExpectedOutput() {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
         var response = connection.sendRestRequest("/template/ok", "", "GET", "", "Tue, 29 Oct 2024 16:56:32 GMT", UUID.randomUUID().toString());
+        assertEquals(200, response.status());
+        assertEquals("\"2019-10-19\"", new ObjectMapper().readTree(response.body()).get("test").toString());
+        assertNotNull(response.headers().get("x-correlation-id"));
+    }
+
+    @Test
+    @SneakyThrows
+    void whenTemplateReplacesOkWithISODate_shouldReturnStatus200AndExpectedOutput() {
+        MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
+        var response = connection.sendRestRequest("/template/ok", "", "GET", "", "2024-10-29", UUID.randomUUID().toString());
         assertEquals(200, response.status());
         assertEquals("\"2019-10-19\"", new ObjectMapper().readTree(response.body()).get("test").toString());
         assertNotNull(response.headers().get("x-correlation-id"));
@@ -189,9 +202,10 @@ class MagdaMockConnectionTest {
 
     @Test
     @SneakyThrows
-    void whenDocumentNotFound_shouldReturnNull() {
+    void whenDocumentNotFound_shouldThrowException() {
         MagdaMockConnection connection = MagdaMockConnection.create(createWireMockForTest(), new LenientSoapBodyValidator(), new LenientSoapBodyValidator());
-        var response = connection.sendDocument(
+        assertThrows(MagdaMockSoapException.class, () -> connection.sendSoapRequest(
+                new MagdaMockSoapHandler.MockSoapRequest(
                 MagdaMockDocument.fromString("""
                         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://magda.vlaanderen.be/persoon/soap/geefpersoon/v02_02">
                             <soapenv:Header/>
@@ -225,8 +239,8 @@ class MagdaMockConnectionTest {
                             </soapenv:Body>
                         </soapenv:Envelope>
                         """).getXml()
-        );
-        assertNull(response);
+                )
+        ));
     }
 
     @Test

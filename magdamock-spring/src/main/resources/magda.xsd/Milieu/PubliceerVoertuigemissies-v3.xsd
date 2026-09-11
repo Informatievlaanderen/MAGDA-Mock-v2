@@ -2,7 +2,18 @@
 <!-- edited with XMLSpy v2020 (http://www.altova.com) by Thomas (Government of Flanders) -->
 <xsd:schema xmlns="http://magda.vlaanderen.be/milieu-v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:bericht="http://generiek-02_00.vip.vlaanderen.be" xmlns:generiek="http://magda.vlaanderen.be/generiek-v3" targetNamespace="http://magda.vlaanderen.be/milieu-v3" elementFormDefault="unqualified" attributeFormDefault="unqualified">
 	<xsd:import namespace="http://magda.vlaanderen.be/generiek-v3" schemaLocation="../Generiek/GeneriekDomein-v3.xsd"/>
+
 	<!--=> ENKELVOUDIGE TYPE DEFINITES-->
+	<xsd:simpleType name="MeasuredVehicleEmissionRatioType">
+		<xsd:annotation>
+			<xsd:documentation>Numeriek type voor gemeten of berekende emissiewaarden, definieert de gewenste precisie.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<xsd:fractionDigits value="9"/> <!-- max 9 getallen na de komma -->
+			<xsd:minInclusive value="0"/> <!-- waarde moet groter of gelijk zijn aan 0 -->
+		</xsd:restriction>
+	</xsd:simpleType>
+
 	<!--=> SAMENGESTELDE TYPE DEFINITES-->
 	<xsd:complexType name="VehicleType">
 		<xsd:annotation>
@@ -614,7 +625,7 @@
 					<xsd:documentation>The Vehicle Specific Power (VSP) in W/kg.</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="CORatio" type="xsd:float" minOccurs="0">
+			<xsd:element name="CORatio" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>The CO ratio in %.</xsd:documentation>
 				</xsd:annotation>
@@ -624,7 +635,7 @@
 					<xsd:documentation>Indicates if the CO data is measured correctly (true) or not (false).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="NORatio" type="xsd:float" minOccurs="0">
+			<xsd:element name="NORatio" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>The NO ratio in %</xsd:documentation>
 				</xsd:annotation>
@@ -634,7 +645,7 @@
 					<xsd:documentation>Indicates if the NO data is measured correctly (true) or not (false).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="NO2Ratio" type="xsd:float" minOccurs="0">
+			<xsd:element name="NO2Ratio" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>The NO2 ratio in %.</xsd:documentation>
 				</xsd:annotation>
@@ -644,7 +655,7 @@
 					<xsd:documentation>Indicates if the NO2 data is measured correctly (true) or not (false).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="HCRatio" type="xsd:float" minOccurs="0">
+			<xsd:element name="HCRatio" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>The HC ratio in %.</xsd:documentation>
 				</xsd:annotation>
@@ -654,7 +665,7 @@
 					<xsd:documentation>Indicates if the HC data is measured correctly (true) or not (false).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="PMRatioOpacityBased" type="xsd:float" minOccurs="0">
+			<xsd:element name="PMRatioOpacityBased" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>Carbon based particle mass in g/kg</xsd:documentation>
 				</xsd:annotation>
@@ -664,7 +675,7 @@
 					<xsd:documentation>Indicates if the PM ratio data is measured correctly (true) or not (false).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="PNRatio" type="xsd:float" minOccurs="0">
+			<xsd:element name="PNRatio" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>The Particle Number emission value</xsd:documentation>
 				</xsd:annotation>
@@ -674,7 +685,7 @@
 					<xsd:documentation>Indicates if the PN ratio data is measured correctly (true) or not (false).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
-			<xsd:element name="NH3Ratio" type="xsd:float" minOccurs="0">
+			<xsd:element name="NH3Ratio" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
 				<xsd:annotation>
 					<xsd:documentation>The NH3 ratio in %.</xsd:documentation>
 				</xsd:annotation>
@@ -694,8 +705,124 @@
 					<xsd:documentation>Indicates if the LAmax data is measured correctly (true) or not (false).</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
+			<xsd:element name="NoxRatio" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The ratio Nox VS CO2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NoxRatioGkg" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The Nox ratio in g/kg brandstof</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CORatioGkg" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The CO ratio in g/kg</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NORatioGkg" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NO ratio in g/kg</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NO2RatioGkg" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NO2 ratio in g/kg</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NH3RatioGkg" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NH3 ratio in g/kg</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HCRatioGkg" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The HC ratio in g/kg</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PnRatioNkg" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The particle number in quadrillion particles per kilogram fuel</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PmRatioGkg" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The particle mass in gram per kilogram fuel</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CORatioMgkm" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The CO ratio in mg/km</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NORatioMgkm" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NO ratio in mg/km</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NO2RatioMgkm" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NO2 ratio in mg/km</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HCRatioMgkm" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The HC ratio in mg/km</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PmRatioMgkm" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The particle mass in mg/km</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NH3RatioMgkm" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NH3 ratio in mg/km</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NoxRatioMgkm" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The Nox ratio in mg/km</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CORatioGkwh" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The CO ratio in g/kwh</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NORatioGkwh" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NO ratio in g/kwh</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NO2RatioGkwh" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NO2 ratio in g/kwh</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="HCRatioGkwh" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The HC ratio in g/kwh</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PmRatioGkwh" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The particle mass in g/kwh</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NH3RatioGkwh" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The NH3 ratio in g/kwh</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="NoxRatioGkwh" type="MeasuredVehicleEmissionRatioType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>The Nox ratio in g/kwh</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
 		</xsd:sequence>
 	</xsd:complexType>
+
 	<!-- ======================== PUBLICATIE TYPES ======================= -->
 	<xsd:complexType name="VehicleEmissionsType">
 		<xsd:sequence>

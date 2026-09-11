@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web:ZoekVerkoopprijzenResponse xmlns:web="http://magda.vlaanderen.be/kadaster/soap/zoekverkoopprijzen/v03_00">
+    <Repliek>
+        <Context>
+            <Naam>ZoekVerkoopprijzen</Naam>
+            <Versie>03.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>0001-01-01</Datum>
+                    <Tijd>00:00:00.000</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <Verkoopprijzen>
+                        <Transacties>
+                            <Transactie>
+                                <DatumRegistratieAkte>2025-01-30</DatumRegistratieAkte>
+                                <DatumEvenement>2025-01-22</DatumEvenement>
+                                <CodeEvenement>
+                                    <Code>VENTEIMMEUBV</Code>
+                                    <Omschrijving Taal="nl">Verkoop</Omschrijving>
+                                </CodeEvenement>
+                                <TypeTransactie>
+                                    <Code>S24</Code>
+                                    <Omschrijving Taal="nl">Notaris - België</Omschrijving>
+                                </TypeTransactie>
+                                <NaamNotaris>DEMOT Hugo</NaamNotaris>
+                                <OnroerendeGoederen>
+                                    <OnroerendGoed>
+                                        <OppervlakteVolgensAkte>1068</OppervlakteVolgensAkte>
+                                        <Bedragen>
+                                            <Bedrag>
+                                                <Type>1</Type>
+                                                <Waarde>345000.0</Waarde>
+                                                <Volgnummer>01</Volgnummer>
+                                            </Bedrag>
+                                        </Bedragen>
+                                        <KadastraleAardVolgensAkte>
+                                            <Code>1</Code>
+                                            <Omschrijving Taal="nl">WOONHUIS MET AANHORIGHEDEN OP EN MET GROND</Omschrijving>
+                                        </KadastraleAardVolgensAkte>
+                                        <Percelen>
+                                            <Perceel>
+                                                <PerceelIdentificatie>
+                                                    <KadastraleAfdeling>
+                                                        <Code>12022</Code>
+                                                        <Omschrijving Taal="nl">PUURS-SINT-AMANDS 4 AFD/LIEZELE/</Omschrijving>
+                                                    </KadastraleAfdeling>
+                                                    <Sectie>B</Sectie>
+                                                    <Grondnummer>104</Grondnummer>
+                                                    <Letterexponent>R</Letterexponent>
+                                                    <Partitie>P0000</Partitie>
+                                                </PerceelIdentificatie>
+                                                <KadastraleAard>
+                                                    <Code>200</Code>
+                                                    <Omschrijving Taal="nl">HUIS</Omschrijving>
+                                                </KadastraleAard>
+                                                <MeerdereKadastraleInkomens>0</MeerdereKadastraleInkomens>
+                                                <CodeKadastraalInkomen>2F</CodeKadastraalInkomen>
+                                                <KadastraalInkomen>651</KadastraalInkomen>
+                                                <VoorgaandeEigendomstoestand>206805953</VoorgaandeEigendomstoestand>
+                                                <VolgendeEigendomstoestand>208108095</VolgendeEigendomstoestand>
+                                                <PerceelEntiteiten>
+                                                    <PerceelEntiteit>
+                                                        <Straat>
+                                                            <Code>00288</Code>
+                                                            <Omschrijving Taal="nl">WOLFSTR</Omschrijving>
+                                                        </Straat>
+                                                        <Huisnummer>52</Huisnummer>
+                                                        <AantalVerdiepingenBovengronds>1</AantalVerdiepingenBovengronds>
+                                                        <BewoonbareDakverdieping>1</BewoonbareDakverdieping>
+                                                        <AantalGarages>1</AantalGarages>
+                                                        <CentraleVerwarming>1</CentraleVerwarming>
+                                                        <AantalBadkamers>1</AantalBadkamers>
+                                                        <AantalWoongelegenheden>1</AantalWoongelegenheden>
+                                                        <AantalWoonplaatsen>6</AantalWoonplaatsen>
+                                                        <Perceeloppervlakte>1068</Perceeloppervlakte>
+                                                        <BebouwdeOppervlakte>211</BebouwdeOppervlakte>
+                                                        <NuttigeOppervlakte>180</NuttigeOppervlakte>
+                                                        <JaarLaatsteFysiekeModificatie>1989</JaarLaatsteFysiekeModificatie>
+                                                        <Constructie>
+                                                            <IndicatieGebouw>
+                                                                <Code>30</Code>
+                                                                <Omschrijving Taal="nl">Villa</Omschrijving>
+                                                            </IndicatieGebouw>
+                                                            <KwaliteitGebouw>
+                                                                <Code>N</Code>
+                                                                <Omschrijving Taal="nl">Normaal</Omschrijving>
+                                                            </KwaliteitGebouw>
+                                                            <Bouwtype>
+                                                                <Code>C</Code>
+                                                                <Omschrijving Taal="nl">Open bebouwing</Omschrijving>
+                                                            </Bouwtype>
+                                                            <Bouwjaar>
+                                                                <Code>1960</Code>
+                                                                <Omschrijving Taal="nl">1960</Omschrijving>
+                                                            </Bouwjaar>
+                                                        </Constructie>
+                                                    </PerceelEntiteit>
+                                                </PerceelEntiteiten>
+                                            </Perceel>
+                                        </Percelen>
+                                    </OnroerendGoed>
+                                </OnroerendeGoederen>
+                            </Transactie>
+                            <Transactie>
+                                <DatumRegistratieAkte>2025-01-30</DatumRegistratieAkte>
+                                <DatumEvenement>2025-01-24</DatumEvenement>
+                                <CodeEvenement>
+                                    <Code>VENTEIMMEUBV</Code>
+                                    <Omschrijving Taal="nl">Verkoop</Omschrijving>
+                                </CodeEvenement>
+                                <TypeTransactie>
+                                    <Code>S24</Code>
+                                    <Omschrijving Taal="nl">Notaris - België</Omschrijving>
+                                </TypeTransactie>
+                                <NaamNotaris>TIMMERMANS Bart</NaamNotaris>
+                                <OnroerendeGoederen>
+                                    <OnroerendGoed>
+                                        <OppervlakteVolgensAkte>425</OppervlakteVolgensAkte>
+                                        <Bedragen>
+                                            <Bedrag>
+                                                <Type>1</Type>
+                                                <Waarde>168000.0</Waarde>
+                                                <Volgnummer>01</Volgnummer>
+                                            </Bedrag>
+                                        </Bedragen>
+                                        <KadastraleAardVolgensAkte>
+                                            <Code>1</Code>
+                                            <Omschrijving Taal="nl">WOONHUIS MET AANHORIGHEDEN OP EN MET GROND</Omschrijving>
+                                        </KadastraleAardVolgensAkte>
+                                        <Percelen>
+                                            <Perceel>
+                                                <PerceelIdentificatie>
+                                                    <KadastraleAfdeling>
+                                                        <Code>12008</Code>
+                                                        <Omschrijving Taal="nl">PUURS-SINT-AMANDS 3 AFD/BREENDONK/</Omschrijving>
+                                                    </KadastraleAfdeling>
+                                                    <Sectie>B</Sectie>
+                                                    <Grondnummer>518</Grondnummer>
+                                                    <Cijferexponent>2</Cijferexponent>
+                                                    <Letterexponent>E</Letterexponent>
+                                                    <Partitie>P0000</Partitie>
+                                                </PerceelIdentificatie>
+                                                <KadastraleAard>
+                                                    <Code>200</Code>
+                                                    <Omschrijving Taal="nl">HUIS</Omschrijving>
+                                                </KadastraleAard>
+                                                <Coordinaten>
+                                                    <X>145131.0</X>
+                                                    <Y>193050.0</Y>
+                                                </Coordinaten>
+                                                <MeerdereKadastraleInkomens>0</MeerdereKadastraleInkomens>
+                                                <CodeKadastraalInkomen>2F</CodeKadastraalInkomen>
+                                                <KadastraalInkomen>161</KadastraalInkomen>
+                                                <VoorgaandeEigendomstoestand>3157203</VoorgaandeEigendomstoestand>
+                                                <VolgendeEigendomstoestand>208108899</VolgendeEigendomstoestand>
+                                                <PerceelEntiteiten>
+                                                    <PerceelEntiteit>
+                                                        <Straat>
+                                                            <Code>00114</Code>
+                                                            <Omschrijving Taal="nl">HOOGHEIDE</Omschrijving>
+                                                        </Straat>
+                                                        <Huisnummer>4</Huisnummer>
+                                                        <AantalVerdiepingenBovengronds>1</AantalVerdiepingenBovengronds>
+                                                        <BewoonbareDakverdieping>1</BewoonbareDakverdieping>
+                                                        <AantalGarages>0</AantalGarages>
+                                                        <CentraleVerwarming>0</CentraleVerwarming>
+                                                        <AantalBadkamers>0</AantalBadkamers>
+                                                        <AantalWoongelegenheden>1</AantalWoongelegenheden>
+                                                        <AantalWoonplaatsen>4</AantalWoonplaatsen>
+                                                        <Perceeloppervlakte>60</Perceeloppervlakte>
+                                                        <BebouwdeOppervlakte>63</BebouwdeOppervlakte>
+                                                        <NuttigeOppervlakte>63</NuttigeOppervlakte>
+                                                        <Constructie>
+                                                            <IndicatieGebouw>
+                                                                <Code>40</Code>
+                                                                <Omschrijving Taal="nl">Huis zonder bewoonbare kelder</Omschrijving>
+                                                            </IndicatieGebouw>
+                                                            <KwaliteitGebouw>
+                                                                <Code>N</Code>
+                                                                <Omschrijving Taal="nl">Normaal</Omschrijving>
+                                                            </KwaliteitGebouw>
+                                                            <Bouwtype>
+                                                                <Code>A</Code>
+                                                                <Omschrijving Taal="nl">Gesloten bebouwing</Omschrijving>
+                                                            </Bouwtype>
+                                                            <Bouwjaar>
+                                                                <Code>0001</Code>
+                                                                <Omschrijving Taal="nl">voor 1850</Omschrijving>
+                                                            </Bouwjaar>
+                                                        </Constructie>
+                                                    </PerceelEntiteit>
+                                                </PerceelEntiteiten>
+                                            </Perceel>
+                                            <Perceel>
+                                                <PerceelIdentificatie>
+                                                    <KadastraleAfdeling>
+                                                        <Code>12008</Code>
+                                                        <Omschrijving Taal="nl">PUURS-SINT-AMANDS 3 AFD/BREENDONK/</Omschrijving>
+                                                    </KadastraleAfdeling>
+                                                    <Sectie>B</Sectie>
+                                                    <Grondnummer>518</Grondnummer>
+                                                    <Cijferexponent>2</Cijferexponent>
+                                                    <Letterexponent>F</Letterexponent>
+                                                    <Partitie>P0000</Partitie>
+                                                </PerceelIdentificatie>
+                                                <KadastraleAard>
+                                                    <Code>4</Code>
+                                                    <Omschrijving Taal="nl">TUIN</Omschrijving>
+                                                </KadastraleAard>
+                                                <Coordinaten>
+                                                    <X>145122.0</X>
+                                                    <Y>193053.0</Y>
+                                                </Coordinaten>
+                                                <MeerdereKadastraleInkomens>0</MeerdereKadastraleInkomens>
+                                                <CodeKadastraalInkomen>1F</CodeKadastraalInkomen>
+                                                <KadastraalInkomen>1</KadastraalInkomen>
+                                                <VoorgaandeEigendomstoestand>3157204</VoorgaandeEigendomstoestand>
+                                                <VolgendeEigendomstoestand>208108900</VolgendeEigendomstoestand>
+                                                <PerceelEntiteiten>
+                                                    <PerceelEntiteit>
+                                                        <Perceeloppervlakte>365</Perceeloppervlakte>
+                                                        <Constructie>
+                                                            <IndicatieGebouw>
+                                                                <Code>0000</Code>
+                                                            </IndicatieGebouw>
+                                                            <KwaliteitGebouw>
+                                                                <Code>-</Code>
+                                                                <Omschrijving Taal="nl">-</Omschrijving>
+                                                            </KwaliteitGebouw>
+                                                            <Bouwtype>
+                                                                <Code>-</Code>
+                                                                <Omschrijving Taal="nl">-</Omschrijving>
+                                                            </Bouwtype>
+                                                            <Bouwjaar>
+                                                                <Code>9999</Code>
+                                                            </Bouwjaar>
+                                                        </Constructie>
+                                                    </PerceelEntiteit>
+                                                </PerceelEntiteiten>
+                                            </Perceel>
+                                        </Percelen>
+                                    </OnroerendGoed>
+                                </OnroerendeGoederen>
+                            </Transactie>
+                            <Transactie>
+                                <DatumRegistratieAkte>2025-01-28</DatumRegistratieAkte>
+                                <DatumEvenement>2025-01-24</DatumEvenement>
+                                <CodeEvenement>
+                                    <Code>VENTEIMMEUBV</Code>
+                                    <Omschrijving Taal="nl">Verkoop</Omschrijving>
+                                </CodeEvenement>
+                                <TypeTransactie>
+                                    <Code>S24</Code>
+                                    <Omschrijving Taal="nl">Notaris - België</Omschrijving>
+                                </TypeTransactie>
+                                <NaamNotaris>EEKHAUTE Jeroom</NaamNotaris>
+                                <OnroerendeGoederen>
+                                    <OnroerendGoed>
+                                        <OppervlakteVolgensAkte>492</OppervlakteVolgensAkte>
+                                        <Bedragen>
+                                            <Bedrag>
+                                                <Type>1</Type>
+                                                <Waarde>210000.0</Waarde>
+                                                <Volgnummer>01</Volgnummer>
+                                            </Bedrag>
+                                        </Bedragen>
+                                        <KadastraleAardVolgensAkte>
+                                            <Code>1</Code>
+                                            <Omschrijving Taal="nl">WOONHUIS MET AANHORIGHEDEN OP EN MET GROND</Omschrijving>
+                                        </KadastraleAardVolgensAkte>
+                                        <Percelen>
+                                            <Perceel>
+                                                <PerceelIdentificatie>
+                                                    <KadastraleAfdeling>
+                                                        <Code>12030</Code>
+                                                        <Omschrijving Taal="nl">PUURS-SINT-AMANDS 1 AFD/PUURS/</Omschrijving>
+                                                    </KadastraleAfdeling>
+                                                    <Sectie>D</Sectie>
+                                                    <Grondnummer>897</Grondnummer>
+                                                    <Bisnummer>2</Bisnummer>
+                                                    <Letterexponent>Z</Letterexponent>
+                                                    <Partitie>P0000</Partitie>
+                                                </PerceelIdentificatie>
+                                                <KadastraleAard>
+                                                    <Code>200</Code>
+                                                    <Omschrijving Taal="nl">HUIS</Omschrijving>
+                                                </KadastraleAard>
+                                                <Coordinaten>
+                                                    <X>145074.0</X>
+                                                    <Y>195915.0</Y>
+                                                </Coordinaten>
+                                                <MeerdereKadastraleInkomens>0</MeerdereKadastraleInkomens>
+                                                <CodeKadastraalInkomen>2F</CodeKadastraalInkomen>
+                                                <KadastraalInkomen>696</KadastraalInkomen>
+                                                <VoorgaandeEigendomstoestand>4013831</VoorgaandeEigendomstoestand>
+                                                <VolgendeEigendomstoestand>208101577</VolgendeEigendomstoestand>
+                                                <PerceelEntiteiten>
+                                                    <PerceelEntiteit>
+                                                        <Straat>
+                                                            <Code>00053</Code>
+                                                            <Omschrijving Taal="nl">COOLHEMSTR</Omschrijving>
+                                                        </Straat>
+                                                        <Huisnummer>7</Huisnummer>
+                                                        <AantalVerdiepingenBovengronds>2</AantalVerdiepingenBovengronds>
+                                                        <BewoonbareDakverdieping>0</BewoonbareDakverdieping>
+                                                        <AantalGarages>0</AantalGarages>
+                                                        <CentraleVerwarming>1</CentraleVerwarming>
+                                                        <AantalBadkamers>1</AantalBadkamers>
+                                                        <AantalWoongelegenheden>1</AantalWoongelegenheden>
+                                                        <AantalWoonplaatsen>6</AantalWoonplaatsen>
+                                                        <Perceeloppervlakte>492</Perceeloppervlakte>
+                                                        <BebouwdeOppervlakte>171</BebouwdeOppervlakte>
+                                                        <NuttigeOppervlakte>173</NuttigeOppervlakte>
+                                                        <Constructie>
+                                                            <IndicatieGebouw>
+                                                                <Code>40</Code>
+                                                                <Omschrijving Taal="nl">Huis zonder bewoonbare kelder</Omschrijving>
+                                                            </IndicatieGebouw>
+                                                            <KwaliteitGebouw>
+                                                                <Code>N</Code>
+                                                                <Omschrijving Taal="nl">Normaal</Omschrijving>
+                                                            </KwaliteitGebouw>
+                                                            <Bouwtype>
+                                                                <Code>A</Code>
+                                                                <Omschrijving Taal="nl">Gesloten bebouwing</Omschrijving>
+                                                            </Bouwtype>
+                                                            <Bouwjaar>
+                                                                <Code>1962</Code>
+                                                                <Omschrijving Taal="nl">1962</Omschrijving>
+                                                            </Bouwjaar>
+                                                        </Constructie>
+                                                    </PerceelEntiteit>
+                                                </PerceelEntiteiten>
+                                            </Perceel>
+                                        </Percelen>
+                                    </OnroerendGoed>
+                                </OnroerendeGoederen>
+                            </Transactie>
+                        </Transacties>
+                        <MaximumAantalResultatenBereikt>1</MaximumAantalResultatenBereikt>
+                        <AantalResultatenVoorVraag>3</AantalResultatenVoorVraag>
+                    </Verkoopprijzen>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:ZoekVerkoopprijzenResponse>
