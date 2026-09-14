@@ -6,7 +6,7 @@
     <parent>
         <groupId>be.vlaanderen.vip</groupId>
         <artifactId>magda.magdamock</artifactId>
-        <version>0.33.0</version>
+        <version>0.33.1</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>be.vlaanderen.vip</groupId>
             <artifactId>magdamock-core</artifactId>
-            <version>0.33.0</version>
+            <version>0.33.1</version>
             <scope>compile</scope>
         </dependency>
 
