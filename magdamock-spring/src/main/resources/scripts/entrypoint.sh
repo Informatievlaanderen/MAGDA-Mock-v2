@@ -11,4 +11,6 @@ cd /data
 cd $pwd_before
 cd /
 
-java -jar /app.jar
+JAR_PATH=$(find target -name "*.jar" ! -name "*-plain.jar")
+
+java -jar JAR_PATH

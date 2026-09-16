@@ -21,6 +21,8 @@ jobs:
         with:
           java-version: '25'
           distribution: 'temurin'
+      - name: Make version unique for this run
+        run: mvn versions:set -DnewVersion=run-${{ github.run_number }}
       - name: Publish
         # Disable artifactory profile and enable github for deployment.
         run: mvn --batch-mode deploy -P "!artifactory,github" -Pfat-jar
