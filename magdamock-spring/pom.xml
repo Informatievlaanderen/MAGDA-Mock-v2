@@ -6,7 +6,7 @@
     <parent>
         <groupId>be.vlaanderen.vip</groupId>
         <artifactId>magda.magdamock</artifactId>
-        <version>0.34.0</version>
+        <version>0.35.0</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>be.vlaanderen.vip</groupId>
             <artifactId>magdamock-core</artifactId>
-            <version>0.34.0</version>
+            <version>0.35.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -92,6 +92,7 @@
         <profile>
             <id>docker</id>
             <build>
+                <finalName>magdamock</finalName>
                 <plugins>
                     <plugin>
                         <groupId>io.fabric8</groupId>
@@ -142,6 +143,7 @@
         <profile>
             <id>docker-release</id>
             <build>
+                <finalName>magdamock</finalName>
                 <plugins>
                     <plugin>
                         <groupId>io.fabric8</groupId>
