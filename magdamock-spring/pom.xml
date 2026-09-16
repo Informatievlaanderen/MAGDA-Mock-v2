@@ -92,6 +92,7 @@
         <profile>
             <id>docker</id>
             <build>
+                <finalName>magdamock</finalName>
                 <plugins>
                     <plugin>
                         <groupId>io.fabric8</groupId>
@@ -142,6 +143,7 @@
         <profile>
             <id>docker-release</id>
             <build>
+                <finalName>magdamock</finalName>
                 <plugins>
                     <plugin>
                         <groupId>io.fabric8</groupId>

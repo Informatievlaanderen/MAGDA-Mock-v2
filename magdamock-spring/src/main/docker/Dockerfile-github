@@ -2,7 +2,7 @@ FROM eclipse-temurin:25-jre
 
 VOLUME /tmp
 
-COPY target/*.jar /
+COPY target/magdamock.jar /app.jar
 
 COPY src/main/resources/magda.xsd /data/magda.xsd
 COPY src/main/resources/scripts /data/scripts
