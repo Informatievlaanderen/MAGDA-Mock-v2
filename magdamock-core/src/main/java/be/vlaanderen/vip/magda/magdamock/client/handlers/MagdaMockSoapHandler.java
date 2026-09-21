@@ -179,6 +179,10 @@ public class MagdaMockSoapHandler extends AbstractMockHandler {
 
     private Document wrapInEnvelope(Document bodyDocument) {
         MagdaMockDocument magdaMockDocument = MagdaMockDocument.fromDocument(bodyDocument);
+        if ("http://schemas.xmlsoap.org/soap/envelope/".equals(bodyDocument.lookupNamespaceURI(bodyDocument.getDocumentElement().getPrefix())) && "Envelope".equals(bodyDocument.getDocumentElement().getLocalName())) {
+            log.info("Response file already contains soap envelope.");
+            return bodyDocument;
+        }
         var soap = """
                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" >
                 <soapenv:Header/>
