@@ -19,7 +19,7 @@ jobs:
           key: mvn-cache
       - uses: actions/setup-java@v5
         with:
-          java-version: '25'
+          java-version: '27'
           distribution: 'temurin'
       - name: Make version unique for this run
         run: mvn versions:set -DnewVersion=run-${{ github.run_number }}
