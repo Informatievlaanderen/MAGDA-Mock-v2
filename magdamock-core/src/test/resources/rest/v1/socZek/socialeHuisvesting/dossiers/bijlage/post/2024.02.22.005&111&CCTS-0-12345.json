@@ -1,0 +1,6 @@
+{
+  "response": {
+    "status": 200,
+    "body": "special case string body mapping"
+  }
+}

@@ -93,12 +93,10 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
 
             if (response.has("body")) {
                 String textBody = response.get("body").asText();
-                byte[] binaryBody = response.get("body").binaryValue();
-                if (textBody != null) {
-                    responseDefinitionBuilder = responseDefinitionBuilder.withBody(textBody);
-                } else {
-                    responseDefinitionBuilder = responseDefinitionBuilder.withBody(binaryBody);
-                }
+                responseDefinitionBuilder = responseDefinitionBuilder.withBody(textBody);
+            } else if (response.has("base64Body")) {
+                byte[] binaryBody = response.get("base64Body").binaryValue();
+                responseDefinitionBuilder = responseDefinitionBuilder.withBody(binaryBody);
             } else if (response.has("jsonBody")) {
                 JsonNode body = response.get("jsonBody");
                 responseDefinitionBuilder = responseDefinitionBuilder.withJsonBody(body);
