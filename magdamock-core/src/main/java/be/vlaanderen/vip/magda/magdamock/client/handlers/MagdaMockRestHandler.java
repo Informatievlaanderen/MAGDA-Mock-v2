@@ -9,6 +9,7 @@ import com.github.tomakehurst.wiremock.http.HttpHeaders;
 import com.github.tomakehurst.wiremock.http.Request;
 import com.github.tomakehurst.wiremock.http.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -53,11 +54,16 @@ public class MagdaMockRestHandler extends AbstractMockHandler {
             parts.add(query);
         }
         RestLogHelper.contextSetRestServiceNameVersion(method, path);
+        MDC.put("RequestHeaders", magdaRestRequest.headers.toString());
+        log.debug("Headers: {}", magdaRestRequest.headers);
+        MDC.put("RequestQueryParams", query);
         log.debug("Query: {}", query);
         log.debug("Path: {}", path);
         log.debug("Method: {}", method);
-        if (logRequestBody)
+        if (logRequestBody) {
             log.debug("Request body: {}", requestBody);
+            MDC.put("RequestBody", requestBody);
+        }
 
         String url = String.join("?", parts);
         HttpHeaders headers = new HttpHeaders();

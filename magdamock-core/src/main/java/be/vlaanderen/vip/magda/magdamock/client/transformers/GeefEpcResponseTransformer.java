@@ -14,6 +14,7 @@ import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.MDC;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -21,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -54,6 +56,8 @@ public class GeefEpcResponseTransformer implements ResponseDefinitionTransformer
                             Pair.of(kv.getKey(), URLEncoder.encode(kv.getValue(), StandardCharsets.UTF_8)
                                     .replace("+", "%20"))
                     ).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+            MDC.put("MappingKeys", xpathValues.toString());
+            log.debug("MappingKeys are {}", xpathValues);
 
             List<Path> fileOptions = new ArrayList<>();
             List<Path> defaultOptions = new ArrayList<>();

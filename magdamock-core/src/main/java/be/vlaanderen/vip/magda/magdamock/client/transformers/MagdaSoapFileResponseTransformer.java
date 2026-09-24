@@ -5,6 +5,7 @@ import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.config.MappingLists;
 import be.vlaanderen.vip.magda.magdamock.config.MissingParameterConfiguration;
 import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
+import be.vlaanderen.vip.magda.magdamock.config.rest.RestParameter;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.extension.Parameters;
@@ -14,6 +15,7 @@ import com.github.tomakehurst.wiremock.http.ResponseDefinition;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -21,7 +23,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @AllArgsConstructor
@@ -55,8 +59,16 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
                                     .replace("+", "%20")
                     )
                     .toList();
+            Map<String, String> soapParameters = new HashMap<>();
+            for (int i = 0; i < keys.size(); i++){
+                String key = keys.get(i);
+                String value = xpathValues.get(i);
+                soapParameters.put(key, value);
+            }
+            MDC.put("MappingKeys", soapParameters.toString());
+            log.debug("MappingKeys are {}", soapParameters);
 
-            //
+
             List<String> fileNames;
             if (mockSoapMapping.getStubHandler().equals(MockSoapMapping.StubHandler.FileSoap)) {
                 if (mockSoapMapping.getMissingParameterConfiguration().equals(MissingParameterConfiguration.Wildcard)) {
