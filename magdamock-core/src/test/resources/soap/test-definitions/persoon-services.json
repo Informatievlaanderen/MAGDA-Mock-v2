@@ -6,6 +6,14 @@
       {
         "path": "INSZ",
         "value": "02651615189"
+      },
+      {
+        "path": "//Criteria/Attest/Naam",
+        "value": "Hoofdverblijfplaats"
+      },
+      {
+        "path": "//Criteria/Attest/Taal",
+        "value": "nl"
       }
     ],
     "xpathExpression": "//Attest/INSZ",
