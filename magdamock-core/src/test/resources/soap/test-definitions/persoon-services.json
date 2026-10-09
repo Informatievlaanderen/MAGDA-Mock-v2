@@ -134,10 +134,30 @@
       {
         "path": "INSZ",
         "value": "00641999774"
+      },
+      {
+        "path": "//Inhoud/Bron",
+        "value": "KSZ"
       }
     ],
     "xpathExpression": "//Achternamen/Achternaam",
     "expectedValue": "Janssens"
+  },
+  {
+    "naam": "GeefHistoriekPersoon",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00641999774"
+      },
+      {
+        "path": "//Inhoud/Bron",
+        "value": "RR"
+      }
+    ],
+    "xpathExpression": "//Achternamen/Achternaam",
+    "expectedValue": "Peeters"
   },
   {
     "naam": "GeefHistoriekPersoon",
