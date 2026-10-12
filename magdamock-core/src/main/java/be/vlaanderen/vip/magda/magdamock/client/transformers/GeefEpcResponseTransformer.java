@@ -76,12 +76,23 @@ public class GeefEpcResponseTransformer implements ResponseDefinitionTransformer
                 defaultOptions.add(pathGebouweenheidId);
             }
 
+            String postcode = xpathValues.getOrDefault(MappingLists.KEY_ADRES_POSTCODE, "");
             String gemeenteNaam = xpathValues.getOrDefault(MappingLists.KEY_ADRES_GEMEENTE, "");
-            if (!gemeenteNaam.isEmpty()) {
+            if (!postcode.isEmpty() || !gemeenteNaam.isEmpty()) {
                 Path pathAdres = mappingPath.resolve("Adres");
-                Path pathAdresGemeenete = pathAdres.resolve(gemeenteNaam);
-                fileOptions.addAll(determineFilenameOptionsForFlatfile(List.of(xpathValues.get(MappingLists.KEY_ADRES_STRAAT),xpathValues.get(MappingLists.KEY_ADRES_HUISNUMMER), xpathValues.get(MappingLists.KEY_ADRES_BUSNUMMER)), pathAdresGemeenete));
-                defaultOptions.add(pathAdresGemeenete);
+
+                if (!postcode.isEmpty()) {
+                    Path pathAdresPostcode = pathAdres.resolve(postcode);
+                    fileOptions.addAll(determineFilenameOptionsForFlatfile(List.of(xpathValues.get(MappingLists.KEY_ADRES_STRAAT), xpathValues.get(MappingLists.KEY_ADRES_HUISNUMMER), xpathValues.get(MappingLists.KEY_ADRES_BUSNUMMER)), pathAdresPostcode));
+                    defaultOptions.add(pathAdresPostcode);
+                }
+
+                if (!gemeenteNaam.isEmpty()) {
+                    Path pathAdresGemeenete = pathAdres.resolve(gemeenteNaam);
+                    fileOptions.addAll(determineFilenameOptionsForFlatfile(List.of(xpathValues.get(MappingLists.KEY_ADRES_STRAAT), xpathValues.get(MappingLists.KEY_ADRES_HUISNUMMER), xpathValues.get(MappingLists.KEY_ADRES_BUSNUMMER)), pathAdresGemeenete));
+                    defaultOptions.add(pathAdresGemeenete);
+                }
+
                 defaultOptions.add(pathAdres);
             }
 

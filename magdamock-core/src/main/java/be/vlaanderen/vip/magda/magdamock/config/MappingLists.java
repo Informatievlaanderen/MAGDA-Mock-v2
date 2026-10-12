@@ -30,6 +30,7 @@ public interface MappingLists {
     String KEY_ADRES_HUISNUMMER = "//Criteria/Adres/Huisnummer";
     String KEY_ADRES_BUSNUMMER = "//Criteria/Adres/Busnummer";
     String KEY_ATTESTNUMMER = "//Criteria/Attestnummer";
+    String KEY_ADRES_POSTCODE = "//Criteria/Adres/Postcode";
 
     List<MockSoapMapping> SOAP_MAPPINGS = List.of(
             // Dossier
@@ -40,6 +41,7 @@ public interface MappingLists {
                     KEY_GEBOUW_ID,
                     KEY_GEBOUWEENHEID_ID,
                     KEY_ADRES_GEMEENTE,
+                    KEY_ADRES_POSTCODE,
                     KEY_ADRES_STRAAT,
                     KEY_ADRES_HUISNUMMER,
                     KEY_ADRES_BUSNUMMER,
@@ -85,12 +87,12 @@ public interface MappingLists {
             new MultiFolderMockSoapMapping("Kadaster", "GeefTransacties", VERSION_03_00, List.of(
                     "//Criteria/INSZ", "//Criteria/Ondernemingsnummer"
             ), SEPERATOR_DIRECTORY, "Kadaster.GeefTransactiesDienst-03.00/WebService/GeefTransacties.xsd", "Kadaster.GeefTransactiesDienst-03.00/WebService/GeefTransactiesResponse.xsd",
-                    List.of("INSZ", "Ondernemingsnummer"), List.of(1,1)
+                    List.of("INSZ", "Ondernemingsnummer"), List.of(1, 1)
             ),
             new MultiFolderMockSoapMapping("Kadaster", "ZoekEigendomstoestanden", VERSION_02_00, List.of(
                     "//Criteria/INSZ", "//Criteria/Ondernemingsnummer"
             ), SEPERATOR_DIRECTORY, "Kadaster.ZoekEigendomstoestandenDienst-02.00/WebService/ZoekEigendomstoestanden.xsd", "Kadaster.ZoekEigendomstoestandenDienst-02.00/WebService/ZoekEigendomstoestandenResponse.xsd",
-                    List.of("INSZ", "Ondernemingsnummer"), List.of(1,1)
+                    List.of("INSZ", "Ondernemingsnummer"), List.of(1, 1)
             ),
             new MockSoapMapping("Kadaster", "ZoekPerceel", VERSION_02_00, List.of(
                     "//Identificatie/KadastraleAfdeling",
