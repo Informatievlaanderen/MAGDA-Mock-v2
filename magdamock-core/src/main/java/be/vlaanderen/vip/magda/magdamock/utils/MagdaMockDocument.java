@@ -6,6 +6,7 @@ import org.apache.commons.io.IOUtils;
 import org.dom4j.dom.DOMNodeHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -160,6 +161,10 @@ public class MagdaMockDocument {
             var elm = (Element) nodes.item(pos);
             elm.getParentNode().removeChild(elm);
         }
+    }
+
+    public void removeNode(Node node) {
+        node.getParentNode().removeChild(node);
     }
 
     public MagdaServiceIdentification getServiceIdentification() {

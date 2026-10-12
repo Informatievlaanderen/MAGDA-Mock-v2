@@ -33,7 +33,9 @@ import java.io.StringWriter;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -95,7 +97,25 @@ class SOAPServicesTest {
             current = child;
         }
 
-        Element leaf = document.createElement(parts[parts.length - 1]);
+        String part = parts[parts.length - 1];
+        Map<String, String> attributes = new HashMap<>();
+        if (part.endsWith("]")) {
+            String[] properties = part.split("\\[");
+            part = properties[0];
+            for (int i = 1; i < properties.length; i++) {
+                String prop = properties[i];
+                prop = prop.replace("]", "");
+
+                String[] split = prop.split("=");
+                String k = split[0].replace("@", "");
+                String v = split[1];
+                attributes.put(k,v);
+            }
+        }
+        Element leaf = document.createElement(part);
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
+            leaf.setAttribute(entry.getKey(), entry.getValue());
+        }
         current.appendChild(leaf);
         leaf.setTextContent(value);
     }
