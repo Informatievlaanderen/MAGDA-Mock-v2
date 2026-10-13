@@ -6,6 +6,14 @@
       {
         "path": "INSZ",
         "value": "02651615189"
+      },
+      {
+        "path": "//Criteria/Attest/Naam",
+        "value": "Hoofdverblijfplaats"
+      },
+      {
+        "path": "//Criteria/Attest/Taal",
+        "value": "nl"
       }
     ],
     "xpathExpression": "//Attest/INSZ",
@@ -126,10 +134,30 @@
       {
         "path": "INSZ",
         "value": "00641999774"
+      },
+      {
+        "path": "//Inhoud/Bron",
+        "value": "KSZ"
       }
     ],
     "xpathExpression": "//Achternamen/Achternaam",
     "expectedValue": "Janssens"
+  },
+  {
+    "naam": "GeefHistoriekPersoon",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
+        "value": "00641999774"
+      },
+      {
+        "path": "//Inhoud/Bron",
+        "value": "RR"
+      }
+    ],
+    "xpathExpression": "//Achternamen/Achternaam",
+    "expectedValue": "Peeters"
   },
   {
     "naam": "GeefHistoriekPersoon",
@@ -381,15 +409,47 @@
       },
       {
         "path": "//Criteria/Naam/Achternaam",
-        "value": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "value": "Jansen"
       },
       {
         "path": "//Criteria/Geboorte/Datum",
         "value": "2000-01-01"
       }
     ],
-    "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Geen gegevens gevonden voor de vraag"
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "66664"
+  },
+  {
+    "naam": "ZoekPersoonOpNaam",
+    "versie": "02.02.0000",
+    "requestFields": [
+      {
+        "path": "//Inhoud/Bron",
+        "value": "RR"
+      },
+      {
+        "path": "//Criteria/Naam/Achternaam",
+        "value": "Jansen"
+      },
+      {
+        "path": "//Criteria/Geboorte/Datum",
+        "value": "1995-03-25"
+      },
+      {
+        "path": "//Criteria/Naam/Voornamen/Voornaam",
+        "value": "Jonathan"
+      },
+      {
+        "path": "//Criteria/Naam/Voornamen/Voornaam",
+        "value": "Tim"
+      },
+      {
+        "path": "//Criteria/Naam/Voornamen/Voornaam",
+        "value": "Jos"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "66666"
   },
   {
     "naam": "ZoekPersoonOpNaam",

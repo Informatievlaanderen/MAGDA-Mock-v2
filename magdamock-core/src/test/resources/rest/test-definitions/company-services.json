@@ -20,7 +20,7 @@
     "expectedContentTypeHeader": "application/json"
   },
   {
-    "path": "/v1/company/ubo/companyCompositions/controls?controlType=CEO",
+    "path": "/v1/company/ubo/companyCompositions/controls",
     "query": "",
     "method": "GET",
     "requestBody": "",
@@ -30,7 +30,7 @@
     "expectedContentTypeHeader": "application/json"
   },
   {
-    "path": "/v1/company/ubo/companyCompositions/controls?controlType=CEO",
+    "path": "/v1/company/ubo/companyCompositions/controls",
     "query": "",
     "method": "GET",
     "requestBody": "",

@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/v1/socZek/socialeHuisvesting/dossiers/bijlage",
+    "query": "",
+    "method": "POST",
+    "requestBody": "{\n  \"dossierNummer\": \"2024.02.22.005\",\n  \"bijlageIdentificatie\": \"CCTS-0-12345\",\n  \"partijCode\": \"111\"\n}",
+    "headers": {},
+    "expectedMessage": "special case string body mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+  "path": "/v1/socZek/socialeHuisvesting/dossiers/bijlage",
+  "query": "",
+  "method": "POST",
+  "requestBody": "{\n  \"dossierNummer\": \"2024.02.22.005\",\n  \"bijlageIdentificatie\": \"CCTS-0-12345\",\n  \"partijCode\": \"444\"\n}",
+  "headers": {},
+  "expectedMessage": "special case binary body mapping",
+  "expectedMappingType": "specific",
+  "expectedContentTypeHeader": "application/json"
+}
+]

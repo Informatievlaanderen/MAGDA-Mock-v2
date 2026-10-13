@@ -13,6 +13,7 @@ import com.github.tomakehurst.wiremock.http.ResponseDefinition;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -20,13 +21,16 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @AllArgsConstructor
 public class MagdaSoapMultiFolderResponseTransformer implements ResponseDefinitionTransformerV2 {
     public static String NAME = "magda-soap-multi-folder-response-transformer";
     private final Path filesRoot;
+    // TODO: merge implementation of MagdaSoapFileResponseTransformer and this one (MagdaSoapFileResponseTransformer being a case of 1 single folder)
 
     @Override
     public ResponseDefinition transform(ServeEvent serveEvent) {
@@ -38,7 +42,7 @@ public class MagdaSoapMultiFolderResponseTransformer implements ResponseDefiniti
             String id = parameters.getString("mapping-id");
 
             MultiFolderMockSoapMapping mockSoapMapping = (MultiFolderMockSoapMapping) MappingLists.SOAP_MAPPINGS.stream().filter(mapping -> mapping.getId().equals(id)).findFirst().get();
-            List<String> keys = mockSoapMapping.getKeys();
+            List<String> keys = mockSoapMapping.getFolderXpathKeys();
             MagdaMockDocument requestBody = MagdaMockDocument.fromString(request.getBodyAsString());
             log.debug("Fetching all parameters to find a mapping for {}", mockSoapMapping.getId());
             List<String> xpathValues = keys.stream()
@@ -52,6 +56,15 @@ public class MagdaSoapMultiFolderResponseTransformer implements ResponseDefiniti
                                     .replace("+", "%20")
                     )
                     .toList();
+            Map<String, String> soapParameters = new HashMap<>();
+            for (int i = 0; i < keys.size(); i++){
+                String key = keys.get(i);
+                String value = xpathValues.get(i);
+                soapParameters.put(key, value);
+            }
+            MDC.put("MappingKeys", soapParameters.toString());
+            log.debug("MappingKeys are {}", soapParameters);
+
             List<List<String>> xpathValuesPerSubMapping = new ArrayList<>();
             int index = 0;
             for (Integer amount : mockSoapMapping.getSubfolderNumberOfElements()) {

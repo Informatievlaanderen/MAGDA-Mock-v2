@@ -96,6 +96,10 @@ class RestServicesTest {
             return allRestServices("rest/test-definitions/werk-services.json");
         }
 
+        static Stream<Arguments> allSpecialCases() {
+            return allRestServices("rest/test-definitions/special-cases.json");
+        }
+
         @BeforeEach
         void setUp() throws IOException, URISyntaxException {
             Path path = Paths.get(getClass()
@@ -224,6 +228,29 @@ class RestServicesTest {
                 String expectedMappingType,
                 String expectedContentTypeHeader
         ) {
+        }
+
+
+        @ParameterizedTest
+        @MethodSource("allSpecialCases")
+        @SneakyThrows
+        void testSpecialCases(
+                MagdaMockRestHandler.MockRestRequest mockRestRequest,
+                String expectedMessage
+        ) {
+            Map<String, String> headers = new HashMap<>(mockRestRequest.headers());
+            headers.putIfAbsent("x-correlation-id", UUID.randomUUID().toString());
+            var restRequest = new MagdaMockRestHandler.MockRestRequest(
+                    mockRestRequest.path(),
+                    mockRestRequest.query(),
+                    mockRestRequest.method(),
+                    mockRestRequest.requestBody(),
+                    headers
+            );
+            var response = magdaMockConnection.sendRestRequest(restRequest);
+            Assertions.assertNotNull(response);
+            Assertions.assertEquals(200, response.status());
+            Assertions.assertEquals(expectedMessage, new String(response.body()));
         }
     }
 

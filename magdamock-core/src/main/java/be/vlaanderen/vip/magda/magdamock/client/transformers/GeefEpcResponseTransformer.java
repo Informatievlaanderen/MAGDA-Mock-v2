@@ -14,6 +14,7 @@ import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
+import org.slf4j.MDC;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -21,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,7 +43,7 @@ public class GeefEpcResponseTransformer implements ResponseDefinitionTransformer
             String id = parameters.getString("mapping-id");
 
             MockSoapMapping mockSoapMapping = MappingLists.SOAP_MAPPINGS.stream().filter(mapping -> mapping.getId().equals(id)).findFirst().get();
-            List<String> keys = mockSoapMapping.getKeys();
+            List<String> keys = mockSoapMapping.getFolderXpathKeys();
             MagdaMockDocument requestBody = MagdaMockDocument.fromString(request.getBodyAsString());
             log.debug("Fetching all parameters to find a mapping for {}", mockSoapMapping.getId());
             Map<String, String> xpathValues = keys.stream()
@@ -54,6 +56,8 @@ public class GeefEpcResponseTransformer implements ResponseDefinitionTransformer
                             Pair.of(kv.getKey(), URLEncoder.encode(kv.getValue(), StandardCharsets.UTF_8)
                                     .replace("+", "%20"))
                     ).collect(Collectors.toMap(Pair::getKey, Pair::getValue));
+            MDC.put("MappingKeys", xpathValues.toString());
+            log.debug("MappingKeys are {}", xpathValues);
 
             List<Path> fileOptions = new ArrayList<>();
             List<Path> defaultOptions = new ArrayList<>();
@@ -72,12 +76,23 @@ public class GeefEpcResponseTransformer implements ResponseDefinitionTransformer
                 defaultOptions.add(pathGebouweenheidId);
             }
 
+            String postcode = xpathValues.getOrDefault(MappingLists.KEY_ADRES_POSTCODE, "");
             String gemeenteNaam = xpathValues.getOrDefault(MappingLists.KEY_ADRES_GEMEENTE, "");
-            if (!gemeenteNaam.isEmpty()) {
+            if (!postcode.isEmpty() || !gemeenteNaam.isEmpty()) {
                 Path pathAdres = mappingPath.resolve("Adres");
-                Path pathAdresGemeenete = pathAdres.resolve(gemeenteNaam);
-                fileOptions.addAll(determineFilenameOptionsForFlatfile(List.of(xpathValues.get(MappingLists.KEY_ADRES_STRAAT),xpathValues.get(MappingLists.KEY_ADRES_HUISNUMMER), xpathValues.get(MappingLists.KEY_ADRES_BUSNUMMER)), pathAdresGemeenete));
-                defaultOptions.add(pathAdresGemeenete);
+
+                if (!postcode.isEmpty()) {
+                    Path pathAdresPostcode = pathAdres.resolve(postcode);
+                    fileOptions.addAll(determineFilenameOptionsForFlatfile(List.of(xpathValues.get(MappingLists.KEY_ADRES_STRAAT), xpathValues.get(MappingLists.KEY_ADRES_HUISNUMMER), xpathValues.get(MappingLists.KEY_ADRES_BUSNUMMER)), pathAdresPostcode));
+                    defaultOptions.add(pathAdresPostcode);
+                }
+
+                if (!gemeenteNaam.isEmpty()) {
+                    Path pathAdresGemeenete = pathAdres.resolve(gemeenteNaam);
+                    fileOptions.addAll(determineFilenameOptionsForFlatfile(List.of(xpathValues.get(MappingLists.KEY_ADRES_STRAAT), xpathValues.get(MappingLists.KEY_ADRES_HUISNUMMER), xpathValues.get(MappingLists.KEY_ADRES_BUSNUMMER)), pathAdresGemeenete));
+                    defaultOptions.add(pathAdresGemeenete);
+                }
+
                 defaultOptions.add(pathAdres);
             }
 

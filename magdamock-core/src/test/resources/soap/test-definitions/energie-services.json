@@ -72,6 +72,50 @@
     "versie": "02.01.0000",
     "requestFields": [
       {
+        "path": "//Criteria/Adres/Straat",
+        "value": "Kerkstraat"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "20"
+      },
+      {
+        "path": "//Criteria/Adres/Postcode",
+        "value": "0612"
+      }
+    ],
+    "xpathExpression": "//Attestnummer",
+    "expectedValue": "20170401-0001985264-5"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Adres/Straat",
+        "value": "Kerkstraat"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "10"
+      },
+      {
+        "path": "//Criteria/Adres/Busnummer",
+        "value": "A"
+      },
+      {
+        "path": "//Criteria/Adres/Postcode",
+        "value": "0612"
+      }
+    ],
+    "xpathExpression": "//Attestnummer",
+    "expectedValue": "20151015-0001324567-6"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
         "path": "//Criteria/Attestnummer",
         "value": "20151015-0001324567-1"
       }
@@ -129,6 +173,26 @@
     ],
     "xpathExpression": "//Uitzondering/Identificatie",
     "expectedValue": "30003"
+  },
+  {
+    "naam": "GeefEpc",
+    "versie": "02.01.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Adres/Straat",
+        "value": "Kerkstraatttt"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "20"
+      },
+      {
+        "path": "//Criteria/Adres/Gemeente",
+        "value": "0612"
+      }
+    ],
+    "xpathExpression": "//Uitzondering/Identificatie",
+    "expectedValue": "30004"
   },
   {
     "naam": "GeefEpc",

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <web:ZoekPersoonOpNaamResponse xmlns:web="http://magda.vlaanderen.be/persoon/soap/zoekpersoonopnaam/v02_02">
     <Repliek>
         <Context>
@@ -7,34 +7,34 @@
             <Bericht>
                 <Type>ANTWOORD</Type>
                 <Tijdstip>
-                    <Datum>2021-04-19</Datum>
-                    <Tijd>12:47:42.361</Tijd>
+					<Datum>0001-01-01</Datum>
+					<Tijd>00:00:00.000</Tijd>
                 </Tijdstip>
                 <Afzender>
-                    <Identificatie>vip.vlaanderen.be</Identificatie>
-                    <Naam>MagdaGateway</Naam>
-                    <Referte>159d70b1-a6ba-45b6-ba97-cba30d17e065</Referte>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
                 </Afzender>
                 <Ontvanger>
-                    <Identificatie>kb.vlaanderen.be/aiv/burgerloket-wwoom-aip</Identificatie>
-                    <Referte>0437dd31-9d7b-469f-90d4-b021f4e39bdb</Referte>
-                    <Hoedanigheid>1303</Hoedanigheid>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
                 </Ontvanger>
             </Bericht>
         </Context>
         <Antwoorden>
             <Antwoord>
-                <Referte>0437dd31-9d7b-469f-90d4-b021f4e39bdb</Referte>
+                <Referte>?</Referte>
                 <Uitzonderingen>
                     <Uitzondering>
-                        <Identificatie>30001</Identificatie>
+                        <Identificatie>66666</Identificatie>
                         <Oorsprong>RR</Oorsprong>
                         <Type>FOUT</Type>
                         <Tijdstip>
-                            <Datum>2021-04-19</Datum>
-                            <Tijd>12:47:42.361</Tijd>
+                            <Datum>0001-01-01</Datum>
+                            <Tijd>00:00:00.000</Tijd>
                         </Tijdstip>
-                        <Diagnose>Geen gegevens gevonden voor de vraag</Diagnose>
+                        <Diagnose>Er heeft zich een onbekende fout voorgedaan.</Diagnose>
                         <Omstandigheid>140</Omstandigheid>
                     </Uitzondering>
                 </Uitzonderingen>

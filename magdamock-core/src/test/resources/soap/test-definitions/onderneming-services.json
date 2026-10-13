@@ -124,11 +124,11 @@
     "requestFields": [
       {
         "path": "INSZ",
-        "value": "00600099734"
+        "value": "79650415395"
       }
     ],
     "xpathExpression": "//FunctiehouderVan",
-    "expectedValue": "0242069537"
+    "expectedValue": "1999990243"
   },
   {
     "naam": "GeefFuncties",
@@ -136,11 +136,63 @@
     "requestFields": [
       {
         "path": "INSZ",
-        "value": "10600099734"
+        "value": "79650415395"
+      },
+      {
+        "path": "//Criteria/Persoon/Ondernemingsnummer",
+        "value": "1999990441"
+      },
+      {
+        "path": "//Criteria/Persoon/AardFuncties/AardFunctie",
+        "value": "10004"
       }
     ],
-    "xpathExpression": "//Uitzondering/Diagnose",
-    "expectedValue": "Geen gegevens gevonden voor de vraag!"
+    "xpathExpression": "//AardFunctie/Code",
+    "expectedValue": "10004"
+  },
+  {
+    "naam": "GeefFuncties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Onderneming/Ondernemingsnummer[@Type=FunctieIn]",
+        "value": "1999990639"
+      }
+    ],
+    "xpathExpression": "//Ondernemingsnummer",
+    "expectedValue": "1999990138"
+  },
+  {
+    "naam": "GeefFuncties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Onderneming/Ondernemingsnummer[@Type=FunctieHouder]",
+        "value": "1999990639"
+      }
+    ],
+    "xpathExpression": "//FunctiehouderVan",
+    "expectedValue": "1999990738"
+  },
+  {
+    "naam": "GeefFuncties",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Onderneming/Ondernemingsnummer[@Type=FunctieIn]",
+        "value": "1999990639"
+      },
+      {
+        "path": "//Criteria/Onderneming/Ondernemingsnummer[@Type=FunctieHouder]",
+        "value": "1999990441"
+      },
+      {
+        "path": "//Criteria/Persoon/AardFuncties/AardFunctie",
+        "value": "10002"
+      }
+    ],
+    "xpathExpression": "//AardFunctie/Code",
+    "expectedValue": "10002"
   },
   {
     "naam": "GeefJaarrekeningen",
@@ -317,6 +369,34 @@
     ],
     "xpathExpression": "//Uitzondering/Diagnose",
     "expectedValue": "Geen gegevens gevonden voor de vraag!"
+  },
+  {
+    "naam": "ZoekOnderneming",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "//Criteria/Naam",
+        "value": "Stad Brugge"
+      },
+      {
+        "path": "//Criteria/Adres/GemeenteNISCode",
+        "value": "31005"
+      },
+      {
+        "path": "//Criteria/Adres/GemeentePostCode",
+        "value": "8000"
+      },
+      {
+        "path": "//Criteria/Adres/StraatCode",
+        "value": "0047"
+      },
+      {
+        "path": "//Criteria/Adres/Huisnummer",
+        "value": "12"
+      }
+    ],
+    "xpathExpression": "//Ondernemingen/Onderneming/Ondernemingsnummer",
+    "expectedValue": "0207528034"
   },
   {
     "naam": "ZoekOnderneming",

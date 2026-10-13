@@ -17,14 +17,17 @@ import com.github.tomakehurst.wiremock.http.ResponseDefinition;
 import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @AllArgsConstructor
@@ -93,12 +96,10 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
 
             if (response.has("body")) {
                 String textBody = response.get("body").asText();
-                byte[] binaryBody = response.get("body").binaryValue();
-                if (textBody != null) {
-                    responseDefinitionBuilder = responseDefinitionBuilder.withBody(textBody);
-                } else {
-                    responseDefinitionBuilder = responseDefinitionBuilder.withBody(binaryBody);
-                }
+                responseDefinitionBuilder = responseDefinitionBuilder.withBody(textBody);
+            } else if (response.has("base64Body")) {
+                byte[] binaryBody = response.get("base64Body").binaryValue();
+                responseDefinitionBuilder = responseDefinitionBuilder.withBody(binaryBody);
             } else if (response.has("jsonBody")) {
                 JsonNode body = response.get("jsonBody");
                 responseDefinitionBuilder = responseDefinitionBuilder.withJsonBody(body);
@@ -137,9 +138,11 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
 
     private List<String> getUrlAndQueryParameters(Request request, MockRestMapping mockRestMapping) {
         List<String> fileParts = new ArrayList<>();
+        List<RestParameter> keys = new ArrayList<>();
 
         for (RestParameter restParameter : mockRestMapping.restParameters()) {
             String key = restParameter.getValue();
+            keys.add(restParameter);
             switch (restParameter.getType()) {
                 case HEADER -> fileParts.add(request.getHeader(key));
                 case QUERY -> {
@@ -170,6 +173,15 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
                 }
             }
         }
+
+        Map<String, String> restParameters = new HashMap<>();
+        for (int i = 0; i < keys.size(); i++){
+            RestParameter key = keys.get(i);
+            String value = fileParts.get(i);
+            restParameters.put(String.format("%s (%s)", key.getValue(), key.getType()), value);
+        }
+        MDC.put("MappingKeys", restParameters.toString());
+        log.debug("MappingKeys are {}", restParameters);
 
         return fileParts.stream()
                 .map(s ->

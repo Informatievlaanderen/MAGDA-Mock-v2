@@ -10,9 +10,9 @@ public class MultiFolderMockSoapMapping extends MockSoapMapping {
     private List<Integer> subfolderNumberOfElements;
 
     public MultiFolderMockSoapMapping(String domain, String service, String version,
-                                      List<String> keys, String separator, String xsdRequestPath, String xsdResponsePath,
+                                      List<String> keys, String xsdRequestPath, String xsdResponsePath,
                                       List<String> subfolders, List<Integer> subfolderNumberOfElements) {
-        super(domain, service, version, keys, separator, xsdRequestPath, xsdResponsePath, StubHandler.MultiFolder, MissingParameterConfiguration.EmptyString);
+        super(domain, service, version, keys, List.of(), xsdRequestPath, xsdResponsePath, StubHandler.MultiFolder, MissingParameterConfiguration.EmptyString);
         this.subfolders = subfolders;
         this.subfolderNumberOfElements = subfolderNumberOfElements;
     }

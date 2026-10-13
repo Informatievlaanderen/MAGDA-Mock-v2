@@ -185,6 +185,22 @@
     "requestFields": [
       {
         "path": "INSZ",
+        "value": "00631499723"
+      },
+      {
+        "path": "//Criteria/Jaar",
+        "value": "2020"
+      }
+    ],
+    "xpathExpression": "//Leefloonbedrag/Jaar",
+    "expectedValue": "2020"
+  },
+  {
+    "naam": "GeefLeefloonbedragen",
+    "versie": "02.00.0000",
+    "requestFields": [
+      {
+        "path": "INSZ",
         "value": "00631499720"
       }
     ],
