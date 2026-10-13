@@ -30,6 +30,7 @@ import java.util.Map;
 public class MagdaSoapMultiFolderResponseTransformer implements ResponseDefinitionTransformerV2 {
     public static String NAME = "magda-soap-multi-folder-response-transformer";
     private final Path filesRoot;
+    // TODO: merge implementation of MagdaSoapFileResponseTransformer and this one (MagdaSoapFileResponseTransformer being a case of 1 single folder)
 
     @Override
     public ResponseDefinition transform(ServeEvent serveEvent) {
@@ -41,7 +42,7 @@ public class MagdaSoapMultiFolderResponseTransformer implements ResponseDefiniti
             String id = parameters.getString("mapping-id");
 
             MultiFolderMockSoapMapping mockSoapMapping = (MultiFolderMockSoapMapping) MappingLists.SOAP_MAPPINGS.stream().filter(mapping -> mapping.getId().equals(id)).findFirst().get();
-            List<String> keys = mockSoapMapping.getKeys();
+            List<String> keys = mockSoapMapping.getFolderXpathKeys();
             MagdaMockDocument requestBody = MagdaMockDocument.fromString(request.getBodyAsString());
             log.debug("Fetching all parameters to find a mapping for {}", mockSoapMapping.getId());
             List<String> xpathValues = keys.stream()

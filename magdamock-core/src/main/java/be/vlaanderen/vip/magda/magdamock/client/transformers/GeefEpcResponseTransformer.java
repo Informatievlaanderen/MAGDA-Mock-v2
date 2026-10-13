@@ -43,7 +43,7 @@ public class GeefEpcResponseTransformer implements ResponseDefinitionTransformer
             String id = parameters.getString("mapping-id");
 
             MockSoapMapping mockSoapMapping = MappingLists.SOAP_MAPPINGS.stream().filter(mapping -> mapping.getId().equals(id)).findFirst().get();
-            List<String> keys = mockSoapMapping.getKeys();
+            List<String> keys = mockSoapMapping.getFolderXpathKeys();
             MagdaMockDocument requestBody = MagdaMockDocument.fromString(request.getBodyAsString());
             log.debug("Fetching all parameters to find a mapping for {}", mockSoapMapping.getId());
             Map<String, String> xpathValues = keys.stream()

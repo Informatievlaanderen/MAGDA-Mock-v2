@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web:ZoekPersoonOpNaamResponse xmlns:web="http://magda.vlaanderen.be/persoon/soap/zoekpersoonopnaam/v02_02">
+    <Repliek>
+        <Context>
+            <Naam>ZoekPersoonOpNaam</Naam>
+            <Versie>02.02.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+					<Datum>0001-01-01</Datum>
+					<Tijd>00:00:00.000</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Uitzonderingen>
+                    <Uitzondering>
+                        <Identificatie>66664</Identificatie>
+                        <Oorsprong>RR</Oorsprong>
+                        <Type>FOUT</Type>
+                        <Tijdstip>
+                            <Datum>0001-01-01</Datum>
+                            <Tijd>00:00:00.000</Tijd>
+                        </Tijdstip>
+                        <Diagnose>Er heeft zich een onbekende fout voorgedaan.</Diagnose>
+                        <Omstandigheid>140</Omstandigheid>
+                    </Uitzondering>
+                </Uitzonderingen>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:ZoekPersoonOpNaamResponse>
+

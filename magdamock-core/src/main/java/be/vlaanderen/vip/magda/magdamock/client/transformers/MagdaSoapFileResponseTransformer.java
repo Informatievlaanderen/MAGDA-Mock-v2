@@ -5,7 +5,6 @@ import be.vlaanderen.vip.magda.magdamock.client.logging.SoapLogHelper;
 import be.vlaanderen.vip.magda.magdamock.config.MappingLists;
 import be.vlaanderen.vip.magda.magdamock.config.MissingParameterConfiguration;
 import be.vlaanderen.vip.magda.magdamock.config.MockSoapMapping;
-import be.vlaanderen.vip.magda.magdamock.config.rest.RestParameter;
 import be.vlaanderen.vip.magda.magdamock.utils.MagdaMockDocument;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.extension.Parameters;
@@ -45,39 +44,32 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
             String version = parameters.getString("version");
 
             MockSoapMapping mockSoapMapping = MappingLists.SOAP_MAPPINGS.stream().filter(mapping -> mapping.getService().equals(service) && mapping.getVersion().equals(version)).findFirst().get();
-            List<String> keys = mockSoapMapping.getKeys();
-            MagdaMockDocument requestBody = MagdaMockDocument.fromString(request.getBodyAsString());
             log.debug("Fetching all parameters to find a mapping for {}", mockSoapMapping.getId());
-            List<String> xpathValues = keys.stream()
-                    .map(requestBody::getValue)
-                    .map(s -> {
-                        if (s == null) return "";
-                        else return s;
-                    })
-                    .map(s ->
-                            URLEncoder.encode(s, StandardCharsets.UTF_8)
-                                    .replace("+", "%20")
-                    )
-                    .toList();
-            Map<String, String> soapParameters = new HashMap<>();
-            for (int i = 0; i < keys.size(); i++){
-                String key = keys.get(i);
-                String value = xpathValues.get(i);
-                soapParameters.put(key, value);
-            }
-            MDC.put("MappingKeys", soapParameters.toString());
-            log.debug("MappingKeys are {}", soapParameters);
-
+            MagdaMockDocument requestBody = MagdaMockDocument.fromString(request.getBodyAsString());
+            List<String> fileXpathKeys = mockSoapMapping.getFileXpathKeys();
+            List<String> fileXpathValues = getXpathMappings(fileXpathKeys, requestBody);
+            List<String> folderXpathKeys = mockSoapMapping.getFolderXpathKeys();
+            List<String> folderXpathValues = getXpathMappings(folderXpathKeys, requestBody);
+            logSoapParameters(fileXpathKeys, fileXpathValues, folderXpathKeys, folderXpathValues);
 
             List<String> fileNames;
-            if (mockSoapMapping.getStubHandler().equals(MockSoapMapping.StubHandler.FileSoap)) {
-                if (mockSoapMapping.getMissingParameterConfiguration().equals(MissingParameterConfiguration.Wildcard)) {
-                    fileNames = determineFilenameOptionsForFlatfileWithWildcardBlanks(xpathValues);
+            if (!fileXpathKeys.isEmpty()) {
+                if (mockSoapMapping.getMissingParameterConfiguration().equals(MissingParameterConfiguration.Wildcard)){
+                    fileNames = determineFilenameOptionsForFlatfileWithWildcardBlanks(fileXpathValues);
                 } else {
-                    fileNames = determineFilenameOptionsForFlatfile(xpathValues);
+                    fileNames = determineFilenameOptionsForFlatfile(fileXpathValues);
                 }
+                String prefix = String.join("/", folderXpathValues);
+                if (!prefix.isEmpty()) {
+                    fileNames = fileNames.stream().map(s -> String.join("/", List.of(prefix, s))).toList();
+                }
+                List<String> copyFolderXpathValues = new ArrayList<>(folderXpathValues);
+                copyFolderXpathValues.add("");
+                List<String> defaultFiles = determineFilenameOptionsForSubdir(copyFolderXpathValues);
+                fileNames = new ArrayList<>(fileNames);
+                fileNames.addAll(defaultFiles);
             } else {
-                fileNames = determineFilenameOptionsForSubdir(xpathValues);
+                fileNames = determineFilenameOptionsForSubdir(folderXpathValues);
             }
 
             boolean stop = false;
@@ -116,6 +108,22 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
                     .withHeader("Content-Type", "text/plain; charset=utf-8")
                     .build();
         }
+    }
+
+    private void logSoapParameters(List<String> fileXpathKeys, List<String> fileXpathValues, List<String> folderXpathKeys, List<String> folderXpathValues) {
+        Map<String, String> soapParameters = new HashMap<>();
+        for (int i = 0; i < fileXpathKeys.size(); i++) {
+            String key = fileXpathKeys.get(i);
+            String value = fileXpathValues.get(i);
+            soapParameters.put(key, value);
+        }
+        for (int i = 0; i < folderXpathKeys.size(); i++) {
+            String key = folderXpathKeys.get(i);
+            String value = folderXpathValues.get(i);
+            soapParameters.put(key, value);
+        }
+        MDC.put("MappingKeys", soapParameters.toString());
+        log.debug("MappingKeys are {}", soapParameters);
     }
 
     private List<String> determineFilenameOptionsForFlatfile(List<String> xpathValues) {
@@ -182,6 +190,19 @@ public class MagdaSoapFileResponseTransformer implements ResponseDefinitionTrans
         return fileNames;
     }
 
+    private List<String> getXpathMappings(List<String> xpathKeys, MagdaMockDocument requestBody) {
+        return xpathKeys.stream()
+                .map(requestBody::getValue)
+                .map(s -> {
+                    if (s == null) return "";
+                    else return s;
+                })
+                .map(s ->
+                        URLEncoder.encode(s, StandardCharsets.UTF_8)
+                                .replace("+", "%20")
+                )
+                .toList();
+    }
 
     @Override
     public String getName() {
