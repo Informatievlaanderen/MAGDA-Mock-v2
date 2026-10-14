@@ -98,7 +98,10 @@ public record MockRestMapping(List<String> folderPath,
             new MockRestMapping(List.of("v1", "company", "ubo", "controls", "get"), List.of(RestPathParameter.of("controlId")), "/v1/company/ubo/controls/{controlId}", "GET"),
 
             //werk
-            new MockRestMapping(List.of("v1", "werk", "verrichtingen", "get"), List.of(RestHeaderParameter.of("x-insz")), "/v1/werk/verrichtingen", "GET")
+            new MockRestMapping(List.of("v1", "werk", "verrichtingen", "get"), List.of(RestHeaderParameter.of("x-insz")), "/v1/werk/verrichtingen", "GET"),
+
+            //voertuigregistraties
+            new MockRestMapping(List.of("v1", "mobility", "voertuigregistraties", "get"), List.of(RestQueryParameter.of("land"), RestQueryParameter.of("kenteken1"), RestQueryParameter.of("kenteken2")), "/v1/mobility/voertuigregistraties", "GET")
 
     );
 

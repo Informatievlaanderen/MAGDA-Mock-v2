@@ -98,5 +98,45 @@
     "expectedMessage": "rest mobility mapping",
     "expectedMappingType": "default",
     "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/voertuigregistraties",
+    "query": "land=BE&kenteken1=1DSI823",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest voertuigregistraties mapping land kenteken1 BE",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/voertuigregistraties",
+    "query": "land=NL&kenteken1=04GSRS&overtreding=1",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest voertuigregistraties mapping land kenteken1 NL",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/voertuigregistraties",
+    "query": "land=DE&kenteken1=WOB&kenteken2=ZK295",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest voertuigregistraties mapping land kenteken1 kenteken2",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/voertuigregistraties",
+    "query": "land=BE&kenteken1=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest voertuigregistraties mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
   }
 ]
