@@ -196,7 +196,7 @@ public class MagdaRestFileResponseTransformer implements ResponseDefinitionTrans
         if (!mockRestMapping.defaultOnly()) {
             List<String> filenameParts = new ArrayList<>(fileParts);
             fileNames.add(String.join("&", filenameParts));
-            while (!filenameParts.isEmpty() && filenameParts.getLast().isBlank()) {
+            while (!filenameParts.isEmpty()) {
                 filenameParts.removeLast();
                 fileNames.add(String.join("&", filenameParts));
             }
