@@ -238,5 +238,75 @@
     "expectedMessage": "rest movementIndications mapping",
     "expectedMappingType": "default",
     "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=2026-01-01",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping date",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=2026-06-10&vehicleCategory=M1",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping date vehicleCategory",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=2026-01-01&vehicleCategory=N1",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping date",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=2026-06-10",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=2026-06-10&vehicleCategory=N1",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
   }
 ]
