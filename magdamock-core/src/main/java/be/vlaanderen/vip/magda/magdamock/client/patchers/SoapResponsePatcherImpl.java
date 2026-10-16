@@ -39,6 +39,10 @@ public class SoapResponsePatcherImpl implements SoapResponsePatcher {
                 new GeefFunctiesResponsePatcher()
         );
         patcherMap.put(
+                new MagdaMockDocument.MagdaServiceIdentification("GeefBetalingenHandicap", VERSION_03_00),
+                new GeefBetalingenHandicapResponsePatcher()
+        );
+        patcherMap.put(
                 new MagdaMockDocument.MagdaServiceIdentification("GeefPasfoto", VERSION_02_00),
                 new SimpleXpathPatcher("//Inhoud/Pasfoto/INSZ", "//Criteria/INSZ")
         );
