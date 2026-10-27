@@ -143,7 +143,7 @@ public class GeefEpcResponseTransformer implements ResponseDefinitionTransformer
         List<String> fileNames = new ArrayList<>();
         List<String> filenameParts = new ArrayList<>(xpathValues);
         fileNames.add(String.join("&", filenameParts));
-        while (!filenameParts.isEmpty() && filenameParts.getLast().isBlank()) {
+        while (!filenameParts.isEmpty()) {
             filenameParts.removeLast();
             fileNames.add(String.join("&", filenameParts));
         }

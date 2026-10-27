@@ -98,5 +98,305 @@
     "expectedMessage": "rest mobility mapping",
     "expectedMappingType": "default",
     "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/voertuigregistraties",
+    "query": "land=BE&kenteken1=1DSI823",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest voertuigregistraties mapping land kenteken1 BE",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/voertuigregistraties",
+    "query": "land=NL&kenteken1=04GSRS&overtreding=1",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest voertuigregistraties mapping land kenteken1 NL",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/voertuigregistraties",
+    "query": "land=DE&kenteken1=WOB&kenteken2=ZK295",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest voertuigregistraties mapping land kenteken1 kenteken2",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/voertuigregistraties",
+    "query": "land=BE&kenteken1=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest voertuigregistraties mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/rowDetails",
+    "query": "plateNr=1KLM284",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications mapping plateNr",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/rowDetails",
+    "query": "plateUID=0282335146",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications mapping plateUID",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/rowDetails",
+    "query": "vin=WDB98765432109876",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications mapping vin",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/rowDetails",
+    "query": "vin=WDB98765432109876&unifier=01",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications mapping vin unifier",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/rowDetails",
+    "query": "vin=WDB98765432109876&unifier=99",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications mapping vin",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/rowDetails",
+    "query": "nationalNr=84691585173",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications mapping nationalNr",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/rowDetails",
+    "query": "companyNr=0465771828",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications mapping companyNr",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/rowDetails",
+    "query": "plateNr=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/rowDetails",
+    "query": "vin=unknown&unifier=01",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/rowDetails",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=2026-01-01",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping date",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=2026-06-10&vehicleCategory=M1",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping date vehicleCategory",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=2026-01-01&vehicleCategory=N1",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping date",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=2026-06-10",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=2026-06-10&vehicleCategory=N1",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "date=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/movementIndications/transactions",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest movementIndications transactions mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "plateNr=1DSI823",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationTitular plateNr mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "text/plain"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "plateUID=8218076670",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationTitular plateUID mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "text/plain"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "vin=SALLMAMU2KA7B8C9D",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationTitular vin mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "text/plain"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "vin=SALLMAMU2KA7B8C9D&unifier=01",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationTitular vin unifier mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "text/plain"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "vin=SALLMAMU2KA7B8C9D&unifier=99",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationTitular vin mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "text/plain"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "plateNr=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationsTitular mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "plateUID=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationsTitular mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "vin=unknown&unifier=01",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationsTitular mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationsTitular mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
   }
 ]

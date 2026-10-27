@@ -1,0 +1,9 @@
+{
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {"message": "rest movementIndications transactions mapping", "mappingType": "default"}
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "response": {
+    "status": 200,
+    "jsonBody": {"message": "rest movementIndications transactions mapping date vehicleCategory", "mappingType": "specific"}
+  }
+}
