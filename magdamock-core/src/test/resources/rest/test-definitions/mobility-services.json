@@ -308,5 +308,95 @@
     "expectedMessage": "rest movementIndications transactions mapping",
     "expectedMappingType": "default",
     "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "plateNr=1DSI823",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationTitular plateNr mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "text/plain"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "plateUID=8218076670",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationTitular plateUID mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "text/plain"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "vin=SALLMAMU2KA7B8C9D",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationTitular vin mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "text/plain"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "vin=SALLMAMU2KA7B8C9D&unifier=01",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationTitular vin unifier mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "text/plain"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "vin=SALLMAMU2KA7B8C9D&unifier=99",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationTitular vin mapping",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "text/plain"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "plateNr=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationsTitular mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "plateUID=unknown",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationsTitular mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "vin=unknown&unifier=01",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationsTitular mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/mobility/registrationsTitular",
+    "query": "",
+    "method": "GET",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "rest mobility registrationsTitular mapping",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
   }
 ]

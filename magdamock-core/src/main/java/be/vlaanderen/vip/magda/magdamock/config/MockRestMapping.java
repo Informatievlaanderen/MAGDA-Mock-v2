@@ -112,7 +112,13 @@ public record MockRestMapping(List<String> folderPath,
             new MockRestMapping(List.of("v1", "mobility", "movementIndications", "rowDetails", "get"), List.of(), "/v1/mobility/movementIndications/rowDetails", "GET", true),
 
             //transactions
-            new MockRestMapping(List.of("v1", "mobility", "movementIndications", "transactions", "get"), List.of(RestQueryParameter.of("date"), RestQueryParameter.of("vehicleCategory")), "/v1/mobility/movementIndications/transactions", "GET")
+            new MockRestMapping(List.of("v1", "mobility", "movementIndications", "transactions", "get"), List.of(RestQueryParameter.of("date"), RestQueryParameter.of("vehicleCategory")), "/v1/mobility/movementIndications/transactions", "GET"),
+
+            //registrationsTitular
+            new MockRestMapping(List.of("v1", "mobility", "registrationsTitular", "get", "plateNr"), List.of(RestQueryParameter.of("plateNr")), "/v1/mobility/registrationsTitular", "GET"),
+            new MockRestMapping(List.of("v1", "mobility", "registrationsTitular", "get", "plateUID"), List.of(RestQueryParameter.of("plateUID")), "/v1/mobility/registrationsTitular", "GET"),
+            new MockRestMapping(List.of("v1", "mobility", "registrationsTitular", "get", "vin"), List.of(RestQueryParameter.of("vin"), RestQueryParameter.of("unifier")), "/v1/mobility/registrationsTitular", "GET"),
+            new MockRestMapping(List.of("v1", "mobility", "registrationsTitular", "get"), List.of(), "/v1/mobility/registrationsTitular", "GET", true)
 
     );
 
