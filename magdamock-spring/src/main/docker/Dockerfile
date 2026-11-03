@@ -2,6 +2,11 @@ FROM docker.io/eclipse-temurin:25-jre
 
 VOLUME /tmp
 
+# These volumes are required for deployment in argocd
+VOLUME /secrets
+VOLUME /vault/secrets
+VOLUME /config
+
 COPY target/*.jar /target/
 
 RUN ln -s $(find target -name "*.jar" ! -name "*-plain.jar" | head -n 1) /app.jar
