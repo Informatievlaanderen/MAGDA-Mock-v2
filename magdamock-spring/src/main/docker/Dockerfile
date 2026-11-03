@@ -1,8 +1,10 @@
-FROM eclipse-temurin:25-jre
+FROM docker.io/eclipse-temurin:25-jre
 
 VOLUME /tmp
 
 COPY target/*.jar /target/
+
+RUN ln -s $(find target -name "*.jar" ! -name "*-plain.jar" | head -n 1) /app.jar
 
 COPY src/main/resources/magda.xsd /data/magda.xsd
 COPY src/main/resources/scripts /data/scripts
