@@ -1,10 +1,13 @@
-FROM eclipse-temurin:25-jre
+ARG BASE_IMAGE="eclipse-temurin:25-jre"
+FROM ${BASE_IMAGE}
+
+USER root
 
 VOLUME /tmp
 
 COPY target/*.jar /target/
 
-RUN ln -s $(find target -name "*.jar" ! -name "*-plain.jar" | head -n 1) /app.jar
+RUN ln -s $(find /target -name "*.jar" ! -name "*-plain.jar" | head -n 1) /app.jar
 
 COPY src/main/resources/magda.xsd /data/magda.xsd
 COPY src/main/resources/scripts /data/scripts

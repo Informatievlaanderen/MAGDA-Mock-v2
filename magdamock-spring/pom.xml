@@ -110,6 +110,9 @@
                                     <build>
                                         <contextDir>${project.basedir}</contextDir>
                                         <dockerFile>src/main/docker/Dockerfile</dockerFile>
+                                        <args>
+                                            <BASE_IMAGE>vlaamseoverheid-magda-docker-public.jfrog.io/magda/vdip-java:${vdip-java.version}</BASE_IMAGE>
+                                        </args>
                                         <tags>
                                             <tag>${project.version}</tag>
                                         </tags>
@@ -161,6 +164,9 @@
                                     <build>
                                         <contextDir>${project.basedir}</contextDir>
                                         <dockerFile>src/main/docker/Dockerfile</dockerFile>
+                                        <args>
+                                            <BASE_IMAGE>vlaamseoverheid-magda-docker-public.jfrog.io/magda/vdip-java:${vdip-java.version}</BASE_IMAGE>
+                                        </args>
                                         <tags>
                                             <tag>${project.version}</tag>
                                         </tags>
