@@ -5,6 +5,8 @@ VOLUME /tmp
 COPY target/${project.build.finalName}.jar /opt/app/app.jar
 # The helm chart expects this location
 COPY target/${project.build.finalName}.jar /target/app.jar
+# Service base expects this location
+COPY target/${project.build.finalName}.jar /app.jar
 
 COPY --chown=javauser:javauser src/main/resources/magda.xsd /data-internal/magda.xsd
 COPY --chown=javauser:javauser src/main/resources/scripts /data-internal/scripts
