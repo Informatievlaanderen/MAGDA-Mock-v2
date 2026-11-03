@@ -109,7 +109,7 @@
                                     </name>
                                     <build>
                                         <contextDir>${project.basedir}</contextDir>
-                                        <dockerFile>src/main/docker/Dockerfile-internal</dockerFile>
+                                        <dockerFile>src/main/docker/Dockerfile</dockerFile>
                                         <tags>
                                             <tag>${project.version}</tag>
                                         </tags>
@@ -160,7 +160,7 @@
                                     </name>
                                     <build>
                                         <contextDir>${project.basedir}</contextDir>
-                                        <dockerFile>src/main/docker/Dockerfile-internal</dockerFile>
+                                        <dockerFile>src/main/docker/Dockerfile</dockerFile>
                                         <tags>
                                             <tag>${project.version}</tag>
                                         </tags>
