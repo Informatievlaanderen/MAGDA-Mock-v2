@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # This entrypoint will first patch the XSD files (e.g. to ensure that testnumbers for INSZ are allowed)
-# It is assumed that the XSD files are mounted on /data/magda.xsd
+# It is assumed that the XSD files are mounted on /data-internal/magda.xsd
 
 pwd_before=$PWD
 
-cd /data
-/data/scripts/update-xsd-files.sh
+cd /data-internal
+/data-internal/scripts/update-xsd-files.sh
 
 cd $pwd_before
 cd /

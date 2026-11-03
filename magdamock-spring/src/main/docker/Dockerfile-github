@@ -4,8 +4,8 @@ VOLUME /tmp
 
 COPY target/*.jar /target/
 
-COPY src/main/resources/magda.xsd /data/magda.xsd
-COPY src/main/resources/scripts /data/scripts
+COPY src/main/resources/magda.xsd /data-internal/magda.xsd
+COPY src/main/resources/scripts /data-internal/scripts
 
 EXPOSE 8080:8080
 
