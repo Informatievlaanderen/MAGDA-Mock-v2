@@ -180,6 +180,26 @@
     "expectedContentTypeHeader": "application/json"
   },
   {
+    "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/contactgegevens",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging contactgegevens post",
+    "expectedMappingType": "specific",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
+    "path": "/v1/organisaties/verenigingen/verenigingen/unknown/contactgegevens",
+    "query": "",
+    "method": "POST",
+    "requestBody": "",
+    "headers": {},
+    "expectedMessage": "vereniging contactgegevens post",
+    "expectedMappingType": "default",
+    "expectedContentTypeHeader": "application/json"
+  },
+  {
     "path": "/v1/organisaties/verenigingen/verenigingen/V0123456/contactgegevens/1",
     "query": "",
     "method": "DELETE",
