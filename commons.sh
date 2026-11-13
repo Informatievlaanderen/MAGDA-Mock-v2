@@ -15,7 +15,7 @@ install_helm() {
 
 update_git_remote() {
   echo "Updating remote origin url"
-  git remote set-url origin "git@bitbucket.org:${BITBUCKET_REPO_FULL_NAME}.git"
+  git remote set-url origin "git@ssh.bitbucket.org:${BITBUCKET_REPO_FULL_NAME}.git"
 }
 
 update_git_config() {
