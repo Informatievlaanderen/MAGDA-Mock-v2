@@ -1,4 +1,4 @@
-FROM docker.io/eclipse-temurin:25-jre
+FROM docker.io/eclipse-temurin:25.0.5.1_2-jre
 
 VOLUME /tmp
 

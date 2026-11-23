@@ -93,7 +93,7 @@ definitions:
     - step: &githubMirror
         name: Mirror to GitHub
         script:
-          - git clone --bare git@bitbucket.org:vlaamseoverheid/magda.magdamock.git
+          - git clone --bare git@ssh.bitbucket.org:vlaamseoverheid/magda.magdamock.git
           - cd magda.magdamock.git
           - echo "$GITHUB_PUSH_KEY" | base64 -d > /tmp/github_push_key
           - chmod 600 /tmp/github_push_key

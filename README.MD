@@ -79,12 +79,12 @@ The following properties are supported:
 It is required to create a magdamock with custom data, 
 
 To create a magdamock with custom data the following prerequisites are assumed:
-- there is a directory `rest` with the REST testdata
-- there is a directory `soap` with the SOAP testdata
+ - there is a directory `rest` with the REST testdata
+ - there is a directory `soap` with the SOAP testdata
 
 Then the steps are:
-- create a custom Dockerfile with accompanying `application.yml`, that copies aforementioned data
-- build and run the Dockerfile that was just created
+ - create a custom Dockerfile with accompanying `application.yml`, that copies aforementioned data
+ - build and run the Dockerfile that was just created
 
 Dockerfile:
 ```dockerfile

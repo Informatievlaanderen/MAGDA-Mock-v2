@@ -1,0 +1,35 @@
+<web:BewaarWoningKwaliteitBijlageResponse xmlns:web="http://webservice.bewaarwoningkwaliteitbijlagedienst-02_00.vlok-02_00.vip.vlaanderen.be">
+    <Repliek>
+        <Context>
+            <Naam>BewaarWoningKwaliteitBijlage</Naam>
+            <Versie>02.00.0000</Versie>
+            <Bericht>
+                <Type>ANTWOORD</Type>
+                <Tijdstip>
+                    <Datum>0001-01-01</Datum>
+                    <Tijd>00:00:00.000</Tijd>
+                </Tijdstip>
+                <Afzender>
+                    <Identificatie>?</Identificatie>
+                    <Naam>?</Naam>
+                    <Referte>?</Referte>
+                </Afzender>
+                <Ontvanger>
+                    <Identificatie>?</Identificatie>
+                    <Referte>?</Referte>
+                    <Hoedanigheid>?</Hoedanigheid>
+                </Ontvanger>
+            </Bericht>
+        </Context>
+        <Antwoorden>
+            <Antwoord>
+                <Referte>?</Referte>
+                <Inhoud>
+                    <Bericht>
+                        <Inhoud>Foto of Document succesvol verwijderd.</Inhoud>
+                    </Bericht>
+                </Inhoud>
+            </Antwoord>
+        </Antwoorden>
+    </Repliek>
+</web:BewaarWoningKwaliteitBijlageResponse>

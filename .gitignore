@@ -35,3 +35,4 @@ build/
 **/application-*secrets.yml
 
 **/.DS_Store
+/.metadata/
